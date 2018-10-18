@@ -1,16 +1,16 @@
 import axios from 'axios';
-import { CLEAR_TOKEN } from './user/types';
+// import { CLEAR_TOKEN } from './user/types';
 import Toast from '../common/toast';
 import { user } from '../common/store';
 import loading from '../common/loading';
-import store from './index';
+// import store from './index';
 import md5 from 'js-md5';
 
-let HOST = 'http://api.fzkaisi.com/index.php?s=/H5/';
+let HOST = 'https://phone-api.baiying58.com/H5/';
 
-if (window.API_HOST) {
-  HOST = window.API_HOST;
-}
+// if (window.API_HOST) {
+//   HOST = window.API_HOST;
+// }
 
 // code > 0 时，失败处理
 function errorHandle (data, reject) {
@@ -18,7 +18,8 @@ function errorHandle (data, reject) {
   loading.hide();
   switch (data.code) {
     case 10003:
-      store && store.commit(CLEAR_TOKEN);
+      // store && store.commit(CLEAR_TOKEN);
+      Toast('登录已失效,请重新登录');
       break;
     default:
       Toast(data.msg);

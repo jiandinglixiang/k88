@@ -1,14 +1,23 @@
 import store from 'store';
 
 let user = {
+  token: null,
   setToken (token) {
-    return store.set('user', {token: token});
+    this.token = token
+    store.set('user', { token: token })
+    return this.token
   },
   getToken () {
-    return store.get('user') && store.get('user')['token'];
+    if (this.token) {
+      return this.token
+    }
+    this.token = store.get('user') && store.get('user')['token']
+    return this.token
   },
   clearToken () {
-    return store.remove('user');
+    this.token = null
+    store.remove('user')
+    return this.token
   }
 }
 let pageJump = {

@@ -22,30 +22,30 @@
         <p class="text-sm text-light">积分</p>
       </div>
     </div>
-    <router-link to="payment" tag="div" class="item border-top">
-      <span class="mine-recharge-icon icon"></span>
-      <span>充值</span>
-      <span class="arrow-right"></span>
-    </router-link>
-    <router-link to="cash" tag="div" class="item border-top">
-      <span class="mine-cash-icon icon"></span>
-      <span>提现</span>
-      <span class="arrow-right"></span>
-    </router-link>
+    <!--<router-link to="payment" tag="div" class="item border-top">-->
+      <!--<span class="mine-recharge-icon icon"></span>-->
+      <!--<span>充值</span>-->
+      <!--<span class="arrow-right"></span>-->
+    <!--</router-link>-->
+    <!--<router-link to="cash" tag="div" class="item border-top">-->
+      <!--<span class="mine-cash-icon icon"></span>-->
+      <!--<span>提现</span>-->
+      <!--<span class="arrow-right"></span>-->
+    <!--</router-link>-->
     <router-link tag="div" to="orders" class="item margin-top-10">
       <span class="mine-order-icon icon"></span>
       <span>我的订单</span>
       <span class="arrow-right"></span>
     </router-link>
-    <router-link tag="div" to="user_info" class="item border-top">
-      <span class="mine-info-icon icon"></span>
-      <span>个人信息</span>
-      <span class="arrow-right"></span>
-    </router-link>
+    <!--<router-link tag="div" to="user_info" class="item border-top">-->
+      <!--<span class="mine-info-icon icon"></span>-->
+      <!--<span>个人信息</span>-->
+      <!--<span class="arrow-right"></span>-->
+    <!--</router-link>-->
 
-    <div class="logout-panel">
-      <a href="javascript:;" @click="logout" class="btn btn-out-line">退出登录</a>
-    </div>
+    <!--<div class="logout-panel">-->
+      <!--<a href="javascript:;" @click="logout" class="btn btn-out-line">退出登录</a>-->
+    <!--</div>-->
     <!--<download-panel></download-panel>-->
     <v-dialog v-show="dialogShow" @close="onCloseDialog">
       <p class="text-md">体验完整功能</p>
