@@ -3,7 +3,9 @@
 #### 项目介绍
 百赢H5
 
-Build Setup
+## Build Setup
+
+``` bash
 # install dependencies
 npm install
 
@@ -15,3 +17,4 @@ npm run build
 
 
 npm run build --report
+```
