@@ -12,7 +12,7 @@ let state = {
   rechargeObject: {},
   rechargeResult: {},
   confirm: {}, // 赢球大师的订单确认页
-  order: {},  // 老虎彩票的订单确认页
+  order: {},  // 365彩票的订单确认页
   orderId: undefined
 }
 

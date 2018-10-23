@@ -253,8 +253,8 @@
         this.$store.dispatch(SPORTS_CONFIRM_PAYMENT, result).then(() => {
           if (this.confirm.id) {
             if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
-              Toast('余额不足');
-              this.$router.push({ name: 'Payment', query: {lack: (this.confirm.stakeCount * this.confirm.multiple * 2 - this.mine.balance).toFixed(2)} });
+              Toast('您的账户余额不足，请先充值！');
+              // this.$router.push({ name: 'Payment', query: {lack: (this.confirm.stakeCount * this.confirm.multiple * 2 - this.mine.balance).toFixed(2)} });
             } else {
               this.$router.push({ name: 'PaymentOrder', query: {id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP'} });
             }

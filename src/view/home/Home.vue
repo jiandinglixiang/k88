@@ -1,14 +1,16 @@
+
 <template>
   <div class="home padding-bottom-50">
+    <v-head title="365彩票" :goApp="true"></v-head>
     <mt-swipe :auto="4000" v-show="home.banners.length > 0">
       <mt-swipe-item :key="key" v-for="(banner, key) in home.banners">
         <img class="banner" :src="banner.image" alt="banner" @click="goBannerUrl(banner)">
       </mt-swipe-item>
     </mt-swipe>
     <div class="container">
-      <div class="recommend-box">
-        <recommend-lottery :issue="home.issue" @refresh="refresh"></recommend-lottery>
-      </div>
+      <!--<div class="recommend-box">-->
+        <!--<recommend-lottery :issue="home.issue" @refresh="refresh"></recommend-lottery>-->
+      <!--</div>-->
       <div class="lottery-box" v-if="lotteries.length > 0">
         <template v-for="(lottery, index) in lotteries">
           <lottery-item :lottery="lottery"></lottery-item>
@@ -25,6 +27,7 @@
 </template>
 
 <script>
+  import VHead from '../../components/VHead';
   import BottomNav from '../../components/BottomNav.vue';
   import LotteryItem from '../../components/HomeLotteryItem.vue';
   import InformationItem from '../../components/HomeInformationItem.vue';
@@ -82,10 +85,10 @@
     created () {
       this.getBanners();
       this.getLotteryList();
-      this.getRecommendIssue();
+      // this.getRecommendIssue();
       this.getInformation()
     },
-    components: {BottomNav, Swipe, SwipeItem, LotteryItem, InformationItem, RecommendLottery}
+    components: {VHead, BottomNav, Swipe, SwipeItem, LotteryItem, InformationItem, RecommendLottery}
   }
 </script>
 

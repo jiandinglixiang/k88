@@ -95,9 +95,9 @@
       <span cspas="text-normal text-default">方案明细</span>
       <span class="arrow-right"></span>
     </router-link>
-    <div class="bottom-logo margin-top-20 text-center">
+   <!--  <div class="bottom-logo margin-top-20 text-center">
       <img src="../../assets/bottom_logo.png" alt="">
-    </div>
+    </div> -->
   </div>
 </template>
 

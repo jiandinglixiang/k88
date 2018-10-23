@@ -19,7 +19,7 @@ function errorHandle (data, reject) {
   switch (data.code) {
     case 10003:
       // store && store.commit(CLEAR_TOKEN);
-      Toast('登录已失效,请重新登录');
+      Toast('登录已过期,请重新登录!');
       break;
     default:
       Toast(data.msg);

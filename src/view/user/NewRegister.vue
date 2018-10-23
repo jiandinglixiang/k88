@@ -1,8 +1,8 @@
 <template>
   <div class="new-register">
-    <div class="logo">
+  <!--   <div class="logo">
       <img src="../../assets/new_register/logo.png" alt="logo">
-    </div>
+    </div> -->
     <div class="form">
       <div class="flag"></div>
       <div class="form-input" v-show="!success">

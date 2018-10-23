@@ -3,7 +3,7 @@
     <span class="checkbox">
       <span class="red-check-icon"></span>
     </span>
-    我已阅读并同意《老虎彩票服务协议》<br/>
+    我已阅读并同意《365彩票服务协议》<br/>
     客服热线：400-835-1108
   </div>
 </template>

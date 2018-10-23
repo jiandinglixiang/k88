@@ -2,7 +2,7 @@
   <div class="home-more">
     <v-head title="更多彩种"></v-head>
     <div class="home-more-container">
-      <p class="tip text-sm text-muted">提示：更多彩种请下载老虎彩票</p>
+      <p class="tip text-sm text-muted">提示：更多彩种请下载365彩票</p>
       <div class="box">
         <lottery-item
           :lottery="lottery"
@@ -15,7 +15,7 @@
       <p>
         <img src="../../assets/home/download_icon.png" alt="download" width="50">
       </p>
-      <p class="text-md margin-top-5">请下载安装老虎彩票官方APP</p>
+      <p class="text-md margin-top-5">请下载安装365彩票官方APP</p>
       <div class="padding">
         <a target="_self" href="http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery" class="btn">立即下载</a>
       </div>

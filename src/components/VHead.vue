@@ -12,10 +12,14 @@
   import router from '../router/index';
   export default {
     name: 'head',
-    props: ['title', 'hideBack'],
+    props: ['title', 'hideBack', 'goApp'],
     methods: {
       goBack () {
-        router.go(-1);
+        if (this.goApp) {
+          location.href = 'goAppIndex';
+        } else {
+          router.go(-1);
+        }
       }
     }
   }

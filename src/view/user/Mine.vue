@@ -49,7 +49,7 @@
     <!--<download-panel></download-panel>-->
     <v-dialog v-show="dialogShow" @close="onCloseDialog">
       <p class="text-md">体验完整功能</p>
-      <p class="text-md margin-top-5">请下载安装老虎彩票官方APP</p>
+      <p class="text-md margin-top-5">请下载安装365彩票官方APP</p>
       <div class="padding margin-top-10">
         <a target="_self" href="http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery" class="btn">立即下载</a>
       </div>

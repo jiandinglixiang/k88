@@ -40,8 +40,8 @@
       <img src="../../assets/promotion/11选5/title_2.png" alt="title">
       <p>1、本活动限活动2017年07月14日0时后注册的新用户专享；</p>
       <p>2、每个新注册账户在都可参与一次买一送一活动；</p>
-      <p>3、注册新用户登录老虎彩票APP后，购买一注高频彩即可获得购彩红包一个；</p>
-      <p>4、本活动解释权归老虎彩票所有；</p>
+      <p>3、注册新用户登录365彩票APP后，购买一注高频彩即可获得购彩红包一个；</p>
+      <p>4、本活动解释权归365彩票所有；</p>
     </div>
     <carousel-swipe :list="imgList"></carousel-swipe>
     <div class="dialog" v-show="dialogVisible">
