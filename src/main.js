@@ -8,7 +8,7 @@ import { user } from './common/store';
 import './common/infiniteScroll'; // 无限滚动指令
 import './common/directive'; // 自定义的指令
 import './common/filter'; // 自定义的过滤器
-import Util from './common/Util';
+import Util from './common/util';
 // if (process.env.NODE_ENV === 'production') {
 //   let targetProtocol = 'https:';
 //   if (window.location.protocol !== targetProtocol) {
