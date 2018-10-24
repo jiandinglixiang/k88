@@ -259,7 +259,8 @@
               this.$router.push({ name: 'PaymentOrder', query: {id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP'} });
             }
           } else {
-            this.$router.push({ name: 'Login', query: {redirect: this.$router.currentRoute.path} });
+            // this.$router.push({ name: 'Login', query: {redirect: this.$router.currentRoute.path} });
+            Toast('登录已过期,请重新登录!');
           }
         });
       },
