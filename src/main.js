@@ -16,8 +16,8 @@ import Util from './common/util';
 //       window.location.href.substring(window.location.protocol.length);
 //   }
 // }
-let token = Util.urlSearch();
-user.setToken(token);
+let data = Util.urlSearch();
+user.setToken(data.token);
 Vue.config.productionTip = false
 // 动画暂时不用
 // import 'vueg/css/transition-min.css'
