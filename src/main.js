@@ -18,6 +18,7 @@ import Util from './common/util';
 // }
 let data = Util.urlSearch();
 user.setToken(data.token);
+
 Vue.config.productionTip = false
 // 动画暂时不用
 // import 'vueg/css/transition-min.css'
