@@ -18,9 +18,9 @@
         </template>
         <lottery-item :lottery="moreLottery"></lottery-item>
       </div>
-      <div class="information-list">
-        <information-item :key="key" :information="item" v-for="(item, key) in home.information"></information-item>
-      </div>
+      <!--<div class="information-list">-->
+        <!--<information-item :key="key" :information="item" v-for="(item, key) in home.information"></information-item>-->
+      <!--</div>-->
     </div>
     <bottom-nav active="Home"></bottom-nav>
   </div>
