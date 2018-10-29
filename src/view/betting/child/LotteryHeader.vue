@@ -64,7 +64,7 @@
         this.changePanelVisible();
       },
       goBack () {
-        this.$router.back();
+        this.$router.replace({path: '/'});
       },
       goHelp () {
         let lotteryId = this.lottery;

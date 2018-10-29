@@ -14,7 +14,8 @@
 
 <script>
   import VHead from '../../components/VHead.vue';
-  import { mapState } from 'vuex';
+  import { mapActions, mapState } from 'vuex';
+  import { MINE_INFO } from '../../store/user/types';
 
   export default {
     name: 'payComplete',
@@ -27,6 +28,14 @@
           name: 'OrderDetail', params: {id: this.orderId}
         }
       }
+    },
+    methods: {
+      ...mapActions({
+        getMineInfo: MINE_INFO
+      })
+    },
+    created () {
+      this.getMineInfo();
     },
     components: { VHead }
   }
