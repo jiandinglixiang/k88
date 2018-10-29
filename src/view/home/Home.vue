@@ -38,7 +38,6 @@
   import Lottery from '../../model/common/Lottery';
   import { GET_BANNER, GET_LOTTERY_LIST, GET_INFORMATION_LIST,
     GET_RECOMMEND_ISSUE, RECOMMEND_ISSUE_REFRESH } from '../../store/home/types';
-  import { MINE_INFO } from '../../store/user/types';
 
   Vue.component(Swipe.name, Swipe);
   Vue.component(SwipeItem.name, SwipeItem);
@@ -74,8 +73,7 @@
         getLotteryList: GET_LOTTERY_LIST,
         getInformation: GET_INFORMATION_LIST,
         getRecommendIssue: GET_RECOMMEND_ISSUE,
-        recommendIssueRefresh: RECOMMEND_ISSUE_REFRESH,
-        getMineInfo: MINE_INFO
+        recommendIssueRefresh: RECOMMEND_ISSUE_REFRESH
       }),
       refresh () {
         this.recommendIssueRefresh();
@@ -89,7 +87,6 @@
       this.getLotteryList();
       // this.getRecommendIssue();
       this.getInformation();
-      this.getMineInfo();
     },
     components: {VHead, BottomNav, Swipe, SwipeItem, LotteryItem, InformationItem, RecommendLottery}
   }

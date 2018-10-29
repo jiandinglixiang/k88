@@ -94,10 +94,7 @@
         logout: LOGOUT
       })
     },
-    components: { VHead, DownloadPanel, VDialog, BottomNav },
-    created () {
-      this.getMineInfo();
-    }
+    components: { VHead, DownloadPanel, VDialog, BottomNav }
   }
 </script>
 

@@ -28,7 +28,7 @@
     },
     created () {
       if (!Lottery.isBasketBall(this.$store.state.betting.lottery)) {
-        this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT, BasketballLotteryIdList[0]);
+        this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT, BasketballLotteryIdList[4]);
       }
     },
     components: { SportLotteryHeader, SportLotteryContainer }

@@ -7,7 +7,7 @@
     <div class="panel-list" v-show="panelVisible">
       <sport-lottery-panel-item v-for="(schedule, index) in group.schedules"
                                 :key="index"
-                                :schedule="schedule">
+                                :schedule="schedule" :index="index">
       </sport-lottery-panel-item>
     </div>
   </div>

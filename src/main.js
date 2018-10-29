@@ -4,11 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store/index';
-import { user } from './common/store';
 import './common/infiniteScroll'; // 无限滚动指令
 import './common/directive'; // 自定义的指令
 import './common/filter'; // 自定义的过滤器
-import Util from './common/util';
 // if (process.env.NODE_ENV === 'production') {
 //   let targetProtocol = 'https:';
 //   if (window.location.protocol !== targetProtocol) {
@@ -16,8 +14,6 @@ import Util from './common/util';
 //       window.location.href.substring(window.location.protocol.length);
 //   }
 // }
-let data = Util.urlSearch();
-user.setToken(data.token);
 Vue.config.devtools = true;
 Vue.config.productionTip = false
 // 动画暂时不用

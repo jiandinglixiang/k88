@@ -30,7 +30,7 @@
     },
     created () {
       if (!Lottery.isFootBall(this.$store.state.betting.lottery)) {
-        this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT, FootballLotteryIdList[0]);
+        this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT, FootballLotteryIdList[5]);
       }
     },
     components: { SportLotteryHeader, SportLotteryContainer }

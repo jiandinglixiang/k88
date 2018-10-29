@@ -113,7 +113,7 @@
 
   export default {
     name: 'sportLotteryPanelItem',
-    props: ['schedule'],
+    props: ['schedule', 'index'],
     data () {
       return {
         tipVisible: false
@@ -147,6 +147,11 @@
       BasketballSFCLottery,
       BasketballHHLottery,
       SfcSPFLottery
+    },
+    created () {
+      if (this.index === 0) {
+        this.showTip();
+      }
     }
   }
 </script>
