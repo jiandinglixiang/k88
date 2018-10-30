@@ -3,7 +3,7 @@
     <span v-if="label" class="label">{{label}}</span>
     <div class="box pull-left">
       <span @click="decrease">-</span>
-      <input class="text" type="text" v-model="input">
+      <input class="text" type="tel" v-model="input">
       <span @click="increase">+</span>
     </div>
     <span class="unit" v-if="unit">{{unit}}</span>
