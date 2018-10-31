@@ -42,8 +42,8 @@
     position: absolute;
     left: 5px; top: 0;
     background: url("../assets/icon/back.png") no-repeat center;
-    background-size: 40% 40%;
-    height: 35px; width: 25px;
+    background-size: 50% 50%;
+    height: 40px; width: 25px;
   }
   .head .right {
     position: absolute;

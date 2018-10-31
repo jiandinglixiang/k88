@@ -10,37 +10,48 @@
         <div class="scheme-box-item" :class="{'has-sure': betting.mode === 2}" v-for="(betting, key) in bettingList">
           <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
           <template v-if="betting.lotteryId === 601">
-            <football-s-p-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true" :schedule="betting"></football-s-p-f-lottery>
+            <football-s-p-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                    :schedule="betting"></football-s-p-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 602">
-            <football-r-q-s-p-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true" :schedule="betting"></football-r-q-s-p-f-lottery>
+            <football-r-q-s-p-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                        :schedule="betting"></football-r-q-s-p-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 603">
-            <football-b-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true" :schedule="betting"></football-b-f-lottery>
+            <football-b-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                  :schedule="betting"></football-b-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 604">
-            <football-z-j-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true" :schedule="betting"></football-z-j-q-lottery>
+            <football-z-j-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                    :schedule="betting"></football-z-j-q-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 605">
-            <football-b-q-c-lottery @onOptionSelected="onOptionSelected" :isConfirm="true" :schedule="betting"></football-b-q-c-lottery>
+            <football-b-q-c-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                    :schedule="betting"></football-b-q-c-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 606">
-            <football-h-h-lottery @onOptionSelected="onOptionSelected" :isConfirm="true" :schedule="betting"></football-h-h-lottery>
+            <football-h-h-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                  :schedule="betting"></football-h-h-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 701">
-            <basketball-s-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true" :schedule="betting"></basketball-s-f-lottery>
+            <basketball-s-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                    :schedule="betting"></basketball-s-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 702">
-            <basketball-r-f-s-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true" :schedule="betting"></basketball-r-f-s-f-lottery>
+            <basketball-r-f-s-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                        :schedule="betting"></basketball-r-f-s-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 703">
-            <basketball-s-f-c-lottery @onOptionSelected="onOptionSelected" :isConfirm="true" :schedule="betting"></basketball-s-f-c-lottery>
+            <basketball-s-f-c-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                      :schedule="betting"></basketball-s-f-c-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 704">
-            <basketball-d-x-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true" :schedule="betting"></basketball-d-x-f-lottery>
+            <basketball-d-x-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                      :schedule="betting"></basketball-d-x-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 705">
-            <basketball-h-h-lottery @onOptionSelected="onOptionSelected" :isConfirm="true" :schedule="betting"></basketball-h-h-lottery>
+            <basketball-h-h-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                    :schedule="betting"></basketball-h-h-lottery>
           </template>
           <span class="sure" :class="{selected: betting.isSure}" @click="addSure(betting)">胆</span>
         </div>
@@ -50,10 +61,13 @@
     <div class="bottom-fixed">
       <div class="row top">
         <div class="col col-50 col-center" @click="onPopupVisible">
-          <span class="text-normal ellipsis" style="width: 80%; display: inline-block">{{seriesText}}</span><span class="down-up"></span>
+          <span class="text-normal ellipsis" style="width: 80%; display: inline-block">{{seriesText}}</span><span
+          class="down-up"></span>
         </div>
         <div class="col">
-          <custom-select-box @change="multipleChange" class="pull-right" label="倍数" :value="confirm.multiple"></custom-select-box>
+          <custom-select-box @change="multipleChange" class="pull-right" label="倍数" :value="confirm.multiple"
+                             :seriesdata="seriesText" :confirmdata="confirm"
+                             :totalmoney="totalMoney"></custom-select-box>
         </div>
       </div>
       <div class="summary">
@@ -63,15 +77,16 @@
             <span class="text-primary">共{{totalMoney}}元</span>
           </span>
           <div class="pull-right text-light ellipsis" style="width: 50%">
-            预计奖金:{{confirm.bonus.min * confirm.multiple | currency}} ~ {{confirm.bonus.max * confirm.multiple | currency}}元
+            预计奖金:{{confirm.bonus.min * confirm.multiple | currency}} ~ {{confirm.bonus.max * confirm.multiple |
+            currency}}元
           </div>
         </div>
         <div class="row">
           <!--<div class="col col-40">-->
-            <!--<a href="javascript:;" class="btn btn-out-line text-center" @click="confirmOptimize">奖金优化</a>-->
+          <!--<a href="javascript:;" class="btn btn-out-line text-center" @click="confirmOptimize">奖金优化</a>-->
           <!--</div>-->
           <!--<div class="col padding-left-10">-->
-            <!--<a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>-->
+          <!--<a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>-->
           <!--</div>-->
           <div class="col">
             <a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>
@@ -115,9 +130,11 @@
   import SchemeBox from '../../components/SchemeBox.vue';
   import ServiceAgreement from '../../components/ServiceAgreement.vue';
   import CustomSelectBox from '../../components/CustomSelectBox.vue';
-  import {SPORTS_CONFIRM_CLEAR_TICKETS, SPORTS_CONFIRM_DELETE_TICKET, SPORTS_CONFIRM_OPTIMIZE,
+  import {
+    SPORTS_CONFIRM_CLEAR_TICKETS, SPORTS_CONFIRM_DELETE_TICKET, SPORTS_CONFIRM_OPTIMIZE,
     SPORTS_BONUS_CHANGE, SPORTS_MULTIPLE_CHANGE, SPORTS_CONFIRM_PAYMENT,
-    SPORTS_CONFIRM_SERIES_SET, SPORTS_CONFIRM_SERIES_CLEAR} from '../../store/betting/types';
+    SPORTS_CONFIRM_SERIES_SET, SPORTS_CONFIRM_SERIES_CLEAR
+  } from '../../store/betting/types';
   import FootballSPFLottery from './child/FootballSPFLottery.vue';
   import FootballRQSPFLottery from './child/FootballRQSPFLottery.vue';
   import FootballBFLottery from './child/FootballBFLottery.vue';
@@ -136,7 +153,8 @@
   import SportsCalculate from '../../model/sports/SportsCalculate';
   import Lottery from '../../model/common/Lottery';
   import Toast from '../../common/toast';
-  import { MINE_INFO } from '../../store/user/types';
+  import {MINE_INFO} from '../../store/user/types';
+
   Vue.component(Popup.name, Popup);
   let calculate;
   export default {
@@ -256,7 +274,10 @@
               Toast('您的账户余额不足，请先充值！');
               // this.$router.push({ name: 'Payment', query: {lack: (this.confirm.stakeCount * this.confirm.multiple * 2 - this.mine.balance).toFixed(2)} });
             } else {
-              this.$router.push({ name: 'PaymentOrder', query: {id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP'} });
+              this.$router.push({
+                name: 'PaymentOrder',
+                query: {id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP'}
+              });
             }
           } else {
             // this.$router.push({ name: 'Login', query: {redirect: this.$router.currentRoute.path} });
@@ -429,20 +450,24 @@
     position: relative;
     overflow: hidden;
   }
+
   .sports-confirm-container {
     padding: 45px 10px 40px 10px;
     height: 100%;
     overflow-y: auto;
   }
+
   .sports-confirm-container .operate-wrap {
     position: absolute;
     width: 100%;
-    top: 40px; left: 0;
+    top: 40px;
+    left: 0;
     padding: 5px 5px 0 5px;
     z-index: 2;
     background: #f2f2f2;
   }
-  .sports-confirm-container .operate-wrap a{
+
+  .sports-confirm-container .operate-wrap a {
     border: 1px solid #ddd;
     border-radius: 5px;
     background: white;
@@ -454,33 +479,42 @@
     padding: 5px;
     font-size: 14px;
   }
+
   .sports-confirm .bottom-fixed {
     position: absolute;
-    bottom: 0;  left:0;
+    bottom: 0;
+    left: 0;
     background: white;
     width: 100%;
     height: 130px;
   }
+
   .sports-confirm .bottom-fixed .top {
     padding: 10px;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
   }
+
   .sports-confirm .bottom-fixed .down-up {
     background: url("../../assets/betting/down_out.png") no-repeat;
     background-size: 100% 100%;
-    width: 20px; height: 20px;
+    width: 20px;
+    height: 20px;
     display: inline-block;
     vertical-align: middle;
     margin-left: 5px;
   }
+
   .sports-confirm .bottom-fixed .summary {
-    padding: 5px 10px; font-size: 14px;
+    padding: 5px 10px;
+    font-size: 14px;
     color: #666;
   }
+
   .sports-confirm .bottom-fixed .summary .text {
     padding-bottom: 5px;
   }
+
   .sports-confirm .bottom-fixed .summary .add-to {
     margin-left: 30px;
     margin-right: 5px;
@@ -489,113 +523,151 @@
     color: red;
     border: 1px solid #ddd;
   }
+
   .sports-confirm .scheme-delete-icon {
     background: url("../../assets/betting/scheme_delete.png") no-repeat;
     background-size: 100% 100%;
-    width: 25px; height: 25px;
+    width: 25px;
+    height: 25px;
   }
+
   .sports-confirm .scheme-box-item {
     padding: 10px 5px 10px 30px;
     position: relative;
     background: white;
     border-top: 1px dotted #ddd;
   }
+
   .sports-confirm .scheme-box-item.has-sure {
     padding-right: 40px;
   }
+
   .sports-confirm .scheme-box-item.has-sure .sure {
     display: block;
   }
+
   .sports-confirm .scheme-box-item .sure {
     position: absolute;
-    width: 30px; height: 30px; line-height: 30px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
     background: #dddddd;
     color: white;
     position: absolute;
-    right: 5px; bottom: 18px;
+    right: 5px;
+    bottom: 18px;
     text-align: center;
     border-radius: 5px;
     display: none;
   }
+
   .sports-confirm .scheme-box-item .sure.selected {
     background: #e73f40;
   }
+
   .sports-confirm .scheme-box-item .scheme-delete-icon {
     position: absolute;
-    left: 5px; bottom: 18px;
+    left: 5px;
+    bottom: 18px;
   }
+
   .sports-confirm .scheme-box-item:first-child {
     border-top: 0;
     padding-top: 0;
   }
+
   .sports-confirm-container .plus-icon {
     background: url("../../assets/betting/confirm_plus.png") no-repeat;
     background-size: 100% 100%;
-    width: 12px; height: 12px;
+    width: 12px;
+    height: 12px;
     display: inline-block;
     vertical-align: middle;
-    margin-right:5px;
+    margin-right: 5px;
     margin-top: -2px;
   }
+
   .sports-confirm-container .clear-icon {
     background: url("../../assets/betting/confirm_clear.png") no-repeat;
     background-size: 100% 100%;
-    width: 12px; height: 12px;
+    width: 12px;
+    height: 12px;
     display: inline-block;
     vertical-align: middle;
-    margin-right:5px;
+    margin-right: 5px;
     margin-top: -2px;
   }
+
   .sports-confirm .mint-popup {
     width: 100%;
   }
+
   .sports-confirm .series-select-popup {
     width: 100%;
     position: relative;
   }
+
   .sports-confirm .series-select-popup .header-nav a {
-    width: 50%; height: 35px; line-height: 35px;
-    text-align: center; color: black;
-    display: block; float: left;
+    width: 50%;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    color: black;
+    display: block;
+    float: left;
     background: #f2f2f2;
     font-size: 14px;
   }
+
   .sports-confirm .series-select-popup .header-nav a.active {
-    color: #e73f40; background: white;
+    color: #e73f40;
+    background: white;
   }
-  .sports-confirm .series-select-popup .btn-wrap{
+
+  .sports-confirm .series-select-popup .btn-wrap {
     border-top: 1px solid #ddd;
   }
+
   .sports-confirm .series-select-popup .btn-wrap a {
     border-radius: 0;
     border: 0;
     background: white;
     color: black;
   }
+
   .sports-confirm .series-select-popup .btn-wrap .col:last-child a {
     color: #e73f40;
     border-left: 1px solid #ddd;
   }
+
   .sports-confirm .series-select-popup .select-content {
     padding: 4px 0;
   }
+
   .sports-confirm .series-select-popup .select-content .item {
-    width: 23%; margin: 2px 1%;
-    height: 28px; line-height: 24px;
-    text-align: center; font-size: 12px;
-    display: block; float: left;
+    width: 23%;
+    margin: 2px 1%;
+    height: 28px;
+    line-height: 24px;
+    text-align: center;
+    font-size: 12px;
+    display: block;
+    float: left;
     border: 1px solid #ddd;
     border-radius: 5px;
   }
+
   .sports-confirm .series-select-popup .select-content .item.selected {
     border: 1px solid #e73f40;
     background: url("../../assets/betting/selected.png") right bottom no-repeat;
     background-size: auto 60%;
     color: #e73f40;
   }
+
   .sports-confirm .arrow-right {
     background: url("../../assets/betting/arrow-right.png") no-repeat;
     background-size: 100% 100%;
-    width: 7px; height: 12px;
+    width: 7px;
+    height: 12px;
   }
 </style>
