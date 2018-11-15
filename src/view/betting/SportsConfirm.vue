@@ -703,7 +703,7 @@
     zoom: 1;
   }
   .panel {
-    margin: 280px auto 0;
+    margin: 250px auto 0;
     width: 70%;
     background-color: #fff;
     border-radius: 10px;
