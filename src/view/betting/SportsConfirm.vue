@@ -122,6 +122,18 @@
         </div>
       </div>
     </mt-popup>
+    <div class="modal" id="modal-recharge" v-show="isShow">
+      <div class="panel">
+        <div class="tit">
+          <h1>余额不足，无法下注，</h1>
+          <h1>请先充值！</h1>
+        </div>
+        <div class="btns">
+          <div class="btn-cancel" @click="toggle()">取消</div>
+          <div class="btn-sure btn-recharge" @click="recharge()">充值</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -167,7 +179,8 @@
         series: [],
         popupSelected: [],
         isMulti: false,
-        sure: 0
+        sure: 0,
+        isShow: false
       }
     },
     computed: {
@@ -202,6 +215,12 @@
       }),
       addBetting () {
         this.$router.back();
+      },
+      toggle () {
+        this.isShow = !this.isShow;
+      },
+      recharge () {
+        location.href = 'gorecharge';
       },
       clearBettingList () {
         this.$store.commit(SPORTS_CONFIRM_CLEAR_TICKETS);
@@ -271,8 +290,9 @@
         this.$store.dispatch(SPORTS_CONFIRM_PAYMENT, result).then(() => {
           if (this.confirm.id) {
             if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
-              Toast('您的账户余额不足，请先充值！');
+              // Toast('您的账户余额不足，请先充值！');
               // this.$router.push({ name: 'Payment', query: {lack: (this.confirm.stakeCount * this.confirm.multiple * 2 - this.mine.balance).toFixed(2)} });
+              this.toggle();
             } else {
               this.$router.push({
                 name: 'PaymentOrder',
@@ -669,5 +689,49 @@
     background-size: 100% 100%;
     width: 7px;
     height: 12px;
+  }
+  .modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    zoom: 1;
+  }
+  .panel {
+    margin: 280px auto 0;
+    width: 70%;
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .tit {
+    padding: 20px 10px 15px;
+  }
+  .tit h1 {
+    font-weight: normal;
+    font-size: 18px;
+    color: #333;
+  }
+  .panel .btns {
+    border-top: 1px solid #ccc;
+    display: flex;
+  }
+  .panel .btns div {
+    flex: 1;
+    height: 38px;
+    line-height: 38px;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+  .panel .btns .btn-cancel {
+    border-right: 1px solid #ccc;
+    color: #999;
+  }
+  .panel .btns .btn-sure {
+    color: #dc3c38;
   }
 </style>
