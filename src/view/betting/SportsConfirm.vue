@@ -221,6 +221,7 @@
       },
       recharge () {
         location.href = 'gorecharge';
+        this.isShow = !this.isShow;
       },
       clearBettingList () {
         this.$store.commit(SPORTS_CONFIRM_CLEAR_TICKETS);
