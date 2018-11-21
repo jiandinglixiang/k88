@@ -15,8 +15,24 @@
     props: ['title', 'hideBack', 'goApp'],
     methods: {
       goBack () {
+        let isH5 = false
+        let origin = null
+        let source = null
+        if (location.search.indexOf('ish5=true') !== -1) {
+          isH5 = true
+        }
+        window.addEventListener('message', function (event) {
+          isH5 = true
+          origin = event.origin
+          source = event.source
+          source.postMessage(JSON.stringify({ response: -1 }), origin)
+        }, false)
         if (this.goApp) {
-          location.href = 'goAppIndex';
+          if (isH5 === true) {
+            source.postMessage(JSON.stringify({ response: 56789 }), origin);
+          } else {
+            location.href = 'goAppIndex';
+          }
         } else {
           router.go(-1);
         }
