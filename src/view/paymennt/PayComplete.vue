@@ -14,8 +14,9 @@
 
 <script>
   import VHead from '../../components/VHead.vue';
-  import { mapActions, mapState } from 'vuex';
-  import { MINE_INFO } from '../../store/user/types';
+  import {mapActions, mapState} from 'vuex';
+  import {MINE_INFO} from '../../store/user/types';
+  import {H5postmsg} from '../../common/postmsg';
 
   export default {
     name: 'payComplete',
@@ -36,8 +37,9 @@
     },
     created () {
       this.getMineInfo();
+      H5postmsg.source && H5postmsg.source.postMessage(JSON.stringify({response: 5}), H5postmsg.origin);
     },
-    components: { VHead }
+    components: {VHead}
   }
 </script>
 

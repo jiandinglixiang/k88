@@ -10,26 +10,16 @@
 
 <script>
   import router from '../router/index';
+  import {H5postmsg} from '../common/postmsg';
+
   export default {
     name: 'head',
     props: ['title', 'hideBack', 'goApp'],
     methods: {
       goBack () {
-        let isH5 = false
-        let origin = null
-        let source = null
-        if (location.search.indexOf('ish5=true') !== -1) {
-          isH5 = true
-        }
-        window.addEventListener('message', function (event) {
-          isH5 = true
-          origin = event.origin
-          source = event.source
-          source.postMessage(JSON.stringify({ response: -1 }), origin)
-        }, false)
         if (this.goApp) {
-          if (isH5 === true) {
-            source.postMessage(JSON.stringify({ response: 56789 }), origin);
+          if (H5postmsg.isH5 === true) {
+            H5postmsg.source.postMessage(JSON.stringify({response: 4}), H5postmsg.origin);
           } else {
             location.href = 'goAppIndex';
           }
@@ -43,6 +33,7 @@
 
 <style>
   @import "../style/icon.css";
+
   .head {
     position: relative;
     padding: 0 20px;
@@ -54,13 +45,17 @@
     line-height: 40px;
     margin-bottom: 1px;
   }
+
   .head .back-icon {
     position: absolute;
-    left: 5px; top: 0;
+    left: 5px;
+    top: 0;
     background: url("../assets/icon/back.png") no-repeat center;
     background-size: 50% 50%;
-    height: 40px; width: 25px;
+    height: 40px;
+    width: 25px;
   }
+
   .head .right {
     position: absolute;
     right: 10px;

@@ -166,7 +166,7 @@
   import Lottery from '../../model/common/Lottery';
   import Toast from '../../common/toast';
   import {MINE_INFO} from '../../store/user/types';
-
+  import {H5postmsg} from '../../common/postmsg';
   Vue.component(Popup.name, Popup);
   let calculate;
   export default {
@@ -220,8 +220,12 @@
         this.isShow = !this.isShow;
       },
       recharge () {
-        location.href = 'gorecharge';
-        this.isShow = !this.isShow;
+        if (H5postmsg.isH5 === true) {
+          H5postmsg.source.postMessage(JSON.stringify({response: 3}), H5postmsg.origin);
+        } else {
+          location.href = 'gorecharge';
+        }
+        // this.isShow = !this.isShow;
       },
       clearBettingList () {
         this.$store.commit(SPORTS_CONFIRM_CLEAR_TICKETS);
@@ -718,8 +722,8 @@
     color: #333;
   }
   .panel .btns {
-    border-top: 1px solid #ccc;
     display: flex;
+    border-top: 1px solid #ccc;
   }
   .panel .btns div {
     flex: 1;
