@@ -41,10 +41,12 @@ const actions = {
     }
   },
   [types.GET_INFORMATION_LIST] (context) {
-    if (state.information.length === 0) {
-      Http.get('/News/getRecommendList').then(data => {
-        context.commit(types.GET_INFORMATION_LIST, data);
-      })
+    if (Array.isArray(state.information) === true) {
+      if (state.information.length === 0) {
+        Http.get('/News/getRecommendList').then(data => {
+          context.commit(types.GET_INFORMATION_LIST, data);
+        })
+      }
     }
   },
   [types.RECOMMEND_ISSUE_REFRESH] (context) {
