@@ -7,6 +7,7 @@ import store from './store/index';
 import './common/infiniteScroll'; // 无限滚动指令
 import './common/directive'; // 自定义的指令
 import './common/filter'; // 自定义的过滤器
+import {H5postmsg} from './common/postmsg'
 // if (process.env.NODE_ENV === 'production') {
 //   let targetProtocol = 'https:';
 //   if (window.location.protocol !== targetProtocol) {
@@ -24,11 +25,17 @@ Vue.config.productionTip = false
 //   duration: 0.2
 // });
 
+window.addEventListener('message', function (event) {
+  H5postmsg.isH5 = true;
+  H5postmsg.origin = event.origin;
+  H5postmsg.source = event.source;
+  H5postmsg.source.postMessage(JSON.stringify({response: -1}), H5postmsg.origin);
+}, false);
 new Vue({
   el: '#app',
   router,
   store,
   template: '<App/>',
-  components: { App }
+  components: {App}
 })
 

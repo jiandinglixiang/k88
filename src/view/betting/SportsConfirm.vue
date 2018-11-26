@@ -221,7 +221,7 @@
       },
       recharge () {
         if (H5postmsg.isH5 === true) {
-          H5postmsg.source.postMessage(JSON.stringify({response: 3}), H5postmsg.origin);
+          window.parent.postMessage(JSON.stringify({response: 3}), '*');
         } else {
           location.href = 'gorecharge';
         }
