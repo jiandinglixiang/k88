@@ -19,6 +19,7 @@
       goBack () {
         if (this.goApp) {
           if (H5postmsg.isH5 === true) {
+            //  h5
             window.parent.postMessage(JSON.stringify({response: 4}), '*');
           } else {
             location.href = 'goAppIndex';
