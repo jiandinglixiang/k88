@@ -220,7 +220,7 @@
         this.isShow = !this.isShow;
       },
       recharge () {
-        if (H5postmsg.isH5 === true) {
+        if (H5postmsg.isH5) {
           window.parent.postMessage(JSON.stringify({response: 3}), '*');
         } else {
           location.href = 'gorecharge';
