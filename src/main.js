@@ -26,6 +26,8 @@ Vue.config.productionTip = false
 // });
 
 window.addEventListener('message', function (event) {
+  if (event.source !== window.parent) return
+  console.log(location)
   H5postmsg.isH5 = location.href.indexOf('ish5=true') !== -1;
   H5postmsg.origin = event.origin;
   H5postmsg.source = event.source;

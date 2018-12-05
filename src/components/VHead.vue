@@ -18,7 +18,8 @@
     methods: {
       goBack () {
         if (this.goApp) {
-          if (H5postmsg.isH5 === true) {
+          console.log(H5postmsg)
+          if (H5postmsg.isH5) {
             //  h5
             window.parent.postMessage(JSON.stringify({response: 4}), '*');
           } else {
