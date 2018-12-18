@@ -49,7 +49,7 @@
         moreLottery: {
           component: 'More',
           tipText: '发现更多彩种',
-          lottery_image: 'http://tclottery.oss-cn-hangzhou.aliyuncs.com/tigerH5App/img/more.png',
+          lottery_image: require('../../assets/ic_more.png'),
           lottery_name: '更多'
         }
       }
@@ -92,7 +92,7 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .home .mint-swipe {
     height: 110px;
   }
@@ -103,7 +103,7 @@
     bottom: 5px;
   }
   .home .mint-swipe-indicator {
-    background: white;
+    background: $c1c1c1c;
     opacity: 0.3;
   }
   .home .mint-swipe-indicator.is-active {
@@ -113,14 +113,15 @@
     padding: 10px;
   }
   .home .container .lottery-box {
-    border: 1px solid #dddddd;
-    background: white;
+    /*border: 1px solid #dddddd;*/
+    background: $c1c1c1c;
     border-radius: 5px;
     overflow: hidden;
     margin-top: 10px;
+    color: $cFFfFFF;
   }
   .home .container .lottery-box hr {
     border-top: 0;
-    border-bottom: 1px solid #ddd;
+    /*border-bottom: 1px solid #ddd;*/
   }
 </style>

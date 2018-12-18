@@ -13,7 +13,8 @@
 </template>
 
 <script>
-  import router from '../router/index';
+  import router from '../router/index'
+
   export default {
     name: 'bottomNav',
     props: ['active'],
@@ -37,7 +38,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .bottom-nav {
     position: fixed;
     width: 100%;
@@ -45,11 +46,11 @@
     bottom: 0;
     left: 0;
     border-top: 1px solid #131313;
-    color: #666;
+    color: $c999999;
     font-size: 12px;
     text-align: center;
     /*background: linear-gradient(top, white, #efeff0);*/
-    background: #131313;
+    background: $c131313;
     padding-top: 7px;
     line-height: 15px;
   }
@@ -66,7 +67,7 @@
     display: inline-block;
   }
   .bottom-nav .bottom-nav-item.active {
-    color: #FFC63A;
+    color: $cffC63A;
   }
   .bottom-nav .nav-icon.home-icon {
     background: url("../assets/home/home.png") no-repeat;

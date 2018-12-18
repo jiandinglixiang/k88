@@ -37,9 +37,9 @@
   }
 </script>
 
-<style>
-  @import "style/common.css";
-  @import "style/animate.css";
+<style lang="scss">
+  @import "style/common.scss";
+  @import "style/animate.scss";
 
   #app {
     height: 100%;

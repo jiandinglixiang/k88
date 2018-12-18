@@ -35,7 +35,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .home-lottery-item {
     width: 33.3%; height: 110px;
     text-align: center;
@@ -44,10 +44,11 @@
     float: left;
   }
   .home-lottery-item .tip {
-    background: url("../assets/home/tip.png") no-repeat;
+    /*background: url("../assets/home/tip.png") no-repeat;*/
+    background: url("../assets/home/yellow_tip.png") no-repeat;
     background-size: 100% 100%;
     height: 28px;
-    color: white;
+    color: $c131313;
     font-size: 12px;
     line-height: 22px;
     margin-bottom: 3px;
