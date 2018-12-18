@@ -44,12 +44,12 @@
     height: 50px;
     bottom: 0;
     left: 0;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #131313;
     color: #666;
     font-size: 12px;
     text-align: center;
     /*background: linear-gradient(top, white, #efeff0);*/
-    background: white;
+    background: #131313;
     padding-top: 7px;
     line-height: 15px;
   }
@@ -66,7 +66,7 @@
     display: inline-block;
   }
   .bottom-nav .bottom-nav-item.active {
-    color: #e73f40;
+    color: #FFC63A;
   }
   .bottom-nav .nav-icon.home-icon {
     background: url("../assets/home/home.png") no-repeat;

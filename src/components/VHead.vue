@@ -9,8 +9,8 @@
 </template>
 
 <script>
-  import router from '../router/index';
-  import {H5postmsg} from '../common/postmsg';
+  import router from '../router/index'
+  import { H5postmsg } from '../common/postmsg'
 
   export default {
     name: 'head',
@@ -32,17 +32,17 @@
     }
   }
 </script>
-
 <style>
   @import "../style/icon.css";
-
+</style>
+<style lang="scss">
   .head {
     position: relative;
     padding: 0 20px;
     height: 40px;
-    background: white;
+    background: $c131313;
     font-size: 18px;
-    color: #333333;
+    color: $cFFfFFF;
     text-align: center;
     line-height: 40px;
     margin-bottom: 1px;
@@ -52,7 +52,7 @@
     position: absolute;
     left: 5px;
     top: 0;
-    background: url("../assets/icon/back.png") no-repeat center;
+    background: url("../assets/icon/white_back_icon.png") no-repeat center;
     background-size: 50% 50%;
     height: 40px;
     width: 25px;
@@ -62,7 +62,7 @@
     position: absolute;
     right: 10px;
     font-size: 14px;
-    color: #969696;
+    color: $cFFfFFF;
     top: 0;
   }
 </style>
