@@ -1,10 +1,10 @@
 <template>
   <div class="orders">
     <v-head title="我的投注" :hide-back="true"></v-head>
-    <nav class="row text-center bg-white text-sm">
+    <nav class="row text-center bg-black text-sm">
       <div class="col col-25" :class="{active: orders.status === 0}" @click="changeStatus(0)"><span>全部</span></div>
       <div class="col col-25" :class="{active: orders.status === -1}" @click="changeStatus(-1)"><span>待开奖</span></div>
-      <div class="col col-25" :class="{active: orders.status === 1}" @click="changeStatus(1)"><span>中奖</span></div>
+      <div class="col col-25" :class="{active: orders.status === 1}" @click="changeStatus(1)"><span class="badge">中奖</span></div>
       <div class="col col-25" :class="{active: orders.status === -2}" @click="changeStatus(-2)"><span>未中奖</span></div>
     </nav>
     <div class="list" v-if="orders.list && orders.list.length > 0" v-infinite-scroll="loadMore"
@@ -83,20 +83,36 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   @import "../../style/main.css";
+  .bg-black {
+    background: $c131313;
+  }
   .orders nav .col{
     height: 37px;
     line-height: 35px;
     border-bottom: 2px solid #dddddd;
-    color: #666666;
+    color: #999;
+  }
+  .orders .badge {
+    position: relative;
+    &:after {
+      position: absolute;
+      content: '';
+      top: 1px;
+      right:-6px;
+      width: 4px;
+      height: 4px;
+      border-radius: 100%;
+      background: $cffC63A;
+    }
   }
   .orders .margin-left-15 {
     margin-left: 15px;
   }
   .orders nav .col.active {
-    color: #e73f40;
-    border-color: #e73f40;
+    color: $cffC63A;
+    border-color: $cffC63A;
   }
   .orders .list {
     padding-bottom: 50px;
@@ -104,8 +120,8 @@
   .orders .list .item {
     padding: 10px;
     position: relative;
-    background: white;
-    border-bottom: 1px solid #dddddd;
+    background: $c1c1c1c;
+    border-bottom: 1px solid #313131;
     min-height: 60px;
   }
   .orders .list .item.item-avatar {
@@ -124,13 +140,13 @@
     right: 10px; top: 24px;
   }
   .orders .list .item .main {
-    color: #333333;
+    color: $cFFfFFF;
     font-size: 13px;
     height: 25px;
     line-height: 25px;
   }
   .orders .list .item .main .active {
-    color: #e73f40;
+    color: $cffC63A;
   }
   .orders .list .item .desc {
     color: #999999;

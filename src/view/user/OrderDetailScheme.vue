@@ -1,7 +1,7 @@
 <template>
   <div class="order-scheme">
     <v-head title="方案明细"></v-head>
-    <div class="padding">
+    <div class="padding text-dark">
       <span class="order-content-icon"></span> 投注内容
       </div>
     <div v-if="detail.jc_info">
@@ -69,11 +69,11 @@
         </tbody>
       </table>
     </div>
-    <div class="padding">
+    <div class="padding text-dark">
       <span class="order-scheme-icon"></span> 方案明细
     </div>
     <table width="100%" cellspacing="0" cellpadding="0" class="text-sm text-center table-scheme">
-      <thead class="text-muted">
+      <thead class="text-light">
       <tr>
         <td :width="detail.tickets && detail.tickets[0].lotteryType === 'k3'?'35%':'45%'">方案拆分</td>
         <td :width="detail.tickets && detail.tickets[0].lotteryType === 'k3'?'20%':'10%'">玩法</td>
@@ -89,7 +89,7 @@
             <!--显示足彩和篮彩-->
             <span v-if="jc.showCheck">
               <div v-for="(bet, i) in jc.betting">
-                <span class="round-no">{{i === 0 ? jc.round_no : ''}}</span>
+                <span class="round-no" :class="{'text-primary': bet.checked}">{{i === 0 ? jc.round_no : ''}}</span>
                 <span style="display: inline-block; padding-left: 10px;" :class="{'text-primary': bet.checked}">
                   {{bet.text}}
                   <template v-if="jc.team && jc.team.letPointText">({{jc.team.letPointText}})</template>
@@ -135,12 +135,12 @@
       </tbody>
     </table>
     <div class="line">
-      <img src="../../assets/scheme_line.png" alt="line">
+      <img src="../../assets/scheme_line1.png" alt="line">
     </div>
-    <div class="row text-center bg-white text-xn padding">
-      <div class="col">{{scheme.success_amount | currency}}元<br/>出票成功</div>
-      <div class="col">{{scheme.failure_amount | currency}}元<br/>出票失败</div>
-      <div class="col"><span :class="{'text-primary': scheme.winnings_bonus > 0}">{{scheme.winnings_bonus | currency}}</span>元<br/>奖金</div>
+    <div class="row text-center bg-darken text-sm padding text-light">
+      <div class="col">出票成功：{{scheme.success_amount | currency}}元</div>
+      <div class="col">出票失败：{{scheme.failure_amount | currency}}元</div>
+      <div class="col text-primary">奖金：<span :class="{'text-primary': scheme.winnings_bonus > 0}">{{scheme.winnings_bonus | currency}}</span>元</div>
     </div>
   </div>
 </template>
@@ -173,7 +173,13 @@
   }
 </script>
 
-<style>
+<style lang="scss">
+  .text-primary {
+    color: $cffC63A;
+  }
+  .bg-darken {
+    background: #313131;
+  }
   .order-scheme .order-content-icon,
   .order-scheme .order-scheme-icon {
     display: inline-block;
@@ -188,14 +194,22 @@
     border-collapse:collapse;
   }
   .order-scheme .table-scheme tr{
-    border-top: 1px solid #f2f2f2;
-    background: white;
+    border-top: 1px solid #1c1c1c;
+    background: #313131;
+  }
+  .order-scheme .table-scheme td {
+    border: 1px solid #494949;
   }
   .order-scheme .table-scheme thead td {
     padding: 5px 0;
+    border-top: 1px solid #313131
   }
   .order-scheme .table-scheme tbody td {
     padding: 10px 0;
+    color: $c999999;
+  }
+  .order-scheme .table-scheme tbody tr:last-child td{
+    border-bottom: 0;
   }
   .order-scheme .line {
     line-height: 0;

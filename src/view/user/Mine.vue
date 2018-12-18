@@ -8,18 +8,18 @@
         <img v-vip="vipIconUrl" alt="">
       </div>
     </div>
-    <div class="info row text-center bg-white">
+    <div class="info row text-center">
       <div class="col border-right">
         <p class="money">{{mine.balance | currency}}</p>
-        <p class="text-sm text-light">余额</p>
+        <p class="text-sm text-light">余额<i class="ico-arrow"></i></p>
       </div>
       <div class="col border-right">
         <p class="red-pack">{{mine.coupon_balance | currency}}</p>
-        <p class="text-sm text-light">红包</p>
+        <p class="text-sm text-light">红包<i class="ico-arrow"></i></p>
       </div>
       <div class="col">
         <p class="points">{{mine.points}}</p>
-        <p class="text-sm text-light">积分</p>
+        <p class="text-sm text-light">积分<i class="ico-arrow"></i></p>
       </div>
     </div>
     <!--<router-link to="payment" tag="div" class="item border-top">-->
@@ -98,15 +98,27 @@
   }
 </script>
 
-<style>
+<style lang="scss">
+  .ico-arrow {
+    overflow:hidden;
+    /*display: inline-block;*/
+    display: none;
+    vertical-align: middle;
+    margin-bottom: 2px;
+    width: 22px;
+    height: 22px;
+    background-image: url(../../assets/icon/ico_arrow_right.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
   .mine {
     position: relative; height: 100%;
   }
   .mine .mine-top {
-    background: linear-gradient(to bottom, #e6403f, #ee7736);
+    position: relative;
     padding: 15px 10px 15px 70px;
     min-height: 80px;
-    position: relative;
+    background: $c131313;
   }
   .mine .mine-top .portrait {
     width: 50px; height: 50px;
@@ -123,8 +135,9 @@
   }
   .mine .item {
     padding: 10px 10px 10px 40px;
-    background: white;
+    background: $c1c1c1c;
     position: relative;
+    color: $c999999;
   }
   .mine .item .icon {
     position: absolute;
@@ -137,17 +150,20 @@
   .mine .item.border-top {
     border-top: 1px solid #ddd;
   }
+  .mine .info {
+    background: $c1c1c1c;
+  }
   .mine .info .red-pack {
-    color: #fc942c;
+    color: #f33;
   }
   .mine .info .money {
-    color: #e83f3f;
+    color: $cffC63A;
   }
   .mine .info .points {
-    color: #5eb935;
+    color: #3393ff;
   }
   .mine .info .border-right {
-    border-right: 1px solid #ddd;
+    border-right: 1px solid #313131;
   }
   .mine .info .col {
     padding: 10px 0;
