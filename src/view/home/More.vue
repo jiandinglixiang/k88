@@ -24,10 +24,10 @@
 </template>
 
 <script>
-  import VHead from '../../components/VHead.vue';
-  import LotteryItem from '../../components/HomeLotteryItem.vue';
-  import {GET_LOTTERY_LIST} from '../../store/home/types';
-  import VDialog from '../../components/VDialog.vue';
+  import VHead from '../../components/VHead.vue'
+  import LotteryItem from '../../components/HomeLotteryItem.vue'
+  import { GET_LOTTERY_LIST } from '../../store/home/types'
+  import VDialog from '../../components/VDialog.vue'
 
   export default {
     name: 'homeMore',
@@ -53,16 +53,16 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .home-more .home-more-container {
     padding: 5px 10px;
   }
   .home-more .home-more-container .box {
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
     border-radius: 5px;
     margin-top: 5px;
     padding: 5px 10px;
-    background: white;
+    background: $c1c1c1c;
     overflow: hidden;
   }
 </style>

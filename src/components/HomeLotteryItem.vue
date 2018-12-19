@@ -64,4 +64,7 @@
   .home-lottery-item .img {
     font-size: 0;
   }
+  .home-lottery-item .name{
+    color: $cFFfFFF;
+  }
 </style>

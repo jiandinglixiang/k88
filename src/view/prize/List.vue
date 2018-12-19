@@ -58,10 +58,11 @@
 </template>
 
 <script>
-  import VHead from '../../components/VHead.vue';
-  import BottomNav from '../../components/BottomNav.vue';
-  import {GET_PRIZE_LIST} from '../../store/prize/types';
-  import Lottery from '../../model/common/Lottery';
+  import VHead from '../../components/VHead.vue'
+  import BottomNav from '../../components/BottomNav.vue'
+  import { GET_PRIZE_LIST } from '../../store/prize/types'
+  import Lottery from '../../model/common/Lottery'
+
   export default {
     name: 'prizeList',
     methods: {
@@ -109,16 +110,20 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .prize-list {
     padding-bottom: 60px;
   }
   .prize-list .list-item {
     padding: 5px 30px 10px 10px;
     position: relative;
-    background: white url("../../assets/icon/arrow_right.png") 97% center no-repeat;
+    background: $c1c1c1c url("../../assets/icon/arrow_right.png") 97% center no-repeat;
     background-size: 10px auto;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $c313131;
+
+    > .list-item-head > span:nth-child(1) {
+      color: $cFFfFFF;
+    }
   }
   .prize-list .list-item .bg-red-ball,
   .prize-list .list-item .bg-blue-ball {

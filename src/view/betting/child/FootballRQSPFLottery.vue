@@ -1,6 +1,6 @@
 <template>
   <div class="football-rqspf-lottery">
-    <div class="row text-center text-default text-sm">
+    <div class="row text-center text-default-2 text-sm">
       <div class="col col-40"> <span class="text-primary" v-if="schedule.home_rank">[{{schedule.home_rank}}]</span>{{schedule.home}}</div>
       <div class="col text-light">VS</div>
       <div class="col col-40">{{schedule.guest}} <span class="text-primary" v-if="schedule.guest_rank">[{{schedule.guest_rank}}]</span></div>
@@ -11,14 +11,15 @@
         @click="onOptionSelected(item, index)"
         v-for="(item, index) in schedule.holderList"
         :class="{selected: isSelected(item), 'box-center': index===1}">
-        <span>{{item.text}} {{item.value}}</span>
+        <span>{{item.text}}<span> {{item.value}}</span></span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import {SPORTS_OPTION_SELECTED} from '../../../store/betting/types';
+  import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
+
   export default {
     name: 'footballRQSPFLottery',
     props: ['schedule'],
@@ -35,16 +36,16 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .football-rqspf-lottery {
     padding-left: 10px;
     font-size: 14px;
   }
   .football-rqspf-lottery .box {
-    border: 1px solid #ddd;
+    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: white;
+    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 13px;
@@ -61,27 +62,43 @@
     padding-top: 7px;
   }
   .football-rqspf-lottery .box .left-point.green {
-    background: #41b43b;
+    background: #1AC456;
   }
   .football-rqspf-lottery .box .left-point.yellow {
-    background: #fed223;
+    background: #FF3333;
   }
   .football-rqspf-lottery .box .box-item {
     padding: 7px 0;
     float: left;
     width: 35%;
+
+    > span {
+      color: $c999999;
+
+      span {
+        color: $cFFfFFF;
+      }
+    }
   }
   .football-rqspf-lottery .box .box-item.box-center {
     width: 30%;
+
+    > span {
+      border-left: 1px dotted $c3f3f3f;
+      border-right: 1px dotted $c3f3f3f;
+      display: inline-block;
+      width: 100%;
+    }
   }
-  .football-rqspf-lottery .box .box-item.box-center span {
-    border-left: 1px dotted #ddd;
-    border-right: 1px dotted #ddd;
-    display: inline-block;
-    width: 100%;
-  }
+
   .football-rqspf-lottery .box .box-item.selected {
-    background: #e73f40;
-    color: white;
+    background: $cffC63A;
+    > span {
+      color: $c131313;
+
+      span {
+        color: $c131313;
+      }
+    }
   }
 </style>

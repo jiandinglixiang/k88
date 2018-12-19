@@ -33,13 +33,12 @@
 </template>
 
 <script>
-  import { SPORT_MODE_SELECT, CLEAR_SPORT_BETTING_SELECTED,
-    SPORTS_CONFIRM_BET } from '../../../store/betting/types';
-  import SportLotteryPanel from './SportLotteryPanel.vue';
-  import SportsNoMatch from './SportsNoMatch.vue';
-  import SportFilter from './SportFilter.vue';
-  import Lottery from '../../../model/common/Lottery';
-  import { mapState } from 'vuex';
+  import { CLEAR_SPORT_BETTING_SELECTED, SPORT_MODE_SELECT, SPORTS_CONFIRM_BET } from '../../../store/betting/types'
+  import SportLotteryPanel from './SportLotteryPanel.vue'
+  import SportsNoMatch from './SportsNoMatch.vue'
+  import SportFilter from './SportFilter.vue'
+  import Lottery from '../../../model/common/Lottery'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'sportLotteryContainer',
@@ -86,35 +85,37 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .sport-lottery-container {
     padding-bottom: 50px;
   }
   .sport-lottery-container .top {
-    background: white;
+    background: $c1c1c1c;
     font-size: 14px;
     text-align: center;
   }
   .sport-lottery-container .top .col {
     padding: 7px;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 2px solid $c999999;
+    color: $c999999;
   }
   .sport-lottery-container .top .col.selected {
-    border-bottom: 2px solid #e73f40;
-    color: #e73f40;
+    border-bottom: 2px solid $cffC63A;
+    color: $cffC63A;
   }
   .sport-lottery-container .bottom-fixed {
     position: fixed;
     height: 45px;
-    border-top: 1px solid #ddd;
+    /*border-top: 1px solid #ddd;*/
     padding: 7px 10px;
     width: 100%;
     bottom: 0; left: 0;
-    background: white;
+    background: $c131313;
   }
   .sport-lottery-container .bottom-fixed .clear-icon {
     width: 25px; height: 25px;
     background: url("../../../assets/betting/ic_scheme_trash.png") no-repeat;
+    background-size: 100%;
     display: inline-block;
     margin: 3px 15px 0 5px;
     float: left;
@@ -126,7 +127,7 @@
     height: 30px;
     line-height: 30px;
     font-size: 14px;
-    color: #ccc;
+    color: $c999999;
   }
   .sport-lottery-container .bottom-fixed .text .btn {
     height: 31px; line-height: 32px;

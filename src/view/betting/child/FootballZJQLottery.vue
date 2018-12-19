@@ -1,6 +1,6 @@
 <template>
   <div class="football-zjq-lottery">
-    <div class="row text-center text-default text-sm">
+    <div class="row text-center text-default-2 text-sm">
       <div class="col col-40"> <span class="text-primary" v-if="schedule.home_rank">[{{schedule.home_rank}}]</span>{{schedule.home}}</div>
       <div class="col text-light">VS</div>
       <div class="col col-40">{{schedule.guest}} <span class="text-primary" v-if="schedule.guest_rank">[{{schedule.guest_rank}}]</span></div>
@@ -56,8 +56,9 @@
 </template>
 
 <script>
-  import {SPORTS_OPTION_SELECTED} from '../../../store/betting/types';
-  import VDialog from '../../../components/VDialog.vue';
+  import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
+  import VDialog from '../../../components/VDialog.vue'
+
   export default {
     name: 'footballZJQLottery',
     props: ['schedule', 'isConfirm'],
@@ -108,16 +109,16 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .football-zjq-lottery {
     padding-left: 10px;
     font-size: 14px;
   }
   .football-zjq-lottery .box {
-    border: 1px solid #ddd;
+    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: white;
+    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 13px;
@@ -126,8 +127,8 @@
   .football-zjq-lottery .box-text {
     height: 30px;
     line-height: 30px;
-    background: #e73f40;
-    color: white;
+    background: $cffC63A;
+    color: $c131313;
   }
   .football-zjq-lottery .box .arrow-right{
     position: absolute; right: 5px; top: 10px;
@@ -138,14 +139,15 @@
     width: 25%;
   }
   .football-zjq-lottery .box .box-item.border-bottom {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $c3f3f3f;
   }
   .football-zjq-lottery .box .box-item span {
-    border-left: 1px dotted #ddd;
+    border-left: 1px dotted $c3f3f3f;
     display: inline-block;
     width: 100%;
     padding: 0 3px;
     box-sizing: border-box;
+    color: $cFFfFFF;
   }
   @media screen and (min-width: 321px){
     .football-zjq-lottery .box .box-item span {
@@ -157,11 +159,16 @@
     border-left: none;
   }
   .football-zjq-lottery .box .box-item.selected {
-    background: #e73f40;
-    color: white;
+    background: $cffC63A;
+    color: $c131313;
   }
-  .football-zjq-lottery .box .box-item.selected .text-light {
-    color: white;
+
+  .football-zjq-lottery .box .box-item.selected span {
+    color: $c131313;
+
+    .text-light {
+      color: $c131313;
+    }
   }
   .football-zjq-lottery .table-wrap {
     padding: 0px 5px 5px 5px;

@@ -118,7 +118,6 @@
     border-radius: 5px;
     overflow: hidden;
     margin-top: 10px;
-    color: $cFFfFFF;
   }
   .home .container .lottery-box hr {
     border-top: 0;

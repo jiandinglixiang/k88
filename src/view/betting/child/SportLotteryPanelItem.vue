@@ -1,6 +1,6 @@
 <template>
   <div class="sport-lottery-panel-item">
-    <div class="row padding">
+    <div class="row padding item-top">
       <div class="col col-20 col-center text-center text-sm text-light" @click="showTip">
         <div>{{schedule.round_no}}</div>
         <div>{{schedule.league}}</div>
@@ -97,19 +97,19 @@
 </template>
 
 <script>
-  import FootballSPFLottery from './FootballSPFLottery.vue';
-  import FootballRQSPFLottery from './FootballRQSPFLottery.vue';
-  import FootballBFLottery from './FootballBFLottery.vue';
-  import FootballZJQLottery from './FootballZJQLottery.vue';
-  import FootballBQCLottery from './FootballBQCLottery.vue';
-  import FootballHHLottery from './FootballHHLottery.vue';
-  import BasketballSFLottery from './BasketballSFLottery.vue';
-  import BasketballRFSFLottery from './BasketballRFSFLottery.vue';
-  import BasketballSFCLottery from './BasketballSFCLottery.vue';
-  import BasketballDXFLottery from './BasketballDXFLottery.vue';
-  import BasketballHHLottery from './BasketballHHLottery.vue';
-  import SfcSPFLottery from './SfcSPFLottery.vue';
-  import Toast from '../../../common/toast';
+  import FootballSPFLottery from './FootballSPFLottery.vue'
+  import FootballRQSPFLottery from './FootballRQSPFLottery.vue'
+  import FootballBFLottery from './FootballBFLottery.vue'
+  import FootballZJQLottery from './FootballZJQLottery.vue'
+  import FootballBQCLottery from './FootballBQCLottery.vue'
+  import FootballHHLottery from './FootballHHLottery.vue'
+  import BasketballSFLottery from './BasketballSFLottery.vue'
+  import BasketballRFSFLottery from './BasketballRFSFLottery.vue'
+  import BasketballSFCLottery from './BasketballSFCLottery.vue'
+  import BasketballDXFLottery from './BasketballDXFLottery.vue'
+  import BasketballHHLottery from './BasketballHHLottery.vue'
+  import SfcSPFLottery from './SfcSPFLottery.vue'
+  import Toast from '../../../common/toast'
 
   export default {
     name: 'sportLotteryPanelItem',
@@ -156,9 +156,17 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .sport-lottery-panel-item {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $c494949;
+
+    > div.item-top {
+      background-color: $c313131;
+
+      > div:nth-child(1) {
+        color: $c999999;
+      }
+    }
   }
   .sport-lottery-panel-item .down-gray-icon {
     background: url("../../../assets/betting/down_gray.png") no-repeat;

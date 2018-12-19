@@ -17,7 +17,7 @@
       </div>
       <div class="box-content clear">
         <div class="box-item"><span>结果</span></div>
-        <div class="box-item"><span class="text-primary">{{data.score.final}}</span></div>
+        <div class="box-item"><span class="yellow-2">{{data.score.final}}</span></div>
         <div class="box-item"><span :class="data.spf.color">{{data.spf.text}}</span></div>
         <div class="box-item"><span :class="data.rqspf.color">{{data.rqspf.text}}</span></div>
         <div class="box-item"><span>{{data.zjq}}</span></div>

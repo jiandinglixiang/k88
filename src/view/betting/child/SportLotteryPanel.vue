@@ -48,15 +48,16 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .sport-lottery-panel {
     margin-bottom: 1px;
   }
   .sport-lottery-panel .panel-top{
-    background: white;
+    background: $c131313;
     padding: 5px 10px;
     font-size: 12px;
     position: relative;
+    color: $cCccCCc;
   }
   .sport-lottery-panel .panel-top .icon {
     position: absolute;

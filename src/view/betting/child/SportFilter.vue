@@ -14,7 +14,7 @@
                :class="{selected: textIsSelected(text)}">{{text}}</div>
         </div>
         <div class="text-center text-light text-sm margin-top-10">
-          共有 <span class="text-primary">{{total}}</span> 场比赛
+          共有 <span class="text-primary-2">{{total}}</span> 场比赛
         </div>
       </div>
       <div class="btn-wrap clear">
@@ -26,10 +26,11 @@
 </template>
 
 <script>
-  import VDialog from '../../../components/VDialog.vue';
-  import {mapState} from 'vuex';
-  import Toast from '../../../common/toast';
-  import {SPORTS_FILTER_PANEL_CHANGE} from '../../../store/betting/types';
+  import VDialog from '../../../components/VDialog.vue'
+  import { mapState } from 'vuex'
+  import Toast from '../../../common/toast'
+  import { SPORTS_FILTER_PANEL_CHANGE } from '../../../store/betting/types'
+
   const FIVE_LEAGUE = ['德甲', '西甲', '英超', '法甲', '意甲'];
   export default {
     name: 'sportFilter',
@@ -124,9 +125,9 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .sport-filter .dialog .content {
-    background: #f2f2f2;
+    background: $c131313;
   }
   .sport-filter .dialog-container {
     padding: 10px 8px;
@@ -136,9 +137,10 @@
   }
   .sport-filter .dialog-container .top-btn-wrap a{
     width: 33.3%; float: left;
-    color: #e73f40; background: white;
+    color: $cffC63A;
     text-align: center; font-size: 12px;
-    padding: 5px; border: 1px solid #e73f40;
+    padding: 5px;
+    border: 1px solid $c999999;
   }
   .sport-filter .dialog-container .top-btn-wrap a:first-child {
     border-bottom-left-radius: 3px;
@@ -151,8 +153,8 @@
     border-left: 0;
   }
   .sport-filter .dialog-container .top-btn-wrap a.selected {
-    color: white;
-    background: #e73f40;
+    color: $c131313;
+    background: $cffC63A;
   }
   .sport-filter .selected-box {
     padding: 15px 0 0 0;
@@ -160,27 +162,28 @@
     overflow-y: auto;
   }
   .sport-filter .selected-box .text-item {
-    background: white;
     margin: 3px 1%;
     width: 31%; float: left;
     border-radius: 5px;
     text-align: center; font-size: 14px;
     padding: 5px 0;
-    border: 1px solid white;
+    border: 1px solid $c999999;
+    color: $c999999;
   }
   .sport-filter .selected-box .text-item.selected {
-    background: white url(../../../assets/betting/selected.png) right bottom no-repeat;
+    background: $c131313 url(../../../assets/betting/selected.png) right bottom no-repeat;
     background-size: auto 60%;
-    border: 1px solid #e73f40;
+    border: 1px solid $cffC63A;
+    color: $cffC63A;
   }
   .sport-filter .btn-wrap a {
     width: 50%; float: left;
     padding: 10px 0;
-    border-top: 1px solid #ddd;
-    color: #666;
+    border-top: 1px solid $c313131;
+    color: $c999999;
   }
   .sport-filter .btn-wrap a:last-child {
-    border-left: 1px solid #ddd;
-    color: #e73f40;
+    border-left: 1px solid $c313131;
+    color: $cffC63A;
   }
 </style>

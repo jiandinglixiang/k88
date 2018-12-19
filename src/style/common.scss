@@ -63,13 +63,13 @@ input[type="text"], input[type="number"], input[type="password"] {
   line-height: 40px;
   text-align: center;
   font-size: 15px;
-  color: white;
-  background: #e73f40;
+  color: $c131313;
+  background: $cffC63A;
   border-radius: 5px;
   display: block;
 }
 .btn.btn-out-line {
-  color: #e73f40;
+  color: #FF3333;
   background: white;
   border: 1px solid #ccc;
 }
@@ -82,7 +82,7 @@ input[type="text"], input[type="number"], input[type="password"] {
   background: #D6D8D7;
 }
 .btn:active {
-  background: #c80112;
+  background: $cffC63A;
 }
 .btn.btn-out-line:active {
   background: #cccccc;
@@ -171,13 +171,19 @@ input[type="text"], input[type="number"], input[type="password"] {
   color: #666666;
 }
 .text-light {
-  color: #999999;
+  color: $c999999;
 }
 .text-default {
   color: #333333;
 }
+.text-default-2 {
+  color: $cCccCCc;
+}
 .text-primary {
-  color: #e73f40;
+  color: #FF3333;
+}
+.text-primary-2 {
+  color: $cffC63A;
 }
 .padding {
   padding: 10px;
@@ -195,14 +201,14 @@ input[type="text"], input[type="number"], input[type="password"] {
   background: white;
 }
 .bg-primary {
-  background: #e73f40;
+  background: #FF3333;
 }
 .bg-red-ball,
 .bg-blue-ball {
   width: 20px; line-height: 20px;
   text-align: center;
   color: white;
-  background: red;
+  background: #FF3333;
   display: inline-block;
   border-radius: 20px;
   font-size: 12px;

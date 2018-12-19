@@ -26,12 +26,18 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  import { CURRENT_PLAY_TYPE_SELECT, GET_CURRENT_LOTTERY, SPORTS_FILTER_PANEL_CHANGE,
-    RECOMMEND_ISSUE_SET, CURRENT_SPORT_PLAY_TYPE_SELECT } from '../../../store/betting/types';
-  import { recommendIssue } from '../../../common/store';
-  import Lottery from '../../../model/common/Lottery';
-  import { LOTTERYIDS } from '../../../store/constants';
+  import { mapState } from 'vuex'
+  import {
+    CURRENT_PLAY_TYPE_SELECT,
+    CURRENT_SPORT_PLAY_TYPE_SELECT,
+    GET_CURRENT_LOTTERY,
+    RECOMMEND_ISSUE_SET,
+    SPORTS_FILTER_PANEL_CHANGE
+  } from '../../../store/betting/types'
+  import { recommendIssue } from '../../../common/store'
+  import Lottery from '../../../model/common/Lottery'
+  import { LOTTERYIDS } from '../../../store/constants'
+
   export default {
     name: 'lotteryHeader',
     props: {
@@ -114,7 +120,7 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .sport-lottery-header {
     position: relative;
   }
@@ -134,9 +140,10 @@
   }
   .sport-lottery-header .select-type {
     padding: 5px 10px;
-    border: 1px solid #ccc;
+    border: 1px solid $cffC63A;
     border-radius: 5px;
     font-size: 16px;
+    color: $cFFfFFF;
   }
   .sport-lottery-header .select-type .icon {
     background: url("../../../assets/betting/down.png") no-repeat;
@@ -163,7 +170,7 @@
     background-size: 50% 50%;
     width: 35px; height: 35px;
     position: absolute;
-    right: 0px; top: 0px;
+    right: 0; top: 0;
   }
   .sport-lottery-header .drop-down-panel {
     position: absolute;
@@ -172,7 +179,7 @@
   }
   .sport-lottery-header .text-container {
     padding: 0 2%;
-    background: white;
+    background: $c131313;
     overflow-y: auto;
     overflow-x: hidden;
     padding-bottom: 5px;
@@ -196,16 +203,16 @@
     width: 29%; float: left;
     margin: 5px 2%;
     padding: 5px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid $c999999;
+    border-radius: 8px;
     font-size: 14px;
     text-align: center;
-    color: #999;
+    color: $c999999;
   }
   .sport-lottery-header .text-item.selected {
-    border: 1px solid #e73f40;
+    border: 1px solid $cffC63A;
     background: url("../../../assets/betting/selected.png") right bottom no-repeat;
     background-size: auto 60%;
-    color: #e73f40;
+    color: $cffC63A;
   }
 </style>

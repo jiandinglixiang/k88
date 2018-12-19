@@ -78,7 +78,7 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .prize-sports-detail {
     height: 100%;
     overflow-y: auto;
@@ -87,11 +87,11 @@
   .prize-sports-detail .bottom-fixed {
     position: fixed;
     width: 100%;
-    height: 52px;
+    /*height: 52px;*/
     left: 0; bottom: 0;
-    background: white;
-    padding: 8px 10px;
-    border-top: 1px solid #ddd;
+    background: $cffC63A;
+    /*padding: 8px 10px;*/
+    /*border-top: 1px solid #ddd;*/
   }
   .prize-sports-detail .bottom-fixed .btn {
     height: 35px; line-height: 35px;

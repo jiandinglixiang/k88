@@ -155,6 +155,7 @@
 
   a.btn.disabled {
     pointer-events: none;
-    background: #ccc;
+    background: #dddddd;
+    color: #999999;
   }
 </style>

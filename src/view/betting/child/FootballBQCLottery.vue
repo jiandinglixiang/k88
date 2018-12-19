@@ -1,6 +1,6 @@
 <template>
   <div class="football-bqc-lottery">
-    <div class="row text-center text-default text-sm">
+    <div class="row text-center text-default-2 text-sm">
       <div class="col col-40"> <span class="text-primary" v-if="schedule.home_rank">[{{schedule.home_rank}}]</span>{{schedule.home}}</div>
       <div class="col text-light">VS</div>
       <div class="col col-40">{{schedule.guest}} <span class="text-primary" v-if="schedule.guest_rank">[{{schedule.guest_rank}}]</span></div>
@@ -92,21 +92,22 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .football-bqc-lottery {
     padding-left: 10px;
     font-size: 14px;
   }
   .football-bqc-lottery .box {
-    border: 1px solid #ddd;
+    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: white;
+    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 14px;
     padding: 7px 0;
     position: relative;
+    color: $c999999;
   }
   .football-bqc-lottery .box.box-icon {
     padding-right: 15px;
@@ -120,8 +121,8 @@
     display: block;
   }
   .football-bqc-lottery .box.selected {
-    background: #e73f40;
-    color: white;
+    background: $cffC63A;
+    color: $c131313;
   }
   .football-bqc-lottery .table-wrap {
     padding: 0px 5px 5px 5px;

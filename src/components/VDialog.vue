@@ -25,7 +25,7 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .dialog {
     position: absolute;
   }
@@ -47,11 +47,11 @@
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    background-color: #FFFFFF;
+    background-color: $c131313;
     text-align: center;
     border-radius: 3px;
     overflow: hidden;
-    color: #333;
+    color: $cFFfFFF;
   }
   .dialog .content-hd {
     height: 30px;

@@ -141,8 +141,9 @@
 </template>
 
 <script>
-  import VDialog from '../../../components/VDialog.vue';
-  import {SPORTS_OPTION_SELECTED} from '../../../store/betting/types';
+  import VDialog from '../../../components/VDialog.vue'
+  import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
+
   export default {
     name: 'footballBQCLottery',
     props: ['schedule', 'isConfirm'],
@@ -244,16 +245,16 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .football-hh-lottery {
     padding-left: 10px;
     font-size: 14px;
   }
   .football-hh-lottery .box {
-    border: 1px solid #ddd;
+    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: white;
+    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 14px;
@@ -279,10 +280,10 @@
   .football-hh-lottery .left-point-top {
     position: absolute;
     left: 0; top: 0; height: 30px; line-height: 30px;
-    background: #dcdcdc;
+    background: #dddddd;
     width: 15px;
     text-align: center;
-    color: white;
+    color: #131313;
     font-size: 12px;
   }
   .football-hh-lottery .left-point-bottom {
@@ -298,24 +299,34 @@
     position: absolute;
     right: 0; top: 0;
     padding: 10px 0;
-    text-align: ;
+    text-align: center;
     white-space: normal;
-    border-left: 1px solid #ddd;
+    border-left: 1px solid $c3f3f3f;
+    color: white;
   }
   .football-hh-lottery .right-item-selected.gray {
-    background: #dcdcdc;
+    background: #DDDDDD;
+    color: $c131313;
   }
   .football-hh-lottery .left-point-bottom.green {
-    background: #41b43b;
+    background: #1AC456;
   }
   .football-hh-lottery .left-point-bottom.yellow {
-    background: #fed223;
+    background: #FF3333;
   }
   .football-hh-lottery .box .box-item {
     height: 30px;
     line-height: 30px;
     float: left;
     width: 35%;
+
+    > span {
+      color: $cFFfFFF;
+
+      i {
+        color: $c999999;
+      }
+    }
   }
   .football-hh-lottery .box .box-item-no {
     width: 100%;
@@ -324,23 +335,26 @@
     color: #999;
   }
   .football-hh-lottery .box .box-item.border-top {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid $c3f3f3f;
   }
   .football-hh-lottery .box .box-item.box-center {
     width: 30%;
   }
   .football-hh-lottery .box .box-item.box-center span {
-    border-left: 1px dotted #ddd;
-    border-right: 1px dotted #ddd;
+    border-left: 1px dotted $c3f3f3f;
+    border-right: 1px dotted $c3f3f3f;
     display: inline-block;
     width: 100%;
   }
   .football-hh-lottery .box .box-item.selected {
-    background: #e73f40;
-    color: white;
-  }
-  .football-hh-lottery .box .box-item.selected .text-light {
-    color: white;
+    background: $cffC63A;
+    > span {
+      color: $c131313;
+
+      i {
+        color: $c131313;
+      }
+    }
   }
   .football-hh-lottery .box.selected {
     background: #e73f40;

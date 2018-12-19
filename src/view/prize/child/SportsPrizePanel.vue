@@ -5,7 +5,7 @@
       <span class="icon" :class="{'up': panelVisible}"></span>
     </div>
     <div class="panel-list" v-show="panelVisible">
-      <div class="row panel-list-content" v-for="item in holder.schedules">
+      <div class="panel-list-content" v-for="item in holder.schedules">
         <div class="col col-25 col-center text-center text-light item-left">
           {{item.round_no}} <br/> {{item.league}}
         </div>
@@ -23,8 +23,8 @@
 </template>
 
 <script>
-  import FootballPanelItem from './FootballPanelItem.vue';
-  import BasketballPanelItem from './BasketballPanelItem.vue';
+  import FootballPanelItem from './FootballPanelItem.vue'
+  import BasketballPanelItem from './BasketballPanelItem.vue'
 
   export default {
     name: 'sportsPrizePanel',
@@ -43,64 +43,95 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .sports-prize-panel {
-    margin-bottom: 1px;
+    .panel-top {
+      background: $c1c1c1c;
+      padding: 5px 10px;
+      font-size: 12px;
+      position: relative;
+      color: $cCccCCc;
+
+      .icon {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        background: url("../../../assets/betting/down_out.png") no-repeat;
+        background-size: 100% 100%;
+        width: 18px;
+        height: 18px;
+        transition: tranform 0.5s;
+      }
+
+      .icon.up {
+        transform: rotate(180deg);
+      }
+    }
+
+    .panel-list {
+
+      .panel-list-content {
+        display: flex;
+        flex-flow: row nowrap;
+        background-color: $c313131;
+        padding: 5px 10px 5px 0;
+        border-bottom: 1px solid $c3f3f3f;
+
+        .item-left {
+          font-size: 12px;
+          line-height: 20px;
+        }
+
+        .item-right {
+          > div {
+            > div:nth-child(1) {
+              color: $cCccCCc;
+            }
+
+            .box {
+              border: 1px solid $c3f3f3f;
+              border-radius: 5px;
+              text-align: center;
+              font-size: 12px;
+              background: $c494949;
+              margin-top: 5px;
+
+              .box-content:first-child {
+                border-bottom: 1px solid $c3f3f3f;
+              }
+
+              .box-item {
+                padding: 5px 0;
+                float: left;
+                color: $c999999;
+
+                span {
+                  display: block;
+                  border-right: 1px dotted $c3f3f3f;
+                }
+              }
+
+              .box-item:last-child span {
+                border: none;
+              }
+            }
+          }
+
+        }
+      }
+    }
   }
-  .sports-prize-panel .panel-top{
-    background: white;
-    padding: 5px 10px;
-    font-size: 12px;
-    position: relative;
-  }
-  .sports-prize-panel .panel-top .icon {
-    position: absolute;
-    right: 10px;
-    top: 5px;
-    background: url("../../../assets/betting/down_out.png") no-repeat;
-    background-size: 100% 100%;
-    width: 18px; height: 18px;
-    transition: tranform 0.5s;
-  }
-  .sports-prize-panel .panel-top .icon.up {
-    transform: rotate(180deg);
-  }
-  .sports-prize-panel .item-left {
-    font-size: 12px;
-    line-height: 20px;
-  }
-  .sports-prize-panel .panel-list-content {
-    padding: 5px 10px 5px 0;
-    border-bottom: 1px solid #ddd;
-  }
-  .sports-prize-panel .box {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 12px;
-    background: white;
-    margin-top: 5px;
-  }
-  .sports-prize-panel .box .box-content:first-child {
-    border-bottom: 1px solid #ddd;
-  }
-  .sports-prize-panel .box .box-item {
-    padding: 5px 0; float: left;
-  }
-  .sports-prize-panel .box .box-item span {
-    display: block;
-    border-right: 1px dotted #ddd;
-  }
-  .sports-prize-panel .box .box-item:last-child span {
-    border: none;
-  }
+
   .sports-prize-panel span.green {
-    color: #4faf50;
+    color: #1AC456;
   }
   .sports-prize-panel span.yellow {
-    color: #f8d8a4;
+    color: #FF3333;
   }
   .sports-prize-panel span.blue {
-    color: #3f6ee7 ;
+    color: #3393FF;
+  }
+  .sports-prize-panel span.yellow-2 {
+    color: #FFC63A;
   }
 </style>
