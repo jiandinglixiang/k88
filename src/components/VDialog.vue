@@ -54,12 +54,15 @@
     color: $cFFfFFF;
   }
   .dialog .content-hd {
+    position: relative;
     height: 30px;
     line-height: 30px;
     text-align: center;
   }
   .dialog .dialog-close-icon {
     position: absolute;
-    right: 10px; top: 10px;
+    right: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
   }
 </style>

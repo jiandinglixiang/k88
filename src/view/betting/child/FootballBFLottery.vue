@@ -163,45 +163,47 @@
   }
   .football-bf-lottery table {
     width: 100%;
-    background: #ccc;
+    /*background: #ccc;*/
   }
   .football-bf-lottery table tbody td {
-    background: white;
+    background: $c313131;
     padding: 3px 0;
+    color: $c999999;
   }
   .football-bf-lottery table tbody td.selected {
-    background: #e73f40;
-    color: white;
-  }
-  .football-bf-lottery table tbody td.selected span {
-    color: white;
+    background: $cffC63A;
+    color: $c131313;
+
+    span {
+      color: $c131313;
+    }
   }
   .football-bf-lottery table thead {
     color: white;
   }
   .football-bf-lottery table .red {
-    background: #e73f40;
+    background: #FF3333;
   }
   .football-bf-lottery table .yellow {
-    background: #ffb525;
+    background: #3393FF;
   }
   .football-bf-lottery table .green {
-    background: #41b43b;
+    background: #1AC456;
   }
   .football-bf-lottery .dialog .content {
     width: 95%;
     max-width: 320px;
-    background: #f2f2f2;
+    /*background: #f2f2f2;*/
   }
   .football-bf-lottery .btn-wrap .btn {
-    background: #f2f2f2;
-    color: #e73f40;
-    border-top: 1px solid #ddd;
+    background: $c131313;
+    color: $cffC63A;
+    border-top: 1px solid $c313131;
     margin-top: 5px;
     border-radius: 0;
   }
   .football-bf-lottery .btn-wrap .col:first-child .btn{
-    border-right: 1px solid #ddd;
+    border-right: 1px solid $c313131;
     color: #666;
   }
 </style>

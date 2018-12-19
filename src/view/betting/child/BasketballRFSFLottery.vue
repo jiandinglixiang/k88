@@ -1,6 +1,6 @@
 <template>
   <div class="basketball-sf-lottery">
-    <div class="row text-center text-default text-sm">
+    <div class="row text-center text-default-2 text-sm">
       <div class="col"><span class="text-primary" v-if="schedule.guest_rank">[{{schedule.guest_rank}}]</span>{{schedule.guest}}</div>
       <div class="col text-light">VS</div>
       <div class="col">
@@ -37,7 +37,7 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .basketball-sf-lottery .let-points{
     padding: 2px 5px;
     border-radius: 20px;
@@ -45,9 +45,9 @@
     font-size: 12px;
   }
   .basketball-sf-lottery .let-points.yellow {
-    background: #fed223; color: white;
+    background: $cffC63A; color: white;
   }
   .basketball-sf-lottery .let-points.green {
-    background: #41b43b; color: white;
+    background: #1AC456; color: white;
   }
 </style>

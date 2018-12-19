@@ -1,6 +1,6 @@
 <template>
   <div class="basketball-sfc-lottery">
-    <div class="row text-center text-default text-sm">
+    <div class="row text-center text-default-2 text-sm">
       <div class="col"><span class="text-primary" v-if="schedule.guest_rank">[{{schedule.guest_rank}}]</span>{{schedule.guest}}</div>
       <div class="col text-light">VS</div>
       <div class="col">{{schedule.home}}<span class="text-primary" v-if="schedule.home_rank">[{{schedule.home_rank}}]</span></div>
@@ -54,8 +54,9 @@
 </template>
 
 <script>
-  import {SPORTS_OPTION_SELECTED} from '../../../store/betting/types';
-  import VDialog from '../../../components/VDialog.vue';
+  import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
+  import VDialog from '../../../components/VDialog.vue'
+
   export default {
     name: 'basketballSFCLottery',
     props: ['schedule', 'isConfirm'],
@@ -131,20 +132,21 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .basketball-sfc-lottery {
     padding-left: 10px;
     font-size: 14px;
   }
   .basketball-sfc-lottery .box {
-    border: 1px solid #ddd;
+    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: white;
+    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 13px;
     position: relative;
+    color: $c999999;
   }
   .basketball-sfc-lottery .box .arrow-right {
     display: none;
@@ -157,44 +159,50 @@
     padding: 7px 5px; width: 100%;
   }
   .basketball-sfc-lottery .box .box-item.selected {
-    background: #e73f40;
-    color: white;
+    background: $cffC63A;
+    color: $c131313;
   }
   .basketball-sfc-lottery .dialog .content {
     width: 95%;
     max-width: 320px;
-    background: #f2f2f2;
+    /*background: #f2f2f2;*/
   }
   .basketball-sfc-lottery .table-wrap {
     padding: 0 10px;
   }
   .basketball-sfc-lottery table {
-    background: #ccc; width: 100%;
+    width: 100%;
   }
   .basketball-sfc-lottery table td {
-    background: white; padding: 5px;
+    background: $c313131;
+    padding: 5px;
   }
   .basketball-sfc-lottery table td.blue {
-    background: #3f6ee7; color: white;
-  }
-  .basketball-sfc-lottery table td.green {
-    background: #51b92c; color: white;
-  }
-  .basketball-sfc-lottery table td.selected {
-    color: white; background: #e73f40;
-  }
-  .basketball-sfc-lottery table td.selected .text-light {
+    background: #3393FF;
     color: white;
   }
+  .basketball-sfc-lottery table td.green {
+    background: #1AC456;
+    color: white;
+  }
+  .basketball-sfc-lottery table td.selected {
+    color: $c131313;
+    background: $cffC63A;
+
+    span {
+      color: $c131313;
+    }
+  }
+
   .basketball-sfc-lottery .btn-wrap .btn {
-    background: #f2f2f2;
-    color: #e73f40;
-    border-top: 1px solid #ddd;
+    background: $c131313;
+    color: $cffC63A;
+    border-top: 1px solid $c313131;
     margin-top: 5px;
     border-radius: 0;
   }
   .basketball-sfc-lottery .btn-wrap .col:first-child .btn{
-    border-right: 1px solid #ddd;
+    border-right: 1px solid $c313131;
     color: #666;
   }
 </style>

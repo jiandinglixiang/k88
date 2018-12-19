@@ -171,46 +171,43 @@
     }
   }
   .football-zjq-lottery .table-wrap {
-    padding: 0px 5px 5px 5px;
+    padding: 0 0 5px 0;
   }
   .football-zjq-lottery table {
     width: 100%;
-    background: #ccc;
+    /*background: #ccc;*/
   }
   .football-zjq-lottery table tbody td {
-    background: white;
+    background: $c313131;
     padding: 5px;
+    color: $c999999;
   }
   .football-zjq-lottery table tbody td.selected {
-    background: #e73f40;
-    color: white;
+    background: $cffC63A;
+    color: $c131313;
+
+    .text-light {
+      color: $c131313;
+    }
   }
-  .football-zjq-lottery table tbody td.selected span {
-    color: white;
-  }
-  .football-zjq-lottery table tbody td.selected .text-light {
-    color: white;
-  }
-  .football-zjq-lottery table thead td{
-    color: white; padding: 5px;
-  }
+
   .football-zjq-lottery table .blue {
-    background: #3f6ee7;
+    background: #3393FF;
   }
   .football-zjq-lottery .dialog .content {
     width: 95%;
     max-width: 320px;
-    background: #f2f2f2;
+    /*background: #f2f2f2;*/
   }
   .football-zjq-lottery .btn-wrap .btn {
-    background: #f2f2f2;
-    color: #e73f40;
-    border-top: 1px solid #ddd;
+    background: $c131313;
+    color: $cffC63A;
+    border-top: 1px solid $c313131;
     margin-top: 5px;
     border-radius: 0;
   }
   .football-zjq-lottery .btn-wrap .col:first-child .btn{
-    border-right: 1px solid #ddd;
+    border-right: 1px solid $c313131;
     color: #666;
   }
 </style>

@@ -79,7 +79,7 @@
       v-show="bettingPanelVisible">
       <div class="table-wrap">
         <table class="text-center text-sm" cellpadding="0" cellspacing="1">
-          <thead><tr><td colspan="2" class="blue">胜负</td></tr></thead>
+          <thead><tr><td colspan="2" class="red">胜负</td></tr></thead>
           <tbody>
           <tr>
             <template v-if="schedule.holderList[0].length > 0">
@@ -97,7 +97,7 @@
           </tbody>
         </table>
         <table class="text-center text-sm margin-top-10" cellpadding="0" cellspacing="1">
-          <thead><tr><td colspan="2" class="orange">让分胜负({{schedule.letPointsText}})</td></tr></thead>
+          <thead><tr><td colspan="2" class="green">让分胜负({{schedule.letPointsText}})</td></tr></thead>
           <tbody>
           <tr>
             <template v-if="schedule.holderList[1].length > 0">
@@ -115,7 +115,7 @@
           </tbody>
         </table>
         <table class="text-center text-sm margin-top-10" cellpadding="0" cellspacing="1">
-          <thead><tr><td colspan="2" class="green">大小分({{schedule.basePoint}})</td></tr></thead>
+          <thead><tr><td colspan="2" class="blue">大小分({{schedule.basePoint}})</td></tr></thead>
           <tbody>
           <tr>
             <template v-if="schedule.holderList[3].length > 0">
@@ -137,8 +137,8 @@
           <tbody>
           <template v-if="schedule.holderList[2].length > 0">
             <tr v-for="(sfcTd, key) in sfcTr">
-              <td v-if="key === 0" class="blue" rowspan="2" width="10%">客胜</td>
-              <td v-if="key === 2" class="green" rowspan="2" width="10%">主胜</td>
+              <td v-if="key === 0" class="grayD" rowspan="2" width="10%">客胜</td>
+              <td v-if="key === 2" class="orange" rowspan="2" width="10%">主胜</td>
               <td v-for="item in sfcTd"
                   class="padding-vertical-0"
                   @click="onDialogOptionSelected(item, 2)"
@@ -163,8 +163,9 @@
 </template>
 
 <script>
-  import {SPORTS_OPTION_SELECTED} from '../../../store/betting/types';
-  import VDialog from '../../../components/VDialog.vue';
+  import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
+  import VDialog from '../../../components/VDialog.vue'
+
   export default {
     name: 'basketballSFCLottery',
     props: ['schedule', 'isConfirm'],
@@ -256,7 +257,7 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .basketball-hh-lottery {
     padding-left: 10px;
     font-size: 14px;
@@ -265,10 +266,10 @@
     padding-right: 45px;
   }
   .basketball-hh-lottery .box {
-    border: 1px solid #ddd;
+    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: white;
+    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 13px;
@@ -276,19 +277,22 @@
   }
   .basketball-hh-lottery .box-right {
     width: 40px; text-align: center;
-    background: white; font-size: 13px;
-    float: right; color: #999;
+    background: #DDDDDD;
+    font-size: 13px;
+    float: right;
+    color: $c131313;
     margin-top: 8px; padding: 5px;
     border: 1px solid #ddd; border-radius: 4px;
     height: 136px; padding-top: 42px;
   }
-  .basketball-hh-lottery .box-right.gray {
-    background: #dcdcdc;
-  }
+
+  /*.basketball-hh-lottery .box-right.gray {*/
+  /*background: #DDDDDD;*/
+  /*}*/
   .basketball-hh-lottery .selected-box {
     padding: 5px;
-    background: #e73f40;
-    color: white;
+    background: $cffC63A;
+    color: $c131313;
     margin-top: 5px;
     padding-right: 15px;
     text-align: center;
@@ -302,24 +306,32 @@
   }
   .basketball-hh-lottery .box .box-item {
     padding: 5px 0; width: 50%; float: left;
+    color: $cFFfFFF;
+
+    .text-light {
+      color: $c999999;
+    }
   }
   .basketball-hh-lottery .no-sale {
     height: 44px; line-height: 44px;
   }
   .basketball-hh-lottery .border-bottom {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $c3f3f3f;
   }
   .basketball-hh-lottery .box .box-item .box-item-content {
     display: block;
   }
   .basketball-hh-lottery .box .box-item.selected {
-    background: #e73f40; color: white;
-  }
-  .basketball-hh-lottery .box .box-item.selected .text-light {
-    color: white;
+    background: $cffC63A;
+
+    color: $c131313;
+
+    .text-light {
+      color: $c131313;
+    }
   }
   .basketball-hh-lottery .box .box-item:nth-child(odd) .box-item-content {
-    border-right: 1px dotted #ddd;
+    border-right: 1px dotted $c3f3f3f;
   }
   .basketball-hh-lottery .box .box-item .box-item-content>span {
     display: block; position: relative;
@@ -329,55 +341,66 @@
     font-size: 12px; color: white;
   }
   .basketball-hh-lottery .box .let-point.yellow {
-    background: #fed223;
+    background: #FF3333;
   }
   .basketball-hh-lottery .box .let-point.green {
-    background: #41b43b;
+    background: #1AC456;
   }
   .basketball-hh-lottery .dialog .content {
     width: 95%;
     max-width: 320px;
-    background: #f2f2f2;
+    /*background: #f2f2f2;*/
   }
   .basketball-hh-lottery .table-wrap {
     padding: 0 10px;
   }
   .basketball-hh-lottery table {
-    background: #ccc; width: 100%;
+    width: 100%;
   }
   .basketball-hh-lottery table td {
-    background: white; padding: 5px;
+    background: $c313131;
+    padding: 5px;
   }
   .basketball-hh-lottery table td.padding-vertical-0 {
     padding: 5px 0;
   }
+  .basketball-hh-lottery table td.grayD {
+    background: #DDDDDD;
+    color: #999999;
+  }
   .basketball-hh-lottery table td.blue {
-    background: #3f6ee7; color: white;
-  }
-  .basketball-hh-lottery table td.green {
-    background: #51b92c; color: white;
-  }
-  .basketball-hh-lottery table td.orange {
-    background: #ffb525; color: white;
-  }
-  .basketball-hh-lottery table td.red {
-    background: #e73f40; color: white;
-  }
-  .basketball-hh-lottery table td.selected {
-    color: white; background: #e73f40;
-  }
-  .basketball-hh-lottery table td.selected .text-light {
+    background: #3393FF;
     color: white;
   }
+  .basketball-hh-lottery table td.green {
+    background: #1AC456;
+    color: white;
+  }
+  .basketball-hh-lottery table td.orange {
+    background: $cffC63A;
+    color: white;
+  }
+  .basketball-hh-lottery table td.red {
+    background: #FF3333;
+    color: white;
+  }
+  .basketball-hh-lottery table td.selected {
+    color: $c131313;
+    background: $cffC63A;
+
+    .text-light {
+      color: $c131313;
+    }
+  }
   .basketball-hh-lottery .btn-wrap .btn {
-    background: #f2f2f2;
-    color: #e73f40;
-    border-top: 1px solid #ddd;
+    background: $c131313;
+    color: $cffC63A;
+    border-top: 1px solid $c313131;
     margin-top: 5px;
     border-radius: 0;
   }
   .basketball-hh-lottery .btn-wrap .col:first-child .btn{
-    border-right: 1px solid #ddd;
+    border-right: 1px solid $c313131;
     color: #666;
   }
 </style>

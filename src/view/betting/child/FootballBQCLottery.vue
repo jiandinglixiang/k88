@@ -32,8 +32,9 @@
 </template>
 
 <script>
-  import VDialog from '../../../components/VDialog.vue';
-  import {SPORTS_OPTION_SELECTED} from '../../../store/betting/types';
+  import VDialog from '../../../components/VDialog.vue'
+  import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
+
   export default {
     name: 'footballBQCLottery',
     props: ['schedule', 'isConfirm'],
@@ -129,45 +130,45 @@
   }
   .football-bqc-lottery table {
     width: 100%;
-    background: #ccc;
+    /*background: #ccc;*/
   }
   .football-bqc-lottery table tbody td {
-    background: white;
+    background: $c313131;
     padding: 5px 10px;
+    color: $c999999;
   }
   .football-bqc-lottery table tbody td .text-value {
     margin-left: 10px;
   }
   .football-bqc-lottery table tbody td.selected {
-    background: #e73f40;
-    color: white;
-  }
-  .football-bqc-lottery table tbody td.selected span {
-    color: white;
+    background: $cffC63A;
+    color: $c131313;
+
+    span {
+      color: $c131313;
+    }
   }
   .football-bqc-lottery table thead {
-    color: white; padding: 5px 0;
+    color: $cFFfFFF; padding: 5px 0;
   }
-  .football-bqc-lottery table thead td {
-    padding: 5px 0;
-  }
+
   .football-bqc-lottery table .red {
-    background: #e73f40;
+    background: #FF3333;
   }
   .football-bqc-lottery .dialog .content {
     width: 95%;
     max-width: 320px;
-    background: #f2f2f2;
+    /*background: #f2f2f2;*/
   }
   .football-bqc-lottery .btn-wrap .btn {
-    background: #f2f2f2;
-    color: #e73f40;
-    border-top: 1px solid #ddd;
+    background: $c131313;
+    color: $cffC63A;
+    border-top: 1px solid $c313131;
     margin-top: 5px;
     border-radius: 0;
   }
   .football-bqc-lottery .btn-wrap .col:first-child .btn{
-    border-right: 1px solid #ddd;
+    border-right: 1px solid $c313131;
     color: #666;
   }
 </style>

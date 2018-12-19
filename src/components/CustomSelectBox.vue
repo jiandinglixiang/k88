@@ -74,7 +74,7 @@
     height: 32px;
     line-height: 32px;
     font-size: 14px;
-    color: #666;
+    color: white;
   }
 
   .custom-select-box .unit {

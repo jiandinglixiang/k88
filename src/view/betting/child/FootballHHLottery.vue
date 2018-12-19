@@ -1,6 +1,6 @@
 <template>
   <div class="football-hh-lottery">
-    <div class="row text-center text-default text-sm">
+    <div class="row text-center text-default-2 text-sm">
       <div class="col col-40"> <span class="text-primary" v-if="schedule.home_rank">[{{schedule.home_rank}}]</span>{{schedule.home}}</div>
       <div class="col text-light">VS</div>
       <div class="col col-40">{{schedule.guest}} <span class="text-primary" v-if="schedule.guest_rank">[{{schedule.guest_rank}}]</span></div>
@@ -262,8 +262,8 @@
     padding: 0 40px 0 15px;
   }
   .football-hh-lottery .box.selected {
-    background: #e73f40;
-    color: white;
+    background: $cffC63A;
+    color: $c131313;
   }
   .football-hh-lottery .box.box-icon {
     padding-right: 15px;
@@ -356,10 +356,7 @@
       }
     }
   }
-  .football-hh-lottery .box.selected {
-    background: #e73f40;
-    color: white;
-  }
+
   .football-hh-lottery .table-wrap {
     padding: 0px 5px 5px 5px;
     max-height: 300px;
@@ -367,66 +364,66 @@
   }
   .football-hh-lottery table {
     width: 100%;
-    background: #ccc;
+    /*background: #ccc;*/
     margin-bottom: 10px;
   }
   .football-hh-lottery table tbody td {
-    background: white;
+    background: $c313131;
     padding: 5px 0;
+    color: $c999999;
   }
   .football-hh-lottery table tbody td .text-value {
     margin-left: 10px;
   }
   .football-hh-lottery table tbody td.selected {
-    background: #e73f40;
-    color: white;
+    background: $cffC63A;
+    color: $c131313;
+
+    span {
+      color: $c131313;
+    }
   }
-  .football-hh-lottery table tbody td.selected span {
-    color: white;
-  }
+
   .football-hh-lottery table thead {
     color: white; padding: 5px 0;
   }
-  .football-hh-lottery table thead td {
-    padding: 5px 0;
-  }
   .football-hh-lottery table .red {
-    background: #e73f40;
+    background: #FF3333;
   }
   .football-hh-lottery .dialog .content {
     width: 95%;
     max-width: 320px;
-    background: #f2f2f2;
+    /*background: #f2f2f2;*/
   }
   .football-hh-lottery .btn-wrap .btn {
-    background: #f2f2f2;
-    color: #e73f40;
-    border-top: 1px solid #ddd;
+    background: $c131313;
+    color: $cffC63A;
+    border-top: 1px solid #494949;
     margin-top: 5px;
     border-radius: 0;
   }
   .football-hh-lottery .btn-wrap .col:first-child .btn{
-    border-right: 1px solid #ddd;
+    border-right: 1px solid #494949;
     color: #666;
   }
   .football-hh-lottery table td.green {
-    background: #41b43b;
-    color: white;
+    background: #1AC456;
+    color: $cFFfFFF;
   }
   .football-hh-lottery table td.gray {
-    background: #dcdcdc;
-    color: white;
+    background: #DDDDDD;
+    color: $c131313;
   }
   .football-hh-lottery table td.blue {
-    background: #3f7ee7;
-    color: white;
+    background: #3393FF;
+    color: $cFFfFFF;
   }
   .football-hh-lottery table td.yellow {
-    background: #ffb525;
-    color: white;
+    background: $cffC63A;
+    color: $cFFfFFF;
   }
   .football-hh-lottery table td.red {
-    background: #e73f40;
-    color: white;
+    background: #FF3333;
+    color: $cFFfFFF;
   }
 </style>
