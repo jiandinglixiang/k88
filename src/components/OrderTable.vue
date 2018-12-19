@@ -1,7 +1,7 @@
 <template>
   <table border="0" cellspacing="1" cellpadding="0" width="100%">
     <thead>
-    <tr class="text-muted">
+    <tr class="text-dark">
       <td width="19%">场次</td>
       <td width="31%" v-if="list && list[0] && list[0].homeFirst">主队vs客队</td>
       <td width="31%" v-else>客队vs主队</td>
@@ -9,7 +9,7 @@
       <td width="19%">彩果</td>
     </tr>
     </thead>
-    <tbody class="text-default">
+    <tbody class="text-light">
     <tr v-for="item in list">
       <td>{{item.round_no}}</td>
       <td>
@@ -52,10 +52,20 @@
   table{
     text-align: center;
     font-size: 11px;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border: 1px solid #313131;
   }
   table td {
-    background: white;
+    background: #313131;
     padding: 5px 0;
+    border-left: 0;
+    border-top: 0;
+    border-right: 1px solid #494949;
+    border-bottom: 1px solid #494949;
+  }
+  table tbody tr:last-child td{
+    border-bottom: 0;
   }
   .red-check-icon {
     display: inline-block;

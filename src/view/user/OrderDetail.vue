@@ -17,7 +17,7 @@
         <span class="text-sm text-muted" v-if="detail.issueNoShow">{{`第${detail.issue_no}期`}}</span>
       </div>
       <div class="text-sm margin-top-5">
-        <span class="text-light">投注金额: <span class="text-default">{{detail.total_amount | currency}}</span></span>
+        <span class="text-light">投注金额: <span>{{detail.total_amount | currency}}</span></span>
         <span class="text-light" v-if="detail.failure_amount > 0">出票失败: <span class="text-default">{{detail.failure_amount | currency}}</span></span>
       </div>
       <div class="text-sm margin-top-5">
@@ -26,21 +26,21 @@
       </div>
       <span :class="detail.statusIcon">{{detail.statusIconText}}</span>
     </div>
-    <div class="margin-top-10 padding text-sm bg-white">
+    <div class="margin-top-10 padding text-sm bg-lighten-black text-light">
       订单状态： <span class="text-primary">{{detail.statusText}}</span>
     </div>
     <!--竞彩-->
     <div class="margin-top-10" v-if="detail.jc_info">
-      <div class="padding bg-white text-default text-xn">{{detail.contextTitle}}</div>
+      <div class="padding bg-lighten-black text-light text-xn">{{detail.contextTitle}}</div>
       <order-table :list="detail.jc_info"></order-table>
-      <div class="padding text-light bg-white text-sm">
+      <div class="padding text-light bg-lighten-black text-sm">
         <p>投注时间：{{detail.buying_time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</p>
         <p class="margin-top-5">方案编号：{{detail.sku}}</p>
       </div>
     </div>
     <!--数字彩-->
     <div class="margin-top-10" v-if="detail.tickets">
-      <div class="padding bg-white">
+      <div class="padding bg-lighten-black">
         <p class="text-normal follow-times" v-if="detail.follow_times">
           追号订单，当前第<span class="text-primary">{{detail.current_follow_times}}/{{detail.follow_times}}</span>期
         </p>
@@ -86,13 +86,13 @@
           </span>
         </p>
       </div>
-      <div class="padding text-light bg-white text-sm margin-top-10">
+      <div class="padding text-light bg-lighten-black text-sm margin-top-10">
         <p>投注时间：{{detail.buying_time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</p>
         <p class="margin-top-5">方案编号：{{detail.sku}}</p>
       </div>
     </div>
-    <router-link to="scheme" tag="div" append class="padding relative bg-white margin-top-10">
-      <span cspas="text-normal text-default">方案明细</span>
+    <router-link to="scheme" tag="div" append class="padding text-light relative bg-lighten-black margin-top-10">
+      <span cspas="text-normal text-light bg-lighten-black">方案明细</span>
       <span class="arrow-right"></span>
     </router-link>
    <!--  <div class="bottom-logo margin-top-20 text-center">
@@ -140,12 +140,16 @@
   }
 </script>
 
-<style>
+<style lang="scss">
+  .bg-lighten-black {
+    background: $c1c1c1c;
+  }
   .order-detail .top{
     background: url("../../assets/icon/order_top_bg.png") no-repeat;
     background-size: 100% 100%;
     padding: 20px 10px 20px 75px;
     position: relative;
+    color: $cFFfFFF;
   }
   .order-detail .top img {
     position: absolute;
@@ -190,5 +194,8 @@
   }
   .margin-left-3 {
     margin-left: 5px;
+  }
+  .text-primary {
+    color: $cffC63A;
   }
 </style>
