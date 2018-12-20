@@ -50,6 +50,7 @@ import PrizeList from '../view/prize/List.vue';
 import PrizeDetail from '../view/prize/Detail.vue';
 import PrizeSportsDetail from '../view/prize/SportsDetail.vue';
 import { pageJump } from '../common/store';
+import Score from '../view/score/score.vue';// -我的
 
 Vue.use(Router)
 
@@ -227,6 +228,11 @@ const router = new Router({
       path: '/promotion/test',
       name: 'PromotionTest',
       component: PromotionTest
+    },
+    {
+      path: '/Score',
+      name: 'Score',
+      component: Score
     }
   ]
 });

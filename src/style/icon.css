@@ -35,7 +35,7 @@
 }
 .red-check-icon {
   width: 12px; height: 9px;
-  background: url("../assets/icon/gold_check.png") no-repeat;
+  background: url("../assets/icon/red_check.png") no-repeat;
   background-size: 100% 100%;
 }
 .scheme-line-icon {
@@ -78,6 +78,16 @@
   background: url("../assets/icon/mine_cash.png") no-repeat;
   background-size: 100% 100%;
 }
+.mine-recommended-icon {
+  width: 20px; height: 20px;
+  background: url("../assets/icon/recommended.png") no-repeat;
+  background-size: 100% 100%;
+}
+.mine-awesome-icon {
+  width: 20px; height: 20px;
+  background: url("../assets/icon/awesome.png") no-repeat;
+  background-size: 100% 100%;
+}
 .mine-order-icon {
   width: 20px; height: 20px;
   background: url("../assets/icon/mine_order.png") no-repeat;
@@ -99,7 +109,7 @@
   background-size: 100% 100%;
 }
 .dialog-close-icon {
-  width: 20px; height: 20px;
+  width: 15px; height: 15px;
   background: url("../assets/icon/close.png") no-repeat;
   background-size: 100% 100%;
 }
@@ -198,3 +208,42 @@
   background: url("../assets/icon/k3_6.png") no-repeat;
   background-size: 100% 100%;
 }
+.activate-stick {
+  background: url("../assets/icon/act_stick.png") no-repeat;
+  background-size: 100% ;
+}
+.del-stick{
+  background: url("../assets/icon/delete_stick.png") no-repeat;
+  background-size: 100% ;
+}
+.pushpin-icon{
+  background: url("../assets/icon/pushpin.png") no-repeat;
+  background-size: 100% ;
+}
+.mine-credit-exchange-icon{
+  width: 20px; height: 20px;
+  background: url("../assets/icon/credit_exchange.png") no-repeat;
+  background-size: 100% ;
+}
+.mine-envelope-management-icon{
+  width: 20px; height: 20px;
+  background: url("../assets/icon/envelope_management.png") no-repeat;
+  background-size: 100% ;
+}
+.mine-point-management-icon{
+  width: 20px; height: 20px;
+  background: url("../assets/icon/point_management.png") no-repeat;
+  background-size: 100% ;
+}
+.mine-white-back-icon{
+  transform:rotate(180deg);
+  width: 1em; height: 1em;
+  background: url("../assets/icon/white_back_icon.png") no-repeat;
+  background-size: auto 100%;
+}
+
+.mine-sing-in-icon {
+  background: url("../assets/icon/sing_in.png") no-repeat;
+  background-size: auto 100%;
+}
+

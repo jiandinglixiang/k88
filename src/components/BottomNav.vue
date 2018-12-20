@@ -23,15 +23,27 @@
         items: [
           {name: '首页', icon: 'home-icon', key: 'Home'},
           {name: '开奖', icon: 'prize-icon', key: 'PrizeList'},
-          {name: '订单', icon: 'order-icon', key: 'Orders'},
-          {name: '我的', icon: 'person-icon', key: 'Mine'}
+          // { name: '比分', icon: 'score-icon', key: 'Score' },
+          {name: '订单', icon: 'order-icon', key: 'Orders'}
+          // {name: '我的', icon: 'person-icon', key: 'Mine'}
         ]
       }
     },
     methods: {
       goRedirect (item) {
         if (item.key !== this.active) {
-          router.replace({name: item.key});
+          switch (item.key) {
+            case 'Home':
+            case 'PrizeList':
+            case 'Score':
+            case 'Mine':
+              router.replace({ name: item.key })
+              break
+            case 'Orders':
+              router.replace({ path: '/orders' })
+              break
+            default:
+          }
         }
       }
     }
@@ -99,6 +111,16 @@
   }
   .bottom-nav .bottom-nav-item.active .prize-icon {
     background: url("../assets/home/prize_active.png") no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .bottom-nav .nav-icon.score-icon {
+    background: url("../assets/home/score.png") no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .bottom-nav .bottom-nav-item.active .score-icon {
+    background: url("../assets/home/score_active.png") no-repeat;
     background-size: 100% 100%;
   }
 </style>

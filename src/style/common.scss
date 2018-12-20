@@ -470,3 +470,17 @@ input[type="text"], input[type="number"], input[type="password"] {
   -ms-flex: 0 0 90%;
   flex: 0 0 90%;
   max-width: 90%; }
+button.mint-msgbox-confirm{
+  color: #e73f40;
+}
+/*弹窗默认覆盖*/
+.v-hidden{
+  visibility: hidden;
+}
+
+.box-init, .box-init * {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+

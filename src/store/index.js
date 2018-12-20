@@ -9,12 +9,13 @@ import payment from './payment/index';
 import betting from './betting/index';
 import home from './home/index';
 import prize from './prize/index';
+import score from './score/index';
 import information from './information/index';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    user, scheme, payment, betting, home, prize, information
+    user, scheme, payment, betting, home, prize, information, score
   }
 })
