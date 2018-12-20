@@ -78,7 +78,7 @@
           </tbody>
         </table>
         <table class="text-center text-sm" cellpadding="0" cellspacing="1">
-          <thead><tr><td class="green" colspan="7">比分</td></tr></thead>
+          <thead><tr><td class="blue" colspan="7">比分</td></tr></thead>
           <tbody>
           <template v-if="bfTrList.length > 0">
             <tr v-for="list in bfTrList">
@@ -96,7 +96,7 @@
           </tbody>
         </table>
         <table class="text-center text-sm" cellpadding="0" cellspacing="1">
-          <thead><tr><td class="blue" colspan="7">总进球</td></tr></thead>
+          <thead><tr><td class="red" colspan="7">总进球</td></tr></thead>
           <tbody>
           <template v-if="zjqTrList.length > 0">
             <tr v-for="list in zjqTrList">
@@ -114,7 +114,7 @@
           </tbody>
         </table>
         <table class="text-center text-sm" cellpadding="0" cellspacing="1">
-          <thead><tr><td class="yellow" colspan="7">半全场</td></tr></thead>
+          <thead><tr><td class="green" colspan="7">半全场</td></tr></thead>
           <tbody>
           <template v-if="bqcTrList.length > 0">
             <tr v-for="list in bqcTrList">

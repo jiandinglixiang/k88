@@ -1,11 +1,11 @@
 <template>
   <div class="payment-confirm" v-cloak>
     <v-head title="支付"></v-head>
-    <div class="bg-white text-center top">
+    <div class="text-center top">
       <h3 class="text-primary">￥{{confirm.pay_money}}</h3>
       <p class="text-light text-normal">{{confirm.bet_desc}}</p>
     </div>
-    <div class="content bg-white text-muted text-normal margin-top-20 clear">
+    <div class="content text-muted text-normal margin-top-20 clear">
       <div class="item">
         红包抵扣
         <span class="pull-right">{{(confirm.currentRedPack && confirm.currentRedPack.balance) || 0}}元</span>
@@ -104,7 +104,7 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .payment-confirm .top{
     padding: 10px;
   }
@@ -118,7 +118,8 @@
   }
   .payment-confirm .content .item {
     padding: 10px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $c313131;
+    color: $cFFfFFF;
   }
   .payment-confirm .content .item:last-child {
     border: 0;
@@ -167,7 +168,7 @@
     display: none;
   }
   .payment-confirm .switch-arrow {
-    border: 1px solid #ddd;
+    border: 1px solid $c313131;
     height: 16px; width: 16px;
     border-radius: 20px;
     margin-left: 5px;

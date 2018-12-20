@@ -32,7 +32,7 @@
           </tbody>
         </table>
         <table class="text-center text-sm margin-top-10" cellpadding="0" cellspacing="1">
-          <thead><tr><td colspan="3" class="green">主胜</td></tr></thead>
+          <thead><tr><td colspan="3" class="red">主胜</td></tr></thead>
           <tbody>
           <tr v-for="homeTd in homeTr">
             <td v-for="home in homeTd"
@@ -181,8 +181,8 @@
     background: #3393FF;
     color: white;
   }
-  .basketball-sfc-lottery table td.green {
-    background: #1AC456;
+  .basketball-sfc-lottery table td.red {
+    background: #FF3333;
     color: white;
   }
   .basketball-sfc-lottery table td.selected {

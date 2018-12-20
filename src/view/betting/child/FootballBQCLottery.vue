@@ -12,7 +12,7 @@
     <v-dialog v-show="bettingPanelVisible" @close="onPanelHide()" :title="schedule.home + ' VS ' + schedule.guest">
       <div class="table-wrap">
         <table class="text-center text-sm" cellpadding="0" cellspacing="1">
-          <thead class="red"><tr><td colspan="3">半全场</td></tr></thead>
+          <thead class="green"><tr><td colspan="3">半全场</td></tr></thead>
           <tbody>
             <tr v-for="list in tableTrList">
               <td class="text-left" :class="{selected: isDialogSelected(item)}" v-for="item in list" @click="onDialogOptionSelected(item)">
@@ -152,8 +152,9 @@
     color: $cFFfFFF; padding: 5px 0;
   }
 
-  .football-bqc-lottery table .red {
-    background: #FF3333;
+  .football-bqc-lottery table .green {
+    background: #1AC456;
+    color: $cFFfFFF;
   }
   .football-bqc-lottery .dialog .content {
     width: 95%;
