@@ -614,7 +614,6 @@
 
   .sports-confirm .scheme-box-item:first-child {
     border-top: 0;
-    padding-top: 0;
   }
 
   .sports-confirm-container .plus-icon {
