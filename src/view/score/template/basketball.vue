@@ -1,10 +1,10 @@
-<style scoped>
+<style scoped lang="scss">
   .item-body * {
     box-sizing: border-box;
   }
 
   .item-body {
-    background-color: white;
+    background-color:$c1c1c1c;
     width: 100%;
     padding: .26rem 0;
     margin-bottom: 10px;

@@ -19,22 +19,23 @@
   };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .body * {
     box-sizing: border-box;
   }
 
   .txt1 {
-    color: #929292;
+    color: $cCccCCc;
     font-size: 0.36rem;
   }
 
   .txt2 {
+    color: $cCccCCc;
     font-size: 0.36rem;
   }
 
   .txt3 {
-    color: #929292;
+    color: $cCccCCc;
     font-size: 0.3rem;
   }
 

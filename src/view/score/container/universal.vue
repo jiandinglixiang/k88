@@ -1,6 +1,6 @@
 <template>
   <div v-if="propsData.schedules.length" class="organ-item">
-    <div v-if="name||propsData.name" class="bg-white organ-item-title" @click="show">
+    <div v-if="name||propsData.name" class="organ-item-title" @click="show">
       <span class="left">{{ name||propsData.name }}</span>
       <span class="right" :class="{bgPlay:rotate}"> </span>
     </div>
@@ -38,20 +38,21 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .organ-item-title {
     position: relative;
     font-size: 0.3125rem;
-    border-bottom: 1px solid #c9c9c9;
+    /*border-bottom: 1px solid #c9c9c9;*/
     padding: 0.21875rem 0.3125rem;
     /*margin:0.015625%;*/
-    color: #666666;
+    color: $cCccCCc;
+    background-color: $c1c1c1c;
   }
 
   .organ-item-title .left {
     display: inline-block;
     padding-left: 0.09375rem;
-    border-left: 0.046875rem solid #e73f40;
+    border-left: 0.046875rem solid $cffC63A;
   }
 
   .organ-item-title .right {

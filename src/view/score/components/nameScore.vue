@@ -1,4 +1,4 @@
-<style scoped>
+<style scoped lang="scss">
   .name-score * {
     box-sizing: border-box;
   }
@@ -37,28 +37,29 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    color: $cFFfFFF;
   }
 
   .football-score {
-    color: #a4a4a4;
+    color: #dddddd;
     width: 2.3em;
     text-align: center;
   }
 
   .basketball-score {
-    color: #a4a4a4;
+    color: #dddddd;
     width: 3em;
     text-align: center;
   }
 
   .football {
-    color: #60a839;
+    color: #1AC456;
     width: 2.3em;
     text-align: center;
   }
 
   .basketball {
-    color: #e73f40;
+    color: #FF3333;
     width: 3em;
     text-align: center;
   }
@@ -68,16 +69,16 @@
     width: 1em;
     margin-right: 0.3em;
     text-align: center;
-    color: white;
+    color: $c131313;
     border-radius: 2px;
   }
 
   .red-board {
-    background-color: #e73f40;
+    background-color: #FF3333;
   }
 
   .yellow-board {
-    background-color: #fed223;
+    background-color: $cffC63A;
   }
 </style>
 <template>

@@ -3,9 +3,9 @@
     <span v-for="i in propsData" :key="i"> {{ i }}</span>
   </div>
 </template>
-<style scoped>
+<style scoped lang="scss">
   .item-title {
-    color: #9b9b9b;
+    color: $c999999;
     font-size: 0.27rem;
     text-indent: 1em;
   }

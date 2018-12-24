@@ -1,10 +1,10 @@
-<style scoped>
+<style scoped lang="scss">
   .back41b43b {
-    background-color: #41b43b;
+    background-color: #1AC456;
   }
 
   .backFed223 {
-    background-color: #fed223;
+    background-color: $cffC63A;
   }
 
   .match-odds * {

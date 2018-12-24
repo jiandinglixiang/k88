@@ -19,10 +19,10 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .not-logged-in {
     width: 100%;
-    height: 10rem;
+    height: 300px;
   }
 
   .not-logged-in .col-center {
@@ -32,13 +32,12 @@
   }
 
   .not-logged-in .col-center img {
-    width: 3.21875rem;
-    height: 2.265625rem;
+    width: 60%;
   }
 
   .not-logged-in .col-center p {
-    margin: 0.46875rem 0;
-    color: #333333;
-    font-size: 0.40625rem;
+    margin: 10px 0;
+    color: $c999999 ;
+    font-size: 14px;
   }
 </style>

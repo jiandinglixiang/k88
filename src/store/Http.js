@@ -7,6 +7,8 @@ import loading from '../common/loading';
 import md5 from 'js-md5';
 
 let HOST = 'https://phone-api.baiying58.com/H5/';
+// let HOST = 'http://test.h5.phone.t.ebao123.com/index.php?s=/H5/';
+// let HOST = 'https://h5-api.tigercai.com/H5/';
 
 // if (window.API_HOST) {
 //   HOST = window.API_HOST;

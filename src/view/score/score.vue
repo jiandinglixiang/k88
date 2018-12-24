@@ -1,4 +1,4 @@
-<style scoped>
+<style scoped lang="scss">
   .score {
     padding-top: 94px;
     max-width: 640px;
@@ -6,25 +6,27 @@
 
   .switchover {
     box-sizing: border-box;
-    width: 33.3%;
+    width: 50%;
     padding: 8px 0;
     line-height: 1;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
     margin: 10px 0;
-    border: 1px solid #e73f40;
-    color: #e73f40;
+    color: $c999999;
+    border-top: 1px solid $c999999;
+    border-bottom: 1px solid $c999999;
   }
 
   .activate {
-    background-color: #e73f40;
-    color: white;
+    background-color: $cffC63A;
+    color: $c131313;
   }
 
   .switchover-left {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+    border-left: 1px solid $c999999;
   }
 
   .switchover-center {
@@ -35,6 +37,7 @@
   .switchover-right {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    border-right: 1px solid $c999999;
   }
 
   .refresh {
@@ -43,16 +46,29 @@
     background-size: 100%;
     width: 30px;
     height: 25px;
-    margin: 9px 0;
-    right: -30%;
-    top: 0;
+    margin: 0 10px;
+    right: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+
+  .back-icon {
+    position: absolute;
+    left: 10px;
+    margin: 0 10px;
+    background: url("../../assets/icon/white_back_icon.png") no-repeat center;
+    background-size: 50%;
+    height: 32px;
+    width: 20px;
+    top: 50%;
+    transform: translate(0, -50%);
   }
 
   .two-title > div, .four-title > div {
     flex: 1;
     height: 37px;
     line-height: 35px;
-    color: #666;
+    color: $c999999;
     border-bottom: 2px solid #dddddd;
   }
 
@@ -66,7 +82,8 @@
   }
 
   .four-title .activate-child, .two-title .activate-child {
-    border-color: #e73f40;
+    color: $cffC63A;
+    border-color: $cffC63A;
   }
 
   .v-body {
@@ -118,7 +135,7 @@
     left: auto;
     width: 100%;
     max-width: 640px;
-    background: white;
+    background: $c131313;
     z-index: 2;
   }
 
@@ -129,17 +146,20 @@
 </style>
 <template>
   <div class='score padding-bottom-50'>
-    <div class='bg-white score-top'>
-      <div style='width: 60%;margin: 0 auto;position: relative;'>
-        <div class='row'>
-          <div @click='switchShow([1,1])' class='switchover switchover-left' :class='{activate:lotteryType===1}'>竞足
-          </div>
-          <div @click='switchShow([2,1])' class='switchover switchover-center' :class='{activate:lotteryType===2}'>胜负彩
-          </div>
-          <div @click='switchShow([3,1])' class='switchover switchover-right' :class='{activate:lotteryType===3}'>竞篮
+    <div class='score-top'>
+      <div style="position: relative;">
+        <div style='width: 60%;margin: 0 auto;'>
+          <div class='row'>
+            <div @click='switchShow([1,1])' class='switchover switchover-left' :class='{activate:lotteryType===1}'>竞足
+            </div>
+            <!--<div @click='switchShow([2,1])' class='switchover switchover-center' :class='{activate:lotteryType===2}'>胜负彩-->
+            <!--</div>-->
+            <div @click='switchShow([3,1])' class='switchover switchover-right' :class='{activate:lotteryType===3}'>竞篮
+            </div>
           </div>
         </div>
         <div class='refresh' @click='switchShow()'></div>
+        <div class="back-icon" @click="goApp"></div>
       </div>
       <div v-if='lotteryType===2' class='row text-center two-title'>
         <div :class="{'activate-child':lotteryState===1}" @click="switchShow([lotteryType,1])">
@@ -188,18 +208,19 @@
   </div>
 </template>
 <script>
-  import { mapState, mapMutations, mapActions } from 'vuex';
+  import { mapActions, mapMutations, mapState } from 'vuex'
   import {
-    SET_SWITCHOVER,
     GET_GAME_LIST,
     GET_MINE_BET_DATA,
     SET_LOTTERY_1,
+    SET_SWITCHOVER,
     TO_THE_TOP_INIT
-  } from '../../store/score/types';
-  import BottomNav from '../../components/BottomNav.vue';
+  } from '../../store/score/types'
+  import BottomNav from '../../components/BottomNav.vue'
   import container from './container.vue'
-  import loading from '../../common/loading';
+  import loading from '../../common/loading'
   import Compute from './components/compute.js'
+  import { H5postmsg } from '../../common/postmsg'
 
   export default {
     name: 'Score',
@@ -407,6 +428,14 @@
           if (i >= 5) {
             this.getMineData([this.lotteryType, this.lotteryState, i])
           }
+        }
+      },
+      goApp () {
+        if (H5postmsg.isH5) {
+          //  h5
+          window.parent.postMessage(JSON.stringify({ response: 4 }), '*')
+        } else {
+          location.href = 'goAppIndex'
         }
       }
     },
