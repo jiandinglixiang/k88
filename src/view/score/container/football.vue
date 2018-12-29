@@ -1,15 +1,15 @@
-<style scoped>
+<style scoped lang="scss">
   .organ-item-title {
     position: relative;
-    border-bottom: 1px solid #ddd;
+    /*border-bottom: 1px solid #ddd;*/
     padding: 10px;
-    color: #666666;
+    color: $cCccCCc;
   }
 
   .organ-item-title .left {
     display: inline-block;
     padding-left: 3px;
-    border-left: 3px solid #e73f40;
+    /*border-left: 3px solid #e73f40;*/
   }
 
   .organ-item-title .right {
@@ -31,7 +31,7 @@
     transform: rotate(180deg);
   }
   .organ-item-li{
-    background-color: white;
+    background-color: $c1c1c1c;
   }
   .organ-item-li::before {
     content: ' ';
@@ -39,7 +39,7 @@
     width: 90%;
     margin: 0 auto;
     height: 1px;
-    background-color: #dddd;
+    background-color: $c131313;
   }
 </style>
 <template>
@@ -47,7 +47,7 @@
     <div class="organ-item"
          v-for="(groups,index) in propsData"
          :key="groups.date||index">
-      <div class="bg-white organ-item-title"
+      <div class="organ-item-title"
            @click="show(groups.date_timestamp)">
         <span class="left">{{ groups.name||groups.date }}</span>
         <span class="right" :class="{bgPlay:switchItem(groups.date_timestamp)}"> </span>

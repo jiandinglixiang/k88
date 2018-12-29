@@ -1,4 +1,4 @@
-<style scoped>
+<style scoped lang="scss">
   .down_gray {
     position: absolute;
     bottom: 0;
@@ -25,22 +25,22 @@
     width: 100%;
     font-size: 0.25rem;
     position: absolute;
-    background-color: white;
-    box-shadow: -3px 3px 5px #ddd;
+    background-color: $c131313;
+    box-shadow: -3px 3px 5px $c313131;
     z-index: 1;
     top: 1.8rem;
   }
 
   .color73f40 {
-    color: #e73f40;
+    color: #FF3333;
   }
 
   .color333 {
-    color: #333333;
+    color: $cFFfFFF;
   }
 
   .color888 {
-    color: #888888;
+    color: $cFFfFFF;
   }
 
   .borderBottom {
@@ -67,7 +67,7 @@
     left: -1px;
     top: 0;
     width: 1px;
-    background-color: #ddd;
+    background-color: $c131313;
     height: 1.3rem;
   }
 

@@ -1,4 +1,4 @@
-<style scoped>
+<style scoped lang="scss">
   .match-odds {
     height: 1.76rem;
   }
@@ -7,6 +7,7 @@
     height: 50%;
     width: 90%;
     text-align: right;
+    color: $cFFfFFF;
   }
 </style>
 <template>

@@ -1,4 +1,4 @@
-<style scoped>
+<style scoped lang="scss">
   .football-back {
     background-image: url('../../../assets/mine_back.png');
   }

@@ -53,7 +53,7 @@
   }
 
   .football {
-    color: #1AC456;
+    color: #FF3333;
     width: 2.3em;
     text-align: center;
   }
@@ -69,15 +69,16 @@
     width: 1em;
     margin-right: 0.3em;
     text-align: center;
-    color: $c131313;
     border-radius: 2px;
   }
 
   .red-board {
+    color: $cFFfFFF;
     background-color: #FF3333;
   }
 
   .yellow-board {
+    color: $c131313;
     background-color: $cffC63A;
   }
 </style>

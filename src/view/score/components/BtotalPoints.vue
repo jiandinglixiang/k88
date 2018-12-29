@@ -1,8 +1,8 @@
-<style scoped>
+<style scoped lang="scss">
   .total-points {
     height: 1.23rem;
     line-height: 1.23rem;
-    color: #888;
+    color: $cFFfFFF;
     font-size: .3rem;
     text-align: center;
   }

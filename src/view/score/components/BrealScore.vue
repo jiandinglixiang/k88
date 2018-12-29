@@ -1,4 +1,4 @@
-<style scoped>
+<style scoped lang="scss">
   .real-score *{
     box-sizing: border-box;
   }
@@ -16,6 +16,7 @@
 
   .real-score .item .child {
     flex: 1 1 100%;
+    color: $cFFfFFF;
   }
 </style>
 
@@ -31,7 +32,7 @@
         {{propsHome.score[index]? propsHome.score[index].score:'-' }}
       </div>
     </div>
-    <div class="item row" style="position: absolute;top: -0.47rem;color: #cccccc">
+    <div class="item row" style="position: absolute;top: -0.47rem;color: #999">
       <div class="child" v-for="i in showLength()" :key="i">{{ i }}</div>
     </div>
   </div>

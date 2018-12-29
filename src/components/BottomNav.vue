@@ -23,7 +23,7 @@
         items: [
           {name: '首页', icon: 'home-icon', key: 'Home'},
           {name: '开奖', icon: 'prize-icon', key: 'PrizeList'},
-          // { name: '比分', icon: 'score-icon', key: 'Score' },
+          { name: '比分', icon: 'score-icon', key: 'Score' },
           {name: '订单', icon: 'order-icon', key: 'Orders'}
           // {name: '我的', icon: 'person-icon', key: 'Mine'}
         ]

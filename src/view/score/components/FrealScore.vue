@@ -1,4 +1,4 @@
-<style scoped>
+<style scoped lang="scss">
   .shoot-1-icon {
     width: 0.3125rem;
     height: 0.5rem;
