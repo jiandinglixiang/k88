@@ -4,6 +4,7 @@
     /*border-bottom: 1px solid #ddd;*/
     padding: 10px;
     color: $cCccCCc;
+    background-color: $c1c1c1c;
   }
 
   .organ-item-title .left {

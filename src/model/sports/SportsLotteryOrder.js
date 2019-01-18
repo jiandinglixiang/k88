@@ -2,19 +2,27 @@ import SportsLotteryJcInfo from './SportsLotteryJcInfo';
 import LotteryOrder from '../LotteryOrder';
 import { SeriesType } from '../../store/constants';
 
+export function initJcInfo (jcInfo) {
+  return jcInfo.map(jc => {
+    return new SportsLotteryJcInfo(jc, jc.lottery_id);
+  })
+}
+
 export default class SportsLotteryOrder extends LotteryOrder {
-  constructor (obj) {
-    super(obj);
+  constructor (obj, ...type) {
+    super(obj, ...type);
     this.jc_info = obj.jc_info;
     this.series = obj.series;
     this.handleJcInfo();
     this.setContentTitle();
   }
+
   handleJcInfo () {
     this.jc_info = this.jc_info.map(jc => {
       return new SportsLotteryJcInfo(jc, this.lottery_id);
     })
   }
+
   // 设置表格title
   setContentTitle () {
     let seriesArr = this.series.split(',').map(value => {

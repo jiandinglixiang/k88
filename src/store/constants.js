@@ -65,6 +65,12 @@ export const LotteryFootballKey = {
     v1: '平',
     v3: '主胜'
   },
+  'betting_score_concede_ectype': {
+    key: '602',
+    v0: '主负',
+    v1: '平',
+    v3: '主胜'
+  },
   'betting_score_concede': {
     key: '602',
     v0: '让球负',
@@ -132,6 +138,11 @@ export const LotteryFootballKey = {
 export const LotteryBasketballKey = {
   'betting_score_no_concede': {
     key: '701',
+    v0: '客胜',
+    v3: '主胜'
+  },
+  'betting_score_concede_ectype': {
+    key: '702',
     v0: '客胜',
     v3: '主胜'
   },
@@ -270,4 +281,45 @@ export const PlayType = {
   '46': '二同号单选',
   '47': '二同号复选',
   '48': '二不同号'
+}
+export const IS_SPORTS = {
+  // 体育
+  [`6`]: 'FOOTBALL',
+  [`7`]: 'BASKETBALL',
+  [`601`]: 'FOOTBALL_SPF',
+  [`602`]: 'FOOTBALL_RQSPF',
+  [`603`]: 'FOOTBALL_BF',
+  [`604`]: 'FOOTBALL_ZJQ',
+  [`605`]: 'FOOTBALL_BQC',
+  [`606`]: 'FOOTBALL_HH',
+  [`701`]: 'BASKETBALL_SF',
+  [`702`]: 'BASKETBALL_RFSF',
+  [`703`]: 'BASKETBALL_SFC',
+  [`704`]: 'BASKETBALL_DXF',
+  [`705`]: 'BASKETBALL_HH',
+  [`20`]: 'SFC',
+  [`21`]: 'RXJ'
+}
+export const IS_FOOTBALL = {
+  // 足球
+  [`6`]: 'FOOTBALL',
+  [`601`]: 'FOOTBALL_SPF',
+  [`602`]: 'FOOTBALL_RQSPF',
+  [`603`]: 'FOOTBALL_BF',
+  [`604`]: 'FOOTBALL_ZJQ',
+  [`605`]: 'FOOTBALL_BQC',
+  [`606`]: 'FOOTBALL_HH',
+  [`20`]: 'SFC',
+  [`21`]: 'RXJ'
+}
+export const IS_DIGITAL = {
+  [`1`]: 'SSQ',
+  [`2`]: 'FC3D',
+  [`3`]: 'DLT',
+  [`4`]: 'SYXW',
+  [`5`]: 'K3',
+  [`8`]: 'SYXW8',
+  [`18`]: 'SYXW18',
+  [`19`]: 'JXK3',
+  [`22`]: 'JSK3'
 }

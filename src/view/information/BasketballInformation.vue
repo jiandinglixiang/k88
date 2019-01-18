@@ -110,12 +110,15 @@
     display: block;
   }
   .football-information .blue {
-    color: #3f6ee7;
+    color: #3393FF;
   }
   .football-information .green {
-    color: #4faf50;
+    color: #1AC456;
   }
   .football-information .red {
-    color: #e73f40;
+    color: #FF3333;
+  }
+  .football-information .yellow {
+    color: #FFC63A;
   }
 </style>

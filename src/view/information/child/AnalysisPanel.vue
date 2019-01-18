@@ -16,7 +16,7 @@
     </basket-panel-container>
     <basket-panel-container title="未来比赛">
       <template v-for="(record, index) in reverse(futureRecord)" v-if="record">
-        <p class="bg-white panel-title-head">
+        <p class="panel-title-head">
           <img :src="index === 0 ? detail.guest_logo : detail.home_logo" alt="">
           {{record.name}}
         </p>
@@ -27,7 +27,7 @@
           </tr>
           <tr v-for="item in record.list">
             <td>{{item.league}}</td>
-            <td>{{item.date | dateFormat('yyyy-MM-dd')}}</td>
+            <td style="color: #999999">{{item.date | dateFormat('yyyy-MM-dd')}}</td>
             <td>{{item.guest_team}}</td>
             <td>VS</td>
             <td>{{item.home_team}}</td>
@@ -68,9 +68,9 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .football-information .panel-title {
-    background: white url("../../../assets/information/football_live_title_bg.png") no-repeat bottom;
+    background: $c131313 url("../../../assets/information/football_live_title_bg.png") no-repeat bottom;
     background-size: 100% 75%;
     height: 35px; line-height: 25px;
     font-style: italic;
@@ -88,13 +88,13 @@
     vertical-align: middle;
   }
   .football-information .block {
-    background-color: transparent;
+
   }
   .football-information .item {
     margin: 0;
-    border-bottom: 1px solid #ddd;
+    /*border-bottom: 1px solid #ddd;*/
     font-size: 14px;
-    color: #999;
+    color: $cFFfFFF;
   }
   .football-information .item .item-center {
     background: #4FAF50;
@@ -108,11 +108,11 @@
     font-size: 12px;
     text-align: center;
     width: 100%;
-    background: white;
+    /*background: white;*/
     border-collapse:collapse;
   }
   .football-information table tr.bg-f6 th{
-    background-color: #f6f6f6;
+    background-color: $c1c1c1c;
   }
   .football-information table th{
     color: #999999;
@@ -123,7 +123,8 @@
     padding: 5px 0;
   }
   .football-information .border-bottom-solid{
-    border-bottom: 1px solid #dddddd;
+    /*border-bottom: 1px solid #dddddd;*/
+    color: $cFFfFFF;
   }
   .football-information .panel-title span{
     float: right;
@@ -138,7 +139,7 @@
     width: 5px;
     height: 5px;
     border-radius: 50px;
-    background-color: #e73f40;
+    background-color: #FF3333;
     left: 2px;
     top: 10px;
     position: absolute;
@@ -149,13 +150,14 @@
     padding: 5px 0;
   }
   .football-information  .active{
-    color: #333333;
+    color: $cFFfFFF;
   }
   .football-information  .active span{
-    border-bottom: 2px solid #3f6ee7;
+    border-bottom: 2px solid #3393FF;
   }
   .football-information  .panel-title-head {
     padding: 10px;
+    color: $cFFfFFF;
   }
   .football-information .panel-title-head img {
     vertical-align: middle;
@@ -163,6 +165,7 @@
     width: 20px; height: 20px;
   }
   .football-information .bg-gray {
-    background: #f6f6f6;
+    background: $c1c1c1c;
+    color: $c999999;
   }
 </style>

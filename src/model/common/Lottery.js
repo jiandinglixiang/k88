@@ -22,7 +22,18 @@ export default class Lottery {
       [LOTTERYIDS.JSK3]: K3Betting,
       [LOTTERYIDS.SFC]: SFCBetting,
       [LOTTERYIDS.RXJ]: SFCBetting,
-      [LOTTERYIDS.FC3D]: FC3DBetting
+      [LOTTERYIDS.FC3D]: FC3DBetting,
+      [LOTTERYIDS.FOOTBALL_SPF]: FootballBetting,
+      [LOTTERYIDS.FOOTBALL_RQSPF]: FootballBetting,
+      [LOTTERYIDS.FOOTBALL_BF]: FootballBetting,
+      [LOTTERYIDS.FOOTBALL_ZJQ]: FootballBetting,
+      [LOTTERYIDS.FOOTBALL_BQC]: FootballBetting,
+      [LOTTERYIDS.FOOTBALL_HH]: FootballBetting,
+      [LOTTERYIDS.BASKETBALL_SF]: BasketballBetting,
+      [LOTTERYIDS.BASKETBALL_RFSF]: BasketballBetting,
+      [LOTTERYIDS.BASKETBALL_SFC]: BasketballBetting,
+      [LOTTERYIDS.BASKETBALL_DXF]: BasketballBetting,
+      [LOTTERYIDS.BASKETBALL_HH]: BasketballBetting
     }
     return LotteryComponent[lotteryId];
   }
@@ -49,6 +60,9 @@ export default class Lottery {
     return [LOTTERYIDS.BASKETBALL_DXF, LOTTERYIDS.BASKETBALL_HH, LOTTERYIDS.BASKETBALL_SFC,
       LOTTERYIDS.BASKETBALL_RFSF, LOTTERYIDS.BASKETBALL_SF].indexOf(parseInt(lotteryId)) !== -1;
   }
+  static isRecommend (lotteryId) {
+    return this.isFootBall(lotteryId) || this.isBasketBall(lotteryId);
+  }
   static isSFCOrRXJ (lotteryId) {
     return [LOTTERYIDS.SFC, LOTTERYIDS.RXJ].indexOf(parseInt(lotteryId)) !== -1;
   }
@@ -60,6 +74,35 @@ export default class Lottery {
   }
   static isRXJ (lotteryId) {
     return LOTTERYIDS.RXJ === parseInt(lotteryId);
+  }
+  static isBuyTogether (ID) {
+    return [LOTTERYIDS.RXJ, LOTTERYIDS.SFC, LOTTERYIDS.DLT, LOTTERYIDS.SSQ, LOTTERYIDS.FOOTBALL_SPF, LOTTERYIDS.FOOTBALL_RQSPF, LOTTERYIDS.FOOTBALL_BF, LOTTERYIDS.FOOTBALL_ZJQ,
+      LOTTERYIDS.FOOTBALL_BQC, LOTTERYIDS.FOOTBALL_HH,
+      LOTTERYIDS.BASKETBALL_DXF, LOTTERYIDS.BASKETBALL_HH, LOTTERYIDS.BASKETBALL_SFC,
+      LOTTERYIDS.BASKETBALL_RFSF, LOTTERYIDS.BASKETBALL_SF].indexOf(parseInt(ID)) !== -1;
+  }
+  static isJointPurchase (lotteryId) {
+    if (typeof lotteryId === 'string') {
+      lotteryId = parseInt(lotteryId)
+    }
+    return [LOTTERYIDS.FOOTBALL_SPF,
+      LOTTERYIDS.FOOTBALL_RQSPF,
+      LOTTERYIDS.FOOTBALL_BF,
+      LOTTERYIDS.FOOTBALL_ZJQ,
+      LOTTERYIDS.FOOTBALL_BQC,
+      LOTTERYIDS.FOOTBALL_HH,
+      LOTTERYIDS.BASKETBALL_SF,
+      LOTTERYIDS.BASKETBALL_RFSF,
+      LOTTERYIDS.BASKETBALL_SFC,
+      LOTTERYIDS.BASKETBALL_DXF,
+      LOTTERYIDS.BASKETBALL_HH,
+      LOTTERYIDS.SFC,
+      LOTTERYIDS.RXJ,
+      LOTTERYIDS.SSQ,
+      LOTTERYIDS.DLT,
+      LOTTERYIDS.FOOTBALL,
+      LOTTERYIDS.BASKETBALL
+    ].indexOf(lotteryId) !== -1;
   }
   static getHelpUrl (lotteryId) {
     switch (parseInt(lotteryId)) {

@@ -2,7 +2,7 @@
   <div class="situation-panel">
     <div class="block">
       <div class="panel-title">赛事事件</div>
-      <div class="row item bg-white" v-for="event in events">
+      <div class="row item" v-for="event in events">
         <template v-if="event.event_type === 8 || event.event_type === 10 || event.event_type === 9">
           <div class="col item-left"></div>
           <div class="col col-10 item-center"><span class="football-ic-start"></span></div>
@@ -24,7 +24,7 @@
           </div>
         </template>
       </div>
-      <div class="all-icon-tip bg-white">
+      <div class="all-icon-tip">
         <span class="football-ic-icon"></span>
         <span>进球</span>
         <span class="football-penalty-icon"></span>
@@ -71,8 +71,9 @@
 </template>
 
 <script>
-  import TotalPercentage from './TotalPercentage.vue';
-  import EventIcon from './SituationEventIcon.vue';
+  import TotalPercentage from './TotalPercentage.vue'
+  import EventIcon from './SituationEventIcon.vue'
+
   export default {
     name: 'situationPanel',
     computed: {
@@ -87,9 +88,9 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .situation-panel .panel-title {
-    background: url("../../../assets/information/football_live_title_bg.png") no-repeat;
+    background: $c131313 url("../../../assets/information/football_live_title_bg.png") no-repeat;
     background-size: 100% 100%;
     height: 25px; line-height: 25px;
     font-style: italic;
@@ -99,24 +100,26 @@
     padding-left: 5px;
   }
   .situation-panel .all-icon-tip {
+    background-color: $c1c1c1c;
     padding: 5px 0 5px 5px;
   }
   .situation-panel .all-icon-tip span {
     display: inline-block;
     font-size: 12px;
     vertical-align: middle;
+    color: $cFFfFFF;
   }
   .situation-panel .block {
-    background: white;
+    background: $c313131;
   }
   .situation-panel .item {
     margin: 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $c494949;
     font-size: 14px;
-    color: #999;
+    color: white;
   }
   .situation-panel .item .item-center {
-    background: #4FAF50;
+    background: #4C9C30;
     width: 50px;
     color: white;
     padding-top: 5px;
@@ -137,6 +140,7 @@
     font-size: 12px;
     text-align: center;
     width: 100%;
+    color: $cFFfFFF;
   }
   .situation-panel table td {
     padding: 5px 0;

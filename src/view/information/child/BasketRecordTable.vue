@@ -1,6 +1,6 @@
 <template>
   <div class="basket-record-table">
-    <mt-swipe :auto="0" style="height: 110px;padding: 0 10px; background: white">
+    <mt-swipe :auto="0" style="height: 110px;padding: 0 10px; background: #131313;color: white">
       <mt-swipe-item>
         <div class="padding text-center">近{{length}}场胜负</div>
         <div>
@@ -48,7 +48,7 @@
       </tr>
       <template v-for="(item, index) in list">
         <template v-if="!first || index > 0">
-          <tr>
+          <tr class="basket-record-table">
             <td>{{item.league}}<br><span class="text-light">{{item.date | dateFormat('yy-MM-dd')}}</span></td>
             <td :class="returnTextColor(item.guest_team_id, item.score, 'left')">{{item.guest_team}}</td>
             <td>{{scoreText(item.score)}}</td>
@@ -58,7 +58,7 @@
           </tr>
         </template>
         <template v-else>
-          <tr class="bg-blue">
+          <tr class="bg-blue basket-record-table">
             <td>本场</td>
             <td>{{item.guest_team}}</td>
             <td>VS</td>
@@ -74,7 +74,8 @@
 </template>
 
 <script>
-  import TotalPercentage from './TotalPercentage.vue';
+  import TotalPercentage from './TotalPercentage.vue'
+
   export default {
     name: 'basketRecordTable',
     props: ['list', 'first', 'name', 'id'],
@@ -153,14 +154,23 @@
   }
 </script>
 
-<style>
+<style lang="scss">
+  .basket-record-table {
+    color: $cFFfFFF;
+    background-color: $c313131;
+  }
   .basket-record-table .bg-blue{
-    background: #e4f3fe;
-    color: #3f9ae7;
-    border-top: 1px solid #3f9ae7;
-    border-bottom: 1px solid #3f9ae7;
+    background: $c494949;
+    color: $cffC63A;
+    /*border-top: 1px solid #3f9ae7;*/
+    /*border-bottom: 1px solid #3f9ae7;*/
+  }
+
+  .basket-record-table .mint-swipe-indicator {
+    background: $cFFfFFF;
   }
   .basket-record-table .mint-swipe-indicator.is-active {
-    background: #e73f40; opacity: 0.8;
+    background: $cffC63A;
+    opacity: 0.8;
   }
 </style>

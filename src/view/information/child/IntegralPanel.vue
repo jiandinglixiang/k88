@@ -41,7 +41,7 @@
   }
 </script>
 
-<style>
+<style scoped lang="scss">
   .integral-panel .panel-header {
     padding: 6px 10px;
     border-radius: 10px;
@@ -50,10 +50,10 @@
     font-size: 14px;
   }
   .integral-panel .panel-header a {
-    color: #e73f40;
-    background: white;
+    color: $c999999;
+    background-color: $c131313;
     padding: 3px;
-    border: 1px solid #e73f40;
+    border: 1px solid $c999999;
   }
   .integral-panel .panel-header a:first-child {
     border-bottom-left-radius: 10px;
@@ -66,7 +66,7 @@
     border-left: 0;
   }
   .integral-panel .panel-header a.active {
-    background: #e73f40;
-    color: white;
+    background: $cffC63A;
+    color: $c131313;
   }
 </style>

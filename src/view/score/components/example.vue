@@ -5,10 +5,7 @@
     left: 0;
     right: 0;
     text-align: center;
-    background: -webkit-linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5)); /* Safari 5.1 - 6 */
-    background: -o-linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5)); /* Opera 11.1 - 12*/
-    background: -moz-linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5)); /* Firefox 3.6 - 15*/
-    background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5)); /* 标准的语法 */
+    background: linear-gradient(to top, rgb(28, 28, 28), rgba(19, 19, 19, 0.5)); /* 标准的语法 */
   }
 
   .down_gray div {
@@ -25,22 +22,22 @@
     width: 100%;
     font-size: 0.25rem;
     position: absolute;
-    background-color: $c131313;
-    box-shadow: -3px 3px 5px $c313131;
+    background-color: $c1c1c1c;
+    box-shadow: -3px 3px 5px $c131313;
     z-index: 1;
     top: 1.8rem;
   }
 
   .color73f40 {
-    color: #FF3333;
+    color: $cFFfFFF;
   }
 
   .color333 {
-    color: $cFFfFFF;
+    color: $c999999;
   }
 
   .color888 {
-    color: $cFFfFFF;
+    color: $c999999;
   }
 
   .borderBottom {
@@ -67,7 +64,7 @@
     left: -1px;
     top: 0;
     width: 1px;
-    background-color: $c131313;
+    background-color: $c999999;
     height: 1.3rem;
   }
 
@@ -76,6 +73,7 @@
     top: 50%;
     transform: translateY(-50%);
     width: 100%;
+    color: $c999999;
   }
 
   .body .item {

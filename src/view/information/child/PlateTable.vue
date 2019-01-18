@@ -65,7 +65,7 @@
                  :class="returnColor(list[index].current_odds.win, list[index+1].current_odds.win)">
                  {{record.current_odds.win|currency}}
             </div>
-            <div class="col col-center col-20">{{centerText(item.current_odds)}}</div>
+            <div class="col col-center col-20"  style="color: #999999">{{centerText(item.current_odds)}}</div>
             <div class="col col-center col-10"
                  :class="returnColor(list[index].current_odds.lose, list[index+1].current_odds.lose)">
                 {{record.current_odds.lose|currency}}
@@ -129,7 +129,7 @@
         this.$store.commit(INFORMATION_SWITCH_ODDS_COLLAPSE, {type: this.type, index: this.index});
       },
       returnColor (a, b) {
-        return a > b ? 'red' : a < b ? 'green' : '';
+        return a > b ? 'yellow' : a < b ? 'green' : '';
       },
       returnDirection (a, b) {
         if (parseInt(this.type) === 2 || parseInt(this.type) === 0) {
@@ -149,14 +149,15 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .table-container {
     font-size: 14px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $c313131;
   }
   .table-container .table-header {
-    background: white;
+    background: $c1c1c1c;
     padding: 5px 0;
+    color: $cFFfFFF;
   }
   .table-container .col div {
     height: 25px;
@@ -171,6 +172,7 @@
   }
   .table-container .list {
     text-align: center;
+    background-color: $c313131;
   }
   .table-container .list .list-header {
     height: 40px; line-height: 40px;
@@ -180,8 +182,9 @@
   .table-container .list .list-item {
     padding: 5px 0;
     margin-top: 0;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid $c494949;
     font-size: 12px;
+    color: $cFFfFFF;
   }
   .table-container.collapse .list {
     display: none;
@@ -197,13 +200,13 @@
     transform: rotate(180deg);
   }
   .table-container span.bg-blue {
-    background: #3f6ee7; color: white;
+    background: #3F86E7; color: white;
     padding: 0px 5px;
     border-radius: 15px;
     line-height: 20px;
   }
   .table-container span.bg-green {
-    background: #4faf50; color: white;
+    background: #41B43B; color: white;
     padding: 0px 5px;
     border-radius: 15px;
     line-height: 20px;

@@ -36,7 +36,7 @@
     </basket-panel-container>
     <basket-panel-container title="技术统计">
       <template v-if="techs.list">
-        <div class="margin-top row padding-10 bg-white text-center">
+        <div class="margin-top row padding-10 text-center has-con">
           <div class="col text-left has-icon">
             <img :src="detail.guest_logo" alt="">
             <span>{{detail.guest}}</span>
@@ -67,7 +67,7 @@
     <basket-panel-container title="球员数据">
       <div class="relative"><span class="current-player">当前在场球员</span></div>
       <template v-if="players.list">
-        <div class="margin-top row bg-white text-center">
+        <div class="margin-top row text-center has-con">
           <div class="col has-icon" :class="{'active': active === 'guest'}" @click="tabItemClick('guest', detail.guest_id)">
             <span><img :src="detail.guest_logo" alt="">{{detail.guest}}</span>
           </div>
@@ -159,7 +159,11 @@
   }
 </script>
 
-<style>
+<style lang="scss">
+  .football-information .has-con{
+    background-color: $c131313;
+    color: $c999999;
+  }
   .football-information .has-icon {
     padding: 0 5px;
   }

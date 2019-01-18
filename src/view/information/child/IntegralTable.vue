@@ -17,7 +17,7 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in list"
-            :class="{red: detail.home_id == item.team_id, green: detail.guest_id == item.team_id}">
+            :class="{red: detail.home_id == item.team_id, blue: detail.guest_id == item.team_id}">
           <template v-if="index < 3">
             <td><span class="rank-icon" :class="rankIcon(index)"></span></td>
           </template>
@@ -56,17 +56,26 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .integral-table table {
     width: 100%;
     font-size: 12px;
-    background: white;
     border-collapse:collapse;
     border:none;
+
+    thead {
+      background-color: #1C1C1C;
+      color: $c999999;
+    }
+
+    tbody {
+      background-color: #313131;
+      color: $cFFfFFF;
+    }
   }
   .integral-table table td {
     padding: 5px 0;
-    border: 1px solid #dddddd;
+    border: 1px solid $c494949;
     text-align: center;
   }
   .integral-table table .rank-icon {

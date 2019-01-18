@@ -1,6 +1,6 @@
 <template>
   <div class="basket-team-table">
-    <p class="bg-white panel-title-head">
+    <p class="panel-title-head">
       <img :src="team.src" alt="">
       {{team.name}}
     </p>
@@ -32,6 +32,20 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
+  .basket-team-table {
+    .panel-title-head {
+      color: $cFFfFFF;
+    }
 
+    table {
+      .bg-gray {
+        background-color: $c1c1c1c;
+        color: $c999999;
+      }
+
+      background-color: $c313131;
+      color: $cFFfFFF;
+    }
+  }
 </style>

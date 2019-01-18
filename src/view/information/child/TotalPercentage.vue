@@ -26,7 +26,7 @@
 
 <style>
   .total-percentage .percentage {
-    background: #F5F5F5;
+    background: #E4E4E4;
     height: 5px; width: 100%;
     position: relative;
   }
@@ -38,15 +38,15 @@
     width: 0;
   }
   .total-percentage .percentage.center {
-    background: red;
+    background: #FF7172;
   }
   .total-percentage .percentage.center span {
-    border-color: blue blue transparent transparent;
+    border-color: #8FAAFF #8FAAFF transparent transparent;
     border-style: solid none solid solid;
     border-width: 5px 0 0 5px;
   }
   .total-percentage .percentage.left span {
-    border-color: red red transparent transparent;
+    border-color: #FF7172 #FF7172 transparent transparent;
     border-style: solid none solid solid;
     border-width: 5px 0 0 5px;
   }
@@ -58,16 +58,16 @@
     border: none;
     width: 100%;
     height: 5px;
-    background: red;
+    background: #FF7172;
   }
   .total-percentage .percentage.right span.full {
     border: none;
     width: 100%;
     height: 5px;
-    background: blue;
+    background: #8FAAFF;
   }
   .total-percentage .percentage.right span {
-    border-color: blue transparent transparent transparent;
+    border-color: #8FAAFF transparent transparent transparent;
     border-style: solid solid solid solid;
     border-width: 5px 5px 0 0;
     right: auto;

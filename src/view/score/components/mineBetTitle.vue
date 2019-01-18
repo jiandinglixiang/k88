@@ -42,7 +42,7 @@
 
   .bet-title {
     position: relative;
-    background-color: white;
+    background-color: $c1c1c1c;
     padding: 0.359375rem 0.25rem 0.265625rem 0.25rem;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
@@ -57,7 +57,7 @@
     height: 2px;
     bottom: -2px;
     left: 0;
-    background-color: white;
+    background-color: $c1c1c1c;
   }
 
   .bet-title .f-img {
@@ -72,28 +72,29 @@
     height: 1.1rem;
     width: 85%;
     vertical-align: top;
-  }
 
-  .bet-title .body .body-item {
-    padding-left: 1em;
-    height: 50%;
-    width: 100%;
-  }
+    .body-item {
+      padding-left: 1em;
+      height: 50%;
+      width: 100%;
 
-  .msgSpan {
-    color: #b6b5b5;
-    font-size: .3rem;
-  }
+      .msgSpan {
+        color: $c999999;
+        font-size: .3rem;
+      }
 
-  .money {
-    font-weight: bold;
-    font-size: .36rem;
-    color: #333333
+      .money {
+        font-weight: bold;
+        font-size: .36rem;
+        color: $cFFfFFF;
+      }
+
+    }
   }
 
   .yes-money {
     font-size: .36rem;
-    color: #ffb81f;
+    color: $cffC63A;
     font-weight: bold
   }
 </style>
@@ -131,7 +132,7 @@
 </template>
 
 <script>
-  import { MessageBox } from 'mint-ui';
+  import { MessageBox } from 'mint-ui'
 
   export default {
     name: 'mineBetTitle',
@@ -175,7 +176,7 @@
         return add
       },
       Message () {
-        MessageBox('', `<p class="text-left" style="line-height:0.56rem;color:#333 ">该订单相关比赛当期赛况下理论奖金范围,实际赔率有浮动,仅做参考,最终以实际中奖金额为准.<br/>奖金优化方案暂不支持理论奖金计算</p>`);
+        MessageBox('', `<p class="text-left" style="line-height:0.56rem;color:#333">该订单相关比赛当期赛况下理论奖金范围,实际赔率有浮动,仅做参考,最终以实际中奖金额为准.<br/>奖金优化方案暂不支持理论奖金计算</p>`);
       }
     }
   }

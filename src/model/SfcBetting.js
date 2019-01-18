@@ -50,7 +50,7 @@ export default class SfcBetting {
     this.setBottomTip();
   }
   getBettingList () {
-    console.log(this.schedules.filter(schedule => schedule.checked))
+    // console.log(this.schedules.filter(schedule => schedule.checked))
     return this.schedules.filter(schedule => schedule.checked);
   }
 }

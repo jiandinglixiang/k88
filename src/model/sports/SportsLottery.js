@@ -55,8 +55,9 @@ export default class SportsLottery {
         if (order.hasOwnProperty(key)) {
           for (let o in order[key]) {
             if (lottery[key].hasOwnProperty(o)) {
+              // console.log(`数据`, lottery[key], order[key])
               betting.push({
-                text: lottery[key][o], value: order[key][o]
+                text: lottery[key][o], value: order[key][o], con: o, key: o, id: lottery[key].key
               })
             }
           }

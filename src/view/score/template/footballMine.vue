@@ -4,7 +4,6 @@
   }
 
   .item-body {
-    background-color: white;
     width: 100%;
     padding: .26rem 0;
     position: relative;

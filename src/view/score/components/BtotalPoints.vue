@@ -2,7 +2,7 @@
   .total-points {
     height: 1.23rem;
     line-height: 1.23rem;
-    color: $cFFfFFF;
+    color: $c999999;
     font-size: .3rem;
     text-align: center;
   }

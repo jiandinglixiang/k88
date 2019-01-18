@@ -160,7 +160,7 @@
   }
 
   .border-bottom-solid{
-    border-bottom: 1px solid #dddddd;
+    /*border-bottom: 1px solid #dddddd;*/
   }
   .border-bottom-dashed{
     border-bottom: 1px dashed #dddddd;

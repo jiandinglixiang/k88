@@ -1,4 +1,4 @@
-import {LOTTERYIDS} from '../store/constants';
+import { LOTTERYIDS } from '../store/constants';
 import Util from '../common/util';
 import store from '../store/index';
 import { LOTTERY_LIST_REFRESH } from '../store/home/types';
@@ -25,6 +25,7 @@ export default class HomeLotteryItem {
     this.end_time = obj.end_time;
     this.serverTime = serverTime;
     this.no = obj.no || obj.issue_no;
+    this.id = obj.id;
     this.timerType = obj.timerType;
     this.play_type_list = obj.play_type_list;
     this.tipText = '';
@@ -33,55 +34,52 @@ export default class HomeLotteryItem {
       this.priority = 3;
       this.tipText = '暂停销售';
     } else {
-      if (Lottery.isDigital(this.lottery_id)) {
-        if (this.next_issue_start_time > 0) {
-          this.component = Lottery.getComponent(this.lottery_id);
-          this.betTip = '距离--期截止还有--';
-          this.firstTime = (this.end_time - this.serverTime + Date.now() / 1000);
-          this.secondTimestamp = this.next_issue_start_time - this.end_time;
-          this.setTipText();
-        } else {
-          this.tipText = '暂无新彩期信息';
-          this.betTip = '暂无新彩期信息';
-        }
-      } else {
-        this.component = Lottery.getComponent(this.lottery_id);
-        this.setTipText();
-      }
+      this.component = Lottery.getComponent(this.lottery_id);
+      this.setTipText();
     }
     this.setPlayTypeList();
   }
+
   setTipText () {
     switch (this.lottery_id) {
       case LOTTERYIDS.SYXW:
       case LOTTERYIDS.SYXW8:
       case LOTTERYIDS.SYXW18:
       case LOTTERYIDS.K3:
+      case LOTTERYIDS.JSK3:
       case LOTTERYIDS.JXK3:
-        this.timer = Util.timeCountdown(this.firstTime, (time) => {
-          if (time > 0) {
-            let fmtStr = time > 60 ? 'm分s秒' : 's秒';
-            this.tipText = '截止:{0}'.format(Util.timeFmt(time, fmtStr));
-            this.betTip = '距离{0}期截止还有{1}'.format(this.no, Util.timeFmt(time, fmtStr));
-          } else {
-            this.timer = Util.timeCountdown(this.secondTimestamp + (Date.now() / 1000), (t) => {
-              if (t > 0) {
-                let fmtStr = t > 3600 ? 'h时m分' : t > 60 ? 'm分s秒' : 's秒';
-                this.tipText = '下一期:{0}'.format(Util.timeFmt(t, fmtStr));
-                this.betTip = '本期已结束，等待下一期:{0}'.format(Util.timeFmt(t, fmtStr));
-              } else {
-                // 刷新
-                this.betTip = this.tipText = '正在获取新彩期...';
-                window.clearInterval(this.timer);
-                if (this.timerType === 'bet') {
-                  store.dispatch(CURRENT_LOTTERY_REFRESH, this.lottery_id);
+        if (this.next_issue_start_time > 0) {
+          this.betTip = '距离--期截止还有--';
+          this.firstTime = (this.end_time - this.serverTime + Date.now() / 1000);
+          this.secondTimestamp = this.next_issue_start_time - this.end_time;
+          this.timer = Util.timeCountdown(this.firstTime, (time) => {
+            if (time > 0) {
+              let fmtStr = time > 60 ? 'm分s秒' : 's秒';
+              this.tipText = '截止:{0}'.format(Util.timeFmt(time, fmtStr));
+              this.betTip = '距离{0}期截止还有{1}'.format(this.no, Util.timeFmt(time, fmtStr));
+            } else {
+              this.timer = Util.timeCountdown(this.secondTimestamp + (Date.now() / 1000), (t) => {
+                if (t > 0) {
+                  let fmtStr = t > 3600 ? 'h时m分' : t > 60 ? 'm分s秒' : 's秒';
+                  this.tipText = '下一期:{0}'.format(Util.timeFmt(t, fmtStr));
+                  this.betTip = '本期已结束，等待下一期:{0}'.format(Util.timeFmt(t, fmtStr));
                 } else {
-                  store.dispatch(LOTTERY_LIST_REFRESH, this.lottery_id);
+                  // 刷新
+                  this.betTip = this.tipText = '正在获取新彩期...';
+                  window.clearInterval(this.timer);
+                  if (this.timerType === 'bet') {
+                    store.dispatch(CURRENT_LOTTERY_REFRESH, this.lottery_id);
+                  } else {
+                    store.dispatch(LOTTERY_LIST_REFRESH, this.lottery_id);
+                  }
                 }
-              }
-            })
-          }
-        });
+              })
+            }
+          });
+        } else {
+          this.tipText = '暂无新彩期信息';
+          this.betTip = '暂无新彩期信息';
+        }
         break;
       case LOTTERYIDS.DLT:
       case LOTTERYIDS.SSQ:
@@ -102,11 +100,16 @@ export default class HomeLotteryItem {
       case LOTTERYIDS.SFC:
       case LOTTERYIDS.RXJ:
         this.tipText = this.short_slogon;
+        break;
+      default:
+        console.log('error')
     }
   }
+
   onClearInterval () {
     this.timer && clearInterval(this.timer);
   }
+
   setPlayTypeList () {
     if (this.play_type_list) {
       if (this.play_type_list.length > 0) {

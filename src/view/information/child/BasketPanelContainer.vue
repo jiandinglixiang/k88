@@ -1,7 +1,7 @@
 <template>
   <div class="basket-panel-container">
     <div class="block">
-      <div class="panel-title bg-white" @click="changeVisible">
+      <div class="panel-title" @click="changeVisible">
         {{title}}
         <p class="test">
           <a class="cross2" :class="{cross: !visible}"></a>
@@ -31,7 +31,7 @@
 
 <style>
   .basket-panel-container .cross2{
-    background: transparent;
+    /*background: transparent;*/
     height: 8px;
     position: relative;
     width: 2px;

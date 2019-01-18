@@ -15,6 +15,7 @@ function selectClassByLotteryId (lotteryId) {
       break;
     case '5':
     case '19':
+    case '22':
       Obj = K3Lottery;
       break;
     case '8':

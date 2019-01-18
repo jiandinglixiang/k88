@@ -111,9 +111,9 @@
         if (record.score) {
           let score = record.score.split(':').map(v => parseInt(v));
           if (parseInt(item.team_id) === parseInt(record.home_team_id)) {
-            return score[0] > score[1] ? 'red' : score[0] < score[1] ? 'blue' : 'green';
+            return score[0] > score[1] ? 'yellow' : score[0] < score[1] ? 'green' : 'blue';
           } else {
-            return score[0] < score[1] ? 'red' : score[0] > score[1] ? 'blue' : 'green';
+            return score[0] < score[1] ? 'yellow' : score[0] > score[1] ? 'green' : 'blue';
           }
         }
       },
@@ -137,16 +137,17 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .table-container {
-    background: white; font-size: 14px;
+    background: $c1c1c1c; font-size: 14px;
   }
   .table-container .table-header {
     height: 40px; line-height: 40px;
     text-align: center;
     font-size: 16px;
     position: relative;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $c313131;
+    color: $cFFfFFF;
   }
   .table-container .switch-arrow {
     border: 1px solid #ddd;
@@ -169,8 +170,9 @@
   .table-container .table-title {
     height: 20px;
     margin: 5px 10px;
-    border-left: 3px solid red;
+    border-left: 3px solid $cffC63A;
     padding-left: 5px;
+    color: $cFFfFFF;
   }
   .table-container table {
     width: 100%; text-align: center;
@@ -178,14 +180,16 @@
     border:none;
   }
   .table-container table thead {
-    color: #999999;
+    color: #B4B4B4;
   }
   .table-container table tbody {
     font-size: 12px;
+    background-color: $c313131;
+    color:$cFFfFFF ;
   }
   .table-container td {
     padding: 5px 0;
-    border: 1px solid #dddddd;
+    border: 1px solid $c494949;
   }
   .table-container.collapse .table-title,
   .table-container.collapse table {

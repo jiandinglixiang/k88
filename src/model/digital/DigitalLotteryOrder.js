@@ -2,8 +2,8 @@ import DigitalLotteryTicket from './DigitalLotteryTicket';
 import LotteryOrder from '../LotteryOrder';
 
 export default class DigitalLotteryOrder extends LotteryOrder {
-  constructor (obj) {
-    super(obj);
+  constructor (obj, ...type) {
+    super(obj, ...type);
     this.prize_num = obj.prize_num;
     this.tickets = obj.tickets;
     this.play_type = obj.play_type;

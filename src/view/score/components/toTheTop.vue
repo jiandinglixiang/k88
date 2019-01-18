@@ -2,11 +2,10 @@
   .organ-item-title {
     position: relative;
     font-size: 0.3125rem;
-    border-bottom: 1px solid #c9c9c9;
+    /*border-bottom: 1px solid #c9c9c9;*/
     padding: 0.21875rem 0.3125rem;
     /*margin:0.015625%;*/
     color: $cCccCCc;
-    background-color: $c1c1c1c;
   }
 
   .organ-item-title .left {
