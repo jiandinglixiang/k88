@@ -4,7 +4,7 @@
     <nav class="row text-center bg-black text-sm">
       <div class="col col-25" :class="{active: orders.status === 0}" @click="changeStatus(0)"><span>全部</span></div>
       <div class="col col-25" :class="{active: orders.status === -1}" @click="changeStatus(-1)"><span>待开奖</span></div>
-      <div class="col col-25" :class="{active: orders.status === 1}" @click="changeStatus(1)"><span class="badge">中奖</span></div>
+      <div class="col col-25" :class="{active: orders.status === 1}" @click="changeStatus(1)"><span class="">中奖</span></div>
       <div class="col col-25" :class="{active: orders.status === -2}" @click="changeStatus(-2)"><span>未中奖</span></div>
     </nav>
     <div class="list" v-if="orders.list && orders.list.length > 0" v-infinite-scroll="loadMore"
