@@ -332,7 +332,7 @@
     width: 100%;
     height: 30px;
     line-height: 30px;
-    color: #999;
+    color: $cFFfFFF;
   }
   .football-hh-lottery .box .box-item.border-top {
     border-top: 1px solid $c3f3f3f;

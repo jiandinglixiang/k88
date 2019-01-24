@@ -1,12 +1,14 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <div>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-  import 'babel-polyfill';
-  import FastClick from 'fastclick';
+  import 'babel-polyfill'
+  import FastClick from 'fastclick'
 
   function getArgs (url) {
     let args = {}
@@ -42,6 +44,12 @@
   @import "style/animate.scss";
 
   #app {
-    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 </style>
