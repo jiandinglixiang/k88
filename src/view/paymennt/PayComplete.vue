@@ -7,7 +7,7 @@
     </div>
     <div class="padding margin-top-20">
       <router-link tag="a" :to="detail" class="btn">查看订单</router-link>
-      <router-link tag="a" to="/mine" class="btn btn-out-line margin-top-10" style="color: #FF3333">返回个人中心</router-link>
+      <!--<router-link tag="a" to="/mine" class="btn btn-out-line margin-top-10" style="color: #FF3333">返回个人中心</router-link>-->
     </div>
   </div>
 </template>
