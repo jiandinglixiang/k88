@@ -16,6 +16,7 @@
 
 <style scoped>
   .service-agreement {
+    display: none;
     padding-left: 35px;
     position: relative;
     padding-top: 10px;
