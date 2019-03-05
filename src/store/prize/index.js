@@ -1,10 +1,10 @@
-import * as types from './types';
-import Http from '../Http';
-import loading from '../../common/loading';
-import Lottery from '../../model/common/Lottery';
-import Util from '../../common/util';
-import FootballPrize from '../../model/sports/football/FootballPrize';
-import BasketballPrize from '../../model/sports/basketball/BasketballPrize';
+import * as types from './types'
+import Http from '../Http'
+import loading from '../../common/loading'
+import Lottery from '../../model/common/Lottery'
+import Util from '../../common/util'
+import FootballPrize from '../../model/sports/football/FootballPrize'
+import BasketballPrize from '../../model/sports/basketball/BasketballPrize'
 
 const state = {
   list: [],
@@ -116,12 +116,12 @@ const mutations = {
     state.sportsDetail.begin = Util.timeFmt(date, 'yyyy-MM-dd');
     state.sportsDetail.end = Util.timeFmt(date + oneDateMint, 'yyyy-MM-dd');
   },
-  [types.PRIZE_SPORT_RESET] (state) {
-    let oneDateMint = 86400;
-    let now = Date.now() / 1000;
-    state.sportsDetail.begin = Util.timeFmt(now - oneDateMint, 'yyyy-MM-dd');
-    state.sportsDetail.end = Util.timeFmt(now + oneDateMint, 'yyyy-MM-dd');
-    state.sportsDetail.list = [];
+  [types.PRIZE_SPORT_RESET] (state, date) {
+    let oneDateMint = 86400
+    let now = date ? date * 1 : Date.now() / 1000
+    state.sportsDetail.begin = Util.timeFmt(now - oneDateMint, 'yyyy-MM-dd')
+    state.sportsDetail.end = Util.timeFmt(now + oneDateMint, 'yyyy-MM-dd')
+    state.sportsDetail.list = []
   }
 }
 

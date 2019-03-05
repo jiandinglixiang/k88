@@ -22,19 +22,21 @@
 </template>
 
 <script>
-  import VHead from '../../components/VHead.vue';
-  import {GET_PRIZE_SPORTS_DETAIL, PRIZE_SPORT_DATE_SELECT, PRIZE_SPORT_RESET} from '../../store/prize/types';
-  import Lottery from '../../model/common/Lottery';
-  import SportsPrizePanel from './child/SportsPrizePanel.vue';
-  import { DatetimePicker } from 'mint-ui';
-  import Vue from 'vue';
+  import VHead from '../../components/VHead.vue'
+  import { GET_PRIZE_SPORTS_DETAIL, PRIZE_SPORT_DATE_SELECT, PRIZE_SPORT_RESET } from '../../store/prize/types'
+  import Lottery from '../../model/common/Lottery'
+  import SportsPrizePanel from './child/SportsPrizePanel.vue'
+  import { DatetimePicker } from 'mint-ui'
+  import Vue from 'vue'
+
   Vue.component(DatetimePicker.name, DatetimePicker);
   let lotteryId = 0;
   export default {
     name: 'prizeSportsDetail',
     data () {
+      const date = this.$route.params.date ? new Date(this.$route.params.date * 1000) : Date.now()
       return {
-        pickerValue: new Date(Date.now())
+        pickerValue: date
       }
     },
     computed: {
@@ -68,7 +70,7 @@
     created () {
       lotteryId = this.$router.currentRoute.params.lottery;
       if (lotteryId) {
-        this.$store.commit(PRIZE_SPORT_RESET);
+        this.$store.commit(PRIZE_SPORT_RESET, this.$route.params.date)
         this.$store.dispatch(GET_PRIZE_SPORTS_DETAIL, lotteryId);
       } else {
         this.$router.back();

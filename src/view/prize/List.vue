@@ -73,7 +73,7 @@
       },
       goSportsDetail (item) {
         this.$router.push({
-          name: 'PrizeSportsDetail', params: {lottery: item.lottery_id}
+          name: 'PrizeSportsDetail', params: {lottery: item.lottery_id, date: item.prize_time}
         });
       },
       isDigital (id) {

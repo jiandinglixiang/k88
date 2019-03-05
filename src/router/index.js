@@ -217,7 +217,7 @@ const router = new Router({
       name: 'PrizeDetail',
       component: PrizeDetail
     }, {
-      path: '/prize/sports_detail/:lottery',
+      path: '/prize/sports_detail/:lottery/:date',
       name: 'PrizeSportsDetail',
       component: PrizeSportsDetail
     }, {
