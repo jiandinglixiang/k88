@@ -16,7 +16,7 @@
           <lottery-item :lottery="lottery"></lottery-item>
           <template v-if="(index+1)%3 === 0"><hr></template>
         </template>
-        <lottery-item :lottery="moreLottery"></lottery-item>
+        <!--<lottery-item :lottery="moreLottery"></lottery-item>-->
       </div>
       <!--<div class="information-list">-->
         <!--<information-item :key="key" :information="item" v-for="(item, key) in home.information"></information-item>-->

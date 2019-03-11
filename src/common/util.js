@@ -26,6 +26,19 @@ if (!String.prototype.format) {
   }
 }
 
+export function copy (obj) {
+  const type = Object.prototype.toString.call(obj)
+  let val
+  if (type === '[object Array]') {
+    val = []
+    for (let i in obj) val[i] = copy(obj[i])
+  } else if (type === '[object Object]') {
+    val = {}
+    for (let i in obj) val[i] = copy(obj[i])
+  } else val = obj
+  return val
+}
+
 export default {
   isMobile (mobile) {
     return /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/.test(mobile);
