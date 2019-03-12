@@ -1,8 +1,8 @@
-import * as types from './types';
-import Http from '../Http';
-import loading from '../../common/loading';
-import HomeLotteryItem from '../../model/HomeLotteryItem';
-import HomeLotteryIssue from '../../model/HomeLotteryIssue';
+import * as types from './types'
+import Http from '../Http'
+import loading from '../../common/loading'
+import HomeLotteryItem from '../../model/HomeLotteryItem'
+import HomeLotteryIssue from '../../model/HomeLotteryIssue'
 
 let state = {
   banners: [],
