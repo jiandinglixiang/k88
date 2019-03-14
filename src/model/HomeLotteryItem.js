@@ -97,6 +97,7 @@ export default class HomeLotteryItem {
         break;
       case LOTTERYIDS.FOOTBALL:
       case LOTTERYIDS.BASKETBALL:
+      case LOTTERYIDS.AHFOOTBALL:
       case LOTTERYIDS.SFC:
       case LOTTERYIDS.RXJ:
         this.tipText = this.short_slogon;

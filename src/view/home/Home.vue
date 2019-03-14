@@ -14,7 +14,7 @@
       <div class="lottery-box" v-if="lotteries.length > 0">
         <template v-for="(lottery, index) in lotteries">
           <lottery-item :lottery="lottery"></lottery-item>
-          <template v-if="(index+1)%3 === 0"><hr></template>
+          <!--<template v-if="(index+1)%3 === 0"><hr></template>-->
         </template>
         <!--<lottery-item :lottery="moreLottery"></lottery-item>-->
       </div>
@@ -62,7 +62,7 @@
         return this.home.lotteries.filter(value => {
           return Lottery.isSYXW(value.lottery_id) || Lottery.isDLT(value.lottery_id) ||
             Lottery.isSSQ(value.lottery_id) || (value.lottery_id === 6) ||
-            (value.lottery_id === 7) || (value.lottery_id === 5) ||
+            (value.lottery_id === 7) || (value.lottery_id === 5) || (value.lottery_id === 30) ||
             Lottery.isFC3D(value.lottery_id) || Lottery.isSFCOrRXJ(value.lottery_id);
         });
       }

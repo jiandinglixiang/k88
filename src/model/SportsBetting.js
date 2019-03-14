@@ -11,6 +11,8 @@ import RFSFHolder from './sports/basketball/RFSFHolder';
 import SFCHolder from './sports/basketball/SFCHolder';
 import DXFHolder from './sports/basketball/DXFHolder';
 import BHHHolder from './sports/basketball/HHHolder';
+import QCRQHolder from './sports/ahfooter/QCRQHolder'
+import QCDXQHolder from './sports/ahfooter/QCDXQHolder'
 const weeks = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
 export default class SportsBetting {
   constructor (obj, mode) {
@@ -27,6 +29,8 @@ export default class SportsBetting {
           v.lotteryType = 'football';
         } else if (Lottery.isBasketBall(this.lotteryId)) {
           v.lotteryType = 'basketball';
+        } else if (Lottery.isAHFootBall(this.lotteryId)) {
+          v.lotteryType = 'ahFooter';
         }
         return this.setCurrentHolderFactory(v);
       })
@@ -95,6 +99,10 @@ export default class SportsBetting {
         return new DXFHolder(item);
       case LOTTERYIDS.BASKETBALL_HH:
         return new BHHHolder(item);
+      case LOTTERYIDS.AHFOOTBALL_QCRQ:
+        return new QCRQHolder(item);
+      case LOTTERYIDS.AHFOOTBALL_QCDXQ:
+        return new QCDXQHolder(item);
     }
   }
 }

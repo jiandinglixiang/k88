@@ -47,6 +47,12 @@
         <template v-else-if="schedule.lotteryId === 21">
           <sfc-s-p-f-lottery :schedule="schedule"></sfc-s-p-f-lottery>
         </template>
+        <template v-else-if="schedule.lotteryId === 901">
+          <ah-qc-r-q-lottery :schedule="schedule"></ah-qc-r-q-lottery>
+        </template>
+        <template v-else-if="schedule.lotteryId === 902">
+          <ah-qc-d-x-q-lottery :schedule="schedule"></ah-qc-d-x-q-lottery>
+        </template>
       </div>
     </div>
     <div class="item-tip" v-show="tipVisible">
@@ -92,6 +98,28 @@
         </p>
         <p class="item-tip-bottom basketball" @click="goDetail">详细赛事分析</p>
       </template>
+      <template v-else-if="schedule.lotteryType == 'ahFooter'">
+        <p class="item-tip-list">
+          <span class="item-tip-list-left">历史交锋</span>
+          近{{schedule.history_fight.games_count}}次交战，
+          {{schedule.home}}
+          <span class="text-primary">{{schedule.history_fight.win}}胜</span>
+          <span class="blue">{{schedule.history_fight.equal}}平</span>
+          <span class="green">{{schedule.history_fight.lose}}负</span>
+        </p>
+        <p class="item-tip-list">
+          <span class="item-tip-list-left">近期战绩</span>
+          主队{{schedule.latest_record.home.win}}胜{{schedule.latest_record.home.equal}}平{{schedule.latest_record.home.lose}}负，
+          客队{{schedule.latest_record.guest.win}}胜{{schedule.latest_record.guest.equal}}平{{schedule.latest_record.guest.lose}}负
+        </p>
+        <p class="item-tip-list">
+          <span class="item-tip-list-left">平均赔率</span>
+          <span class="item-tip-list-odds">{{schedule.average_win_odds}}</span>
+          <span class="item-tip-list-odds">{{schedule.average_equal_odds}}</span>
+          <span class="item-tip-list-odds">{{schedule.average_lose_odds}}</span>
+        </p>
+        <p class="item-tip-bottom football" @click="goDetail">详细赛事分析</p>
+      </template>
     </div>
   </div>
 </template>
@@ -109,6 +137,8 @@
   import BasketballDXFLottery from './BasketballDXFLottery.vue'
   import BasketballHHLottery from './BasketballHHLottery.vue'
   import SfcSPFLottery from './SfcSPFLottery.vue'
+  import AhQcRQLottery from './AhQcRQLottery.vue'
+  import AhQcDXQLottery from './AhQcDXQLottery.vue'
   import Toast from '../../../common/toast'
 
   export default {
@@ -146,7 +176,9 @@
       BasketballDXFLottery,
       BasketballSFCLottery,
       BasketballHHLottery,
-      SfcSPFLottery
+      SfcSPFLottery,
+      AhQcRQLottery,
+      AhQcDXQLottery
     },
     created () {
       if (this.index === 0) {

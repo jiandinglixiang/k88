@@ -3,6 +3,7 @@ const SYXWBetting = 'SYXWBetting';
 const SSQBetting = 'SSQBetting';
 const FootballBetting = 'FootballBetting';
 const BasketballBetting = 'BasketballBetting';
+const AHFooter = 'AHFooter';
 const K3Betting = 'K3Betting';
 const SFCBetting = 'SFCBetting';
 const FC3DBetting = 'FC3DBetting';
@@ -33,7 +34,10 @@ export default class Lottery {
       [LOTTERYIDS.BASKETBALL_RFSF]: BasketballBetting,
       [LOTTERYIDS.BASKETBALL_SFC]: BasketballBetting,
       [LOTTERYIDS.BASKETBALL_DXF]: BasketballBetting,
-      [LOTTERYIDS.BASKETBALL_HH]: BasketballBetting
+      [LOTTERYIDS.BASKETBALL_HH]: BasketballBetting,
+      [LOTTERYIDS.AHFOOTBALL]: AHFooter,
+      [LOTTERYIDS.AHFOOTBALL_QCRQ]: AHFooter,
+      [LOTTERYIDS.AHFOOTBALL_QCDXQ]: AHFooter
     }
     return LotteryComponent[lotteryId];
   }
@@ -60,8 +64,11 @@ export default class Lottery {
     return [LOTTERYIDS.BASKETBALL_DXF, LOTTERYIDS.BASKETBALL_HH, LOTTERYIDS.BASKETBALL_SFC,
       LOTTERYIDS.BASKETBALL_RFSF, LOTTERYIDS.BASKETBALL_SF].indexOf(parseInt(lotteryId)) !== -1;
   }
+  static isAHFootBall (lotteryId) {
+    return [LOTTERYIDS.AHFOOTBALL_QCRQ, LOTTERYIDS.AHFOOTBALL_QCDXQ].indexOf(parseInt(lotteryId)) !== -1;
+  }
   static isRecommend (lotteryId) {
-    return this.isFootBall(lotteryId) || this.isBasketBall(lotteryId);
+    return this.isFootBall(lotteryId) || this.isBasketBall(lotteryId) || this.isAHFootBall(lotteryId);
   }
   static isSFCOrRXJ (lotteryId) {
     return [LOTTERYIDS.SFC, LOTTERYIDS.RXJ].indexOf(parseInt(lotteryId)) !== -1;
@@ -79,7 +86,8 @@ export default class Lottery {
     return [LOTTERYIDS.RXJ, LOTTERYIDS.SFC, LOTTERYIDS.DLT, LOTTERYIDS.SSQ, LOTTERYIDS.FOOTBALL_SPF, LOTTERYIDS.FOOTBALL_RQSPF, LOTTERYIDS.FOOTBALL_BF, LOTTERYIDS.FOOTBALL_ZJQ,
       LOTTERYIDS.FOOTBALL_BQC, LOTTERYIDS.FOOTBALL_HH,
       LOTTERYIDS.BASKETBALL_DXF, LOTTERYIDS.BASKETBALL_HH, LOTTERYIDS.BASKETBALL_SFC,
-      LOTTERYIDS.BASKETBALL_RFSF, LOTTERYIDS.BASKETBALL_SF].indexOf(parseInt(ID)) !== -1;
+      LOTTERYIDS.BASKETBALL_RFSF, LOTTERYIDS.BASKETBALL_SF,
+      LOTTERYIDS.AHFOOTBALL_QCRQ, LOTTERYIDS.AHFOOTBALL_QCRQ].indexOf(parseInt(ID)) !== -1;
   }
   static isJointPurchase (lotteryId) {
     if (typeof lotteryId === 'string') {
@@ -101,7 +109,10 @@ export default class Lottery {
       LOTTERYIDS.SSQ,
       LOTTERYIDS.DLT,
       LOTTERYIDS.FOOTBALL,
-      LOTTERYIDS.BASKETBALL
+      LOTTERYIDS.BASKETBALL,
+      LOTTERYIDS.AHFOOTBALL,
+      LOTTERYIDS.AHFOOTBALL_QCRQ,
+      LOTTERYIDS.AHFOOTBALL_QCDXQ
     ].indexOf(lotteryId) !== -1;
   }
   static getHelpUrl (lotteryId) {

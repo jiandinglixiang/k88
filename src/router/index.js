@@ -51,6 +51,7 @@ import PrizeDetail from '../view/prize/Detail.vue';
 import PrizeSportsDetail from '../view/prize/SportsDetail.vue';
 import { pageJump } from '../common/store';
 import Score from '../view/score/score.vue';// -我的
+import AHFooter from '../view/asianHandicap/AHFooter.vue';
 
 Vue.use(Router)
 
@@ -233,6 +234,11 @@ const router = new Router({
       path: '/Score',
       name: 'Score',
       component: Score
+    },
+    {
+      path: '/asianHandicap/ah_footer',
+      name: 'AHFooter',
+      component: AHFooter
     }
   ]
 });

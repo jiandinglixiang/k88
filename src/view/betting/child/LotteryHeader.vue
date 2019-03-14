@@ -6,6 +6,7 @@
         {{currentType.value}}
         <i class="icon" :class="{'up': panelVisible}"></i>
       </span>
+      <span class="refresh-icon"></span>
       <span class="filter-icon" v-show="hasFilter()" @click="openFilter"></span>
       <span class="question-icon" @click="goHelp"></span>
     </div>
@@ -61,7 +62,9 @@
         this.panelVisible = !this.panelVisible;
       },
       selectPlayType (item) {
-        if (Lottery.isFootBall(this.lottery) || Lottery.isBasketBall(this.lottery)) {
+        console.log(this.lottery, item)
+        if (Lottery.isFootBall(this.lottery) || Lottery.isBasketBall(this.lottery) || Lottery.isAHFootBall(this.lottery)) {
+          console.log(item)
           this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT, item);
         } else if (Lottery.isSSQ(this.lottery) || Lottery.isDLT(this.lottery) ||
           Lottery.isSYXW(this.lottery) || Lottery.isK3(this.lottery) || Lottery.isFC3D(this.lottery)) {
@@ -89,7 +92,7 @@
         })
       },
       hasFilter () {
-        return Lottery.isFootBall(this.lottery) || Lottery.isBasketBall(this.lottery);
+        return Lottery.isFootBall(this.lottery) || Lottery.isBasketBall(this.lottery) || Lottery.isAHFootBall(this.lottery);
       },
       openFilter () {
         this.$store.commit(SPORTS_FILTER_PANEL_CHANGE, true);
@@ -157,6 +160,13 @@
   }
   .sport-lottery-header .select-type .icon.up {
     transform: rotate(180deg);
+  }
+  .sport-lottery-header .refresh-icon {
+    background: url("../../../assets/betting/ic_refrersh.png") no-repeat center;
+    background-size: 50% 50%;
+    width: 35px; height: 35px;
+    position: absolute;
+    right: 60px; top: 0;
   }
   .sport-lottery-header .filter-icon {
     background: url("../../../assets/betting/filter.png") no-repeat center;

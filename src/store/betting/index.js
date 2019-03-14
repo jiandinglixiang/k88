@@ -36,6 +36,8 @@ const state = {
   [LOTTERYIDS.BASKETBALL_HH]: { playType: {id: 705, value: '混合过关'}, mode: 2, scheme: [] },
   [LOTTERYIDS.SFC]: [],
   [LOTTERYIDS.RXJ]: [],
+  [LOTTERYIDS.AHFOOTBALL_QCRQ]: { playType: {id: 901, value: '全场让球'}, mode: 2, scheme: [] },
+  [LOTTERYIDS.AHFOOTBALL_QCDXQ]: { playType: {id: 902, value: '全场大/小球'}, mode: 2, scheme: [] },
   sfc: {issues: [], current: {}},
   confirm: {
     bettingList: [],
@@ -174,6 +176,7 @@ const mutations = {
   [types.CURRENT_SPORT_PLAY_TYPE_SELECT] (state, data) {
     const obj = state[state.lottery];
     let schemes = [...obj.scheme];
+    console.log(obj, schemes, data)
     schemes[obj.mode === 2 ? 0 : 1] = new SportsBetting(data, obj.mode);
     obj.scheme = schemes;
   },
