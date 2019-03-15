@@ -12,11 +12,13 @@
         <div class="col-40 bg-red">大</div>
         <div class="col-40 bg-blue">小</div>
       </div>
-      <div class="box-item row text-center"
-           v-for="(item) in schedule.holderList">
-        <div class="col bg-dark">{{ item.text }}</div>
-        <div class="col-40 text-color">{{ item.value }}</div>
-        <div class="col-40 text-color">{{ item.value }}</div>
+      <div class="box-bd">
+        <div class="box-item row"
+             v-for="(item, index) in schedule.holderList"
+             :class="{'border-top': index > 0}">
+          <div class="col bg-dark">{{ item.text }}</div>
+          <div class="col-67 text-color">{{ item.value }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -55,17 +57,28 @@
           background-color: #3393ff;
         }
       }
+      .box-bd {
+        overflow: hidden;
+      }
       .box-item {
+        float: left;
         margin: 0;
         height: 30px;
         line-height: 30px;
         color: #999;
+        width: 60%;
         .col-40.selected {
             background-color: #ffc63a;
             color: #131313;
           }
         .col {
           color: #131313;
+        }
+        .col-67 {
+          -moz-flex: 0 0 7%;
+          -ms-flex: 0 0 67%;
+          flex: 0 0 67%;
+          max-width: 67%;
         }
         &.border-top {
           border-top: 1px solid #3f3f3f;
@@ -77,6 +90,13 @@
           }
           &.down {
             color: #f33;
+          }
+        }
+        &:nth-child(even) {
+          width: 40%;
+          .bg-dark {
+            display: none;
+
           }
         }
         &:nth-child(odd) {
