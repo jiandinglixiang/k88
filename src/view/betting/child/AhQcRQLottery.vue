@@ -6,30 +6,30 @@
       <div class="col col-40">{{schedule.guest}}</div>
     </div>
     <div class="box order-list" v-if="isConfirm">
-      <div class=" ellipsis text-center box-icon selected margin-bottom">曼城（-1.0/-1.5）<span>1.66</span></div>
-      <!-- 单关显示 -->
-      <div class="row">
-        <div class="col col-40 padding-right-10 text-left c-white">
-          <div class="row ellipsis">
-            <div class="col">投注金额</div>
-            <div class="col text-right">1注</div>
-          </div>
-          <div class="">投注上限 <span>xxx.00</span></div>
-        </div>
-        <div class="col">
-          <div class="input-text text-center">
-            <input type="text" placeholder="请输入投注金额">
-          </div>
-        </div>
-      </div>
+      <div class=" ellipsis text-center box-icon selected margin-bottom">{{boxText}} <span>{{ boxValue }}</span></div>
+      <!--单关显示 -->
+      <!--<div class="row">-->
+      <!--<div class="col col-40 padding-right-10 text-left c-white">-->
+      <!--<div class="row ellipsis">-->
+      <!--<div class="col">投注金额</div>-->
+      <!--<div class="col text-right">1注</div>-->
+      <!--</div>-->
+      <!--<div class="">投注上限 <span>xxx.00</span></div>-->
+      <!--</div>-->
+      <!--<div class="col">-->
+      <!--<div class="input-text text-center">-->
+      <!--<input type="text" placeholder="请输入投注金额">-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
     </div>
     <div class="box" v-else>
       <div class="box-item row"
            @click="onOptionSelected(item)"
            v-for="(item, index) in schedule.holderList"
            :class="{selected: isSelected(item), 'border-top': index > 1}">
-        <div class="col-66 text-center">{{ item.text }}</div>
-        <div class="col text-color">{{ item.value }}</div>
+        <div class="col-60 text-center">{{ item.text }}</div>
+        <div class="col text-color">{{ item.value }}<span class="arrow-icon"></span></div>
       </div>
     </div>
   </div>
@@ -37,17 +37,38 @@
 
 <script>
   import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
+
   export default {
     name: 'ahQcRQLottery',
     props: ['schedule', 'isConfirm'],
+    computed: {
+      boxText () {
+        let items = []
+        let name = ''
+        this.schedule.selected.map(v => {
+          if (v.key.substring(4, 3) === '1') {
+            name = this.schedule.home
+          } else {
+            name = this.schedule.guest
+          }
+          items.push(name, v.text)
+        })
+        return items.join('')
+      },
+      boxValue () {
+        let items = []
+        this.schedule.selected.map(v => items.push(v.value))
+        return items.join(',')
+      }
+    },
     methods: {
       onOptionSelected (item) {
-        this.schedule.onOptionSelected(item);
-        this.$store.commit(SPORTS_OPTION_SELECTED);
-        this.$emit('onOptionSelected');
+        this.schedule.onOptionSelected(item)
+        this.$store.commit(SPORTS_OPTION_SELECTED)
+        this.$emit('onOptionSelected')
       },
       isSelected (item) {
-        return this.schedule.selected.indexOf(item) !== -1;
+        return this.schedule.selected.indexOf(item) !== -1
       }
     }
   }
@@ -75,13 +96,30 @@
         &.border-top {
           border-top: 1px solid #3f3f3f;
         }
+        .arrow-icon {
+          display: none;
+          vertical-align: middle;
+          margin-left: 5px;
+          width: 0;
+          height: 0;
+          border-width: 4px;
+          border-style: solid dashed dashed dashed;
+        }
         .text-color {
           color: #fff;
           &.up {
             color: #1ac456;
+            .arrow-icon {
+              display: inline-block;
+              border-color: #1ac456 transparent transparent transparent;
+            }
           }
           &.down {
             color: #f33;
+            .arrow-icon {
+              display: inline-block;
+              border-color: #f33 transparent transparent transparent;
+            }
           }
         }
         &:nth-child(odd) {

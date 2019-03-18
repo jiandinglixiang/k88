@@ -8,7 +8,18 @@
       </div>
       <!--<scheme-box>-->
       <div style="padding: 2.3% 2.3% 0 2.3%;">
-        <div class="scheme-box-item" :class="{'has-sure': betting.mode === 2}" v-for="(betting, key) in bettingList">
+        <div class="scheme-box-item" v-if="betting.lotteryId === 901" v-for="(betting, key) in bettingList">
+          <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
+          <template v-if="betting.lotteryId === 901">
+            <ah-qc-r-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                               :schedule="betting"></ah-qc-r-q-lottery>
+          </template>
+          <template v-else-if="betting.lotteryId === 902">
+            <ah-qc-d-x-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                 :schedule="betting"></ah-qc-d-x-q-lottery>
+          </template>
+        </div>
+        <div class="scheme-box-item" :class="{'has-sure': betting.mode === 2}" v-for="(betting, key) in bettingList" v-else>
           <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
           <template v-if="betting.lotteryId === 601">
             <football-s-p-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
@@ -166,6 +177,8 @@
   import BasketballRFSFLottery from './child/BasketballRFSFLottery.vue'
   import BasketballDXFLottery from './child/BasketballDXFLottery.vue'
   import BasketballHHLottery from './child/BasketballHHLottery.vue'
+  import AhQcRQLottery from './child/AhQcRQLottery.vue'
+  import AhQcDXQLottery from './child/AhQcDXQLottery.vue'
   import { mapActions, mapState } from 'vuex'
   import Vue from 'vue'
   import { Popup } from 'mint-ui'
@@ -176,8 +189,8 @@
   import { MINE_INFO } from '../../store/user/types'
   import { H5postmsg } from '../../common/postmsg'
 
-  Vue.component(Popup.name, Popup);
-  let calculate;
+  Vue.component(Popup.name, Popup)
+  let calculate
   export default {
     name: 'sportsConfirm',
     data () {
@@ -199,22 +212,24 @@
         lotteryId: state => state.betting.lottery
       }),
       seriesText () {
-        let textArr = this.series.map(v => v.value);
-        return textArr.join(',') || '投注方式';
+        let textArr = this.series.map(v => v.value)
+        return textArr.join(',') || '投注方式'
       },
       totalMoney () {
-        return parseInt(this.confirm.ticketPrice * this.confirm.stakeCount * this.confirm.multiple);
+        return parseInt(this.confirm.ticketPrice * this.confirm.stakeCount * this.confirm.multiple)
       },
       title () {
         if (Lottery.isFootBall(this.lotteryId)) {
-          return '竞彩足球';
+          return '竞彩足球'
         } else if (Lottery.isBasketBall(this.lotteryId)) {
-          return '竞彩篮球';
+          return '竞彩篮球'
+        } else if (Lottery.isAHFootBall(this.lotteryId)) {
+          return '足球亚盘'
         }
       },
       bettingList () {
         return this.confirm.bettingList.filter(value => {
-          return value.selected.length > 0;
+          return value.selected.length > 0
         })
       }
     },
@@ -223,64 +238,64 @@
         getMineInfo: MINE_INFO
       }),
       addBetting () {
-        this.$router.back();
+        this.$router.back()
       },
       toggle () {
-        this.isShow = !this.isShow;
+        this.isShow = !this.isShow
       },
       recharge () {
         if (H5postmsg.isH5) {
-          window.parent.postMessage(JSON.stringify({response: 3}), '*');
+          window.parent.postMessage(JSON.stringify({ response: 3 }), '*')
         } else {
-          location.href = 'gorecharge';
+          location.href = 'gorecharge'
         }
         // this.isShow = !this.isShow;
       },
       clearBettingList () {
-        this.$store.commit(SPORTS_CONFIRM_CLEAR_TICKETS);
-        this.clearSeries();
-        this.setProjectBonus();
+        this.$store.commit(SPORTS_CONFIRM_CLEAR_TICKETS)
+        this.clearSeries()
+        this.setProjectBonus()
       },
       deleteBetting (index) {
-        this.$store.commit(SPORTS_CONFIRM_DELETE_TICKET, index);
-        this.clearSeries();
-        this.setProjectBonus();
+        this.$store.commit(SPORTS_CONFIRM_DELETE_TICKET, index)
+        this.clearSeries()
+        this.setProjectBonus()
       },
       clearSeries () {
         if (this.confirm.mode === 2) {
-          const list = this.getPopupList();
+          const list = this.getPopupList()
           if (list[0][0]) {
-            let arr = [];
+            let arr = []
             for (let i = 0; i < this.series.length; i++) {
               list.map(value => {
                 value.map(v => {
                   if (v.key === this.series[i].key) {
-                    arr.push(this.series[i]);
+                    arr.push(this.series[i])
                   }
                 })
               })
             }
-            this.series = arr;
+            this.series = arr
           } else {
-            this.series = [];
+            this.series = []
           }
         }
       },
       multipleChange (v) {
-        this.$store.commit(SPORTS_MULTIPLE_CHANGE, v);
+        this.$store.commit(SPORTS_MULTIPLE_CHANGE, v)
       },
       confirmPayment () {
         if (this.series.length <= 0) {
-          Toast('请选择投注方式');
-          return;
+          Toast('请选择投注方式')
+          return
         }
         if (this.confirm.multiple < 1) {
-          Toast('倍数不能小于1');
-          return;
+          Toast('倍数不能小于1')
+          return
         }
 
-        let seriesArr = [];
-        this.series.map(v => seriesArr.push(v.key));
+        let seriesArr = []
+        this.series.map(v => seriesArr.push(v.key))
         const result = {
           multiple: this.confirm.multiple,
           lottery_id: this.lotteryId,
@@ -300,161 +315,161 @@
               match_round_id: value.match_round_id
             }
           })
-        };
+        }
         this.$store.dispatch(SPORTS_CONFIRM_PAYMENT, result).then(() => {
           if (this.confirm.id) {
             if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
               // Toast('您的账户余额不足，请先充值！');
               // this.$router.push({ name: 'Payment', query: {lack: (this.confirm.stakeCount * this.confirm.multiple * 2 - this.mine.balance).toFixed(2)} });
-              this.toggle();
+              this.toggle()
             } else {
               this.$router.push({
                 name: 'PaymentOrder',
-                query: {id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP'}
-              });
+                query: { id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP' }
+              })
             }
           } else {
             // this.$router.push({ name: 'Login', query: {redirect: this.$router.currentRoute.path} });
-            Toast('无订单id,登录已过期,请重新登录!');
+            Toast('无订单id,登录已过期,请重新登录!')
           }
-        });
+        })
       },
       getPopupList () {
-        return Series.getSeriesList(this.lotteryId, this.bettingList, this.sure);
+        return Series.getSeriesList(this.lotteryId, this.bettingList, this.sure)
       },
       onPopupVisible () {
         if (this.confirm.mode === 2) {
-          this.isMulti = this.confirm.isMulti;
-          this.popupList = this.getPopupList();
-          this.popupSelected = this.series;
-          this.popupVisible = true;
+          this.isMulti = this.confirm.isMulti
+          this.popupList = this.getPopupList()
+          this.popupSelected = this.series
+          this.popupVisible = true
         }
       },
       hidePopupVisible () {
-        this.popupVisible = false;
+        this.popupVisible = false
       },
       confirmPopup () {
-        this.series = this.popupSelected;
+        this.series = this.popupSelected
         this.$store.commit(SPORTS_CONFIRM_SERIES_SET, {
           series: this.series, isMulti: this.isMulti
-        });
-        this.setProjectBonus();
-        this.hidePopupVisible();
+        })
+        this.setProjectBonus()
+        this.hidePopupVisible()
       },
       popupNavChange (index) {
         if (this.popupNavIndex !== index) {
-          this.popupNavIndex = index;
+          this.popupNavIndex = index
         }
       },
       popupIsSelected (item) {
-        return this.popupSelected.indexOf(item) !== -1;
+        return this.popupSelected.indexOf(item) !== -1
       },
       popupItemSelected (item) {
         if (this.popupNavIndex === 0) {
           if (this.isMulti) {
-            this.popupSelected = [item];
-            this.isMulti = false;
+            this.popupSelected = [item]
+            this.isMulti = false
           } else {
-            const i = this.popupSelected.indexOf(item);
-            i === -1 ? this.popupSelected.push(item) : this.popupSelected.splice(i, 1);
+            const i = this.popupSelected.indexOf(item)
+            i === -1 ? this.popupSelected.push(item) : this.popupSelected.splice(i, 1)
           }
         } else {
-          this.isMulti = true;
-          this.popupSelected = [item];
+          this.isMulti = true
+          this.popupSelected = [item]
         }
       },
       addSure (betting) {
         if (this.isMulti) {
-          return;
+          return
         }
         if (betting.isSure) {
-          this.sure--; // 是否会不一致
-          betting.isSure = false;
-          this.setProjectBonus();
+          this.sure-- // 是否会不一致
+          betting.isSure = false
+          this.setProjectBonus()
         } else {
-          const canSure = Series.sureCount(this.series);
+          const canSure = Series.sureCount(this.series)
           if (canSure + 1 < this.bettingList.length) {
-            this.sure++;
-            betting.isSure = true;
+            this.sure++
+            betting.isSure = true
             if (this.sure > canSure) {
-              this.clearSeries();
+              this.clearSeries()
               if (Series.sureCount(this.series) + 1 === this.bettingList.length) {
-                this.clearSeries();
-                this.sure = 0;
+                this.clearSeries()
+                this.sure = 0
                 this.bettingList = this.bettingList.map(v => {
-                  v.isSure = false;
-                  return v;
+                  v.isSure = false
+                  return v
                 })
               }
             }
-            this.setProjectBonus();
+            this.setProjectBonus()
           }
         }
       },
       setProjectBonus () {
         if (!calculate) {
-          calculate = new SportsCalculate(this.lotteryId);
+          calculate = new SportsCalculate(this.lotteryId)
         }
-        calculate.setPlayType(this.lotteryId);
+        calculate.setPlayType(this.lotteryId)
         if (this.series.length > 0) {
           calculate.setProjectBonus(this.series, this.bettingList, this.confirm.multiple).then((value) => {
-            console.log(value);
+            console.log(value)
             if (value.count) {
-              calculate.tickets = value.betlist;
-              this.$store.commit(SPORTS_BONUS_CHANGE, value);
+              calculate.tickets = value.betlist
+              this.$store.commit(SPORTS_BONUS_CHANGE, value)
             } else {
-              Toast('预计奖金计算出错，请重新选择');
-              this.$store.commit(SPORTS_BONUS_CHANGE, {min: 0, max: 0, count: 0});
+              Toast('预计奖金计算出错，请重新选择')
+              this.$store.commit(SPORTS_BONUS_CHANGE, { min: 0, max: 0, count: 0 })
             }
-          });
+          })
         } else {
-          this.$store.commit(SPORTS_BONUS_CHANGE, {min: 0, max: 0, count: 0});
+          this.$store.commit(SPORTS_BONUS_CHANGE, { min: 0, max: 0, count: 0 })
         }
       },
       onOptionSelected () {
-        this.clearSeries();
-        this.setProjectBonus();
+        this.clearSeries()
+        this.setProjectBonus()
       },
       confirmOptimize () {
         if (this.isMulti) {
-          Toast('奖金优化不支持复杂玩法！');
-          return;
+          Toast('奖金优化不支持复杂玩法！')
+          return
         }
         if (this.confirm.stakeCount > 99) {
-          Toast('奖金优化只支持单注100倍以下！');
-          return;
+          Toast('奖金优化只支持单注100倍以下！')
+          return
         }
-        this.$store.commit(SPORTS_CONFIRM_OPTIMIZE, calculate.getSportTickets(this.bettingList));
-        this.$router.push({name: 'SportsOptimize'});
+        this.$store.commit(SPORTS_CONFIRM_OPTIMIZE, calculate.getSportTickets(this.bettingList))
+        this.$router.push({ name: 'SportsOptimize' })
       }
     },
     created () {
       if (this.bettingList.length === 0) {
-        this.$store.commit(SPORTS_CONFIRM_SERIES_CLEAR);
-        this.$router.back();
+        this.$store.commit(SPORTS_CONFIRM_SERIES_CLEAR)
+        this.$router.back()
       } else {
         if (this.confirm.mode === 1) {
-          this.series = [{value: '单关', key: '101'}];
+          this.series = [{ value: '单关', key: '101' }]
         } else {
           if (this.confirm.series.length > 0) {
-            this.series = this.confirm.series;
-            this.isMulti = this.confirm.isMulti;
+            this.series = this.confirm.series
+            this.isMulti = this.confirm.isMulti
           } else {
-            const list = this.getPopupList();
+            const list = this.getPopupList()
             if (list[0][0]) {
-              this.series = [list[0][list[0].length - 1]];
+              this.series = [list[0][list[0].length - 1]]
               this.bettingList = this.bettingList.map(v => {
-                v.isSure = false;
-                return v;
-              });
+                v.isSure = false
+                return v
+              })
               this.$store.commit(SPORTS_CONFIRM_SERIES_SET, {
                 series: this.series, isMulti: this.isMulti
-              });
+              })
             }
           }
         }
-        this.setProjectBonus();
-        this.getMineInfo();
+        this.setProjectBonus()
+        this.getMineInfo()
       }
     },
     components: {
@@ -472,7 +487,9 @@
       BasketballRFSFLottery,
       BasketballSFCLottery,
       BasketballDXFLottery,
-      BasketballHHLottery
+      BasketballHHLottery,
+      AhQcRQLottery,
+      AhQcDXQLottery
     }
   }
 </script>
@@ -712,6 +729,7 @@
     width: 7px;
     height: 12px;
   }
+
   .modal {
     position: fixed;
     left: 0;
@@ -723,6 +741,7 @@
     background: rgba(0, 0, 0, 0.6);
     zoom: 1;
   }
+
   .panel {
     margin: 250px auto 0;
     width: 70%;
@@ -731,27 +750,33 @@
     overflow: hidden;
     text-align: center;
   }
+
   .tit {
     padding: 20px 10px 15px;
   }
+
   .tit h1 {
     font-weight: normal;
     font-size: 18px;
     color: #333;
   }
+
   .panel .btns {
     display: flex;
     border-top: 1px solid #ccc;
   }
+
   .panel .btns div {
     flex: 1;
     height: 38px;
     line-height: 38px;
     font-size: 16px;
   }
+
   .panel .btns .btn-cancel {
     color: $c999999;
   }
+
   .panel .btns .btn-sure {
     background-color: $cffC63A;
     color: $c131313;
