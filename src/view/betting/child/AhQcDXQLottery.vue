@@ -14,8 +14,9 @@
       </div>
       <div class="box-bd">
         <div class="box-item row"
+             @click="onOptionSelected(item)"
              v-for="(item, index) in schedule.holderList"
-             :class="{'border-top': index > 0}">
+             :class="{selected: isSelected(item), 'border-top': index > 0}">
           <div class="col bg-dark">{{ item.text }}</div>
           <div class="col-67 text-color">{{ item.value }}</div>
         </div>
@@ -25,10 +26,19 @@
 </template>
 
 <script>
+  import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
   export default {
     name: 'ahQcDXQLottery',
     props: ['schedule', 'isConfirm'],
     methods: {
+      onOptionSelected (item) {
+        this.schedule.onOptionSelected(item)
+        this.$store.commit(SPORTS_OPTION_SELECTED)
+        this.$emit('onOptionSelected')
+      },
+      isSelected (item) {
+        return this.schedule.selected.indexOf(item) !== -1
+      }
     }
   }
 </script>
@@ -67,10 +77,12 @@
         line-height: 30px;
         color: #999;
         width: 60%;
-        .col-40.selected {
+        &.selected {
+        .col-67 {
             background-color: #ffc63a;
             color: #131313;
           }
+        }
         .col {
           color: #131313;
         }

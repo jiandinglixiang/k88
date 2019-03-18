@@ -21,4 +21,15 @@ export default class QCDXQHolder extends SportsHolder {
     }
     this.holderList.reverse();
   }
+  onOptionSelected (item) {
+    const index = this.selected.indexOf(item);
+    if (index !== -1) {
+      this.selected.splice(index, 1);
+    } else {
+      this.selected.splice(0, this.selected.length);
+      this.selected.push(item);
+    }
+    this.setIsChecked();
+    console.log(item)
+  }
 }

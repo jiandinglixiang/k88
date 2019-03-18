@@ -22,10 +22,15 @@ export default class QCRQHolder extends SportsHolder {
     this.holderList.reverse();
   }
   onOptionSelected (item) {
-    console.log(this.selected, item);
+    console.log(item)
     const index = this.selected.indexOf(item);
-
-    index !== -1 ? this.selected.splice(index, 1) : this.selected.push(item);
+    if (index !== -1) {
+      this.selected.splice(index, 1);
+    } else {
+      this.selected.splice(0, this.selected.length);
+      this.selected.push(item);
+    }
+    console.log(this.selected);
     this.setIsChecked();
   }
 }
