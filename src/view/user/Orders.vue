@@ -1,6 +1,6 @@
 <template>
   <div class="orders">
-    <v-head :hide-back="true" title="我的投注"></v-head>
+    <v-head :hide-back="true" title="我的投注" :hideOrder="true"></v-head>
     <nav @click.stop="changeStatus" class="row text-center bg-black text-sm" data-top="y">
       <div :class="{active: listIndex['0'] === '0'}" class="col col-25" data-value="0,0"><span>全部</span></div>
       <div :class="{active: listIndex['0'] === '1'}" class="col col-25" data-value="1,-1"><span>待开奖</span></div>

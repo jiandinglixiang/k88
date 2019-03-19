@@ -8,18 +8,9 @@
       </div>
       <!--<scheme-box>-->
       <div style="padding: 2.3% 2.3% 0 2.3%;">
-        <div class="scheme-box-item" v-if="betting.lotteryId === 901" v-for="(betting, key) in bettingList">
-          <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-          <template v-if="betting.lotteryId === 901">
-            <ah-qc-r-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                               :schedule="betting"></ah-qc-r-q-lottery>
-          </template>
-          <template v-else-if="betting.lotteryId === 902">
-            <ah-qc-d-x-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                 :schedule="betting"></ah-qc-d-x-q-lottery>
-          </template>
-        </div>
-        <div class="scheme-box-item" :class="{'has-sure': betting.mode === 2}" v-for="(betting, key) in bettingList" v-else>
+        <div class="scheme-box-item"
+             :class="{'has-sure': betting.mode === 2,'sure-none':betting.lotteryId===901||betting.lotteryId===902}"
+             v-for="(betting, key) in bettingList">
           <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
           <template v-if="betting.lotteryId === 601">
             <football-s-p-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
@@ -65,13 +56,74 @@
             <basketball-h-h-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                     :schedule="betting"></basketball-h-h-lottery>
           </template>
+          <template v-else-if="betting.lotteryId === 901">
+            <ah-qc-r-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                               :schedule="betting"></ah-qc-r-q-lottery>
+          </template>
+          <template v-else-if="betting.lotteryId === 902">
+            <ah-qc-d-x-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                                 :schedule="betting"></ah-qc-d-x-q-lottery>
+
+          </template>
           <span class="sure" :class="{selected: betting.isSure}" @click="addSure(betting)">胆</span>
         </div>
       </div>
       <!--</scheme-box>-->
       <service-agreement></service-agreement>
     </div>
-    <div class="bottom-fixed">
+    <div class="bottom-fixed ahfootball-bottom-fixed" v-if="lotteryId === 901||lotteryId === 902">
+      <div class="top">
+        <div class="row control text-normal" v-for="item in bettingList">
+          <div class="col col-60 padding-right-10">
+            <div class="row margin-bottom-7">
+              <div class="col col-70">
+                <span>{{seriesText}}</span>
+              </div>
+              <div class="col text-right">
+                <span class="">1注</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-70">投注上限 <span>xxx.00</span>
+              </div>
+              <div class="col text-right">投注金额</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-text text-center">
+              <input type="text" placeholder="请输入投注金额">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-more text-center text-light" @click="showMore">
+        <span class="down-up"></span>点击选择更多串关投注种类
+      </div>
+      <div class="row">
+        <div class="col col-60 padding-left-10 padding-right-10 text-normal">
+          <div class="row margin-bottom-7">
+            <div class="col col-60">
+              <span>总投注金额</span>
+            </div>
+            <div class="col text-right c-blue">
+              <span>54.00</span>元
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-60">
+              <span>预计奖金</span>
+            </div>
+            <div class="col text-right text-primary">
+              <span>12848.00</span>元
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-fixed" v-else>
       <div class="row top">
         <div class="col col-50 col-center" @click="onPopupVisible">
           <span class="text-normal ellipsis"
@@ -441,6 +493,9 @@
         }
         this.$store.commit(SPORTS_CONFIRM_OPTIMIZE, calculate.getSportTickets(this.bettingList))
         this.$router.push({ name: 'SportsOptimize' })
+      },
+      showMore () {
+        Toast('show')
       }
     },
     created () {
@@ -603,6 +658,13 @@
 
   .sports-confirm .scheme-box-item.has-sure .sure {
     display: block;
+  }
+
+  .sports-confirm .scheme-box-item.has-sure.sure-none {
+    padding: 10px 5px 5px 30px;
+    .sure {
+      display: none;
+    }
   }
 
   .sports-confirm .scheme-box-item .sure {
@@ -780,5 +842,67 @@
   .panel .btns .btn-sure {
     background-color: $cffC63A;
     color: $c131313;
+  }
+
+  .sports-confirm .ahfootball-bottom-fixed {
+    height: auto;
+    color: $cFFfFFF;
+    .top {
+      overflow: hidden;
+      padding: 0;
+      height: 52px;
+      background-color: #313131;
+      border-top: 0;
+      border-top-left-radius: 14px;
+      border-top-right-radius: 14px;
+      &.show {
+        overflow: visible;
+        height: 100%;
+      }
+      .control {
+        margin: 0;
+        padding: 6px 10px;
+        border-top: 1px solid #494949;
+        &:first-child {
+          border-top: 0;
+        }
+      }
+    }
+    .summary {
+      border-top: 1px solid $c1c1c1c;
+    }
+    .margin-bottom-7 {
+      margin-bottom: 7px;
+    }
+    .btn-more {
+      height: 22px;
+      line-height: 21px;
+      background-color: $c1c1c1c;
+      .down-up {
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+        margin-bottom: 2px;
+        margin-right: 5px;
+      }
+    }
+    .btn {
+      border-radius: 0;
+    }
+    .c-blue {
+      color: #3393ff;
+    }
+  }
+
+  .input-text {
+    overflow: hidden;
+    background-color: #494949;
+    border-radius: 4px;
+    input {
+      background: transparent;
+      border: none;
+      text-align: center;
+      color: $cFFfFFF;
+    }
   }
 </style>

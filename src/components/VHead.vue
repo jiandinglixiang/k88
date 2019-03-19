@@ -2,6 +2,7 @@
   <div class="head">
     <span class="back-icon" @click="goBack" v-if="!hideBack"></span>
     <div>{{title}}</div>
+    <span class="order-icon" @click="goEleSport" v-if="hideOrder"></span>
     <span class="right">
       <slot name="right"></slot>
     </span>
@@ -14,7 +15,7 @@
 
   export default {
     name: 'head',
-    props: ['title', 'hideBack', 'goApp'],
+    props: ['title', 'hideBack', 'goApp', 'hideOrder'],
     methods: {
       goBack () {
         if (this.goApp) {
@@ -28,6 +29,10 @@
         } else {
           router.go(-1);
         }
+      },
+      goEleSport () {
+        // 电竞订单
+        window.parent.postMessage(JSON.stringify({response: 7}), '*');
       }
     }
   }
@@ -46,6 +51,16 @@
     text-align: center;
     line-height: 40px;
     margin-bottom: 1px;
+    .order-icon {
+      position: absolute;
+      right: 10px;
+      top: 2px;
+      width: 36px;
+      height: 36px;
+      background: url("../assets/icon/icon_electronic_sports.png") no-repeat center;
+      -webkit-background-size: cover;
+      background-size: cover;
+    }
   }
 
   .head .back-icon {

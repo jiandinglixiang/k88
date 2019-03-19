@@ -53,6 +53,10 @@
       border-radius: 4px;
       text-align: center;
       font-size: 14px;
+      &.selected {
+        background-color: #ffc63a;
+        color: #131313;
+      }
       .box-hd {
         height: 20px;
         line-height: 20px;
@@ -87,7 +91,7 @@
           color: #131313;
         }
         .col-67 {
-          -moz-flex: 0 0 7%;
+          -moz-flex: 0 0 67%;
           -ms-flex: 0 0 67%;
           flex: 0 0 67%;
           max-width: 67%;
@@ -108,7 +112,12 @@
           width: 40%;
           .bg-dark {
             display: none;
-
+          }
+          .col-67 {
+            -moz-flex: 0 0 100%;
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
           }
         }
         &:nth-child(odd) {

@@ -6,7 +6,7 @@
       <div class="col col-40">{{schedule.guest}}</div>
     </div>
     <div class="box order-list" v-if="isConfirm">
-      <div class=" ellipsis text-center box-icon selected margin-bottom">{{boxText}} <span>{{ boxValue }}</span></div>
+      <div class=" ellipsis text-center box-icon selected margin-bottom">{{boxText}}) <span>{{ boxValue }}</span></div>
       <!--单关显示 -->
       <!--<div class="row">-->
       <!--<div class="col col-40 padding-right-10 text-left c-white">-->
@@ -53,7 +53,7 @@
           }
           items.push(name, v.text)
         })
-        return items.join('')
+        return items.join(' (')
       },
       boxValue () {
         let items = []
