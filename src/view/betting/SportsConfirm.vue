@@ -63,7 +63,6 @@
           <template v-else-if="betting.lotteryId === 902">
             <ah-qc-d-x-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                  :schedule="betting"></ah-qc-d-x-q-lottery>
-
           </template>
           <span class="sure" :class="{selected: betting.isSure}" @click="addSure(betting)">胆</span>
         </div>
@@ -72,56 +71,83 @@
       <service-agreement></service-agreement>
     </div>
     <div class="bottom-fixed ahfootball-bottom-fixed" v-if="lotteryId === 901||lotteryId === 902">
-      <div class="top">
-        <div class="row control text-normal" v-for="item in bettingList">
-          <div class="col col-60 padding-right-10">
-            <div class="row margin-bottom-7">
-              <div class="col col-70">
-                <span>{{seriesText}}</span>
+      <template v-if="currentMode === 2">
+        <div :class="isChoose?'top':'top show'">
+          <div class="row control text-normal" v-for="item in bettingList">
+            <div class="col col-60 padding-right-10">
+              <div class="row margin-bottom-7">
+                <div class="col col-70">
+                  <span>{{seriesText}}</span>
+                </div>
+                <div class="col text-right">
+                  <span class="">{{confirm.stakeCount}}注</span>
+                </div>
               </div>
-              <div class="col text-right">
-                <span class="">1注</span>
+              <div class="row">
+                <div class="col col-70">投注上限 <span>xxx.00</span>
+                </div>
+                <div class="col text-right">投注金额</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-text text-center">
+                <input type="text" placeholder="请输入投注金额">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-more text-center text-light" @click="showMore">
+          <span class="down-up"></span>点击选择更多串关投注种类
+        </div>
+        <div class="row">
+          <div class="col col-60 padding-left-10 padding-right-10 text-normal">
+            <div class="row margin-bottom-7">
+              <div class="col col-60">
+                <span>总投注金额</span>
+              </div>
+              <div class="col text-right c-blue">
+                <span>54.00</span>元
               </div>
             </div>
             <div class="row">
-              <div class="col col-70">投注上限 <span>xxx.00</span>
+              <div class="col col-60">
+                <span>预计奖金</span>
               </div>
-              <div class="col text-right">投注金额</div>
+              <div class="col text-right text-primary">
+                <span>12848.00</span>元
+              </div>
             </div>
           </div>
           <div class="col">
-            <div class="input-text text-center">
-              <input type="text" placeholder="请输入投注金额">
-            </div>
+            <a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>
           </div>
         </div>
-      </div>
-      <div class="btn-more text-center text-light" @click="showMore">
-        <span class="down-up"></span>点击选择更多串关投注种类
-      </div>
-      <div class="row">
-        <div class="col col-60 padding-left-10 padding-right-10 text-normal">
-          <div class="row margin-bottom-7">
-            <div class="col col-60">
-              <span>总投注金额</span>
-            </div>
-            <div class="col text-right c-blue">
-              <span>54.00</span>元
+      </template>
+      <template v-else>
+        <div class="summary">
+          <div class="text">
+          <span>
+            {{confirm.stakeCount}}注 {{confirm.multiple}}倍
+            <span>共{{totalMoney}}元</span>
+          </span>
+            <div class="pull-right text-light ellipsis" style="width: 50%">
+              预计奖金:{{confirm.bonus.min * confirm.multiple | currency}} ~ {{confirm.bonus.max * confirm.multiple |
+              currency}}元
             </div>
           </div>
           <div class="row">
-            <div class="col col-60">
-              <span>预计奖金</span>
-            </div>
-            <div class="col text-right text-primary">
-              <span>12848.00</span>元
+            <!--<div class="col col-40">-->
+            <!--<a href="javascript:;" class="btn btn-out-line text-center" @click="confirmOptimize">奖金优化</a>-->
+            <!--</div>-->
+            <!--<div class="col padding-left-10">-->
+            <!--<a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>-->
+            <!--</div>-->
+            <div class="col">
+              <a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>
             </div>
           </div>
         </div>
-        <div class="col">
-          <a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>
-        </div>
-      </div>
+      </template>
     </div>
     <div class="bottom-fixed" v-else>
       <div class="row top">
@@ -254,14 +280,16 @@
         popupSelected: [],
         isMulti: false,
         sure: 0,
-        isShow: false
+        isShow: false,
+        isChoose: true
       }
     },
     computed: {
       ...mapState({
         mine: state => state.user.mine,
         confirm: state => state.betting.sportConfirm,
-        lotteryId: state => state.betting.lottery
+        lotteryId: state => state.betting.lottery,
+        currentMode: state => state.betting[state.betting.lottery].mode
       }),
       seriesText () {
         let textArr = this.series.map(v => v.value)
@@ -495,7 +523,7 @@
         this.$router.push({ name: 'SportsOptimize' })
       },
       showMore () {
-        Toast('show')
+        this.isChoose = !this.isChoose
       }
     },
     created () {
@@ -856,8 +884,11 @@
       border-top-left-radius: 14px;
       border-top-right-radius: 14px;
       &.show {
-        overflow: visible;
+        display: block;
         height: 100%;
+        max-height: 260px;
+        overflow-y: auto;
+        overflow-x: hidden;
       }
       .control {
         margin: 0;
@@ -870,6 +901,9 @@
     }
     .summary {
       border-top: 1px solid $c1c1c1c;
+      .btn {
+        border-radius: 4px;
+      }
     }
     .margin-bottom-7 {
       margin-bottom: 7px;

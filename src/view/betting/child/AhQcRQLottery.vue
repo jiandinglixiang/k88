@@ -1,42 +1,43 @@
 <template>
   <div class="ah-football-qcrq-lottery">
     <div class="row text-center text-default-2 text-sm">
-      <div class="col col-40">{{schedule.home}}</div>
-      <div class="col text-light">VS</div>
-      <div class="col col-40">{{schedule.guest}}</div>
+    <div class="col col-40">{{schedule.home}}</div>
+    <div class="col text-light">VS</div>
+    <div class="col col-40">{{schedule.guest}}</div>
     </div>
     <div class="box order-list" v-if="isConfirm">
-      <div class=" ellipsis text-center box-icon selected margin-bottom">{{boxText}}) <span>{{ boxValue }}</span></div>
-      <!--单关显示 -->
-      <!--<div class="row">-->
-      <!--<div class="col col-40 padding-right-10 text-left c-white">-->
-      <!--<div class="row ellipsis">-->
-      <!--<div class="col">投注金额</div>-->
-      <!--<div class="col text-right">1注</div>-->
-      <!--</div>-->
-      <!--<div class="">投注上限 <span>xxx.00</span></div>-->
-      <!--</div>-->
-      <!--<div class="col">-->
-      <!--<div class="input-text text-center">-->
-      <!--<input type="text" placeholder="请输入投注金额">-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</div>-->
+    <div class=" ellipsis text-center box-icon selected margin-bottom">{{boxText}}) <span>{{ boxValue }}</span></div>
+    <!--单关显示 -->
+    <div class="row order-input-text" v-if="currentMode === 1">
+    <div class="col col-40 padding-right-10 text-left c-white">
+    <div class="row ellipsis">
+    <div class="col">投注金额</div>
+    <div class="col text-right">1注</div>
+    </div>
+    <div class="">投注上限 <span>xxx.00</span></div>
+    </div>
+    <div class="col">
+    <div class="input-text text-center">
+    <input type="text" placeholder="请输入投注金额">
+    </div>
+    </div>
+    </div>
     </div>
     <div class="box" v-else>
-      <div class="box-item row"
-           @click="onOptionSelected(item)"
-           v-for="(item, index) in schedule.holderList"
-           :class="{selected: isSelected(item), 'border-top': index > 1}">
-        <div class="col-60 text-center">{{ item.text }}</div>
-        <div class="col text-color">{{ item.value }}<span class="arrow-icon"></span></div>
-      </div>
+    <div class="box-item row"
+    @click="selectedItem(item)"
+    v-for="(item, index) in schedule.holderList"
+    :class="{selected: isSelected(item), 'border-top': index > 1}">
+    <div class="col-60 text-center">{{ item.text }}</div>
+    <div class="col text-color">{{ item.value }}<span class="arrow-icon"></span></div>
+    </div>
     </div>
   </div>
 </template>
 
 <script>
   import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'ahQcRQLottery',
@@ -58,8 +59,11 @@
       boxValue () {
         let items = []
         this.schedule.selected.map(v => items.push(v.value))
-        return items.join(',')
-      }
+        return items.join('')
+      },
+      ...mapState({
+        currentMode: state => state.betting[state.betting.lottery].mode
+      })
     },
     methods: {
       onOptionSelected (item) {
@@ -69,11 +73,26 @@
       },
       isSelected (item) {
         return this.schedule.selected.indexOf(item) !== -1
+      },
+      selectedItem (item) {
+        if (this.currentMode === 1) {
+          this.schedule.onOptionSelected(item)
+          this.$store.commit(SPORTS_OPTION_SELECTED)
+          this.$emit('onOptionSelected')
+        } else {
+          this.schedule.onOptionSelected2(item)
+          this.$store.commit(SPORTS_OPTION_SELECTED)
+          this.$emit('onOptionSelected')
+        }
       }
+    },
+    created () {
+      // console.log(JSON.parse(JSON.stringify(this.schedule)))
+      // console.log(this.SelectedList)
     }
   }
 </script>
-<style lang="scss">
+<style scoped lang="scss">
   .ah-football-qcrq-lottery {
     padding-left: 10px;
     font-size: 14px;
