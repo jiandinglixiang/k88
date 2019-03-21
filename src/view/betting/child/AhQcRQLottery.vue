@@ -1,37 +1,85 @@
 <template>
   <div class="ah-football-qcrq-lottery">
-    <div class="row text-center text-default-2 text-sm">
-    <div class="col col-40">{{schedule.home}}</div>
-    <div class="col text-light">VS</div>
-    <div class="col col-40">{{schedule.guest}}</div>
-    </div>
-    <div class="box order-list" v-if="isConfirm">
-    <div class=" ellipsis text-center box-icon selected margin-bottom">{{boxText}}) <span>{{ boxValue }}</span></div>
-    <!--单关显示 -->
-    <div class="row order-input-text" v-if="currentMode === 1">
-    <div class="col col-40 padding-right-10 text-left c-white">
-    <div class="row ellipsis">
-    <div class="col">投注金额</div>
-    <div class="col text-right">1注</div>
-    </div>
-    <div class="">投注上限 <span>xxx.00</span></div>
-    </div>
-    <div class="col">
-    <div class="input-text text-center">
-    <input type="text" placeholder="请输入投注金额">
-    </div>
-    </div>
-    </div>
-    </div>
-    <div class="box" v-else>
-    <div class="box-item row"
-    @click="selectedItem(item)"
-    v-for="(item, index) in schedule.holderList"
-    :class="{selected: isSelected(item), 'border-top': index > 1}">
-    <div class="col-60 text-center">{{ item.text }}</div>
-    <div class="col text-color">{{ item.value }}<span class="arrow-icon"></span></div>
-    </div>
-    </div>
+    <template v-if="currentMode === 1">
+      <template v-if="isConfirm">
+        <template v-for="item in selectedList">
+          <div class="scheme-box-item">
+            <span class="scheme-delete-icon poa-m" @click="deleteBetting(key)"></span>
+            <div class="padding-left-10">
+              <div class="row text-center text-default-2 text-sm">
+                <div class="col col-40">{{item.home}}</div>
+                <div class="col text-light">VS</div>
+                <div class="col col-40">{{item.guest}}</div>
+              </div>
+              <div class="box order-list">
+                <div class=" ellipsis text-center box-icon selected margin-bottom">{{item.name}} ({{ item.text }})
+                  <span>{{ item.value }}</span>
+                </div>
+                <!--单关显示 -->
+                <div class="row order-input-text">
+                  <div class="col col-50 padding-right-10 text-left c-white">
+                    <div class="row ellipsis">
+                      <div class="col">投注金额</div>
+                      <div class="col text-right">1注</div>
+                    </div>
+                    <div class="row margin-top-5">
+                      <div class="col">投注上限</div>
+                      <div class="col ellipsis text-right">{{ bonusLimit/item.value|parseIntBalance }}</div>
+                    </div>
+                    <!--<div class="ellipsis">投注上限 <span>{{ 85470.08}}</span></div>-->
+                  </div>
+                  <div class="col">
+                    <div class="input-text text-center">
+                      <input type="text" placeholder="请输入投注金额">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </template>
+      <template v-else>
+        <div class="padding-left-10">
+          <div class="row text-center text-default-2 text-sm">
+            <div class="col col-40">{{schedule.home}}</div>
+            <div class="col text-light">VS</div>
+            <div class="col col-40">{{schedule.guest}}</div>
+          </div>
+          <div class="box">
+            <div class="box-item row"
+                 @click="selectedItem(item)"
+                 v-for="(item, index) in schedule.holderList"
+                 :class="{selected: isSelected(item), 'border-top': index > 1}">
+              <div class="col-60 text-center">{{ item.text}}</div>
+              <div class="col text-color">{{ item.value }}<span class="arrow-icon"></span></div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </template>
+    <template v-else>
+      <div class="padding-left-10">
+        <div class="row text-center text-default-2 text-sm">
+          <div class="col col-40">{{schedule.home}}</div>
+          <div class="col text-light">VS</div>
+          <div class="col col-40">{{schedule.guest}}</div>
+        </div>
+        <div class="box order-list" v-if="isConfirm">
+          <div class=" ellipsis text-center box-icon selected margin-bottom">{{boxText}}) <span>{{ boxValue }}</span>
+          </div>
+        </div>
+        <div class="box" v-else>
+          <div class="box-item row"
+               @click="selectedItem(item)"
+               v-for="(item, index) in schedule.holderList"
+               :class="{selected: isSelected(item), 'border-top': index > 1}">
+            <div class="col-60 text-center">{{ item.text }}</div>
+            <div class="col text-color">{{ item.value }}<span class="arrow-icon"></span></div>
+          </div>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -41,7 +89,7 @@
 
   export default {
     name: 'ahQcRQLottery',
-    props: ['schedule', 'isConfirm'],
+    props: ['schedule', 'isConfirm', 'bonusLimit'],
     computed: {
       boxText () {
         let items = []
@@ -60,6 +108,30 @@
         let items = []
         this.schedule.selected.map(v => items.push(v.value))
         return items.join('')
+      },
+      selectedList () {
+        let items = []
+        let item = []
+        let name = ''
+        let id = this.schedule.id
+        let home = this.schedule.home
+        let guest = this.schedule.guest
+        this.schedule.selected.map(v => {
+          if (v.key.substring(4, 3) === '1') {
+            name = this.schedule.home
+          } else {
+            name = this.schedule.guest
+          }
+          item['name'] = name
+          item['key'] = v.key
+          item['value'] = v.value
+          item['text'] = v.text
+          item['id'] = id
+          item['home'] = home
+          item['guest'] = guest
+          items.push(item)
+        })
+        return items
       },
       ...mapState({
         currentMode: state => state.betting[state.betting.lottery].mode
@@ -86,15 +158,20 @@
         }
       }
     },
+    filters: {
+      parseIntBalance: function (value) {
+        value = parseInt(value)
+        return value
+      }
+    },
     created () {
       // console.log(JSON.parse(JSON.stringify(this.schedule)))
-      // console.log(this.SelectedList)
+      console.log(this.selectedList)
     }
   }
 </script>
 <style scoped lang="scss">
   .ah-football-qcrq-lottery {
-    padding-left: 10px;
     font-size: 14px;
     .box {
       overflow: hidden;
@@ -156,6 +233,9 @@
         &.selected {
           background-color: #ffc63a;
           color: #131313;
+          .text-color {
+            color: #131313;
+          }
         }
       }
       .selected {
@@ -183,6 +263,9 @@
       .c-white {
         color: $cFFfFFF;
       }
+    }
+    .order-input-text .margin-top-5 {
+      margin-top: 4px !important;
     }
   }
 </style>

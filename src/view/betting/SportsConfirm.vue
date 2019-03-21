@@ -11,61 +11,82 @@
         <div class="scheme-box-item"
              :class="{'has-sure': betting.mode === 2,'sure-none':betting.lotteryId===901||betting.lotteryId===902}"
              v-for="(betting, key) in bettingList">
-          <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
           <template v-if="betting.lotteryId === 601">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <football-s-p-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                     :schedule="betting"></football-s-p-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 602">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <football-r-q-s-p-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                         :schedule="betting"></football-r-q-s-p-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 603">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <football-b-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                   :schedule="betting"></football-b-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 604">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <football-z-j-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                     :schedule="betting"></football-z-j-q-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 605">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <football-b-q-c-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                     :schedule="betting"></football-b-q-c-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 606">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <football-h-h-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                   :schedule="betting"></football-h-h-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 701">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <basketball-s-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                     :schedule="betting"></basketball-s-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 702">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <basketball-r-f-s-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                         :schedule="betting"></basketball-r-f-s-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 703">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <basketball-s-f-c-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                       :schedule="betting"></basketball-s-f-c-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 704">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <basketball-d-x-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                       :schedule="betting"></basketball-d-x-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 705">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <basketball-h-h-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                     :schedule="betting"></basketball-h-h-lottery>
           </template>
-          <template v-else-if="betting.lotteryId === 901">
+          <template v-else-if="betting.lotteryId === 901 && betting.mode === 2">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <ah-qc-r-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                               :schedule="betting"></ah-qc-r-q-lottery>
+                               :schedule="betting">
+            </ah-qc-r-q-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 902">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
             <ah-qc-d-x-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
                                  :schedule="betting"></ah-qc-d-x-q-lottery>
           </template>
           <span class="sure" :class="{selected: betting.isSure}" @click="addSure(betting)">胆</span>
         </div>
+        <template v-for="(betting, key) in bettingList">
+          <template v-if="betting.lotteryId === 901 && betting.mode === 1">
+            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
+            <ah-qc-r-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
+                               :schedule="betting" :bonusLimit="bonusLimit">
+            </ah-qc-r-q-lottery>
+          </template>
+        </template>
       </div>
       <!--</scheme-box>-->
       <service-agreement></service-agreement>
@@ -84,7 +105,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col col-70">投注上限 <span>xxx.00</span>
+                <div class="col col-70">投注上限 <span>{{ item.selected }}</span>
                 </div>
                 <div class="col text-right">投注金额</div>
               </div>
@@ -289,7 +310,8 @@
         mine: state => state.user.mine,
         confirm: state => state.betting.sportConfirm,
         lotteryId: state => state.betting.lottery,
-        currentMode: state => state.betting[state.betting.lottery].mode
+        currentMode: state => state.betting[state.betting.lottery].mode,
+        bonusLimit: state => state.user.mine.bonus_limit
       }),
       seriesText () {
         let textArr = this.series.map(v => v.value)
@@ -554,6 +576,7 @@
         this.setProjectBonus()
         this.getMineInfo()
       }
+      console.log(this.series)
     },
     components: {
       VHead,
@@ -717,6 +740,9 @@
     position: absolute;
     left: 5px;
     bottom: 18px;
+    &.poa-m {
+      bottom: 48px;
+    }
   }
 
   .sports-confirm .scheme-box-item:first-child {

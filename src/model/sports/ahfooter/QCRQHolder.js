@@ -1,17 +1,18 @@
-import SportsHolder from '../SportsHolder';
+import SportsHolder from '../SportsHolder'
 
 import { BettingScoreOdds, QCRQ } from '../BettingScoreOdds'
 
 export default class QCRQHolder extends SportsHolder {
   constructor (obj) {
-    super(obj);
-    this.qCRQ = obj['betting_score_odds'][QCRQ];
-    this.setHolderList();
-    this.selected = [];
+    super(obj)
+    this.qCRQ = obj['betting_score_odds'][QCRQ]
+    this.setHolderList()
+    this.selected = []
   }
+
   setHolderList () {
-    this.holderList = [];
-    const lotteryKey = BettingScoreOdds.getType(QCRQ);
+    this.holderList = []
+    const lotteryKey = BettingScoreOdds.getType(QCRQ)
     for (let key in this.qCRQ) {
       if (this.qCRQ.hasOwnProperty(key) && lotteryKey.hasOwnProperty(key)) {
         this.holderList.push({
@@ -19,8 +20,9 @@ export default class QCRQHolder extends SportsHolder {
         })
       }
     }
-    this.holderList.reverse();
+    this.holderList.reverse()
   }
+
   // onOptionSelected (item) {
   //   const index = this.selected.indexOf(item);
   //   if (index !== -1) {
