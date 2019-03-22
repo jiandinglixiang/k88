@@ -52,7 +52,8 @@
                  v-for="(item, index) in schedule.holderList"
                  :class="{selected: isSelected(item), 'border-top': index > 1}">
               <div class="col-60 text-center">{{ item.text}}</div>
-              <div class="col text-color">{{ item.value }}<span class="arrow-icon"></span></div>
+              <div class="col text-color" :class="isStyle(item.str)">{{ item.value }}<span class="arrow-icon"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -75,7 +76,8 @@
                v-for="(item, index) in schedule.holderList"
                :class="{selected: isSelected(item), 'border-top': index > 1}">
             <div class="col-60 text-center">{{ item.text }}</div>
-            <div class="col text-color">{{ item.value }}<span class="arrow-icon"></span></div>
+            <div class="col text-color" :class="isStyle(item.str)">{{ item.value }}<span
+              class="arrow-icon"></span></div>
           </div>
         </div>
       </div>
@@ -156,6 +158,16 @@
           this.$store.commit(SPORTS_OPTION_SELECTED)
           this.$emit('onOptionSelected')
         }
+      },
+      isStyle (item) {
+        if (item === 'u') {
+          item = 'up'
+        } else if (item === 'd') {
+          item = 'down'
+        } else {
+          item = ''
+        }
+        return item
       }
     },
     filters: {
@@ -166,7 +178,7 @@
     },
     created () {
       // console.log(JSON.parse(JSON.stringify(this.schedule)))
-      console.log(this.selectedList)
+      // console.log(this.selectedList)
     }
   }
 </script>
@@ -207,7 +219,8 @@
             color: #1ac456;
             .arrow-icon {
               display: inline-block;
-              border-color: #1ac456 transparent transparent transparent;
+              margin-bottom: 6px;
+              border-color: transparent transparent #1ac456 transparent;
             }
           }
           &.down {

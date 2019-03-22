@@ -1,4 +1,5 @@
-import { LOTTERYIDS, SeriesType } from '../../store/constants';
+import { LOTTERYIDS, SeriesType } from '../../store/constants'
+
 const SERIES_TYPE = {
   X11: '101',
   X21: '102',
@@ -84,7 +85,8 @@ const SERIES_STR = {
   [SERIES_TYPE.X8247]: '8*247'
 }
 const SERIES_LIST = [
-  [{ key: SERIES_TYPE.X21, value: SeriesType[SERIES_TYPE.X21]
+  [{
+    key: SERIES_TYPE.X21, value: SeriesType[SERIES_TYPE.X21]
   }, {
     key: SERIES_TYPE.X31, value: SeriesType[SERIES_TYPE.X31]
   }, {
@@ -98,7 +100,8 @@ const SERIES_LIST = [
   }, {
     key: SERIES_TYPE.X81, value: SeriesType[SERIES_TYPE.X81]
   }],
-  [{ key: SERIES_TYPE.X33, value: SeriesType[SERIES_TYPE.X33]
+  [{
+    key: SERIES_TYPE.X33, value: SeriesType[SERIES_TYPE.X33]
   }, {
     key: SERIES_TYPE.X34, value: SeriesType[SERIES_TYPE.X34]
   }, {
@@ -162,7 +165,7 @@ const SERIES_LIST = [
   }, {
     key: SERIES_TYPE.X8247, value: SeriesType[SERIES_TYPE.X8247]
   }]
-];
+]
 const SeriesPlayTypeLimit = {
   [LOTTERYIDS.FOOTBALL_SPF]: 8,
   [LOTTERYIDS.FOOTBALL_RQSPF]: 8,
@@ -178,82 +181,116 @@ const SeriesPlayTypeLimit = {
 export default class Series {
   static getSeriesLimit (lotteryIds, count) {
     if (Array.isArray(lotteryIds)) {
-      let min = 8;
+      let min = 8
       lotteryIds.map(value => {
         if (min > SeriesPlayTypeLimit[value]) {
-          min = SeriesPlayTypeLimit[value];
+          min = SeriesPlayTypeLimit[value]
         }
-      });
-      return Math.min(min, count);
+      })
+      return Math.min(min, count)
     } else {
-      return Math.min(SeriesPlayTypeLimit[lotteryIds], count);
+      return Math.min(SeriesPlayTypeLimit[lotteryIds], count)
     }
   }
+
   static getSeriesList (lotteryId, bettingList, sure) {
-    let count = bettingList.length;
-    let lotteryArr = [];
-    let params = lotteryId;
-    if (lotteryId === LOTTERYIDS.FOOTBALL_HH || lotteryId === LOTTERYIDS.BASKETBALL_HH) {
+    console.log(lotteryId, bettingList, sure)
+    let count = bettingList.length
+    let lotteryArr = []
+    let params = lotteryId
+    if (lotteryId === LOTTERYIDS.FOOTBALL_HH || lotteryId === LOTTERYIDS.BASKETBALL_HH || LOTTERYIDS.AHFOOTBALL_QCRQ) {
       bettingList.map(value => {
         value.selected.map((v, i) => {
           if (v.length > 0) {
-            let key;
+            let key
             if (lotteryId === LOTTERYIDS.FOOTBALL_HH) {
-              key = '60{0}'.format(i + 1);
+              key = '60{0}'.format(i + 1)
             } else {
               key = '70{0}'.format(i + 1)
             }
             if (lotteryArr.indexOf(key) === -1) {
-              lotteryArr.push(key);
+              lotteryArr.push(key)
             }
           }
         })
-      });
-      params = lotteryArr;
+      })
+      params = lotteryArr
     }
-    let number = Series.getSeriesLimit(params, count);
+    let number = Series.getSeriesLimit(params, count)
     if (sure && sure > 0) {
       switch (sure) {
-        case 1: return [SERIES_LIST[0].slice(0, number - 1), []];
-        case 2: return [SERIES_LIST[0].slice(1, number - 1), []];
-        case 3: return [SERIES_LIST[0].slice(2, number - 1), []];
-        case 4: return [SERIES_LIST[0].slice(3, number - 1), []];
-        case 5: return [SERIES_LIST[0].slice(4, number - 1), []];
-        case 6: return [SERIES_LIST[0].slice(5, number - 1), []];
-        case 7: return [SERIES_LIST[0].slice(6, number - 1), []];
-        default: return [[], []]
+        case 1:
+          return [SERIES_LIST[0].slice(0, number - 1), []]
+        case 2:
+          return [SERIES_LIST[0].slice(1, number - 1), []]
+        case 3:
+          return [SERIES_LIST[0].slice(2, number - 1), []]
+        case 4:
+          return [SERIES_LIST[0].slice(3, number - 1), []]
+        case 5:
+          return [SERIES_LIST[0].slice(4, number - 1), []]
+        case 6:
+          return [SERIES_LIST[0].slice(5, number - 1), []]
+        case 7:
+          return [SERIES_LIST[0].slice(6, number - 1), []]
+        default:
+          return [[], []]
       }
     } else {
       switch (number) {
-        case 2: return [SERIES_LIST[0].slice(0, 1), []];
-        case 3: return [SERIES_LIST[0].slice(0, 2), SERIES_LIST[1].slice(0, 2)]
-        case 4: return [SERIES_LIST[0].slice(0, 3), SERIES_LIST[1].slice(0, 6)]
-        case 5: return [SERIES_LIST[0].slice(0, 4), SERIES_LIST[1].slice(0, 12)]
-        case 6: return [SERIES_LIST[0].slice(0, 5), SERIES_LIST[1].slice(0, 21)]
-        case 7: return [SERIES_LIST[0].slice(0, 6), SERIES_LIST[1].slice(0, 26)]
-        case 8: return [SERIES_LIST[0].slice(0, 7), SERIES_LIST[1].slice(0, 32)]
-        default: return [[], []]
+        case 2:
+          return [SERIES_LIST[0].slice(0, 1), []]
+        case 3:
+          return [SERIES_LIST[0].slice(0, 2), SERIES_LIST[1].slice(0, 2)]
+        case 4:
+          return [SERIES_LIST[0].slice(0, 3), SERIES_LIST[1].slice(0, 6)]
+        case 5:
+          return [SERIES_LIST[0].slice(0, 4), SERIES_LIST[1].slice(0, 12)]
+        case 6:
+          return [SERIES_LIST[0].slice(0, 5), SERIES_LIST[1].slice(0, 21)]
+        case 7:
+          return [SERIES_LIST[0].slice(0, 6), SERIES_LIST[1].slice(0, 26)]
+        case 8:
+          return [SERIES_LIST[0].slice(0, 7), SERIES_LIST[1].slice(0, 32)]
+        default:
+          return [[], []]
       }
     }
   }
+
   static sureCount (list) {
-    let total = 10;
+    let total = 10
     list.map(value => {
-      let i = 0;
+      let i = 0
       switch (value.key) {
-        case SERIES_TYPE.X21: i = 1; break;
-        case SERIES_TYPE.X31: i = 2; break;
-        case SERIES_TYPE.X41: i = 3; break;
-        case SERIES_TYPE.X51: i = 4; break;
-        case SERIES_TYPE.X61: i = 5; break;
-        case SERIES_TYPE.X71: i = 6; break;
-        case SERIES_TYPE.X81: i = 7; break;
+        case SERIES_TYPE.X21:
+          i = 1
+          break
+        case SERIES_TYPE.X31:
+          i = 2
+          break
+        case SERIES_TYPE.X41:
+          i = 3
+          break
+        case SERIES_TYPE.X51:
+          i = 4
+          break
+        case SERIES_TYPE.X61:
+          i = 5
+          break
+        case SERIES_TYPE.X71:
+          i = 6
+          break
+        case SERIES_TYPE.X81:
+          i = 7
+          break
       }
-      if (total > i) total = i;
-    });
-    return total;
+      if (total > i) total = i
+    })
+    return total
   }
+
   static getSeriesStr (type) {
-    return SERIES_STR[type];
+    return SERIES_STR[type]
   }
 }

@@ -18,7 +18,7 @@
              v-for="(item, index) in schedule.holderList"
              :class="{selected: isSelected(item), 'border-top': index > 0}">
           <div class="col bg-dark">{{ item.text }}</div>
-          <div class="col-67 text-color">{{ item.value }}</div>
+          <div class="col-67 text-color" :class="isStyle(item.str)">{{ item.value }}<span class="arrow-icon"></span></div>
         </div>
       </div>
     </div>
@@ -38,6 +38,16 @@
       },
       isSelected (item) {
         return this.schedule.selected.indexOf(item) !== -1
+      },
+      isStyle (item) {
+        if (item === 'u') {
+          item = 'up'
+        } else if (item === 'd') {
+          item = 'down'
+        } else {
+          item = ''
+        }
+        return item
       }
     }
   }
@@ -99,13 +109,31 @@
         &.border-top {
           border-top: 1px solid #3f3f3f;
         }
+        .arrow-icon {
+          display: none;
+          vertical-align: middle;
+          margin-left: 5px;
+          width: 0;
+          height: 0;
+          border-width: 4px;
+          border-style: solid dashed dashed dashed;
+        }
         .text-color {
           color: #fff;
           &.up {
             color: #1ac456;
+            .arrow-icon {
+              display: inline-block;
+              margin-bottom: 6px;
+              border-color: transparent transparent #1ac456 transparent;
+            }
           }
           &.down {
             color: #f33;
+            .arrow-icon {
+              display: inline-block;
+              border-color: #f33 transparent transparent transparent;
+            }
           }
         }
         &:nth-child(even) {

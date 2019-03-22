@@ -98,21 +98,21 @@
             <div class="col col-60 padding-right-10">
               <div class="row margin-bottom-7">
                 <div class="col col-70">
-                  <span>{{seriesText}}</span>
+                  <span>11</span>
                 </div>
                 <div class="col text-right">
                   <span class="">{{confirm.stakeCount}}注</span>
                 </div>
               </div>
               <div class="row">
-                <div class="col col-70">投注上限 <span>{{ item.selected }}</span>
+                <div class="col col-70">投注上限 <span>10000</span>
                 </div>
                 <div class="col text-right">投注金额</div>
               </div>
             </div>
             <div class="col">
               <div class="input-text text-center">
-                <input type="text" placeholder="请输入投注金额">
+                <input type="text" placeholder="请输入投注金额" data-num="10000" @input="inputNum">
               </div>
             </div>
           </div>
@@ -546,6 +546,15 @@
       },
       showMore () {
         this.isChoose = !this.isChoose
+      },
+      inputNum (e) {
+        let money = e.target.value
+        let limit = e.target.getAttribute('data-num')
+        money = parseInt(money)
+        limit = parseInt(limit)
+        if (money > limit) {
+          Toast('超过投注上限,请重新输入!')
+        }
       }
     },
     created () {
@@ -576,7 +585,6 @@
         this.setProjectBonus()
         this.getMineInfo()
       }
-      console.log(this.series)
     },
     components: {
       VHead,

@@ -14,8 +14,9 @@ export default class QCDXQHolder extends SportsHolder {
     const lotteryKey = BettingScoreOdds.getType(QCDXQ);
     for (let key in this.qCDXQ) {
       if (this.qCDXQ.hasOwnProperty(key) && lotteryKey.hasOwnProperty(key)) {
+        let values = this.qCDXQ[key].split('-')
         this.holderList.push({
-          key: key, value: this.qCDXQ[key], text: lotteryKey[key]
+          key: key, value: values[0], text: lotteryKey[key], str: values[1]
         })
       }
     }

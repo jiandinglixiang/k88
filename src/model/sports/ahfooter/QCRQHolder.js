@@ -15,22 +15,12 @@ export default class QCRQHolder extends SportsHolder {
     const lotteryKey = BettingScoreOdds.getType(QCRQ)
     for (let key in this.qCRQ) {
       if (this.qCRQ.hasOwnProperty(key) && lotteryKey.hasOwnProperty(key)) {
+        let values = this.qCRQ[key].split('-')
         this.holderList.push({
-          key: key, value: this.qCRQ[key], text: lotteryKey[key]
+          key: key, value: values[0], text: lotteryKey[key], str: values[1]
         })
       }
     }
     this.holderList.reverse()
   }
-
-  // onOptionSelected (item) {
-  //   const index = this.selected.indexOf(item);
-  //   if (index !== -1) {
-  //     this.selected.splice(index, 1);
-  //   } else {
-  //     this.selected.splice(0, this.selected.length);
-  //     this.selected.push(item);
-  //   }
-  //   this.setIsChecked();
-  // }
 }
