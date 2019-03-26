@@ -1,4 +1,4 @@
-import { LOTTERYIDS, SeriesType } from '../../store/constants'
+import { LOTTERYIDS, SeriesType2, SeriesType } from '../../store/constants'
 
 const SERIES_TYPE = {
   X11: '101',
@@ -86,19 +86,19 @@ const SERIES_STR = {
 }
 const SERIES_LIST = [
   [{
-    key: SERIES_TYPE.X21, value: SeriesType[SERIES_TYPE.X21]
+    key: SERIES_TYPE.X21, value: SeriesType[SERIES_TYPE.X21], text: SeriesType2[SERIES_TYPE.X21]
   }, {
-    key: SERIES_TYPE.X31, value: SeriesType[SERIES_TYPE.X31]
+    key: SERIES_TYPE.X31, value: SeriesType[SERIES_TYPE.X31], text: SeriesType2[SERIES_TYPE.X31]
   }, {
-    key: SERIES_TYPE.X41, value: SeriesType[SERIES_TYPE.X41]
+    key: SERIES_TYPE.X41, value: SeriesType[SERIES_TYPE.X41], text: SeriesType2[SERIES_TYPE.X41]
   }, {
-    key: SERIES_TYPE.X51, value: SeriesType[SERIES_TYPE.X51]
+    key: SERIES_TYPE.X51, value: SeriesType[SERIES_TYPE.X51], text: SeriesType2[SERIES_TYPE.X51]
   }, {
-    key: SERIES_TYPE.X61, value: SeriesType[SERIES_TYPE.X61]
+    key: SERIES_TYPE.X61, value: SeriesType[SERIES_TYPE.X61], text: SeriesType2[SERIES_TYPE.X61]
   }, {
-    key: SERIES_TYPE.X71, value: SeriesType[SERIES_TYPE.X71]
+    key: SERIES_TYPE.X71, value: SeriesType[SERIES_TYPE.X71], text: SeriesType2[SERIES_TYPE.X71]
   }, {
-    key: SERIES_TYPE.X81, value: SeriesType[SERIES_TYPE.X81]
+    key: SERIES_TYPE.X81, value: SeriesType[SERIES_TYPE.X81], text: SeriesType2[SERIES_TYPE.X81]
   }],
   [{
     key: SERIES_TYPE.X33, value: SeriesType[SERIES_TYPE.X33]
@@ -175,7 +175,8 @@ const SeriesPlayTypeLimit = {
   [LOTTERYIDS.BASKETBALL_SF]: 8,
   [LOTTERYIDS.BASKETBALL_RFSF]: 8,
   [LOTTERYIDS.BASKETBALL_SFC]: 4,
-  [LOTTERYIDS.BASKETBALL_DXF]: 8
+  [LOTTERYIDS.BASKETBALL_DXF]: 8,
+  [LOTTERYIDS.AHFOOTBALL_QCRQ]: 8
 }
 
 export default class Series {
@@ -194,19 +195,20 @@ export default class Series {
   }
 
   static getSeriesList (lotteryId, bettingList, sure) {
-    console.log(lotteryId, bettingList, sure)
     let count = bettingList.length
     let lotteryArr = []
     let params = lotteryId
-    if (lotteryId === LOTTERYIDS.FOOTBALL_HH || lotteryId === LOTTERYIDS.BASKETBALL_HH || LOTTERYIDS.AHFOOTBALL_QCRQ) {
+    if (lotteryId === LOTTERYIDS.FOOTBALL_HH || lotteryId === LOTTERYIDS.BASKETBALL_HH || lotteryId === LOTTERYIDS.AHFOOTBALL_QCRQ) {
       bettingList.map(value => {
         value.selected.map((v, i) => {
           if (v.length > 0) {
             let key
             if (lotteryId === LOTTERYIDS.FOOTBALL_HH) {
               key = '60{0}'.format(i + 1)
-            } else {
+            } else if (lotteryId === LOTTERYIDS.BASKETBALL_HH) {
               key = '70{0}'.format(i + 1)
+            } else {
+              key = '90{0}'.format(i + 1)
             }
             if (lotteryArr.indexOf(key) === -1) {
               lotteryArr.push(key)
@@ -235,6 +237,25 @@ export default class Series {
           return [SERIES_LIST[0].slice(6, number - 1), []]
         default:
           return [[], []]
+      }
+    } else if (lotteryId === LOTTERYIDS.AHFOOTBALL_QCRQ) {
+      switch (number) {
+        case 2:
+          return [SERIES_LIST[0].slice(0, 1)]
+        case 3:
+          return [...(SERIES_LIST[0].slice(0, 2)), ...(SERIES_LIST[1].slice(1, 2))]
+        case 4:
+          return [...(SERIES_LIST[0].slice(0, 3)), ...(SERIES_LIST[1].slice(5, 6))]
+        case 5:
+          return [...(SERIES_LIST[0].slice(0, 4)), ...(SERIES_LIST[1].slice(11, 12))]
+        case 6:
+          return [...(SERIES_LIST[0].slice(0, 5)), ...(SERIES_LIST[1].slice(20, 21))]
+        case 7:
+          return [...(SERIES_LIST[0].slice(0, 6)), ...(SERIES_LIST[1].slice(25, 26))]
+        case 8:
+          return [...(SERIES_LIST[0].slice(0, 7)), ...(SERIES_LIST[1].slice(31, 32))]
+        default:
+          return []
       }
     } else {
       switch (number) {

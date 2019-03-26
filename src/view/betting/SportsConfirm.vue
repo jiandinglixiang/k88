@@ -93,56 +93,92 @@
     </div>
     <div class="bottom-fixed ahfootball-bottom-fixed" v-if="lotteryId === 901||lotteryId === 902">
       <template v-if="currentMode === 2">
-        <div :class="isChoose?'top':'top show'">
-          <div class="row control text-normal" v-for="item in bettingList">
-            <div class="col col-60 padding-right-10">
-              <div class="row margin-bottom-7">
-                <div class="col col-70">
-                  <span>11</span>
+        <template v-if="isShowBottom">
+          <template v-if="popupInputIndex === 0">
+            <div class="top">
+              <div class="row control text-normal">
+                <div class="col col-60 padding-right-10">
+                  <div class="row margin-bottom-7">
+                    <div class="col col-70">
+                      <span>{{ seriesText1 }}</span>
+                    </div>
+                    <div class="col text-right">
+                      <span class="">1注</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-70">投注上限 <span>{{ mine.amount_max }}.00</span>
+                    </div>
+                    <div class="col text-right">投注金额</div>
+                  </div>
                 </div>
-                <div class="col text-right">
-                  <span class="">{{confirm.stakeCount}}注</span>
+                <div class="col">
+                  <div class="input-text text-center">
+                    <input type="text" placeholder="请输入投注金额" data-num="mine.amount_max" @input="inputNum"
+                           v-model="inputModelArry[popupArry.length-2]">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="btn-more text-center text-light" @click="popupInputChange(1)"
+                 v-if="popupArry[popupArry.length-2]">
+              <span class="down-up"></span>点击选择更多串关投注种类
+            </div>
+          </template>
+          <template v-else>
+            <div class="top show">
+              <div class="row control text-normal" v-for="(item, index) in popupArry">
+                <div class="col col-60 padding-right-10">
+                  <div class="row margin-bottom-7">
+                    <div class="col col-70">
+                      <span>{{ seriesText2 }}</span>
+                    </div>
+                    <div class="col text-right">
+                      <span class="">{{ item.stake }}注</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-70">投注上限 <span>{{ mine.amount_max }}.00</span>
+                    </div>
+                    <div class="col text-right">投注金额</div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-text text-center">
+                    <input type="text" placeholder="请输入投注金额" data-num="10000" @input="mine.amount_max"
+                           v-model="inputModelArry[index]">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="btn-more text-center text-light" @click="popupInputChange(0)">
+              <span class="down-up"></span>收起列表
+            </div>
+          </template>
+          <div class="row">
+            <div class="col col-60 padding-left-10 padding-right-10 text-normal">
+              <div class="row margin-bottom-7">
+                <div class="col col-60">
+                  <span>总投注金额</span>
+                </div>
+                <div class="col text-right c-blue">
+                  <span>{{ inputCount(inputModelArry) }}</span>元
                 </div>
               </div>
               <div class="row">
-                <div class="col col-70">投注上限 <span>10000</span>
+                <div class="col col-60">
+                  <span>预计奖金</span>
                 </div>
-                <div class="col text-right">投注金额</div>
+                <div class="col text-right text-primary">
+                  <span>12848.00</span>元
+                </div>
               </div>
             </div>
             <div class="col">
-              <div class="input-text text-center">
-                <input type="text" placeholder="请输入投注金额" data-num="10000" @input="inputNum">
-              </div>
+              <a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>
             </div>
           </div>
-        </div>
-        <div class="btn-more text-center text-light" @click="showMore">
-          <span class="down-up"></span>点击选择更多串关投注种类
-        </div>
-        <div class="row">
-          <div class="col col-60 padding-left-10 padding-right-10 text-normal">
-            <div class="row margin-bottom-7">
-              <div class="col col-60">
-                <span>总投注金额</span>
-              </div>
-              <div class="col text-right c-blue">
-                <span>54.00</span>元
-              </div>
-            </div>
-            <div class="row">
-              <div class="col col-60">
-                <span>预计奖金</span>
-              </div>
-              <div class="col text-right text-primary">
-                <span>12848.00</span>元
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>
-          </div>
-        </div>
+        </template>
       </template>
       <template v-else>
         <div class="summary">
@@ -296,13 +332,16 @@
       return {
         popupVisible: false,
         popupNavIndex: 0,
+        popupInputIndex: 0,
         popupList: [[], []],
         series: [],
         popupSelected: [],
         isMulti: false,
         sure: 0,
         isShow: false,
-        isChoose: true
+        isShowBottom: true,
+        inputmoney: this.value,
+        inputModelArry: []
       }
     },
     computed: {
@@ -333,6 +372,67 @@
         return this.confirm.bettingList.filter(value => {
           return value.selected.length > 0
         })
+      },
+      popupArry () {
+        if (this.confirm.mode === 2) {
+          const list = Series.getSeriesList(this.lotteryId, this.bettingList, this.sure)
+
+          const ff = (length) => {
+            function f1 (ii, w) {
+              let z = 1
+              let q = w
+              let d = 1
+              for (let i = ii; i > 0; i--) {
+                z *= q
+                q--
+                d *= i
+              }
+              return z / d
+            }
+
+            if (length < 2 || length > 8) return
+            let arr = {}
+            for (let i = 2; i <= length; i++) {
+              arr[`${i}01`] = f1(i, length)
+            }
+            return arr
+          }
+
+          const test = ff(this.bettingList.length)
+          return list.map(v => {
+            if (test[v.text]) {
+              return { ...v, stake: test[v.text] }
+            } else {
+              let count = 0
+              for (let i in test) {
+                count += test[i]
+              }
+              return { ...v, stake: count }
+            }
+          })
+        }
+        return []
+      },
+      seriesText1 () {
+        const popupArr = this.popupArry
+        if (popupArr[popupArr.length - 2]) {
+          return popupArr[popupArr.length - 2].value
+        } else {
+          return '2串1'
+        }
+      },
+      seriesText2 () {
+        const popupArr = this.popupArry
+        if (popupArr[popupArr.length - 2]) {
+          popupArr.map(v => {
+            this.value = v.value
+            // console.log(v)
+          })
+          console.log(this.value)
+          return this.value
+        } else {
+          return '2串1'
+        }
       }
     },
     methods: {
@@ -365,6 +465,9 @@
       },
       clearSeries () {
         if (this.confirm.mode === 2) {
+          if (this.bettingList.length <= 1) {
+            this.isShowBottom = false
+          }
           const list = this.getPopupList()
           if (list[0][0]) {
             let arr = []
@@ -463,6 +566,14 @@
           this.popupNavIndex = index
         }
       },
+      popupInputChange (index) {
+        if (this.popupInputIndex !== index) {
+          this.popupInputIndex = index
+        }
+        if (this.confirm.mode === 2) {
+          this.popupList = this.getPopupList()
+        }
+      },
       popupIsSelected (item) {
         return this.popupSelected.indexOf(item) !== -1
       },
@@ -544,9 +655,6 @@
         this.$store.commit(SPORTS_CONFIRM_OPTIMIZE, calculate.getSportTickets(this.bettingList))
         this.$router.push({ name: 'SportsOptimize' })
       },
-      showMore () {
-        this.isChoose = !this.isChoose
-      },
       inputNum (e) {
         let money = e.target.value
         let limit = e.target.getAttribute('data-num')
@@ -555,6 +663,13 @@
         if (money > limit) {
           Toast('超过投注上限,请重新输入!')
         }
+      },
+      inputCount (number) {
+        let sum = 0
+        number.map(v => {
+          sum += parseInt(v)
+        })
+        return sum
       }
     },
     created () {
