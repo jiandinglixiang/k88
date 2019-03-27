@@ -1,7 +1,20 @@
-import { SeriesType } from '../../../store/constants.js'
 import SportsCalculate from '../../../model/sports/SportsCalculate'
-import SportsLotteryJcInfo from '../../../model/sports/SportsLotteryJcInfo';
+import SportsLotteryJcInfo from '../../../model/sports/SportsLotteryJcInfo'
+import { SeriesType } from '../../../store/constants'
 
+function initSeries (series) {
+  let seriesText = ''
+  const seriesCopy = []
+  if (!series) return [seriesCopy, seriesText]
+  const seriesArr = series.split(',')
+  if (!Array.isArray(seriesArr)) return [seriesCopy, seriesText]
+  console.log(seriesArr.length)
+  for (let i = 0; i < seriesArr.length; i++) {
+    seriesText = seriesText ? `${seriesText},${SeriesType[seriesArr[i]]}` : `${SeriesType[seriesArr[i]]}`
+    seriesCopy.push({ key: seriesArr[i], value: SeriesType[seriesArr[i]] })
+  }
+  return [seriesCopy, seriesText]
+}
 export default class compute {
   constructor (groups) {
     this.groups = depthCopy(groups)
@@ -51,13 +64,10 @@ export default class compute {
         // 如果是胜负彩就不计算奖金
         if (list.lottery_id === '20' || list.lottery_id === '21') return list;
         // 奖金计算
-        let series = [];
-        if (list.series) {
-          list.seriesText = SeriesType[list.series];
-          series.push({key: list.series, value: SeriesType[list.series]});
-        }
+        const [seriesCopy, seriesText] = initSeries(list.series)
+        list.seriesText = seriesText
         location.push([indexA, indexB])
-        PromsSave.push(this.setProjectBonus(list.lottery_id, series, list.jc_info, list.multiple));
+        PromsSave.push(this.setProjectBonus(list.lottery_id, seriesCopy, list.jc_info, list.multiple))
         return list;
       });
       return data;
