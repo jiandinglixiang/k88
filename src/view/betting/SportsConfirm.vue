@@ -3,87 +3,87 @@
     <v-head :title="title"></v-head>
     <div class="sports-confirm-container">
       <div class="operate-wrap">
-        <a href="javascript:;" @click="addBetting"><span class="plus-icon"></span>编辑/添加投注</a>
-        <a href="javascript:;" @click="clearBettingList"><span class="clear-icon"></span>清空</a>
+        <a @click="addBetting" href="javascript:;"><span class="plus-icon"></span>编辑/添加投注</a>
+        <a @click="clearBettingList" href="javascript:;"><span class="clear-icon"></span>清空</a>
       </div>
       <!--<scheme-box>-->
       <div style="padding: 2.3% 2.3% 0 2.3%;">
-        <div class="scheme-box-item"
-             :class="{'has-sure': betting.mode === 2,'sure-none':betting.lotteryId===901||betting.lotteryId===902}"
+        <div :class="{'has-sure': betting.mode === 2,'sure-none':betting.lotteryId===901||betting.lotteryId===902}"
+             class="scheme-box-item"
              v-for="(betting, key) in bettingList">
           <template v-if="betting.lotteryId === 601">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <football-s-p-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                    :schedule="betting"></football-s-p-f-lottery>
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <football-s-p-f-lottery :isConfirm="true" :schedule="betting"
+                                    @onOptionSelected="onOptionSelected"></football-s-p-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 602">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <football-r-q-s-p-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                        :schedule="betting"></football-r-q-s-p-f-lottery>
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <football-r-q-s-p-f-lottery :isConfirm="true" :schedule="betting"
+                                        @onOptionSelected="onOptionSelected"></football-r-q-s-p-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 603">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <football-b-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                  :schedule="betting"></football-b-f-lottery>
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <football-b-f-lottery :isConfirm="true" :schedule="betting"
+                                  @onOptionSelected="onOptionSelected"></football-b-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 604">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <football-z-j-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                    :schedule="betting"></football-z-j-q-lottery>
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <football-z-j-q-lottery :isConfirm="true" :schedule="betting"
+                                    @onOptionSelected="onOptionSelected"></football-z-j-q-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 605">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <football-b-q-c-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                    :schedule="betting"></football-b-q-c-lottery>
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <football-b-q-c-lottery :isConfirm="true" :schedule="betting"
+                                    @onOptionSelected="onOptionSelected"></football-b-q-c-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 606">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <football-h-h-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                  :schedule="betting"></football-h-h-lottery>
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <football-h-h-lottery :isConfirm="true" :schedule="betting"
+                                  @onOptionSelected="onOptionSelected"></football-h-h-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 701">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <basketball-s-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                    :schedule="betting"></basketball-s-f-lottery>
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <basketball-s-f-lottery :isConfirm="true" :schedule="betting"
+                                    @onOptionSelected="onOptionSelected"></basketball-s-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 702">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <basketball-r-f-s-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                        :schedule="betting"></basketball-r-f-s-f-lottery>
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <basketball-r-f-s-f-lottery :isConfirm="true" :schedule="betting"
+                                        @onOptionSelected="onOptionSelected"></basketball-r-f-s-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 703">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <basketball-s-f-c-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                      :schedule="betting"></basketball-s-f-c-lottery>
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <basketball-s-f-c-lottery :isConfirm="true" :schedule="betting"
+                                      @onOptionSelected="onOptionSelected"></basketball-s-f-c-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 704">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <basketball-d-x-f-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                      :schedule="betting"></basketball-d-x-f-lottery>
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <basketball-d-x-f-lottery :isConfirm="true" :schedule="betting"
+                                      @onOptionSelected="onOptionSelected"></basketball-d-x-f-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 705">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <basketball-h-h-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                    :schedule="betting"></basketball-h-h-lottery>
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <basketball-h-h-lottery :isConfirm="true" :schedule="betting"
+                                    @onOptionSelected="onOptionSelected"></basketball-h-h-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 901 && betting.mode === 2">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <ah-qc-r-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                               :schedule="betting">
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <ah-qc-r-q-lottery :isConfirm="true" :schedule="betting"
+                               @onOptionSelected="onOptionSelected">
             </ah-qc-r-q-lottery>
           </template>
           <template v-else-if="betting.lotteryId === 902">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <ah-qc-d-x-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                                 :schedule="betting"></ah-qc-d-x-q-lottery>
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <ah-qc-d-x-q-lottery :isConfirm="true" :schedule="betting"
+                                 @onOptionSelected="onOptionSelected"></ah-qc-d-x-q-lottery>
           </template>
-          <span class="sure" :class="{selected: betting.isSure}" @click="addSure(betting)">胆</span>
+          <span :class="{selected: betting.isSure}" @click="addSure(betting)" class="sure">胆</span>
         </div>
         <template v-for="(betting, key) in bettingList">
           <template v-if="betting.lotteryId === 901 && betting.mode === 1">
-            <span class="scheme-delete-icon" @click="deleteBetting(key)"></span>
-            <ah-qc-r-q-lottery @onOptionSelected="onOptionSelected" :isConfirm="true"
-                               :schedule="betting" :bonusLimit="bonusLimit">
+            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
+            <ah-qc-r-q-lottery :bonusLimit="bonusLimit" :isConfirm="true"
+                               :schedule="betting" @onOptionSelected="onOptionSelected">
             </ah-qc-r-q-lottery>
           </template>
         </template>
@@ -92,95 +92,130 @@
       <service-agreement></service-agreement>
     </div>
     <div class="bottom-fixed ahfootball-bottom-fixed" v-if="lotteryId === 901||lotteryId === 902">
-      <template v-if="currentMode === 2">
-        <template v-if="isShowBottom">
-          <template v-if="popupInputIndex === 0">
-            <div class="top">
-              <div class="row control text-normal">
-                <div class="col col-60 padding-right-10">
-                  <div class="row margin-bottom-7">
-                    <div class="col col-70">
-                      <span>{{ seriesText1 }}</span>
-                    </div>
-                    <div class="col text-right">
-                      <span class="">1注</span>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col col-70">投注上限 <span>{{ mine.amount_max }}.00</span>
-                    </div>
-                    <div class="col text-right">投注金额</div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="input-text text-center">
-                    <input type="text" placeholder="请输入投注金额" data-num="mine.amount_max" @input="inputNum"
-                           v-model="inputModelArry[popupArry.length-2]">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="btn-more text-center text-light" @click="popupInputChange(1)"
-                 v-if="popupArry[popupArry.length-2]">
-              <span class="down-up"></span>点击选择更多串关投注种类
-            </div>
-          </template>
-          <template v-else>
-            <div class="top show">
-              <div class="row control text-normal" v-for="(item, index) in popupArry">
-                <div class="col col-60 padding-right-10">
-                  <div class="row margin-bottom-7">
-                    <div class="col col-70">
-                      <span>{{ item.value }}</span>
-                    </div>
-                    <div class="col text-right">
-                      <span class="">{{ item.stake }}注</span>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col col-70">投注上限 <span>{{ mine.amount_max }}.00</span>
-                    </div>
-                    <div class="col text-right">投注金额</div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="input-text text-center">
-                    <input type="text" placeholder="请输入投注金额" data-num="mine.amount_max" @input="inputNum"
-                           v-model="inputModelArry[index]">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="btn-more text-center text-light" @click="popupInputChange(0)">
-              <span class="down-up"></span>收起列表
-            </div>
-          </template>
-          <div class="row">
-            <div class="col col-60 padding-left-10 padding-right-10 text-normal">
+      <template v-if="currentMode === 2" v-show="isShowBottom">
+        <!--单列-->
+        <div class="top" v-show="popupInputIndex">
+          <div class="row control text-normal">
+            <div class="col col-60 padding-right-10">
               <div class="row margin-bottom-7">
-                <div class="col col-60">
-                  <span>总投注金额</span>
+                <div class="col col-70">
+                  <span>{{ seriesText1 }}</span>
                 </div>
-                <div class="col text-right c-blue">
-                  <span>{{ inputCount(inputModelArry) }}</span>元
+                <div class="col text-right">
+                  <span class="">1注</span>
                 </div>
               </div>
               <div class="row">
-                <div class="col col-60">
-                  <span>预计奖金</span>
+                <div class="col col-70">投注上限 <span>{{ mine.amount_max }}.00</span>
                 </div>
-                <div class="col text-right text-primary">
-                  <expected-bonus :inputArray="inputModelArry" :bettingList="bettingList"></expected-bonus>
-                </div>
+                <div class="col text-right">投注金额</div>
               </div>
             </div>
             <div class="col">
-              <a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>
+              <div class="input-text text-center">
+                <input placeholder="请输入投注金额"
+                       type="number"
+                       v-model="inputModelArry[popupArray.length-2]"
+                >
+              </div>
             </div>
           </div>
-        </template>
+        </div>
+        <!--多列-->
+        <div class="top show" v-show="!popupInputIndex">
+          <div class="row control text-normal" v-for="(item, index) in popupArray" :key="index">
+            <div class="col col-60 padding-right-10">
+              <div class="row margin-bottom-7">
+                <div class="col col-70">
+                  <span>{{ item.value }}</span>
+                </div>
+                <div class="col text-right">
+                  <span class="">{{ item.stake }}注</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-70">投注上限 <span>{{ mine.amount_max }}.00</span>
+                </div>
+                <div class="col text-right">投注金额</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-text text-center">
+                <input placeholder="请输入投注金额"
+                       type="number"
+                       v-model="inputModelArry[index]">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--控制显示-->
+        <div @click="popupInputIndex = !popupInputIndex" class="btn-more text-center text-light">
+          <span class="down-up"></span>{{popupInputIndex ?`点击选择更多串关投注种类`:`收起列表`}}
+        </div>
+        <!--投注总额-->
+        <div class="row">
+          <div class="col col-60 padding-left-10 padding-right-10 text-normal">
+            <div class="row margin-bottom-7">
+              <div class="col col-60">
+                <span>总投注金额</span>
+              </div>
+              <div class="col text-right c-blue">
+                <span>{{ inputCount(inputModelArry) }}</span>元
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-60">
+                <span>预计奖金</span>
+              </div>
+              <div class="col text-right text-primary">
+                <expected-bonus :bettingList="bettingList" :inputArray="inputModelArry"></expected-bonus>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <a @click="confirmPayment" class="btn text-center" href="javascript:;">付款</a>
+          </div>
+        </div>
       </template>
-      <template v-else>
+      <div class="summary" v-else>
+        <div class="text">
+          <span>
+            {{confirm.stakeCount}}注 {{confirm.multiple}}倍
+            <span>共{{totalMoney}}元</span>
+          </span>
+          <div class="pull-right text-light ellipsis" style="width: 50%">
+            预计奖金:{{confirm.bonus.min * confirm.multiple | currency}} ~ {{confirm.bonus.max * confirm.multiple |
+            currency}}元
+          </div>
+        </div>
+        <div class="row">
+          <!--<div class="col col-40">-->
+          <!--<a href="javascript:;" class="btn btn-out-line text-center" @click="confirmOptimize">奖金优化</a>-->
+          <!--</div>-->
+          <!--<div class="col padding-left-10">-->
+          <!--<a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>-->
+          <!--</div>-->
+          <div class="col">
+            <a @click="confirmPayment" class="btn text-center" href="javascript:;">付款</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <template v-else>
+      <div class="bottom-fixed">
+        <div class="row top">
+          <div @click="onPopupVisible" class="col col-50 col-center">
+          <span class="text-normal ellipsis"
+                style="width: 80%; display: inline-block;color: white;vertical-align: middle">{{seriesText}}</span><span
+            class="down-up"></span>
+          </div>
+          <div class="col">
+            <custom-select-box :confirmdata="confirm" :seriesdata="seriesText" :totalmoney="totalMoney"
+                               :value="confirm.multiple"
+                               @change="multipleChange" class="pull-right"
+                               label="倍数"></custom-select-box>
+          </div>
+        </div>
         <div class="summary">
           <div class="text">
           <span>
@@ -200,77 +235,40 @@
             <!--<a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>-->
             <!--</div>-->
             <div class="col">
-              <a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>
+              <a @click="confirmPayment" class="btn text-center" href="javascript:;">付款</a>
             </div>
           </div>
         </div>
-      </template>
-    </div>
-    <div class="bottom-fixed" v-else>
-      <div class="row top">
-        <div class="col col-50 col-center" @click="onPopupVisible">
-          <span class="text-normal ellipsis"
-                style="width: 80%; display: inline-block;color: white;vertical-align: middle">{{seriesText}}</span><span
-          class="down-up"></span>
-        </div>
-        <div class="col">
-          <custom-select-box @change="multipleChange" class="pull-right" label="倍数" :value="confirm.multiple"
-                             :seriesdata="seriesText" :confirmdata="confirm"
-                             :totalmoney="totalMoney"></custom-select-box>
-        </div>
       </div>
-      <div class="summary">
-        <div class="text">
-          <span>
-            {{confirm.stakeCount}}注 {{confirm.multiple}}倍
-            <span>共{{totalMoney}}元</span>
-          </span>
-          <div class="pull-right text-light ellipsis" style="width: 50%">
-            预计奖金:{{confirm.bonus.min * confirm.multiple | currency}} ~ {{confirm.bonus.max * confirm.multiple |
-            currency}}元
+      <mt-popup
+        position="bottom"
+        v-model="popupVisible">
+        <div class="series-select-popup">
+          <div class="header-nav clear">
+            <a :class="{active: popupNavIndex === 0}" @click="popupNavChange(0)" href="javascript:;">自由过关</a>
+            <a :class="{active: popupNavIndex === 1}" @click="popupNavChange(1)" href="javascript:;">多串过关</a>
           </div>
-        </div>
-        <div class="row">
-          <!--<div class="col col-40">-->
-          <!--<a href="javascript:;" class="btn btn-out-line text-center" @click="confirmOptimize">奖金优化</a>-->
-          <!--</div>-->
-          <!--<div class="col padding-left-10">-->
-          <!--<a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>-->
-          <!--</div>-->
-          <div class="col">
-            <a href="javascript:;" class="btn text-center" @click="confirmPayment">付款</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <mt-popup
-      v-model="popupVisible"
-      position="bottom">
-      <div class="series-select-popup">
-        <div class="header-nav clear">
-          <a href="javascript:;" @click="popupNavChange(0)" :class="{active: popupNavIndex === 0}">自由过关</a>
-          <a href="javascript:;" @click="popupNavChange(1)" :class="{active: popupNavIndex === 1}">多串过关</a>
-        </div>
-        <div class="select-content clear" v-if="popupNavIndex === 0">
-          <span class="item"
-                :class="{selected: popupIsSelected(item)}"
+          <div class="select-content clear" v-if="popupNavIndex === 0">
+          <span :class="{selected: popupIsSelected(item)}"
                 @click="popupItemSelected(item, 0)"
+                class="item"
                 v-for="item in popupList[0]">
             {{item.value}}</span>
-        </div>
-        <div class="select-content clear" v-else>
-          <span class="item"
-                :class="{selected: popupIsSelected(item)}"
+          </div>
+          <div class="select-content clear" v-else>
+          <span :class="{selected: popupIsSelected(item)}"
                 @click="popupItemSelected(item, 1)"
+                class="item"
                 v-for="item in popupList[1]">
             {{item.value}}</span>
+          </div>
+          <div class="btn-wrap row">
+            <div class="col col-50"><a @click="hidePopupVisible" class="btn" href="javascript:;">取消</a></div>
+            <div class="col col-50"><a @click="confirmPopup" class="btn" href="javascript:;">确认</a></div>
+          </div>
         </div>
-        <div class="btn-wrap row">
-          <div class="col col-50"><a href="javascript:;" @click="hidePopupVisible" class="btn">取消</a></div>
-          <div class="col col-50"><a href="javascript:;" @click="confirmPopup" class="btn">确认</a></div>
-        </div>
-      </div>
-    </mt-popup>
+      </mt-popup>
+    </template>
     <div class="modal" id="modal-recharge" v-show="isShow">
       <div class="panel">
         <div class="tit">
@@ -278,8 +276,8 @@
           <h1>请先充值！</h1>
         </div>
         <div class="btns">
-          <div class="btn-cancel" @click="toggle()">取消</div>
-          <div class="btn-sure btn-recharge" @click="recharge()">充值</div>
+          <div @click="toggle()" class="btn-cancel">取消</div>
+          <div @click="recharge()" class="btn-sure btn-recharge">充值</div>
         </div>
       </div>
     </div>
@@ -333,7 +331,7 @@
       return {
         popupVisible: false,
         popupNavIndex: 0,
-        popupInputIndex: 0,
+        popupInputIndex: true,
         popupList: [[], []],
         series: [],
         popupSelected: [],
@@ -374,7 +372,7 @@
           return value.selected.length > 0
         })
       },
-      popupArry () {
+      popupArray () {
         if (this.confirm.mode === 2) {
           const list = Series.getSeriesList(this.lotteryId, this.bettingList, this.sure)
           this.inputModelArry = new Array(list.length).fill('')
@@ -416,22 +414,9 @@
         return []
       },
       seriesText1 () {
-        const popupArr = this.popupArry
+        const popupArr = this.popupArray
         if (popupArr[popupArr.length - 2]) {
           return popupArr[popupArr.length - 2].value
-        } else {
-          return '2串1'
-        }
-      },
-      seriesText2 () {
-        const popupArr = this.popupArry
-        if (popupArr[popupArr.length - 2]) {
-          popupArr.map(v => {
-            console.log(v.value)
-            return v.value
-          })
-          // console.log('外部: ', this.value)
-          // return this.value
         } else {
           return '2串1'
         }
@@ -568,14 +553,6 @@
           this.popupNavIndex = index
         }
       },
-      popupInputChange (index) {
-        if (this.popupInputIndex !== index) {
-          this.popupInputIndex = index
-        }
-        if (this.confirm.mode === 2) {
-          this.popupList = this.getPopupList()
-        }
-      },
       popupIsSelected (item) {
         return this.popupSelected.indexOf(item) !== -1
       },
@@ -687,7 +664,7 @@
             this.isMulti = this.confirm.isMulti
           } else {
             const list = this.getPopupList()
-            if (list[0][0]) {
+            if (list && list[0] && list[0][0]) {
               this.series = [list[0][list[0].length - 1]]
               this.bettingList = this.bettingList.map(v => {
                 v.isSure = false
@@ -699,7 +676,7 @@
             }
           }
         }
-        this.setProjectBonus()
+        !Lottery.isAHFootBall(this.lotteryId) && this.setProjectBonus()
         this.getMineInfo()
       }
     },
@@ -839,6 +816,7 @@
 
   .sports-confirm .scheme-box-item.has-sure.sure-none {
     padding: 10px 5px 5px 30px;
+
     .sure {
       display: none;
     }
@@ -866,6 +844,7 @@
     position: absolute;
     left: 5px;
     bottom: 18px;
+
     &.poa-m {
       bottom: 48px;
     }
@@ -1027,6 +1006,7 @@
   .sports-confirm .ahfootball-bottom-fixed {
     height: auto;
     color: $cFFfFFF;
+
     .top {
       overflow: hidden;
       padding: 0;
@@ -1035,6 +1015,7 @@
       border-top: 0;
       border-top-left-radius: 14px;
       border-top-right-radius: 14px;
+
       &.show {
         display: block;
         height: 100%;
@@ -1042,28 +1023,35 @@
         overflow-y: auto;
         overflow-x: hidden;
       }
+
       .control {
         margin: 0;
         padding: 6px 10px;
         border-top: 1px solid #494949;
+
         &:first-child {
           border-top: 0;
         }
       }
     }
+
     .summary {
       border-top: 1px solid $c1c1c1c;
+
       .btn {
         border-radius: 4px;
       }
     }
+
     .margin-bottom-7 {
       margin-bottom: 7px;
     }
+
     .btn-more {
       height: 22px;
       line-height: 21px;
       background-color: $c1c1c1c;
+
       .down-up {
         width: 16px;
         height: 16px;
@@ -1072,9 +1060,11 @@
         margin-right: 5px;
       }
     }
+
     .btn {
       border-radius: 0;
     }
+
     .c-blue {
       color: #3393ff;
     }
@@ -1084,6 +1074,7 @@
     overflow: hidden;
     background-color: #494949;
     border-radius: 4px;
+
     input {
       background: transparent;
       border: none;
