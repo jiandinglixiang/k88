@@ -131,7 +131,7 @@
                 <div class="col col-60 padding-right-10">
                   <div class="row margin-bottom-7">
                     <div class="col col-70">
-                      <span>{{ seriesText2 }}</span>
+                      <span>{{ item.value }}</span>
                     </div>
                     <div class="col text-right">
                       <span class="">{{ item.stake }}注</span>
@@ -145,7 +145,7 @@
                 </div>
                 <div class="col">
                   <div class="input-text text-center">
-                    <input type="text" placeholder="请输入投注金额" data-num="10000" @input="mine.amount_max"
+                    <input type="text" placeholder="请输入投注金额" data-num="mine.amount_max" @input="inputNum"
                            v-model="inputModelArry[index]">
                   </div>
                 </div>
@@ -170,7 +170,7 @@
                   <span>预计奖金</span>
                 </div>
                 <div class="col text-right text-primary">
-                  <span>12848.00</span>元
+                  <expected-bonus :inputArray="inputModelArry" :bettingList="bettingList"></expected-bonus>
                 </div>
               </div>
             </div>
@@ -314,6 +314,7 @@
   import BasketballHHLottery from './child/BasketballHHLottery.vue'
   import AhQcRQLottery from './child/AhQcRQLottery.vue'
   import AhQcDXQLottery from './child/AhQcDXQLottery.vue'
+  import ExpectedBonus from '../../components/ExpectedBonus.vue'
   import { mapActions, mapState } from 'vuex'
   import Vue from 'vue'
   import { Popup } from 'mint-ui'
@@ -376,7 +377,8 @@
       popupArry () {
         if (this.confirm.mode === 2) {
           const list = Series.getSeriesList(this.lotteryId, this.bettingList, this.sure)
-
+          this.inputModelArry = new Array(list.length).fill('')
+          // 注数计算
           const ff = (length) => {
             function f1 (ii, w) {
               let z = 1
@@ -398,14 +400,14 @@
             return arr
           }
 
-          const test = ff(this.bettingList.length)
+          const stakeList = ff(this.bettingList.length)
           return list.map(v => {
-            if (test[v.text]) {
-              return { ...v, stake: test[v.text] }
+            if (stakeList[v.text]) {
+              return { ...v, stake: stakeList[v.text] }
             } else {
               let count = 0
-              for (let i in test) {
-                count += test[i]
+              for (let i in stakeList) {
+                count += stakeList[i]
               }
               return { ...v, stake: count }
             }
@@ -425,11 +427,11 @@
         const popupArr = this.popupArry
         if (popupArr[popupArr.length - 2]) {
           popupArr.map(v => {
-            this.value = v.value
-            // console.log(v)
+            console.log(v.value)
+            return v.value
           })
-          console.log(this.value)
-          return this.value
+          // console.log('外部: ', this.value)
+          // return this.value
         } else {
           return '2串1'
         }
@@ -666,8 +668,8 @@
       },
       inputCount (number) {
         let sum = 0
-        number.map(v => {
-          sum += parseInt(v)
+        number.forEach(i => {
+          sum += (i * 1)
         })
         return sum
       }
@@ -718,7 +720,8 @@
       BasketballDXFLottery,
       BasketballHHLottery,
       AhQcRQLottery,
-      AhQcDXQLottery
+      AhQcDXQLottery,
+      ExpectedBonus
     }
   }
 </script>
