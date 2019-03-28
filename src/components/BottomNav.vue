@@ -13,7 +13,6 @@
 </template>
 
 <script>
-  import router from '../router/index'
 
   export default {
     name: 'bottomNav',
@@ -37,10 +36,10 @@
             case 'PrizeList':
             case 'Score':
             case 'Mine':
-              router.replace({ name: item.key })
+              this.$router.replace({ name: item.key })
               break
             case 'Orders':
-              router.replace({ path: '/orders' })
+              this.$router.replace({ path: '/orders' })
               break
             default:
           }

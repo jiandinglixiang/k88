@@ -66,118 +66,27 @@
             <basketball-h-h-lottery :isConfirm="true" :schedule="betting"
                                     @onOptionSelected="onOptionSelected"></basketball-h-h-lottery>
           </template>
-          <template v-else-if="betting.lotteryId === 901 && betting.mode === 2">
+          <template v-else-if="betting.lotteryId === 901">
             <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
-            <ah-qc-r-q-lottery :isConfirm="true" :schedule="betting"
-                               @onOptionSelected="onOptionSelected">
-            </ah-qc-r-q-lottery>
+            <ah-qc-r-q-lottery :bonusLimit="bonusLimit" :isConfirm="true" :schedule="betting"
+                               @onOptionSelected="onOptionSelected"/>
           </template>
           <template v-else-if="betting.lotteryId === 902">
             <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
             <ah-qc-d-x-q-lottery :isConfirm="true" :schedule="betting"
                                  @onOptionSelected="onOptionSelected"></ah-qc-d-x-q-lottery>
           </template>
-          <span :class="{selected: betting.isSure}" @click="addSure(betting)" class="sure">胆</span>
+          <span :class="{selected: betting.isSure}"
+                @click="addSure(betting)"
+                class="sure"
+                v-if="!(betting.lotteryId === 901 && betting.mode === 1)">胆</span>
         </div>
-        <template v-for="(betting, key) in bettingList">
-          <template v-if="betting.lotteryId === 901 && betting.mode === 1">
-            <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
-            <ah-qc-r-q-lottery :bonusLimit="bonusLimit" :isConfirm="true"
-                               :schedule="betting" @onOptionSelected="onOptionSelected">
-            </ah-qc-r-q-lottery>
-          </template>
-        </template>
       </div>
       <!--</scheme-box>-->
       <service-agreement></service-agreement>
     </div>
     <div class="bottom-fixed ahfootball-bottom-fixed" v-if="lotteryId === 901||lotteryId === 902">
-      <template v-if="currentMode === 2" v-show="isShowBottom">
-        <!--单列-->
-        <div class="top" v-show="popupInputIndex">
-          <div class="row control text-normal">
-            <div class="col col-60 padding-right-10">
-              <div class="row margin-bottom-7">
-                <div class="col col-70">
-                  <span>{{ seriesText1 }}</span>
-                </div>
-                <div class="col text-right">
-                  <span class="">1注</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col col-70">投注上限 <span>{{ mine.amount_max }}.00</span>
-                </div>
-                <div class="col text-right">投注金额</div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-text text-center">
-                <input placeholder="请输入投注金额"
-                       type="number"
-                       v-model="inputModelArry[popupArray.length-2]"
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--多列-->
-        <div class="top show" v-show="!popupInputIndex">
-          <div class="row control text-normal" v-for="(item, index) in popupArray" :key="index">
-            <div class="col col-60 padding-right-10">
-              <div class="row margin-bottom-7">
-                <div class="col col-70">
-                  <span>{{ item.value }}</span>
-                </div>
-                <div class="col text-right">
-                  <span class="">{{ item.stake }}注</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col col-70">投注上限 <span>{{ mine.amount_max }}.00</span>
-                </div>
-                <div class="col text-right">投注金额</div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-text text-center">
-                <input placeholder="请输入投注金额"
-                       type="number"
-                       v-model="inputModelArry[index]">
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--控制显示-->
-        <div @click="popupInputIndex = !popupInputIndex" class="btn-more text-center text-light">
-          <span class="down-up"></span>{{popupInputIndex ?`点击选择更多串关投注种类`:`收起列表`}}
-        </div>
-        <!--投注总额-->
-        <div class="row">
-          <div class="col col-60 padding-left-10 padding-right-10 text-normal">
-            <div class="row margin-bottom-7">
-              <div class="col col-60">
-                <span>总投注金额</span>
-              </div>
-              <div class="col text-right c-blue">
-                <span>{{ inputCount(inputModelArry) }}</span>元
-              </div>
-            </div>
-            <div class="row">
-              <div class="col col-60">
-                <span>预计奖金</span>
-              </div>
-              <div class="col text-right text-primary">
-                <expected-bonus :bettingList="bettingList" :inputArray="inputModelArry"></expected-bonus>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <a @click="confirmPayment" class="btn text-center" href="javascript:;">付款</a>
-          </div>
-        </div>
-      </template>
-      <div class="summary" v-else>
+      <div class="summary" v-if="currentMode === 1">
         <div class="text">
           <span>
             {{confirm.stakeCount}}注 {{confirm.multiple}}倍
@@ -200,6 +109,63 @@
           </div>
         </div>
       </div>
+      <template v-else-if="bettingList.length>=0">
+        <div class="top show">
+          <div :key="index" class="row control text-normal" v-for="(item, index) in popupArray"
+               v-show="popupInputIndex?  `${bettingList.length}01`===item.text :true">
+            <div class="col col-60 padding-right-10">
+              <div class="row margin-bottom-7">
+                <div class="col col-70">
+                  <span>{{ item.value }}</span>
+                </div>
+                <div class="col text-right">
+                  <span class="">{{ item.stake }}注</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-70">投注上限 <span>{{ item.upperLimit }}</span>
+                </div>
+                <div class="col text-right">投注金额</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-text text-center">
+                <input placeholder="请输入投注金额"
+                       type="number"
+                       v-model="ManyValue[item.text]">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--控制显示-->
+        <div @click="popupInputIndex = !popupInputIndex" class="btn-more text-center text-light">
+          <span class="down-up"></span>{{popupInputIndex ?`点击选择更多串关投注种类`:`收起列表`}}
+        </div>
+        <!--投注总额-->
+        <div class="row">
+          <div class="col col-60 padding-left-10 padding-right-10 text-normal">
+            <div class="row margin-bottom-7">
+              <div class="col col-60">
+                <span>总投注金额</span>
+              </div>
+              <div class="col text-right c-blue">
+                <span>{{  totalMoney }}</span>元
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-60">
+                <span>预计奖金</span>
+              </div>
+              <div class="col text-right text-primary">
+                <expected-bonus :ManyValue="ManyValue" :tempBetting="tempBetting"></expected-bonus>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <a @click="confirmPayment" class="btn text-center" href="javascript:;">付款</a>
+          </div>
+        </div>
+      </template>
     </div>
     <template v-else>
       <div class="bottom-fixed">
@@ -331,7 +297,6 @@
       return {
         popupVisible: false,
         popupNavIndex: 0,
-        popupInputIndex: true,
         popupList: [[], []],
         series: [],
         popupSelected: [],
@@ -339,8 +304,8 @@
         sure: 0,
         isShow: false,
         isShowBottom: true,
-        inputmoney: this.value,
-        inputModelArry: []
+        ManyValue: {}, // 输入金额值列表
+        popupInputIndex: true // 显示单个输入框
       }
     },
     computed: {
@@ -349,14 +314,23 @@
         confirm: state => state.betting.sportConfirm,
         lotteryId: state => state.betting.lottery,
         currentMode: state => state.betting[state.betting.lottery].mode,
-        bonusLimit: state => state.user.mine.bonus_limit
+        bonusLimit: state => state.user.mine.bonus_limit || 0
       }),
       seriesText () {
         let textArr = this.series.map(v => v.value)
         return textArr.join(',') || '投注方式'
       },
       totalMoney () {
-        return parseInt(this.confirm.ticketPrice * this.confirm.stakeCount * this.confirm.multiple)
+        if (!Lottery.isAHFootBall(this.lotteryId) || this.confirm.mode !== 2) {
+          return parseInt(this.confirm.ticketPrice * this.confirm.stakeCount * this.confirm.multiple)
+        }
+        let value = 0
+        for (let i in this.popupArray) {
+          if (/^\d+$/.test(this.ManyValue[this.popupArray[i].text]) && this.ManyValue[this.popupArray[i].text] >= 1) {
+            value += this.ManyValue[this.popupArray[i].text] * this.popupArray[i].stake
+          }
+        }
+        return value
       },
       title () {
         if (Lottery.isFootBall(this.lotteryId)) {
@@ -372,60 +346,98 @@
           return value.selected.length > 0
         })
       },
-      popupArray () {
-        if (this.confirm.mode === 2) {
-          const list = Series.getSeriesList(this.lotteryId, this.bettingList, this.sure)
-          this.inputModelArry = new Array(list.length).fill('')
-          // 注数计算
-          const ff = (length) => {
-            function f1 (ii, w) {
-              let z = 1
-              let q = w
-              let d = 1
-              for (let i = ii; i > 0; i--) {
-                z *= q
-                q--
-                d *= i
-              }
-              return z / d
-            }
-
-            if (length < 2 || length > 8) return
-            let arr = {}
-            for (let i = 2; i <= length; i++) {
-              arr[`${i}01`] = f1(i, length)
-            }
-            return arr
+      tempBetting () {
+        // 返回n串1可能性
+        const data = {
+          '201': [],
+          '301': [],
+          '401': [],
+          '501': [],
+          '601': [],
+          '701': [],
+          '801': []
+        }
+        if (!Lottery.isAHFootBall(this.lotteryId) || this.confirm.mode !== 2) return data
+        const list = this.getGroup(JSON.parse(JSON.stringify(this.bettingList)))
+        list.forEach(value => {
+          if (Array.isArray(value)) {
+            data[`${value.length}01`].push(value)
           }
-
-          const stakeList = ff(this.bettingList.length)
-          return list.map(v => {
-            if (stakeList[v.text]) {
-              return { ...v, stake: stakeList[v.text] }
-            } else {
-              let count = 0
-              for (let i in stakeList) {
-                count += stakeList[i]
-              }
-              return { ...v, stake: count }
-            }
-          })
-        }
-        return []
+        })
+        return data
       },
-      seriesText1 () {
-        const popupArr = this.popupArray
-        if (popupArr[popupArr.length - 2]) {
-          return popupArr[popupArr.length - 2].value
-        } else {
-          return '2串1'
-        }
+      popupArray () {
+        if (!Lottery.isAHFootBall(this.lotteryId) || this.confirm.mode !== 2) return []
+        // 返回投注金额列表
+        const list = this.getPopupList()
+        return list.map((value) => {
+          let data = null
+          const isAll = value.text === 'nCn' // n串n
+          if (isAll) {
+            data = this.upperLimit(isAll, this.tempBetting, this.mine.bonus_limit, this.mine.amount_max, this.mine.amount_min)
+          } else {
+            data = this.upperLimit(isAll, this.tempBetting[value.text], this.mine.bonus_limit, this.mine.amount_max, this.mine.amount_min)
+          }
+          return { ...value, stake: data.stake, upperLimit: data.upperLimit }
+        })
       }
     },
     methods: {
       ...mapActions({
         getMineInfo: MINE_INFO
       }),
+      getGroup (data, index = 0, group = []) {
+        const need = [data[index]]
+        for (let i = 0; i < group.length; i++) {
+          if (Array.isArray(group[i])) {
+            need.push(group[i].concat([data[index]]))
+          } else {
+            need.push([group[i], data[index]])
+          }
+        }
+        group.push.apply(group, need)
+        if (index + 1 >= data.length) {
+          return group
+        } else {
+          return this.getGroup(data, index + 1, group)
+        }
+      },
+      upperLimit (isAll, arr, limit, max, min) {
+        let [upperLimit, stake] = [0, 0] // 上限金额 投注注数
+        if (isAll) {
+          for (let o in arr) { // 201
+            for (let i in arr[o]) {
+              upperLimit += f1(arr[o][i])
+              stake++ // 注数+1
+            }
+          }
+        } else {
+          // 只计算当前串
+          for (let i in arr) {
+            upperLimit += f1(arr[i])
+            stake++ // 注数+1
+          }
+        }
+
+        function f1 (arr) {
+          // 返回单注的赔率
+          let s = 1
+          for (let i in arr) {
+            s *= arr[i].selected[0].value
+          }
+          return s
+        }
+
+        upperLimit = upperLimit / stake // 平均单注赔率
+        upperLimit = (limit || 0) / stake / upperLimit // 可投注总额
+        if (max && upperLimit > max) {
+          upperLimit = max
+        }
+        if (min && upperLimit < min) {
+          upperLimit = min
+        }
+        return { upperLimit: Math.floor(upperLimit), stake }
+      },
       addBetting () {
         this.$router.back()
       },
@@ -633,22 +645,6 @@
         }
         this.$store.commit(SPORTS_CONFIRM_OPTIMIZE, calculate.getSportTickets(this.bettingList))
         this.$router.push({ name: 'SportsOptimize' })
-      },
-      inputNum (e) {
-        let money = e.target.value
-        let limit = e.target.getAttribute('data-num')
-        money = parseInt(money)
-        limit = parseInt(limit)
-        if (money > limit) {
-          Toast('超过投注上限,请重新输入!')
-        }
-      },
-      inputCount (number) {
-        let sum = 0
-        number.forEach(i => {
-          sum += (i * 1)
-        })
-        return sum
       }
     },
     created () {

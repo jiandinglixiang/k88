@@ -3,63 +3,30 @@
 </template>
 
 <script>//
-function getGroup (data, index = 0, group = []) {
-  const need = [data[index]]
-  for (let i = 0; i < group.length; i++) {
-    if (Array.isArray(group[i])) {
-      need.push(group[i].concat([data[index]]))
-    } else {
-      need.push([group[i], data[index]])
-    }
-  }
-  group.push.apply(group, need)
-  if (index + 1 >= data.length) {
-    return group
-  } else {
-    return getGroup(data, index + 1, group)
-  }
-}
 
 export default {
   name: 'ExpectedBonus',
   props: {
-    inputArray: { type: Array },
-    bettingList: { type: Array }
+    tempBetting: { type: Object }, // n串1可能性
+    ManyValue: { type: Object } // 绑定值
   },
   data () {
     return {}
   },
   computed: {
     text () {
-      console.log(this.inputArray)
-      const temp = [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        []
-      ] // 0/2串1 1/3串1 ....
-      const arr = getGroup(this.bettingList)
-      // 计算出n串1的可能性
-      arr.forEach(value => {
-        // 过滤1串一的值
-        if (Array.isArray(value)) {
-          temp[value.length - 2].push(value)
-        }
-      })
       let sum = 0 // 总金额
-      this.inputArray.forEach((value, i) => {
-        // 如果是输入框绑定最后一个,她就是n串n否则就是n串1
-        if (this.inputArray.length - 1 === i) {
-          // n串n
-          sum += this.computedSum(temp, value, true)
-        } else {
-          // n串1
-          sum += this.computedSum(temp[i], value)
+      for (let i in this.ManyValue) {
+        if (/^\d+$/.test(this.ManyValue[i])) {
+          if (i === 'nCn') {
+            // n串n
+            sum += this.computedSum(this.tempBetting, this.ManyValue[i], true)
+          } else {
+            // n串1
+            sum += this.computedSum(this.tempBetting[i], this.ManyValue[i])
+          }
         }
-      })
+      }
       return sum
     }
   },
@@ -93,7 +60,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

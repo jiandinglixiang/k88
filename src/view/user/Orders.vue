@@ -111,6 +111,7 @@
               } else {
                 this.loading = this.list[index[0]].length % 10 === 0  // 可被整除
                 this.listIndex = index
+                localStorage.setItem('ordersIndex', JSON.stringify(index))
               }
               break
             }

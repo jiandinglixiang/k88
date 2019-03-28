@@ -1,4 +1,4 @@
-import { LOTTERYIDS, SeriesType2, SeriesType } from '../../store/constants'
+import { LOTTERYIDS, SeriesType, SeriesType2 } from '../../store/constants'
 
 const SERIES_TYPE = {
   X11: '101',
@@ -101,69 +101,69 @@ const SERIES_LIST = [
     key: SERIES_TYPE.X81, value: SeriesType[SERIES_TYPE.X81], text: SeriesType2[SERIES_TYPE.X81]
   }],
   [{
-    key: SERIES_TYPE.X33, value: SeriesType[SERIES_TYPE.X33]
+    key: SERIES_TYPE.X33, value: SeriesType[SERIES_TYPE.X33], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X34, value: SeriesType[SERIES_TYPE.X34]
+    key: SERIES_TYPE.X34, value: SeriesType[SERIES_TYPE.X34], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X44, value: SeriesType[SERIES_TYPE.X44]
+    key: SERIES_TYPE.X44, value: SeriesType[SERIES_TYPE.X44], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X45, value: SeriesType[SERIES_TYPE.X45]
+    key: SERIES_TYPE.X45, value: SeriesType[SERIES_TYPE.X45], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X46, value: SeriesType[SERIES_TYPE.X46]
+    key: SERIES_TYPE.X46, value: SeriesType[SERIES_TYPE.X46], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X411, value: SeriesType[SERIES_TYPE.X411]
+    key: SERIES_TYPE.X411, value: SeriesType[SERIES_TYPE.X411], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X55, value: SeriesType[SERIES_TYPE.X55]
+    key: SERIES_TYPE.X55, value: SeriesType[SERIES_TYPE.X55], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X56, value: SeriesType[SERIES_TYPE.X56]
+    key: SERIES_TYPE.X56, value: SeriesType[SERIES_TYPE.X56], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X510, value: SeriesType[SERIES_TYPE.X510]
+    key: SERIES_TYPE.X510, value: SeriesType[SERIES_TYPE.X510], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X516, value: SeriesType[SERIES_TYPE.X516]
+    key: SERIES_TYPE.X516, value: SeriesType[SERIES_TYPE.X516], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X520, value: SeriesType[SERIES_TYPE.X520]
+    key: SERIES_TYPE.X520, value: SeriesType[SERIES_TYPE.X520], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X526, value: SeriesType[SERIES_TYPE.X526]
+    key: SERIES_TYPE.X526, value: SeriesType[SERIES_TYPE.X526], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X66, value: SeriesType[SERIES_TYPE.X66]
+    key: SERIES_TYPE.X66, value: SeriesType[SERIES_TYPE.X66], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X67, value: SeriesType[SERIES_TYPE.X67]
+    key: SERIES_TYPE.X67, value: SeriesType[SERIES_TYPE.X67], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X615, value: SeriesType[SERIES_TYPE.X615]
+    key: SERIES_TYPE.X615, value: SeriesType[SERIES_TYPE.X615], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X620, value: SeriesType[SERIES_TYPE.X620]
+    key: SERIES_TYPE.X620, value: SeriesType[SERIES_TYPE.X620], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X622, value: SeriesType[SERIES_TYPE.X622]
+    key: SERIES_TYPE.X622, value: SeriesType[SERIES_TYPE.X622], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X635, value: SeriesType[SERIES_TYPE.X635]
+    key: SERIES_TYPE.X635, value: SeriesType[SERIES_TYPE.X635], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X642, value: SeriesType[SERIES_TYPE.X642]
+    key: SERIES_TYPE.X642, value: SeriesType[SERIES_TYPE.X642], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X650, value: SeriesType[SERIES_TYPE.X650]
+    key: SERIES_TYPE.X650, value: SeriesType[SERIES_TYPE.X650], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X657, value: SeriesType[SERIES_TYPE.X657]
+    key: SERIES_TYPE.X657, value: SeriesType[SERIES_TYPE.X657], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X77, value: SeriesType[SERIES_TYPE.X77]
+    key: SERIES_TYPE.X77, value: SeriesType[SERIES_TYPE.X77], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X78, value: SeriesType[SERIES_TYPE.X78]
+    key: SERIES_TYPE.X78, value: SeriesType[SERIES_TYPE.X78], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X721, value: SeriesType[SERIES_TYPE.X721]
+    key: SERIES_TYPE.X721, value: SeriesType[SERIES_TYPE.X721], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X735, value: SeriesType[SERIES_TYPE.X735]
+    key: SERIES_TYPE.X735, value: SeriesType[SERIES_TYPE.X735], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X7120, value: SeriesType[SERIES_TYPE.X7120]
+    key: SERIES_TYPE.X7120, value: SeriesType[SERIES_TYPE.X7120], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X88, value: SeriesType[SERIES_TYPE.X88]
+    key: SERIES_TYPE.X88, value: SeriesType[SERIES_TYPE.X88], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X89, value: SeriesType[SERIES_TYPE.X89]
+    key: SERIES_TYPE.X89, value: SeriesType[SERIES_TYPE.X89], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X828, value: SeriesType[SERIES_TYPE.X828]
+    key: SERIES_TYPE.X828, value: SeriesType[SERIES_TYPE.X828], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X856, value: SeriesType[SERIES_TYPE.X856]
+    key: SERIES_TYPE.X856, value: SeriesType[SERIES_TYPE.X856], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X870, value: SeriesType[SERIES_TYPE.X870]
+    key: SERIES_TYPE.X870, value: SeriesType[SERIES_TYPE.X870], text: 'nCn'
   }, {
-    key: SERIES_TYPE.X8247, value: SeriesType[SERIES_TYPE.X8247]
+    key: SERIES_TYPE.X8247, value: SeriesType[SERIES_TYPE.X8247], text: 'nCn'
   }]
 ]
 const SeriesPlayTypeLimit = {
@@ -241,7 +241,7 @@ export default class Series {
     } else if (lotteryId === LOTTERYIDS.AHFOOTBALL_QCRQ) {
       switch (number) {
         case 2:
-          return [SERIES_LIST[0].slice(0, 1)]
+          return [...(SERIES_LIST[0].slice(0, 1))]
         case 3:
           return [...(SERIES_LIST[0].slice(0, 2)), ...(SERIES_LIST[1].slice(1, 2))]
         case 4:
