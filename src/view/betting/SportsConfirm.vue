@@ -162,7 +162,7 @@
             </div>
           </div>
           <div class="col">
-            <a @click="confirmPayment" class="btn text-center" href="javascript:;">付款</a>
+            <a @click="confirmPaymentYp" class="btn text-center" href="javascript:;">付款</a>
           </div>
         </div>
       </template>
@@ -263,7 +263,8 @@
     SPORTS_CONFIRM_PAYMENT,
     SPORTS_CONFIRM_SERIES_CLEAR,
     SPORTS_CONFIRM_SERIES_SET,
-    SPORTS_MULTIPLE_CHANGE
+    SPORTS_MULTIPLE_CHANGE,
+    SPORTS_CONFIRM_PAYMENT_PREBETYP
   } from '../../store/betting/types'
   import FootballSPFLottery from './child/FootballSPFLottery.vue'
   import FootballRQSPFLottery from './child/FootballRQSPFLottery.vue'
@@ -468,7 +469,7 @@
             this.isShowBottom = false
           }
           const list = this.getPopupList()
-          if (list[0][0]) {
+          if (list && list[0] && list[0][0]) {
             let arr = []
             for (let i = 0; i < this.series.length; i++) {
               list.map(value => {
@@ -537,6 +538,68 @@
             Toast('无订单id,登录已过期,请重新登录!')
           }
         })
+      },
+      confirmPaymentYp () {
+        // 亚盘下单
+        let inputArray = []
+        for (let i in this.ManyValue) {
+          if (this.ManyValue[i] !== '0' && this.ManyValue[i] !== '') {
+            inputArray.push({
+              text: i, Value: this.ManyValue[i]
+            })
+          }
+        }
+        if (inputArray.length <= 0) {
+          Toast('请输入投注金额')
+        } else {
+          const postArray = []
+          for (let i in this.popupArray) {
+            for (let j in inputArray) {
+              if (this.popupArray[i].text.toLowerCase() === inputArray[j].text.toLowerCase()) {
+                postArray.push({
+                  key: this.popupArray[i].key,
+                  value: this.popupArray[i].value,
+                  text: this.popupArray[i].text,
+                  stake: this.popupArray[i].stake,
+                  total: inputArray[j].Value
+                })
+              }
+            }
+          }
+          const result = {
+            Orders: postArray.map((v) => {
+              return {
+                series: v.key,
+                lottery_id: this.lotteryId,
+                play_type: this.confirm.mode,
+                stake_count: v.stake,
+                total_amount: v.total,
+                schedule_orders: this.bettingList.map(value => {
+                  return {
+                    bet_number: value.selected[0].key,
+                    schedule_id: value.id,
+                    is_sure: value.isSure ? 1 : 0
+                  }
+                })
+              }
+            })
+          }
+          console.log(result)
+          this.$store.dispatch(SPORTS_CONFIRM_PAYMENT_PREBETYP, result).then(() => {
+            if (this.confirm.id) {
+              if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
+                this.toggle()
+              } else {
+                this.$router.push({
+                  name: 'PaymentOrder',
+                  query: { id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP' }
+                })
+              }
+            } else {
+              Toast('无订单id,登录已过期,请重新登录!')
+            }
+          })
+        }
       },
       getPopupList () {
         return Series.getSeriesList(this.lotteryId, this.bettingList, this.sure)

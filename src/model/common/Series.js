@@ -198,7 +198,7 @@ export default class Series {
     let count = bettingList.length
     let lotteryArr = []
     let params = lotteryId
-    if (lotteryId === LOTTERYIDS.FOOTBALL_HH || lotteryId === LOTTERYIDS.BASKETBALL_HH || lotteryId === LOTTERYIDS.AHFOOTBALL_QCRQ) {
+    if (lotteryId === LOTTERYIDS.FOOTBALL_HH || lotteryId === LOTTERYIDS.BASKETBALL_HH || lotteryId === LOTTERYIDS.AHFOOTBALL_QCRQ || lotteryId === LOTTERYIDS.AHFOOTBALL_QCDXQ) {
       bettingList.map(value => {
         value.selected.map((v, i) => {
           if (v.length > 0) {
@@ -238,7 +238,7 @@ export default class Series {
         default:
           return [[], []]
       }
-    } else if (lotteryId === LOTTERYIDS.AHFOOTBALL_QCRQ) {
+    } else if (lotteryId === LOTTERYIDS.AHFOOTBALL_QCRQ || lotteryId === LOTTERYIDS.AHFOOTBALL_QCDXQ) {
       switch (number) {
         case 2:
           return [...(SERIES_LIST[0].slice(0, 1))]

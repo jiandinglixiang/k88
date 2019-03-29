@@ -5,7 +5,11 @@
       <div class="col text-light">VS</div>
       <div class="col col-40">{{schedule.guest}}</div>
     </div>
-    <div class="box ellipsis selected text-center box-icon" v-if="isConfirm">曼城（-1.0/-1.5）<span>1.66</span></div>
+    <template v-if="isConfirm">
+      <div class="box ellipsis selected text-center box-icon" v-for="item in selectedList">{{item.name}} ({{ item.text
+        }})<span>{{ item.value }}</span>
+      </div>
+    </template>
     <div class="box" v-else>
       <div class="box-hd row">
         <div class="col">进球</div>
@@ -18,7 +22,8 @@
              v-for="(item, index) in schedule.holderList"
              :class="{selected: isSelected(item), 'border-top': index > 0}">
           <div class="col bg-dark">{{ item.text }}</div>
-          <div class="col-67 text-color" :class="isStyle(item.str)">{{ item.value }}<span class="arrow-icon"></span></div>
+          <div class="col-67 text-color" :class="isStyle(item.str)">{{ item.value }}<span class="arrow-icon"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -27,10 +32,48 @@
 
 <script>
   import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
+
   export default {
     name: 'ahQcDXQLottery',
     props: ['schedule', 'isConfirm'],
+    computed: {
+      selectedList () {
+        let items = []
+        let item = []
+        let name = ''
+        this.schedule.selected.map(v => {
+          if (v.key.substring(4, 3) === '1') {
+            name = this.schedule.home
+          } else {
+            name = this.schedule.guest
+          }
+          item['name'] = name
+          item['value'] = v.value
+          item['text'] = v.text
+          items.push(item)
+        })
+        return items
+      }
+    },
     methods: {
+      boxText () {
+        let items = []
+        let name = ''
+        this.schedule.selected.map(v => {
+          if (v.key.substring(4, 3) === '1') {
+            name = this.schedule.home
+          } else {
+            name = this.schedule.guest
+          }
+          items.push(name, v.text)
+        })
+        return items.join(' (')
+      },
+      boxValue () {
+        let items = []
+        this.schedule.selected.map(v => items.push(v.value))
+        return items.join('')
+      },
       onOptionSelected (item) {
         this.schedule.onOptionSelected(item)
         this.$store.commit(SPORTS_OPTION_SELECTED)
@@ -92,7 +135,7 @@
         color: #999;
         width: 60%;
         &.selected {
-        .col-67 {
+          .col-67 {
             background-color: #ffc63a;
             color: #131313;
           }
