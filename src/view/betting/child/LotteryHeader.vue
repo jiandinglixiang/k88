@@ -6,7 +6,9 @@
         {{currentType.value}}
         <i class="icon" :class="{'up': panelVisible}"></i>
       </span>
-      <span class="refresh-icon"></span>
+      <span @click="updateList" class="refresh-icon">
+<!--        刷新-->
+      </span>
       <span class="filter-icon" v-show="hasFilter()" @click="openFilter"></span>
       <span class="question-icon" @click="goHelp"></span>
     </div>
@@ -31,6 +33,7 @@
   import {
     CURRENT_PLAY_TYPE_SELECT,
     CURRENT_SPORT_PLAY_TYPE_SELECT,
+    CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE,
     GET_CURRENT_LOTTERY,
     RECOMMEND_ISSUE_SET,
     SPORTS_FILTER_PANEL_CHANGE
@@ -46,16 +49,15 @@
     },
     data () {
       return {
-        panelVisible: false
+        panelVisible: false,
+        time: 0
       }
     },
     computed: {
       ...mapState({
-        lottery: state => state.betting.lottery
-      }),
-      currentType () {
-        return this.$store.state.betting[this.lottery].playType || {value: ''}
-      }
+        lottery: state => state.betting.lottery,
+        currentType: state => state.betting[state.betting.lottery].playType || { value: '' }
+      })
     },
     methods: {
       changePanelVisible () {
@@ -70,7 +72,7 @@
           Lottery.isSYXW(this.lottery) || Lottery.isK3(this.lottery) || Lottery.isFC3D(this.lottery)) {
           this.$store.commit(CURRENT_PLAY_TYPE_SELECT, item);
         }
-        this.changePanelVisible();
+        this.changePanelVisible()
       },
       goBack () {
         this.$router.replace({path: '/'});
@@ -96,6 +98,17 @@
       },
       openFilter () {
         this.$store.commit(SPORTS_FILTER_PANEL_CHANGE, true);
+      },
+      updateList () {
+        // 更新
+        const item = this.currentType
+        if (Lottery.isFootBall(this.lottery) || Lottery.isBasketBall(this.lottery) || Lottery.isAHFootBall(this.lottery)) {
+          console.log(item)
+          this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, item)
+        } else if (Lottery.isSSQ(this.lottery) || Lottery.isDLT(this.lottery) ||
+          Lottery.isSYXW(this.lottery) || Lottery.isK3(this.lottery) || Lottery.isFC3D(this.lottery)) {
+          this.$store.commit(CURRENT_PLAY_TYPE_SELECT, item)
+        }
       }
     },
     created () {

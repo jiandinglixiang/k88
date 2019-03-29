@@ -149,6 +149,7 @@
         return this.schedule.selected.indexOf(item) !== -1
       },
       selectedItem (item) {
+        console.log(item)
         if (this.currentMode === 1) {
           this.schedule.onOptionSelected(item)
           this.$store.commit(SPORTS_OPTION_SELECTED)

@@ -33,7 +33,12 @@
 </template>
 
 <script>
-  import { CLEAR_SPORT_BETTING_SELECTED, SPORT_MODE_SELECT, SPORTS_CONFIRM_BET } from '../../../store/betting/types'
+  import {
+    CLEAR_SPORT_BETTING_SELECTED,
+    CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE,
+    SPORT_MODE_SELECT,
+    SPORTS_CONFIRM_BET
+  } from '../../../store/betting/types'
   import SportLotteryPanel from './SportLotteryPanel.vue'
   import SportsNoMatch from './SportsNoMatch.vue'
   import SportFilter from './SportFilter.vue'
@@ -58,7 +63,8 @@
         return this.holders && (this.holders.total > (this.holders.mode === 2 ? 1 : 0)) && this.holders.total <= 15;
       },
       ...mapState({
-        lottery: state => state.betting.lottery
+        lottery: state => state.betting.lottery,
+        currentType: state => state.betting[state.betting.lottery].playType || { value: '' }
       }),
       filterType () {
         return Lottery.isFootBall(this.lottery) ? 'football' : '';
@@ -79,6 +85,28 @@
       },
       filterConfirm (selected) {
         this.filterSelected = selected;
+      }
+    },
+    mounted () {
+      if (Lottery.isAHFootBall(this.lottery)) {
+        // 每10秒更新次
+        let isOk = true
+        const ff = () => {
+          if (!isOk) return
+          if (this.$route.path === '/asianHandicap/ah_footer' || this.$route.path === '/betting/sports_confirm') {
+            isOk = false
+            this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType).then(() => {
+              return this.$route.path === '/betting/sports_confirm' && this.$store.commit(SPORTS_CONFIRM_BET)
+            }).finally(() => {
+              isOk = true
+            })
+          } else {
+            clearInterval(this.time)
+          }
+        }
+        this.$nextTick(() => {
+          this.time = setInterval(ff, 10000)
+        })
       }
     },
     components: {SportLotteryPanel, SportsNoMatch, SportFilter}

@@ -1,15 +1,15 @@
-import * as types from './types';
-import { LOTTERYIDS } from '../constants';
-import BettingFactory from '../../model/BettingFactory';
-import SportsBetting from '../../model/SportsBetting';
-import SfcBetting from '../../model/SfcBetting';
-import HomeLotteryItem from '../../model/HomeLotteryItem';
-import Http from '../Http';
-import loading from '../../common/loading';
-import md5 from 'md5';
-import BonusOptimizationUtil from '../../model/common/BonusOptimizationUtil';
-import Lottery from '../../model/common/Lottery';
-import SfcCalculator from '../../model/common/SfcCalculator';
+import * as types from './types'
+import { LOTTERYIDS } from '../constants'
+import BettingFactory from '../../model/BettingFactory'
+import SportsBetting from '../../model/SportsBetting'
+import SfcBetting from '../../model/SfcBetting'
+import HomeLotteryItem from '../../model/HomeLotteryItem'
+import Http from '../Http'
+import loading from '../../common/loading'
+import md5 from 'md5'
+import BonusOptimizationUtil from '../../model/common/BonusOptimizationUtil'
+import Lottery from '../../model/common/Lottery'
+import SfcCalculator from '../../model/common/SfcCalculator'
 
 const state = {
   lottery: null,
@@ -145,6 +145,16 @@ const actions = {
       }
     }
   },
+  [types.CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE] ({ commit, state }, data) {
+    // 更新数据
+    return Http.get('/Lottery/getJcList', {
+      lottery_id: state.lottery,
+      play_type: state[state.lottery].mode
+    }).then(data => {
+      commit(types.CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, data)
+      return data
+    })
+  },
   [types.SPORT_MODE_SELECT] (context, mode) {
     const obj = state[state.lottery];
     if (!obj.scheme[mode === 2 ? 0 : 1]) {
@@ -172,6 +182,35 @@ const mutations = {
       (state[state.lottery].playType.id === data.id && state[state.lottery].playType.sure !== data.sure)) {
       state[state.lottery] = new BettingFactory(state.lottery, data);
     }
+  },
+  [types.CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE] (state, data) {
+    // 更新数据
+    const obj = state[state.lottery]
+    const schemes = [...obj.scheme]
+    const BetList = schemes[obj.mode === 2 ? 0 : 1].getBettingList() // 选中列表
+    const objNew = new SportsBetting(data, obj.mode) // 新数据
+    const IndexOff = (selected, newSchedules) => {
+      for (let i in selected) {
+        const item = newSchedules.holderList.find(value3 => selected[i].key === value3.key)
+        // 在新数据内找到同一个item
+        item && newSchedules.onOptionSelected2(item)
+      }
+    }
+    BetList.forEach((value) => {
+      for (let i in objNew.groups) {
+        const schedules = objNew.groups[i].schedules.find(value2 => value2.id === value.id)
+        // 找到对应的新比赛数据
+        if (schedules) {
+          // 覆盖新数据selected列表
+          IndexOff(value.selected, schedules)
+        } else {
+          break
+        }
+      }
+    })
+    objNew.setBottomTip()
+    schemes[obj.mode === 2 ? 0 : 1] = objNew
+    obj.scheme = schemes
   },
   [types.CURRENT_SPORT_PLAY_TYPE_SELECT] (state, data) {
     const obj = state[state.lottery];
@@ -264,6 +303,7 @@ const mutations = {
     state.sportConfirm.multiple = 1;
     state.sportConfirm.series = [];
     state.sportConfirm.isMulti = false;
+    return Promise.resolve(true)
   },
   [types.SPORTS_CONFIRM_DELETE_TICKET] (state, key) {
     state.sportConfirm.bettingList.splice(key, 1);
