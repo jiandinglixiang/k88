@@ -122,6 +122,16 @@ const actions = {
       })
     }
   },
+  [types.SPORTS_CONFIRM_PAYMENT_PREBETYP] (context, result) {
+    if (context.rootState.user.token) {
+      loading.show();
+      const mdStr = '{0}{1}{2}Ehcv2b1AvWAMSey2'.format(result.Orders[0].lottery_id, result.Orders[0].play_type, parseInt(result.Orders[0].total_amount));
+      return Http.post('/WebBet/preBetYp?lottery_id={0}&product_name=LHCP&sign={1}'.format(result.Orders[0].lottery_id, md5(mdStr)), result).then(data => {
+        context.commit(types.SPORTS_CONFIRM_PAYMENT_PREBETYP, data);
+        loading.hide();
+      })
+    }
+  },
   [types.SFC_CONFIRM_PAYMENT] (context, result) {
     if (context.rootState.user.token) {
       loading.show();
@@ -246,6 +256,10 @@ const mutations = {
     state.confirm.sign = data.sign;
   },
   [types.SPORTS_CONFIRM_PAYMENT] (state, data) {
+    state.sportConfirm.id = data.id;
+    state.sportConfirm.sign = data.sign;
+  },
+  [types.SPORTS_CONFIRM_PAYMENT_PREBETYP] (state, data) {
     state.sportConfirm.id = data.id;
     state.sportConfirm.sign = data.sign;
   },
