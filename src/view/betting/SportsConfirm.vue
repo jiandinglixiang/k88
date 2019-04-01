@@ -379,7 +379,7 @@
       textSum () {
         let sum = 0
         this.inputValue.forEach(i => {
-          sum += (i.total_amount) * 1
+          sum += (i.total) * 1
         })
         return sum
       },
@@ -390,7 +390,7 @@
         // 单关 奖金预计
         let count = 0
         this.inputValue.forEach(i => {
-          count += ((i.total_amount) * (i.value)) * 1
+          count += ((i.total) * (i.value)) * 1
         })
         return count
       }
@@ -554,76 +554,96 @@
       confirmPaymentYp () {
         // 亚盘下单
         let inputArray = []
-        for (let i in this.ManyValue) {
-          if (this.ManyValue[i] !== '0' && this.ManyValue[i] !== '') {
-            inputArray.push({
-              text: i, Value: this.ManyValue[i]
-            })
+        if (this.confirm.mode === 2) {
+          // 过关
+          for (let i in this.ManyValue) {
+            if (this.ManyValue[i] !== '0' && this.ManyValue[i] !== '') {
+              inputArray.push({
+                text: i, Value: this.ManyValue[i]
+              })
+            }
           }
-        }
-        if (inputArray.length <= 0) {
-          Toast('请输入投注金额')
-        } else {
-          const postArray = []
-          for (let i in this.popupArray) {
-            for (let j in inputArray) {
-              if (this.popupArray[i].text.toLowerCase() === inputArray[j].text.toLowerCase()) {
-                postArray.push({
-                  key: this.popupArray[i].key,
-                  value: this.popupArray[i].value,
-                  text: this.popupArray[i].text,
-                  stake: this.popupArray[i].stake,
-                  upperLimit: this.popupArray[i].upperLimit,
-                  total: inputArray[j].Value
-                })
+          if (inputArray.length <= 0) {
+            Toast('请输入投注金额')
+          } else {
+            const postArray = []
+            for (let i in this.popupArray) {
+              for (let j in inputArray) {
+                if (this.popupArray[i].text.toLowerCase() === inputArray[j].text.toLowerCase()) {
+                  postArray.push({
+                    key: this.popupArray[i].key,
+                    value: this.popupArray[i].value,
+                    text: this.popupArray[i].text,
+                    stake: this.popupArray[i].stake,
+                    upperLimit: this.popupArray[i].upperLimit,
+                    total: inputArray[j].Value
+                  })
+                }
               }
             }
-          }
-          // console.log(postArray)
-          let stats = true
-          for (let i in postArray) {
-            if (postArray[i].total > postArray[i].upperLimit) {
-              Toast(postArray[i].value + '超过投注上限,请重新输入')
-              stats = false
-              break
+            // console.log(postArray)
+            let stats = true
+            for (let i in postArray) {
+              if (postArray[i].total > postArray[i].upperLimit) {
+                Toast(postArray[i].value + '超过投注上限,请重新输入')
+                stats = false
+                break
+              }
             }
-          }
-          if (stats === true) {
-            const result = {
-              Orders: postArray.map((v) => {
-                return {
-                  series: v.key,
-                  lottery_id: this.lotteryId,
-                  play_type: this.confirm.mode,
-                  stake_count: v.stake,
-                  total_amount: v.total,
-                  schedule_orders: this.bettingList.map(value => {
-                    return {
-                      bet_number: value.selected[0].key,
-                      schedule_id: value.id,
-                      is_sure: value.isSure ? 1 : 0
-                    }
-                  })
+            if (stats === true) {
+              const result = {
+                Orders: postArray.map((v) => {
+                  return {
+                    series: v.key,
+                    lottery_id: this.lotteryId,
+                    play_type: this.confirm.mode,
+                    stake_count: v.stake,
+                    total_amount: v.total,
+                    schedule_orders: this.bettingList.map(value => {
+                      return {
+                        bet_number: value.selected[0].key,
+                        schedule_id: value.id,
+                        is_sure: value.isSure ? 1 : 0
+                      }
+                    })
+                  }
+                })
+              }
+              console.log(result)
+              this.$store.dispatch(SPORTS_CONFIRM_PAYMENT_PREBETYP, result).then(() => {
+                if (this.confirm.id) {
+                  if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
+                    this.toggle()
+                  } else {
+                    this.$router.push({
+                      name: 'PaymentOrder',
+                      query: { id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP' }
+                    })
+                  }
+                } else {
+                  Toast('无订单id,登录已过期,请重新登录!')
                 }
               })
             }
-            console.log(result)
-            this.$store.dispatch(SPORTS_CONFIRM_PAYMENT_PREBETYP, result).then(() => {
-              if (this.confirm.id) {
-                if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
-                  this.toggle()
-                } else {
-                  this.$router.push({
-                    name: 'PaymentOrder',
-                    query: { id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP' }
-                  })
-                }
-              } else {
-                Toast('无订单id,登录已过期,请重新登录!')
-              }
-            })
+          }
+        } else {
+          // 单关
+          for (let i in this.inputValue) {
+            if (this.inputValue[i] !== '0' && this.inputValue[i] !== '') {
+              inputArray.push({
+                text: i,
+                total: this.inputValue[i]
+              })
+            }
+          }
+          if (inputArray.length <= 0) {
+            Toast('请输入投注金额')
+          } else {
+            // const postArray = []
+            console.log('next')
           }
         }
+        console.log()
       },
       Payment () {
         // 亚盘单关
@@ -1169,9 +1189,11 @@
       color: $cFFfFFF;
     }
   }
+
   .sports-confirm .scheme-box-item.stylehidden {
     padding: 0;
-    >.scheme-delete-icon {
+
+    > .scheme-delete-icon {
       display: none;
     }
   }

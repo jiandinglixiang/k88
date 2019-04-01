@@ -173,13 +173,21 @@
         return item
       },
       getInputValue (e, index) {
-        this.inputValueArray.push({
-          index: index,
-          value: '1.9',
-          total_amount: e.target.value
-        })
-        this.inputValueArray[index]['index'] = index
-        this.inputValueArray[index]['total_amount'] = e.target.value
+        if (e.target.value !== '' && e.target.value !== '0') {
+          this.inputValueArray[index] = {
+            index: index,
+            total: e.target.value,
+            guest: this.selectedList[index].guest,
+            home: this.selectedList[index].home,
+            id: this.selectedList[index].id,
+            key: this.selectedList[index].key,
+            name: this.selectedList[index].name,
+            text: this.selectedList[index].text,
+            value: this.selectedList[index].value
+          }
+        }
+        console.log(this.selectedList)
+        console.log(this.inputValueArray)
       }
     },
     filters: {
@@ -198,6 +206,7 @@
 <style scoped lang="scss">
   .ah-football-qcrq-lottery {
     font-size: 14px;
+
     .box {
       overflow: hidden;
       margin-top: 8px;
@@ -206,6 +215,7 @@
       border-radius: 4px;
       text-align: center;
       font-size: 14px;
+
       .box-item {
         float: left;
         margin: 0;
@@ -214,9 +224,11 @@
         line-height: 30px;
         text-align: left;
         color: #999;
+
         &.border-top {
           border-top: 1px solid #3f3f3f;
         }
+
         .arrow-icon {
           display: none;
           vertical-align: middle;
@@ -226,26 +238,33 @@
           border-width: 4px;
           border-style: solid dashed dashed dashed;
         }
+
         .text-color {
           color: #fff;
+
           &.up {
             color: #1ac456;
+
             .arrow-icon {
               display: inline-block;
               margin-bottom: 6px;
               border-color: transparent transparent #1ac456 transparent;
             }
           }
+
           &.down {
             color: #f33;
+
             .arrow-icon {
               display: inline-block;
               border-color: #f33 transparent transparent transparent;
             }
           }
         }
+
         &:nth-child(odd) {
           position: relative;
+
           &:after {
             position: absolute;
             top: 9px;
@@ -256,40 +275,50 @@
             height: 12px;
           }
         }
+
         &.selected {
           background-color: #ffc63a;
           color: #131313;
+
           .text-color {
             color: #131313;
           }
         }
       }
+
       .selected {
         background-color: #ffc63a;
         color: #131313;
       }
+
       .box-icon {
         height: 35px;
         line-height: 35px;
+
         span {
           color: #3359ff;
         }
       }
     }
+
     .order-list {
       background: transparent;
       border: none;
       border-radius: 0;
+
       .selected {
         border-radius: 4px;
       }
+
       .margin-bottom {
         margin-bottom: 8px;
       }
+
       .c-white {
         color: $cFFfFFF;
       }
     }
+
     .order-input-text .margin-top-5 {
       margin-top: 4px !important;
     }
