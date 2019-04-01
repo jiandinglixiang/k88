@@ -203,7 +203,7 @@ const mutations = {
       for (let i in selected) {
         const item = newSchedules.holderList.find(value3 => selected[i].key === value3.key)
         // 在新数据内找到同一个item
-        item && newSchedules.onOptionSelected2(item)
+        item && newSchedules.onOptionSelected(item)
       }
     }
     BetList.forEach((value) => {

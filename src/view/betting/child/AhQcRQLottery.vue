@@ -2,9 +2,9 @@
   <div class="ah-football-qcrq-lottery">
     <template v-if="currentMode === 1">
       <template v-if="isConfirm">
-        <template v-for="item in selectedList">
+        <template v-for="(item, index) in selectedList">
           <div class="scheme-box-item">
-            <span class="scheme-delete-icon poa-m" @click="deleteBetting(key)"></span>
+            <span class="scheme-delete-icon poa-m" @click="deleteBetting(index)"></span>
             <div class="padding-left-10">
               <div class="row text-center text-default-2 text-sm">
                 <div class="col col-40">{{item.home}}</div>
@@ -12,7 +12,7 @@
                 <div class="col col-40">{{item.guest}}</div>
               </div>
               <div class="box order-list">
-                <div class=" ellipsis text-center box-icon selected margin-bottom">{{item.name}} ({{ item.text }})
+                <div class=" ellipsis text-center box-icon selected margin-bottom">{{ item.name }}({{ item.text }})
                   <span>{{ item.value }}</span>
                 </div>
                 <!--单关显示 -->
@@ -30,7 +30,7 @@
                   </div>
                   <div class="col">
                     <div class="input-text text-center">
-                      <input type="text" placeholder="请输入投注金额">
+                      <input placeholder="请输入投注金额" type="number" @change="getInputValue($event, index)">
                     </div>
                   </div>
                 </div>
@@ -92,6 +92,11 @@
   export default {
     name: 'ahQcRQLottery',
     props: ['schedule', 'isConfirm', 'bonusLimit'],
+    data () {
+      return {
+        inputValueArray: []
+      }
+    },
     computed: {
       boxText () {
         let items = []
@@ -113,25 +118,22 @@
       },
       selectedList () {
         let items = []
-        let item = []
         let name = ''
-        let id = this.schedule.id
-        let home = this.schedule.home
-        let guest = this.schedule.guest
         this.schedule.selected.map(v => {
           if (v.key.substring(4, 3) === '1') {
             name = this.schedule.home
           } else {
             name = this.schedule.guest
           }
-          item['name'] = name
-          item['key'] = v.key
-          item['value'] = v.value
-          item['text'] = v.text
-          item['id'] = id
-          item['home'] = home
-          item['guest'] = guest
-          items.push(item)
+          items.push({
+            name: name,
+            key: v.key,
+            value: v.value,
+            text: v.text,
+            home: this.schedule.home,
+            guest: this.schedule.guest,
+            id: this.schedule.id
+          })
         })
         return items
       },
@@ -149,7 +151,7 @@
         return this.schedule.selected.indexOf(item) !== -1
       },
       selectedItem (item) {
-        console.log(item)
+        // console.log(item)
         if (this.currentMode === 1) {
           this.schedule.onOptionSelected(item)
           this.$store.commit(SPORTS_OPTION_SELECTED)
@@ -169,6 +171,15 @@
           item = ''
         }
         return item
+      },
+      getInputValue (e, index) {
+        this.inputValueArray.push({
+          index: index,
+          value: '1.9',
+          total_amount: e.target.value
+        })
+        this.inputValueArray[index]['index'] = index
+        this.inputValueArray[index]['total_amount'] = e.target.value
       }
     },
     filters: {
@@ -180,6 +191,7 @@
     created () {
       // console.log(JSON.parse(JSON.stringify(this.schedule)))
       // console.log(this.selectedList)
+      this.$emit('update:inputValue', this.inputValueArray)
     }
   }
 </script>
