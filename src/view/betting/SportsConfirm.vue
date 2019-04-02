@@ -9,7 +9,9 @@
       <!--<scheme-box>-->
       <div style="padding: 2.3% 2.3% 0 2.3%;">
         <div
-          :class="{'has-sure': betting.mode === 2,'sure-none':betting.lotteryId===901||betting.lotteryId===902,'stylehidden':betting.lotteryId===901 && betting.mode === 1}"
+          :class="{'has-sure': betting.mode === 2,
+          'padding': stylepadding,
+          'stylehidden': stylehidden}"
           class="scheme-box-item"
           v-for="(betting, key) in bettingList">
           <template v-if="betting.lotteryId === 601">
@@ -76,13 +78,15 @@
           </template>
           <template v-else-if="betting.lotteryId === 902">
             <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
-            <ah-qc-d-x-q-lottery :isConfirm="true" :schedule="betting"
+            <ah-qc-d-x-q-lottery :bonusLimit="bonusLimit" :amountMax="mine.amount_max" :amountMin="mine.amount_min"
+                                 :isConfirm="true" :schedule="betting"
+                                 :inputValue.sync="inputValue"
                                  @onOptionSelected="onOptionSelected"></ah-qc-d-x-q-lottery>
           </template>
           <span :class="{selected: betting.isSure}"
                 @click="addSure(betting)"
                 class="sure"
-                v-if="!(betting.lotteryId === 901 && betting.mode === 1)">胆</span>
+                v-if="!(betting.lotteryId === 901 || betting.lotteryId === 902)">胆</span>
         </div>
       </div>
       <!--</scheme-box>-->
@@ -394,6 +398,16 @@
           count += (i.total * i.value) * 1
         })
         return count.toFixed(2)
+      },
+      stylepadding () {
+        if (this.currentMode === 2 && this.lotteryId === 901 || this.currentMode === 2 && this.lotteryId === 902) {
+          return true
+        }
+      },
+      stylehidden () {
+        if (this.currentMode === 1 && this.lotteryId === 901 || this.currentMode === 1 && this.lotteryId === 902) {
+          return true
+        }
       }
     },
     methods: {
@@ -603,7 +617,8 @@
                     return {
                       bet_number: value.selected[0].key,
                       schedule_id: value.id,
-                      is_sure: value.isSure ? 1 : 0
+                      is_sure: value.isSure ? 1 : 0,
+                      odds: value.selected[0].value
                     }
                   })
                 }
@@ -642,7 +657,8 @@
                     return {
                       bet_number: value.selected[0].key,
                       schedule_id: value.id,
-                      is_sure: value.isSure ? 1 : 0
+                      is_sure: value.isSure ? 1 : 0,
+                      odds: v.value
                     }
                   })
                 }
@@ -665,10 +681,6 @@
             Toast('无订单id,登录已过期,请重新登录!')
           }
         })
-      },
-      Payment () {
-        // 亚盘单关
-        console.log(this.inputValue)
       },
       getPopupList () {
         return Series.getSeriesList(this.lotteryId, this.bettingList, this.sure)
@@ -765,6 +777,7 @@
       onOptionSelected () {
         this.clearSeries()
         this.setProjectBonus()
+        this.overstep()
       },
       confirmOptimize () {
         if (this.isMulti) {
@@ -777,10 +790,15 @@
         }
         this.$store.commit(SPORTS_CONFIRM_OPTIMIZE, calculate.getSportTickets(this.bettingList))
         this.$router.push({ name: 'SportsOptimize' })
+      },
+      overstep () {
+        console.log(this.bettingList)
+        if (this.bettingList.selected.length > 8) {
+          Toast('超出')
+        }
       }
     },
     created () {
-      console.log(this.bettingList)
       if (this.bettingList.length === 0) {
         this.$store.commit(SPORTS_CONFIRM_SERIES_CLEAR)
         this.$router.back()
@@ -943,12 +961,9 @@
     display: block;
   }
 
-  .sports-confirm .scheme-box-item.has-sure.sure-none {
+  .sports-confirm .scheme-box-item.has-sure.padding {
     padding: 10px 5px 5px 30px;
 
-    .sure {
-      display: none;
-    }
   }
 
   .sports-confirm .scheme-box-item .sure {
