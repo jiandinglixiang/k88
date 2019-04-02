@@ -24,13 +24,12 @@
                     </div>
                     <div class="row margin-top-5">
                       <div class="col">投注上限</div>
-                      <div class="col ellipsis text-right">{{ bonusLimit/item.value|parseIntBalance }}</div>
+                      <div class="col ellipsis text-right">{{ item.upperLimit }}</div>
                     </div>
-                    <!--<div class="ellipsis">投注上限 <span>{{ 85470.08}}</span></div>-->
                   </div>
                   <div class="col">
                     <div class="input-text text-center">
-                      <input placeholder="请输入投注金额" type="number" @change="getInputValue($event, index)">
+                      <input placeholder="请输入投注金额" type="number" @input="getInputValue($event, index)">
                     </div>
                   </div>
                 </div>
@@ -86,12 +85,12 @@
 </template>
 
 <script>
-  import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
+  import { SPORTS_OPTION_SELECTED, SPORTS_CONFIRM_DELETE_TICKET_ONE } from '../../../store/betting/types'
   import { mapState } from 'vuex'
 
   export default {
     name: 'ahQcRQLottery',
-    props: ['schedule', 'isConfirm', 'bonusLimit'],
+    props: ['schedule', 'isConfirm', 'bonusLimit', 'amountMax', 'amountMin'],
     data () {
       return {
         inputValueArray: []
@@ -119,11 +118,18 @@
       selectedList () {
         let items = []
         let name = ''
+        let upperLimit = ''
         this.schedule.selected.map(v => {
           if (v.key.substring(4, 3) === '1') {
             name = this.schedule.home
           } else {
             name = this.schedule.guest
+          }
+          upperLimit = Math.floor(this.bonusLimit / v.value)
+          if (upperLimit > this.amountMax) {
+            upperLimit = this.amountMax
+          } else if (upperLimit < this.amountMin) {
+            upperLimit = this.amountMin
           }
           items.push({
             name: name,
@@ -132,7 +138,8 @@
             text: v.text,
             home: this.schedule.home,
             guest: this.schedule.guest,
-            id: this.schedule.id
+            id: this.schedule.id,
+            upperLimit: upperLimit
           })
         })
         return items
@@ -172,22 +179,24 @@
         }
         return item
       },
+      deleteBetting (index) {
+        this.$store.commit(SPORTS_CONFIRM_DELETE_TICKET_ONE, index)
+      },
       getInputValue (e, index) {
-        if (e.target.value !== '' && e.target.value !== '0') {
-          this.inputValueArray[index] = {
-            index: index,
-            total: e.target.value,
-            guest: this.selectedList[index].guest,
-            home: this.selectedList[index].home,
-            id: this.selectedList[index].id,
-            key: this.selectedList[index].key,
-            name: this.selectedList[index].name,
-            text: this.selectedList[index].text,
-            value: this.selectedList[index].value
-          }
-        }
-        console.log(this.selectedList)
-        console.log(this.inputValueArray)
+        this.$set(this.inputValueArray, index, {
+          index: index,
+          total: e.target.value,
+          guest: this.selectedList[index].guest,
+          home: this.selectedList[index].home,
+          id: this.selectedList[index].id,
+          key: this.selectedList[index].key,
+          name: this.selectedList[index].name,
+          text: this.selectedList[index].text,
+          value: this.selectedList[index].value,
+          upperLimit: this.selectedList[index].upperLimit
+        })
+
+        // console.log(this.inputValueArray)
       }
     },
     filters: {
@@ -198,8 +207,13 @@
     },
     created () {
       // console.log(JSON.parse(JSON.stringify(this.schedule)))
-      // console.log(this.selectedList)
-      this.$emit('update:inputValue', this.inputValueArray)
+      // this.$emit('update:inputValue', this.inputValueArray)
+    },
+    watch: {
+      inputValueArray (news) {
+        // console.log(news)
+        this.$emit('update:inputValue', news)
+      }
     }
   }
 </script>

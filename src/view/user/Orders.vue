@@ -64,7 +64,7 @@
         const id = order.lottery_id
         if (Lottery.isFootBall(id) || Lottery.isBasketBall(id) || Lottery.isSYXW(id) ||
           Lottery.isDLT(id) || Lottery.isSSQ(id) || Lottery.isSFCOrRXJ(id) || Lottery.isK3(id) ||
-          Lottery.isFC3D(id)) {
+          Lottery.isFC3D(id) || Lottery.isAHFootBall(id)) {
           this.$router.push({
             name: 'OrderDetail',
             params: { id: order.id }

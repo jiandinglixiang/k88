@@ -69,7 +69,8 @@
           </template>
           <template v-else-if="betting.lotteryId === 901">
             <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
-            <ah-qc-r-q-lottery :bonusLimit="bonusLimit" :isConfirm="true" :schedule="betting"
+            <ah-qc-r-q-lottery :bonusLimit="bonusLimit" :amountMax="mine.amount_max" :amountMin="mine.amount_min"
+                               :isConfirm="true" :schedule="betting"
                                :inputValue.sync="inputValue"
                                @onOptionSelected="onOptionSelected"/>
           </template>
@@ -98,7 +99,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <a @click="Payment" class="btn text-center" href="javascript:;">付款</a>
+            <a @click="confirmPaymentYp" class="btn text-center" href="javascript:;">付款</a>
           </div>
         </div>
       </div>
@@ -379,7 +380,7 @@
       textSum () {
         let sum = 0
         this.inputValue.forEach(i => {
-          sum += (i.total) * 1
+          sum += (i.total * 1)
         })
         return sum
       },
@@ -390,9 +391,9 @@
         // 单关 奖金预计
         let count = 0
         this.inputValue.forEach(i => {
-          count += ((i.total) * (i.value)) * 1
+          count += (i.total * i.value) * 1
         })
-        return count
+        return count.toFixed(2)
       }
     },
     methods: {
@@ -553,9 +554,10 @@
       },
       confirmPaymentYp () {
         // 亚盘下单
-        let inputArray = []
+        const result = {}
         if (this.confirm.mode === 2) {
           // 过关
+          let inputArray = []
           for (let i in this.ManyValue) {
             if (this.ManyValue[i] !== '0' && this.ManyValue[i] !== '') {
               inputArray.push({
@@ -581,7 +583,6 @@
                 }
               }
             }
-            // console.log(postArray)
             let stats = true
             for (let i in postArray) {
               if (postArray[i].total > postArray[i].upperLimit) {
@@ -591,59 +592,79 @@
               }
             }
             if (stats === true) {
-              const result = {
-                Orders: postArray.map((v) => {
-                  return {
-                    series: v.key,
-                    lottery_id: this.lotteryId,
-                    play_type: this.confirm.mode,
-                    stake_count: v.stake,
-                    total_amount: v.total,
-                    schedule_orders: this.bettingList.map(value => {
-                      return {
-                        bet_number: value.selected[0].key,
-                        schedule_id: value.id,
-                        is_sure: value.isSure ? 1 : 0
-                      }
-                    })
-                  }
-                })
-              }
-              console.log(result)
-              this.$store.dispatch(SPORTS_CONFIRM_PAYMENT_PREBETYP, result).then(() => {
-                if (this.confirm.id) {
-                  if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
-                    this.toggle()
-                  } else {
-                    this.$router.push({
-                      name: 'PaymentOrder',
-                      query: { id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP' }
-                    })
-                  }
-                } else {
-                  Toast('无订单id,登录已过期,请重新登录!')
+              result.Orders = postArray.map((v) => {
+                return {
+                  series: v.key,
+                  lottery_id: this.lotteryId,
+                  play_type: this.confirm.mode,
+                  stake_count: v.stake,
+                  total_amount: v.total,
+                  schedule_orders: this.bettingList.map(value => {
+                    return {
+                      bet_number: value.selected[0].key,
+                      schedule_id: value.id,
+                      is_sure: value.isSure ? 1 : 0
+                    }
+                  })
                 }
               })
+              // console.log(result)
             }
           }
         } else {
           // 单关
-          for (let i in this.inputValue) {
-            if (this.inputValue[i] !== '0' && this.inputValue[i] !== '') {
-              inputArray.push({
-                text: i,
-                total: this.inputValue[i]
-              })
-            }
-          }
-          if (inputArray.length <= 0) {
+          if (this.inputValue.length <= 0 || this.inputValue.length < this.bettingList[0].selected.length) {
             Toast('请输入投注金额')
           } else {
-            // const postArray = []
-            console.log('next')
+            const postArray = this.inputValue
+            let stats = true
+            for (let i in postArray) {
+              if (postArray[i].total === '0' || postArray[i].total === '') {
+                Toast('请输入投注金额')
+                stats = false
+                break
+              }
+              if (postArray[i].total > postArray[i].upperLimit) {
+                Toast('超过投注上限,请重新输入')
+                stats = false
+                break
+              }
+            }
+            if (stats === true) {
+              result.Orders = postArray.map((v) => {
+                return {
+                  series: '101',
+                  lottery_id: this.lotteryId,
+                  play_type: this.confirm.mode,
+                  stake_count: '1',
+                  total_amount: v.total,
+                  schedule_orders: this.bettingList.map(value => {
+                    return {
+                      bet_number: value.selected[0].key,
+                      schedule_id: value.id,
+                      is_sure: value.isSure ? 1 : 0
+                    }
+                  })
+                }
+              })
+              // console.log(result)
+            }
           }
         }
-        console.log()
+        this.$store.dispatch(SPORTS_CONFIRM_PAYMENT_PREBETYP, result).then(() => {
+          if (this.confirm.id) {
+            if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
+              this.toggle()
+            } else {
+              this.$router.push({
+                name: 'PaymentOrder',
+                query: { id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP' }
+              })
+            }
+          } else {
+            Toast('无订单id,登录已过期,请重新登录!')
+          }
+        })
       },
       Payment () {
         // 亚盘单关
@@ -759,6 +780,7 @@
       }
     },
     created () {
+      console.log(this.bettingList)
       if (this.bettingList.length === 0) {
         this.$store.commit(SPORTS_CONFIRM_SERIES_CLEAR)
         this.$router.back()

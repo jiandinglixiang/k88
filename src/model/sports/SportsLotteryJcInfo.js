@@ -11,6 +11,8 @@ function selectClassByLotteryId (lotteryId) {
     case '604':
     case '605':
     case '606':
+    case '901':
+    case '902':
       Obj = FootBallLottery;
       break;
     case '701':
