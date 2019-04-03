@@ -52,8 +52,14 @@ export default class SportsBetting {
     } else {
       this.bottomTip = this.mode === 2 ? '至少选择两场比赛' : '至少选择一场比赛'
     }
-    if (total > 15) {
-      this.bottomTip = '不能超过15场'
+    if (this.lotteryId === 901 || this.lotteryId === 902) {
+      if (total > 8) {
+        this.bottomTip = '不能超过8场'
+      }
+    } else {
+      if (total > 15) {
+        this.bottomTip = '不能超过15场'
+      }
     }
     this.total = total
   }
@@ -83,31 +89,31 @@ export default class SportsBetting {
   setCurrentHolderFactory (item) {
     switch (this.lotteryId) {
       case LOTTERYIDS.FOOTBALL_SPF:
-        return new SPFHolder(item);
+        return new SPFHolder(item)
       case LOTTERYIDS.FOOTBALL_RQSPF:
-        return new RQSPFHolder(item);
+        return new RQSPFHolder(item)
       case LOTTERYIDS.FOOTBALL_BF:
-        return new BFHolder(item);
+        return new BFHolder(item)
       case LOTTERYIDS.FOOTBALL_ZJQ:
-        return new ZJQHolder(item);
+        return new ZJQHolder(item)
       case LOTTERYIDS.FOOTBALL_BQC:
-        return new BQCHolder(item);
+        return new BQCHolder(item)
       case LOTTERYIDS.FOOTBALL_HH:
-        return new HHHolder(item);
+        return new HHHolder(item)
       case LOTTERYIDS.BASKETBALL_SF:
-        return new SFHolder(item);
+        return new SFHolder(item)
       case LOTTERYIDS.BASKETBALL_RFSF:
-        return new RFSFHolder(item);
+        return new RFSFHolder(item)
       case LOTTERYIDS.BASKETBALL_SFC:
-        return new SFCHolder(item);
+        return new SFCHolder(item)
       case LOTTERYIDS.BASKETBALL_DXF:
-        return new DXFHolder(item);
+        return new DXFHolder(item)
       case LOTTERYIDS.BASKETBALL_HH:
-        return new BHHHolder(item);
+        return new BHHHolder(item)
       case LOTTERYIDS.AHFOOTBALL_QCRQ:
-        return new QCRQHolder(item);
+        return new QCRQHolder(item)
       case LOTTERYIDS.AHFOOTBALL_QCDXQ:
-        return new QCDXQHolder(item);
+        return new QCDXQHolder(item)
     }
   }
 }

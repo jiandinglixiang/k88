@@ -60,7 +60,11 @@
         return this.$store.state.betting[this.lottery].scheme[this.currentMode === 2 ? 0 : 1] || {};
       },
       confirmDisabled () {
-        return this.holders && (this.holders.total > (this.holders.mode === 2 ? 1 : 0)) && this.holders.total <= 15;
+        if (Lottery.isAHFootBall(this.lottery)) {
+          return this.holders && (this.holders.total > (this.holders.mode === 2 ? 1 : 0)) && this.holders.total <= 8;
+        } else {
+          return this.holders && (this.holders.total > (this.holders.mode === 2 ? 1 : 0)) && this.holders.total <= 15;
+        }
       },
       ...mapState({
         lottery: state => state.betting.lottery,
@@ -105,7 +109,7 @@
           }
         }
         this.$nextTick(() => {
-          this.time = setInterval(ff, 10000)
+          this.time = setInterval(ff, 15000)
         })
       }
     },
