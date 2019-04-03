@@ -245,6 +245,17 @@
         </div>
       </div>
     </div>
+    <div class="modal" id="modal-error" v-show="oddsChange">
+      <div class="panel">
+        <div class="tit">
+          <h1>赔率发生变动是否接受</h1>
+        </div>
+        <div class="btns">
+          <div @click="refresh" class="btn-cancel">取消</div>
+          <div @click="confirmPaymentYp" class="btn-sure">接受并付款</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -262,7 +273,8 @@
     SPORTS_CONFIRM_SERIES_CLEAR,
     SPORTS_CONFIRM_SERIES_SET,
     SPORTS_MULTIPLE_CHANGE,
-    SPORTS_CONFIRM_PAYMENT_PREBETYP
+    SPORTS_CONFIRM_PAYMENT_PREBETYP,
+    CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE
   } from '../../store/betting/types'
   import FootballSPFLottery from './child/FootballSPFLottery.vue'
   import FootballRQSPFLottery from './child/FootballRQSPFLottery.vue'
@@ -302,6 +314,7 @@
         isMulti: false,
         sure: 0,
         isShow: false,
+        oddsChange: false,
         isShowBottom: true,
         ManyValue: {}, // 输入金额值列表
         popupInputIndex: true, // 显示单个输入框
@@ -314,7 +327,8 @@
         confirm: state => state.betting.sportConfirm,
         lotteryId: state => state.betting.lottery,
         currentMode: state => state.betting[state.betting.lottery].mode,
-        bonusLimit: state => state.user.mine.bonus_limit || 0
+        bonusLimit: state => state.user.mine.bonus_limit || 0,
+        currentType: state => state.betting[state.betting.lottery].playType || { value: '' }
       }),
       seriesText () {
         let textArr = this.series.map(v => v.value)
@@ -623,7 +637,7 @@
                   })
                 }
               })
-              // console.log(result)
+              console.log(result)
             }
           }
         } else {
@@ -796,6 +810,9 @@
         if (this.bettingList.selected.length > 8) {
           Toast('超出')
         }
+      },
+      refresh () {
+        this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType)
       }
     },
     created () {
@@ -1109,6 +1126,7 @@
 
   .panel {
     margin: 250px auto 0;
+    padding: 20px 15px 15px;
     width: 70%;
     background-color: #fff;
     border-radius: 10px;
@@ -1117,7 +1135,7 @@
   }
 
   .tit {
-    padding: 20px 10px 15px;
+    margin-bottom: 20px;
   }
 
   .tit h1 {
@@ -1127,22 +1145,26 @@
   }
 
   .panel .btns {
-    display: flex;
-    border-top: 1px solid #ccc;
+    overflow: hidden;
   }
 
   .panel .btns div {
-    flex: 1;
-    height: 38px;
-    line-height: 38px;
+    display: inline-block;
+    height: 34px;
+    line-height: 34px;
+    border-radius: 4px;
     font-size: 16px;
+    width: 46%;
   }
 
   .panel .btns .btn-cancel {
+    float: left;
+    background-color: #ddd;
     color: $c999999;
   }
 
   .panel .btns .btn-sure {
+    float: right;
     background-color: $cffC63A;
     color: $c131313;
   }

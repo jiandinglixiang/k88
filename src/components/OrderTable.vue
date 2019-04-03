@@ -23,10 +23,23 @@
         <!--显示足彩和篮彩-->
         <span v-if="item.showCheck">
           <span v-for="b in item.betting" :class="{'text-primary': b.checked}">
-            {{b.text}} {{b.value}}
-            <span class="red-check-icon" v-show="b.checked"></span>
-            <br>
-          </span>
+            <span v-show="b.id === '901'">
+              <span>让球 <span v-if="b.key.substring(4, 3)=== '1'">{{ item.home }}</span>
+              <span v-else>{{ item.guest }}</span>
+              </span>
+              <br>
+             </span>
+            <span v-show="b.id === '902'">
+              <span>大小球 <span v-if="b.key.substring(4, 3)=== '1'">{{ item.home }}</span>
+              <span v-else>{{ item.guest }}</span>
+              </span>
+              <br>
+             </span>
+              <span>
+                ({{b.text}}) {{b.value}}
+                <span class="red-check-icon" v-show="b.checked"></span>
+              </span>
+            </span>
         </span>
         <!--胜负彩和任选九-->
         <span v-else>
@@ -44,18 +57,28 @@
 <script>
   export default {
     name: 'orderTable',
-    props: ['list']
+    props: ['list'],
+    computed: {
+      teamName (key) {
+        if (key.substring(4, 3) === '1') {
+          return 'item.home'
+        } else {
+          return 'item.guest'
+        }
+      }
+    }
   }
 </script>
 
 <style scoped>
-  table{
+  table {
     text-align: center;
     font-size: 11px;
     border-spacing: 0;
     border-collapse: collapse;
     border: 1px solid #313131;
   }
+
   table td {
     background: #313131;
     padding: 5px 0;
@@ -64,9 +87,11 @@
     border-right: 1px solid #494949;
     border-bottom: 1px solid #494949;
   }
-  table tbody tr:last-child td{
+
+  table tbody tr:last-child td {
     border-bottom: 0;
   }
+
   .red-check-icon {
     display: inline-block;
   }

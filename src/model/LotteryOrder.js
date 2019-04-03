@@ -13,6 +13,7 @@ export default class LotteryOrder {
     this.failure_amount = obj.failure_amount;
     this.total_amount = obj.total_amount;
     this.stackCount = obj.total_amount / obj.multiple / 2;
+    this.ahstackCount = obj.stake_count;
     this.winnings_bonus = obj.winnings_bonus;
     this.official_prize_time = obj.official_prize_time;
     this.buying_time = obj.buying_time || obj.bet_time;

@@ -44,7 +44,6 @@
   import SportFilter from './SportFilter.vue'
   import Lottery from '../../../model/common/Lottery'
   import { mapState } from 'vuex'
-
   export default {
     name: 'sportLotteryContainer',
     data () {
@@ -93,7 +92,7 @@
     },
     mounted () {
       if (Lottery.isAHFootBall(this.lottery)) {
-        // 每10秒更新次
+        // 每15秒更新次
         let isOk = true
         const ff = () => {
           if (!isOk) return

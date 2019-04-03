@@ -30,8 +30,13 @@ export default class SportsLotteryOrder extends LotteryOrder {
     })
     let seriesStr = seriesArr.join(',');
     // 串数统计
-    this.contextTitle = '投注内容：' + this.stackCount + '注, ' + this.jc_info.length + '场, ' +
-      seriesStr + `, ${this.multiple}倍`;
+    if (String(this.lottery_id) === '901' || String(this.lottery_id) === '902') {
+      this.contextTitle = '投注内容：' + this.ahstackCount + '注, ' + this.jc_info.length + '场, ' +
+        seriesStr;
+    } else {
+      this.contextTitle = '投注内容：' + this.stackCount + '注, ' + this.jc_info.length + '场, ' +
+        seriesStr + `, ${this.multiple}倍`;
+    }
     if (String(this.lottery_id) === '20' || String(this.lottery_id) === '21') {
       this.issueNoShow = true;
     }
