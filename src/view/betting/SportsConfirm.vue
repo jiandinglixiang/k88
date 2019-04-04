@@ -318,7 +318,8 @@
         isShowBottom: true,
         ManyValue: {}, // 输入金额值列表
         popupInputIndex: true, // 显示单个输入框
-        inputValue: []
+        inputValue: [],
+        updateOdds: {}
       }
     },
     computed: {
@@ -486,6 +487,9 @@
       toggle () {
         this.isShow = !this.isShow
       },
+      toggleModel () {
+        this.oddsChange = !this.oddsChange
+      },
       recharge () {
         if (H5postmsg.isH5) {
           window.parent.postMessage(JSON.stringify({ response: 3 }), '*')
@@ -620,23 +624,57 @@
               }
             }
             if (stats === true) {
-              result.Orders = postArray.map((v) => {
-                return {
-                  series: v.key,
-                  lottery_id: this.lotteryId,
-                  play_type: this.confirm.mode,
-                  stake_count: v.stake,
-                  total_amount: v.total,
-                  schedule_orders: this.bettingList.map(value => {
-                    return {
-                      bet_number: value.selected[0].key,
-                      schedule_id: value.id,
-                      is_sure: value.isSure ? 1 : 0,
-                      odds: value.selected[0].value
-                    }
-                  })
+              if (JSON.stringify(this.updateOdds) === '{}') {
+                result.Orders = postArray.map((v) => {
+                  return {
+                    series: v.key,
+                    lottery_id: this.lotteryId,
+                    play_type: this.confirm.mode,
+                    stake_count: v.stake,
+                    total_amount: v.total,
+                    schedule_orders: this.bettingList.map(value => {
+                      return {
+                        bet_number: value.selected[0].key,
+                        schedule_id: value.id,
+                        is_sure: value.isSure ? 1 : 0,
+                        odds: value.selected[0].value
+                      }
+                    })
+                  }
+                })
+              } else {
+                const updateOddsArray = []
+                for (let i in this.updateOdds) {
+                  for (let j in this.updateOdds[i]) {
+                    updateOddsArray.push({
+                      schedule_id: i,
+                      new_odds: this.updateOdds[i][j],
+                      key: j
+                    })
+                  }
                 }
-              })
+                result.Orders = postArray.map((v) => {
+                  return {
+                    series: v.key,
+                    lottery_id: this.lotteryId,
+                    play_type: this.confirm.mode,
+                    stake_count: v.stake,
+                    total_amount: v.total,
+                    schedule_orders: this.bettingList.map(value => {
+                      for (let i in updateOddsArray) {
+                        if (value.id === updateOddsArray[i].schedule_id) {
+                          return {
+                            bet_number: value.selected[0].key,
+                            schedule_id: value.id,
+                            is_sure: value.isSure ? 1 : 0,
+                            odds: updateOddsArray[i].new_odds
+                          }
+                        }
+                      }
+                    })
+                  }
+                })
+              }
               console.log(result)
             }
           }
@@ -660,29 +698,66 @@
               }
             }
             if (stats === true) {
-              result.Orders = postArray.map((v) => {
-                return {
-                  series: '101',
-                  lottery_id: this.lotteryId,
-                  play_type: this.confirm.mode,
-                  stake_count: '1',
-                  total_amount: v.total,
-                  schedule_orders: this.bettingList.map(value => {
-                    return {
-                      bet_number: value.selected[0].key,
-                      schedule_id: value.id,
-                      is_sure: value.isSure ? 1 : 0,
-                      odds: v.value
-                    }
-                  })
+              if (JSON.stringify(this.updateOdds) === '{}') {
+                result.Orders = postArray.map((v) => {
+                  return {
+                    series: '101',
+                    lottery_id: this.lotteryId,
+                    play_type: this.confirm.mode,
+                    stake_count: '1',
+                    total_amount: v.total,
+                    schedule_orders: this.bettingList.map(value => {
+                      return {
+                        bet_number: value.selected[0].key,
+                        schedule_id: value.id,
+                        is_sure: value.isSure ? 1 : 0,
+                        odds: v.value
+                      }
+                    })
+                  }
+                })
+              } else {
+                const updateOddsArray = []
+                for (let i in this.updateOdds) {
+                  for (let j in this.updateOdds[i]) {
+                    updateOddsArray.push({
+                      schedule_id: i,
+                      new_odds: this.updateOdds[i][j],
+                      key: j
+                    })
+                  }
                 }
-              })
-              // console.log(result)
+                result.Orders = postArray.map((v) => {
+                  return {
+                    series: '101',
+                    lottery_id: this.lotteryId,
+                    play_type: this.confirm.mode,
+                    stake_count: '1',
+                    total_amount: v.total,
+                    schedule_orders: this.bettingList.map(value => {
+                      for (let i in updateOddsArray) {
+                        if (value.id === updateOddsArray[i].schedule_id) {
+                          return {
+                            bet_number: value.selected[0].key,
+                            schedule_id: value.id,
+                            is_sure: value.isSure ? 1 : 0,
+                            odds: updateOddsArray[i].new_odds
+                          }
+                        }
+                      }
+                    })
+                  }
+                })
+              }
+              console.log(result)
             }
           }
         }
-        this.$store.dispatch(SPORTS_CONFIRM_PAYMENT_PREBETYP, result).then(() => {
-          if (this.confirm.id) {
+        this.$store.dispatch(SPORTS_CONFIRM_PAYMENT_PREBETYP, result).then((data) => {
+          if (data.update_odds) {
+            this.toggleModel()
+            this.updateOdds = data.update_odds
+          } else if (this.confirm.id) {
             if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
               this.toggle()
             } else {
@@ -813,6 +888,7 @@
       },
       refresh () {
         this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType)
+        this.toggleModel()
       }
     },
     created () {

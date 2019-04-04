@@ -129,6 +129,7 @@ const actions = {
       return Http.post('/WebBet/preBetYp?lottery_id={0}&product_name=LHCP&sign={1}'.format(result.Orders[0].lottery_id, md5(mdStr)), result).then(data => {
         context.commit(types.SPORTS_CONFIRM_PAYMENT_PREBETYP, data)
         loading.hide()
+        return data
       })
     }
   },
@@ -299,8 +300,10 @@ const mutations = {
     state.sportConfirm.sign = data.sign
   },
   [types.SPORTS_CONFIRM_PAYMENT_PREBETYP] (state, data) {
-    state.sportConfirm.id = data.id
-    state.sportConfirm.sign = data.sign
+    if (data.id) {
+      state.sportConfirm.id = data.id
+      state.sportConfirm.sign = data.sign
+    }
   },
   [types.SPORTS_OPTION_SELECTED] () {
     const obj = state[state.lottery]
