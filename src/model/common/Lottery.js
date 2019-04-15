@@ -139,6 +139,10 @@ export default class Lottery {
         return 'https://phone-api.tigercai.com/index.php?s=/Content/help/jcrxj.html';
       case LOTTERYIDS.FC3D:
         return 'http://phone.api.tigercai.com/index.php?s=/Content/help/p3.html';
+      case LOTTERYIDS.AHFOOTBALL:
+      case LOTTERYIDS.AHFOOTBALL_QCRQ:
+      case LOTTERYIDS.AHFOOTBALL_QCDXQ:
+        return 'http://tgapi.666esport.com/Content/help/jcyp.html';
     }
   }
   static getPrizeBalls (prizeText) {
