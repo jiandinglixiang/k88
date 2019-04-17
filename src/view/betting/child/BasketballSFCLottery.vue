@@ -56,6 +56,7 @@
 <script>
   import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
   import VDialog from '../../../components/VDialog.vue'
+  import { LotteryBasketballKey } from '../../../store/constants'
 
   export default {
     name: 'basketballSFCLottery',
@@ -88,16 +89,9 @@
         return list;
       },
       boxText () {
-        let textArr = [];
-        this.schedule.selected.map(value => {
-          console.log(value.key);
-          if (['v01', 'v02', 'v03', 'v04', 'v05', 'v06'].indexOf(value.key) !== -1) {
-            textArr.push('客胜{0}'.format(value.text));
-          } else {
-            textArr.push('主胜{0}'.format(value.text));
-          }
-        });
-        return textArr.join(',');
+        return this.schedule.selected.map(value => {
+          return LotteryBasketballKey.betting_score_sfc[value.key] || '错误'
+        }).join(',')
       }
     },
     methods: {
