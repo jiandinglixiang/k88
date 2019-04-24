@@ -29,13 +29,11 @@
               </span>
               <br>
              </span>
-            <span v-show="b.id === '902'">
-              <span>大小球 <span v-if="b.key.substring(4, 3)=== '1'">{{ item.home }}</span>
-              <span v-else>{{ item.guest }}</span>
-              </span>
-              <br>
-             </span>
               <span>
+                <span v-show="b.id === '902'">
+                  <span v-if="b.key.substring(4, 3)=== '1'">小</span>
+                  <span v-else>大</span>
+               </span>
                 ({{b.text}}) {{b.value}}
                 <span class="red-check-icon" v-show="b.checked"></span>
               </span>

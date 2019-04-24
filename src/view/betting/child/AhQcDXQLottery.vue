@@ -108,19 +108,6 @@
       }
     },
     computed: {
-      boxText () {
-        let items = []
-        let name = ''
-        this.schedule.selected.map(v => {
-          if (v.key.substring(4, 3) === '1') {
-            name = this.schedule.home
-          } else {
-            name = this.schedule.guest
-          }
-          items.push(name, v.text)
-        })
-        return items.join(' (')
-      },
       boxValue () {
         let items = []
         this.schedule.selected.map(v => items.push(v.value))
@@ -132,9 +119,9 @@
         let upperLimit = ''
         this.schedule.selected.map(v => {
           if (v.key.substring(4, 3) === '1') {
-            name = this.schedule.home
+            name = '小'
           } else {
-            name = this.schedule.guest
+            name = '大'
           }
           upperLimit = Math.floor(this.bonusLimit / v.value)
           if (upperLimit > this.amountMax) {
