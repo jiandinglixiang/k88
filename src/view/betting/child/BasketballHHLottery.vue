@@ -165,6 +165,7 @@
 <script>
   import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
   import VDialog from '../../../components/VDialog.vue'
+  import { LotteryBasketballKey } from '../../../store/constants'
 
   export default {
     name: 'basketballSFCLottery',
@@ -196,11 +197,13 @@
           let textArr = [];
           value.map(v => {
             if (i === 2) {
-              if (['v01', 'v02', 'v03', 'v04', 'v05', 'v06'].indexOf(v.key) !== -1) {
-                textArr.push('客胜{0}'.format(v.text));
-              } else {
-                textArr.push('主胜{0}'.format(v.text));
-              }
+              // bug代码
+              // if (['v01', 'v02', 'v03', 'v04', 'v05', 'v06'].indexOf(v.key) !== -1) {
+              //   textArr.push('客胜{0}'.format(v.text));
+              // } else {
+              //   textArr.push('主胜{0}'.format(v.text));
+              // }
+              textArr.push(LotteryBasketballKey.betting_score_sfc[v.key] || '错误')
             } else if (i === 1) {
               textArr.push('让分{0}'.format(v.text));
             } else {
