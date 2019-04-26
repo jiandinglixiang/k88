@@ -265,16 +265,16 @@
   import ServiceAgreement from '../../components/ServiceAgreement.vue'
   import CustomSelectBox from '../../components/CustomSelectBox.vue'
   import {
+    CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE,
     SPORTS_BONUS_CHANGE,
     SPORTS_CONFIRM_CLEAR_TICKETS,
     SPORTS_CONFIRM_DELETE_TICKET,
     SPORTS_CONFIRM_OPTIMIZE,
     SPORTS_CONFIRM_PAYMENT,
+    SPORTS_CONFIRM_PAYMENT_PREBETYP,
     SPORTS_CONFIRM_SERIES_CLEAR,
     SPORTS_CONFIRM_SERIES_SET,
-    SPORTS_MULTIPLE_CHANGE,
-    SPORTS_CONFIRM_PAYMENT_PREBETYP,
-    CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE
+    SPORTS_MULTIPLE_CHANGE
   } from '../../store/betting/types'
   import FootballSPFLottery from './child/FootballSPFLottery.vue'
   import FootballRQSPFLottery from './child/FootballRQSPFLottery.vue'
@@ -382,6 +382,7 @@
         return data
       },
       popupArray () {
+        // 亚盘投注列表
         if (!Lottery.isAHFootBall(this.lotteryId) || this.confirm.mode !== 2) return []
         // 返回投注金额列表
         const list = this.getPopupList()
@@ -430,6 +431,7 @@
         getMineInfo: MINE_INFO
       }),
       getGroup (data, index = 0, group = []) {
+        // 返回n串1可能性
         const need = [data[index]]
         for (let i = 0; i < group.length; i++) {
           if (Array.isArray(group[i])) {
@@ -446,6 +448,7 @@
         }
       },
       upperLimit (isAll, arr, limit, max, min) {
+        // 计算投注上限
         let [upperLimit, stake] = [0, 0] // 上限金额 投注注数
         if (isAll) {
           for (let o in arr) { // 201
@@ -504,6 +507,7 @@
         this.setProjectBonus()
       },
       deleteBetting (index) {
+        // 删除
         this.$store.commit(SPORTS_CONFIRM_DELETE_TICKET, index)
         this.clearSeries()
         this.setProjectBonus()

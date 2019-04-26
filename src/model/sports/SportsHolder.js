@@ -33,11 +33,12 @@ export default class SportsHolder {
     this.setIsChecked();
   }
   onOptionSelected2 (item) {
+    // 过关
     const index = this.selected.indexOf(item);
     if (index !== -1) {
       this.selected.splice(index, 1);
     } else {
-      this.selected.splice(0, this.selected.length);
+      this.selected.shift();
       this.selected.push(item);
     }
     this.setIsChecked();

@@ -4,7 +4,7 @@
       <template v-if="isConfirm">
         <template v-for="(item, index) in selectedList">
           <div class="scheme-box-item">
-            <span class="scheme-delete-icon poa-m" @click="deleteBetting(index)"></span>
+            <span class="scheme-delete-icon poa-m" @click="deleteBetting(index,item)"></span>
             <div class="padding-left-10">
               <div class="row text-center text-default-2 text-sm">
                 <div class="col col-40">{{item.home}}</div>
@@ -176,8 +176,8 @@
         }
         return item
       },
-      deleteBetting (index) {
-        this.$store.commit(SPORTS_CONFIRM_DELETE_TICKET_ONE, index)
+      deleteBetting (index, item) {
+        this.$store.commit(SPORTS_CONFIRM_DELETE_TICKET_ONE, { index, item })
       },
       getInputValue (e, index) {
         this.$set(this.inputValueArray, index, {

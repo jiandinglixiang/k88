@@ -76,12 +76,10 @@ export default class SportsBetting {
   }
 
   getBettingList () {
-    let list = []
+    const list = []
     this.groups.map(value => value.schedules.map(v => {
       v.isSure = false
-      if (v.checked) {
-        list.push(v)
-      }
+      v.checked && list.push(v)
     }))
     return list
   }

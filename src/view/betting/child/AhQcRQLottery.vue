@@ -4,7 +4,7 @@
       <template v-if="isConfirm">
         <template v-for="(item, index) in selectedList">
           <div class="scheme-box-item">
-            <span class="scheme-delete-icon poa-m" @click="deleteBetting(index)"></span>
+            <span @click="deleteBetting(index,item)" class="scheme-delete-icon poa-m"></span>
             <div class="padding-left-10">
               <div class="row text-center text-default-2 text-sm">
                 <div class="col col-40">{{item.home}}</div>
@@ -29,7 +29,7 @@
                   </div>
                   <div class="col">
                     <div class="input-text text-center">
-                      <input placeholder="请输入投注金额" type="number" @input="getInputValue($event, index)">
+                      <input @input="getInputValue($event, index)" placeholder="请输入投注金额" type="number">
                     </div>
                   </div>
                 </div>
@@ -85,7 +85,7 @@
 </template>
 
 <script>
-  import { SPORTS_OPTION_SELECTED, SPORTS_CONFIRM_DELETE_TICKET_ONE } from '../../../store/betting/types'
+  import { SPORTS_CONFIRM_DELETE_TICKET_ONE, SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
   import { mapState } from 'vuex'
 
   export default {
@@ -178,8 +178,8 @@
         }
         return item
       },
-      deleteBetting (index) {
-        this.$store.commit(SPORTS_CONFIRM_DELETE_TICKET_ONE, index)
+      deleteBetting (index, item) {
+        this.$store.commit(SPORTS_CONFIRM_DELETE_TICKET_ONE, { index, item })
       },
       getInputValue (e, index) {
         this.$set(this.inputValueArray, index, {

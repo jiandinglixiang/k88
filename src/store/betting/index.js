@@ -323,12 +323,28 @@ const mutations = {
     return Promise.resolve(true)
   },
   [types.SPORTS_CONFIRM_DELETE_TICKET] (state, key) {
-    state.sportConfirm.bettingList.splice(key, 1)
+    // 删除
+    state.sportConfirm.bettingList[key].clearSelected() // 清除实例上的数据
+    state.sportConfirm.bettingList.splice(key, 1) // 从数组里面删除
   },
-  [types.SPORTS_CONFIRM_DELETE_TICKET_ONE] (state, kei) {
-    state.sportConfirm.bettingList[0].selected.splice(kei, 1)
+  [types.SPORTS_CONFIRM_DELETE_TICKET_ONE] (state, { index, item }) {
+    // 亚盘单关删除
+    const bet = state.sportConfirm.bettingList.find(i => i.id === item.id)
+    if (bet) {
+      bet.selected.splice(index, 1)// 从数组里面删除
+      bet.setIsChecked() // 实例重新计算
+    } else {
+      state.sportConfirm.bettingList.forEach(value => {
+        value.clearSelected() // 清除实例上的数据
+      })
+      state.sportConfirm.bettingList = [] // 从数组里面删除
+    }
   },
   [types.SPORTS_CONFIRM_CLEAR_TICKETS] (state) {
+    // 清空所有投注
+    state.sportConfirm.bettingList.forEach(value => {
+      value.clearSelected()
+    })
     state.sportConfirm.bettingList = []
   },
   [types.SPORTS_MULTIPLE_CHANGE] (state, multiple) {
