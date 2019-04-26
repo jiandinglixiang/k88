@@ -603,6 +603,7 @@
           }
           if (inputArray.length <= 0) {
             Toast('请输入投注金额')
+            return
           } else {
             const postArray = []
             for (let i in this.popupArray) {
@@ -680,12 +681,15 @@
                 })
               }
               console.log(result)
+            } else {
+              return
             }
           }
         } else {
           // 单关
           if (this.inputValue.length <= 0 || this.inputValue.length < this.bettingList[0].selected.length) {
             Toast('请输入投注金额')
+            return
           } else {
             const postArray = this.inputValue
             let stats = true
@@ -754,6 +758,8 @@
                 })
               }
               console.log(result)
+            } else {
+              return
             }
           }
         }
