@@ -73,14 +73,14 @@
             <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
             <ah-qc-r-q-lottery :bonusLimit="bonusLimit" :amountMax="mine.amount_max" :amountMin="mine.amount_min"
                                :isConfirm="true" :schedule="betting"
-                               :inputValue.sync="inputValue"
+                               :inputValue.sync="inputValue[key]"
                                @onOptionSelected="onOptionSelected"/>
           </template>
           <template v-else-if="betting.lotteryId === 902">
             <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
             <ah-qc-d-x-q-lottery :bonusLimit="bonusLimit" :amountMax="mine.amount_max" :amountMin="mine.amount_min"
                                  :isConfirm="true" :schedule="betting"
-                                 :inputValue.sync="inputValue"
+                                 :inputValue.sync="inputValue[key]"
                                  @onOptionSelected="onOptionSelected"></ah-qc-d-x-q-lottery>
           </template>
           <span :class="{selected: betting.isSure}"
@@ -399,20 +399,28 @@
       },
       textSum () {
         let sum = 0
-        this.inputValue.forEach(i => {
-          sum += (i.total * 1)
-        })
+        for (let i in this.inputValue) {
+          for (let j in this.inputValue[i]) {
+            sum += (this.inputValue[i][j].total * 1)
+          }
+        }
         return sum
       },
       stakeCount () {
-        return this.inputValue.length
+        let stake = 0
+        for (let i in this.inputValue) {
+          stake += this.inputValue[i].length
+        }
+        return stake
       },
       bonusCount () {
         // 单关 奖金预计
         let count = 0
-        this.inputValue.forEach(i => {
-          count += (i.total * i.value) * 1
-        })
+        for (let i in this.inputValue) {
+          for (let j in this.inputValue[i]) {
+            count += (this.inputValue[i][j].total * this.inputValue[i][j].value) * 1
+          }
+        }
         return count.toFixed(2)
       },
       stylepadding () {
