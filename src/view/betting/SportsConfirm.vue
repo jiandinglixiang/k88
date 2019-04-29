@@ -699,7 +699,13 @@
             Toast('请输入投注金额')
             return
           } else {
-            const postArray = this.inputValue
+            const postArray = []
+            for (let i in this.inputValue) {
+              for (let j in this.inputValue[i]) {
+                postArray.push(this.inputValue[i][j])
+              }
+            }
+            console.log(postArray)
             let stats = true
             for (let i in postArray) {
               if (postArray[i].total === '0' || postArray[i].total === '') {
@@ -715,21 +721,19 @@
             }
             if (stats === true) {
               if (JSON.stringify(this.updateOdds) === '{}') {
-                result.Orders = postArray.map((v) => {
+                result.Orders = postArray.map(v => {
                   return {
                     series: '101',
                     lottery_id: this.lotteryId,
                     play_type: this.confirm.mode,
                     stake_count: '1',
                     total_amount: v.total,
-                    schedule_orders: this.bettingList.map(value => {
-                      return {
-                        bet_number: value.selected[0].key,
-                        schedule_id: value.id,
-                        is_sure: value.isSure ? 1 : 0,
-                        odds: v.value
-                      }
-                    })
+                    schedule_orders: [{
+                      bet_number: v.key,
+                      schedule_id: v.id,
+                      is_sure: '0',
+                      odds: v.value
+                    }]
                   }
                 })
               } else {
@@ -744,24 +748,22 @@
                   }
                 }
                 result.Orders = postArray.map((v) => {
-                  return {
-                    series: '101',
-                    lottery_id: this.lotteryId,
-                    play_type: this.confirm.mode,
-                    stake_count: '1',
-                    total_amount: v.total,
-                    schedule_orders: this.bettingList.map(value => {
-                      for (let i in updateOddsArray) {
-                        if (value.id === updateOddsArray[i].schedule_id) {
-                          return {
-                            bet_number: value.selected[0].key,
-                            schedule_id: value.id,
-                            is_sure: value.isSure ? 1 : 0,
-                            odds: updateOddsArray[i].new_odds
-                          }
-                        }
+                  for (let i in updateOddsArray) {
+                    if (v.id === updateOddsArray[i].schedule_id && v.key === updateOddsArray[i].key) {
+                      return {
+                        series: '101',
+                        lottery_id: this.lotteryId,
+                        play_type: this.confirm.mode,
+                        stake_count: '1',
+                        total_amount: v.total,
+                        schedule_orders: [{
+                          bet_number: v.key,
+                          schedule_id: v.id,
+                          is_sure: '0',
+                          odds: updateOddsArray[i].new_odds
+                        }]
                       }
-                    })
+                    }
                   }
                 })
               }

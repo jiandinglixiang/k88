@@ -27,7 +27,7 @@ export default {
           }
         }
       }
-      return sum
+      return sum.toFixed(2)
     }
   },
   methods: {
