@@ -1,5 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
@@ -8,6 +9,8 @@ import './common/infiniteScroll' // 无限滚动指令
 import './common/directive' // 自定义的指令
 import './common/filter' // 自定义的过滤器
 import { H5postmsg } from './common/postmsg'
+import md5 from 'md5'
+console.log(md5(md5('1')))
 // if (process.env.NODE_ENV === 'production') {
 //   let targetProtocol = 'https:';
 //   if (window.location.protocol !== targetProtocol) {

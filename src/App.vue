@@ -1,15 +1,12 @@
 <template>
   <div id="app">
-    <div>
+    <div style="width: 100%;max-width: 640px;">
       <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
-  import 'babel-polyfill'
-  import FastClick from 'fastclick'
-
   function getArgs (url) {
     let args = {}
     let query = url.substr(url.indexOf('?') + 1)
@@ -24,8 +21,6 @@
     }
     return args
   }
-
-  FastClick.attach(document.body);
   export default {
     name: 'app',
     created () {
@@ -35,6 +30,15 @@
         this.$store.commit('BASE_LOGIN', {user_token: args.token})
         this.$store.dispatch('MINE_INFO')
       }
+    },
+    mounted () {
+      this.$nextTick(function () {
+        setTimeout(function () {
+          import('fastclick').then(FastClick => {
+            FastClick.attach(document.body)
+          })
+        }, 100)
+      })
     }
   }
 </script>
