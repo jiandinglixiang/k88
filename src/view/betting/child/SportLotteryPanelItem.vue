@@ -249,4 +249,7 @@
   .sport-lottery-panel-item span.blue {
     color: #3f6ee7;
   }
+  .sport-lottery-panel-item span.text-primary {
+    color: #f33;
+  }
 </style>
