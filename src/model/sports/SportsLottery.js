@@ -3,6 +3,7 @@
  */
 export default class SportsLottery {
   constructor (obj) {
+    this.schedule_status = obj.schedule_status
     this.lottery_id = obj.lottery_id
     this.betting_order = obj.betting_order
     this.result_odds = obj.result_odds
@@ -86,7 +87,7 @@ export default class SportsLottery {
           switch (key) {
             case 'betting_score_letball':
             case 'betting_score_sizeball':
-              f2(key, Object.keys(order[key])[0])
+              f2(this.schedule_status)
               break
             case 'betting_score_no_concede':
               k = finalArr[0] > finalArr[1] ? '3' : finalArr[0] === finalArr[1] ? '1' : '0'
@@ -143,8 +144,8 @@ export default class SportsLottery {
       result.push(temp)
     }
 
-    function f2 (key, k) {
-      const temp = { text: `全场 ${finalArr.join('-')}`, value: null }
+    function f2 (status) {
+      const temp = { text: parseInt(status) === 6 ? '取消' : `全场 ${finalArr.join('-')}`, value: null }
       // if (!temp.value && resultOdds && resultOdds[lottery[key]['key']]) {
       //   temp.value = resultOdds[lottery[key]['key']]['v' + k]
       // }
