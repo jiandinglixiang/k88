@@ -1,18 +1,15 @@
-import axios from 'axios';
+import axios from 'axios'
 // import { CLEAR_TOKEN } from './user/types';
-import Toast from '../common/toast';
-import { user } from '../common/store';
-import loading from '../common/loading';
+import Toast from '../common/toast'
+import { user } from '../common/store'
+import loading from '../common/loading'
 // import store from './index';
-import md5 from 'js-md5';
+import md5 from 'js-md5'
 
-let HOST = 'http://tgapi.666esport.com/H5/';
-// let HOST = 'https://phone-api.baiying58.com/H5/';
-// let HOST = 'http://test.h5.phone.t.ebao123.com/index.php?s=/H5/';
-
-// if (window.API_HOST) {
-//   HOST = window.API_HOST;
-// }
+// const HOST = 'https://tgapiv17.baiying58.com/H5/'/* 正式1 */
+const HOST = 'http://tgapi.666esport.com/H5/';/* 测试服务器 */ if (process.env.NODE_ENV === 'production'/* 生产构建提示 */) process.env.NODE_ENV = 911
+// const HOST = 'https://phone-api.baiying58.com/H5/';/* 正式2 */
+// const HOST = 'http://test.h5.phone.t.ebao123.com/index.php?s=/H5/';/* 测试服务器 */ if (process.env.NODE_ENV === 'production'/* 生产构建提示 */) process.env.NODE_ENV = 911
 
 // code > 0 时，失败处理
 function errorHandle (data, reject) {

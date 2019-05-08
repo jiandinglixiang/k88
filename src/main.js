@@ -9,17 +9,10 @@ import './common/infiniteScroll' // 无限滚动指令
 import './common/directive' // 自定义的指令
 import './common/filter' // 自定义的过滤器
 import { H5postmsg } from './common/postmsg'
-import md5 from 'md5'
-console.log(md5(md5('1')))
-// if (process.env.NODE_ENV === 'production') {
-//   let targetProtocol = 'https:';
-//   if (window.location.protocol !== targetProtocol) {
-//     window.location.href = targetProtocol +
-//       window.location.href.substring(window.location.protocol.length);
-//   }
-// }
-Vue.config.devtools = true;
+
+Vue.config.devtools = true
 Vue.config.productionTip = false
+
 // 动画暂时不用
 // import 'vueg/css/transition-min.css'
 // import vueg from 'vueg';
@@ -27,6 +20,7 @@ Vue.config.productionTip = false
 //   forwardAnim: 'fadeInRight',
 //   duration: 0.2
 // });
+
 window.addEventListener('message', function (event) {
   if (H5postmsg.post && event.source === window.parent) {
     H5postmsg.post = false
@@ -41,6 +35,5 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: {App}
+  components: { App }
 })
-
