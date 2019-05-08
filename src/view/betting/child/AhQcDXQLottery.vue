@@ -86,7 +86,7 @@
                v-for="(item, index) in schedule.holderList"
                :class="{selected: isSelected(item), 'border-top': index > 0}">
             <div class="col bg-dark">{{ item.text }}</div>
-            <div class="col-67 text-color" :class="isStyle(item.str)">{{ item.value }}<span class="arrow-icon"></span>
+            <div class="col-67 text-color" :class="isStyle(item.str)">{{ twoDecimal[index] }}<span class="arrow-icon"></span>
             </div>
           </div>
         </div>
@@ -110,8 +110,15 @@
     computed: {
       boxValue () {
         let items = []
-        this.schedule.selected.map(v => items.push(v.value))
+        this.schedule.selected.map(v => items.push(this.toDecimal(v.value)))
         return items.join('')
+      },
+      twoDecimal () {
+        let items = []
+        this.schedule.holderList.map(v => {
+          items.push(this.toDecimal(v.value))
+        })
+        return items
       },
       selectedList () {
         let items = []
@@ -132,7 +139,7 @@
           items.push({
             name: name,
             key: v.key,
-            value: v.value,
+            value: this.toDecimal(v.value),
             text: v.text,
             home: this.schedule.home,
             guest: this.schedule.guest,
@@ -147,6 +154,23 @@
       })
     },
     methods: {
+      toDecimal (odds) {
+        let f = (odds * 1)
+        let value = f.toString()
+        let rs = value.indexOf('.')
+        if (rs < 0) {
+          rs = value.length
+          value += '.'
+        }
+        if (value.length > rs + 3) {
+          let st = value.length - (rs + 3)
+          value = value.substring(0, value.length - st)
+        }
+        while (value.length <= rs + 2) {
+          value += '0'
+        }
+        return value
+      },
       onOptionSelected (item) {
         this.schedule.onOptionSelected(item)
         this.$store.commit(SPORTS_OPTION_SELECTED)

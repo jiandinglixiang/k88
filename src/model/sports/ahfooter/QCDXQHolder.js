@@ -15,18 +15,8 @@ export default class QCDXQHolder extends SportsHolder {
     for (let key in this.qCDXQ) {
       if (this.qCDXQ.hasOwnProperty(key) && lotteryKey.hasOwnProperty(key)) {
         let values = this.qCDXQ[key].split('-')
-        let f = Math.floor(values[0] * 100) / 100;
-        let value = f.toString();
-        let rs = value.indexOf('.');
-        if (rs < 0) {
-          rs = value.length;
-          value += '.';
-        }
-        while (value.length <= rs + 2) {
-          value += '0';
-        }
         this.holderList.push({
-          key: key, value: value, text: lotteryKey[key], str: values[1]
+          key: key, value: values[0], text: lotteryKey[key], str: values[1]
         })
       }
     }
