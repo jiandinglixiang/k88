@@ -34,7 +34,7 @@
                   <span v-if="b.key.substring(4, 3)=== '1'">小</span>
                   <span v-else>大</span>
                </span>
-                ({{b.text}}) {{b.value}}
+                ({{b.text}}) {{toDecimal(b.value)}}
                 <span class="red-check-icon" v-show="b.checked"></span>
               </span>
             </span>
@@ -62,6 +62,29 @@
           return 'item.home'
         } else {
           return 'item.guest'
+        }
+      }
+    },
+    methods: {
+      toDecimal (odds) {
+        if (this.list[0].lottery_id === '901' || this.list[0].lottery_id === '902') {
+          let f = (odds * 1)
+          let value = f.toString()
+          let rs = value.indexOf('.')
+          if (rs < 0) {
+            rs = value.length
+            value += '.'
+          }
+          if (value.length > rs + 3) {
+            let st = value.length - (rs + 3)
+            value = value.substring(0, value.length - st)
+          }
+          while (value.length <= rs + 2) {
+            value += '0'
+          }
+          return value
+        } else {
+          return odds
         }
       }
     }

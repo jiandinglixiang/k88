@@ -345,7 +345,7 @@
             value += this.ManyValue[this.popupArray[i].text] * this.popupArray[i].stake
           }
         }
-        return value
+        return value.toFixed(2)
       },
       title () {
         if (Lottery.isFootBall(this.lotteryId)) {
@@ -404,7 +404,7 @@
             sum += (this.inputValue[i][j].total * 1)
           }
         }
-        return sum
+        return sum.toFixed(2)
       },
       stakeCount () {
         let stake = 0
