@@ -90,11 +90,11 @@
             <span v-if="jc.showCheck">
               <div v-for="(bet, i) in jc.betting">
                 <span class="round-no" :class="{'text-primary': bet.checked}">{{i === 0 ? jc.round_no : ''}}</span>
-                <span style="display: inline-block; padding-left: 10px;" :class="{'text-primary': bet.checked}">
+                <span style="display: inline-block; padding-left: 10px; min-width:62px;" :class="{'text-primary': bet.checked}">
                   {{bet.text}}
                   <template v-if="jc.team && jc.team.letPointText">({{jc.team.letPointText}})</template>
                   <template v-if="jc.team && jc.team.basePointText">({{jc.team.basePointText}})</template>
-                  <template v-if="bet.value"><br/>{{`(${bet.value})`}}</template>
+                  <template v-if="bet.value"><br/>{{`(${toDecimal(bet.value)})`}}</template>
                   <span class="red-check-icon" v-if="bet.checked"></span><br>
                 </span>
               </div>
@@ -162,7 +162,28 @@
     methods: {
       ...mapActions({
         getOrderScheme: ORDER_SCHEME_REQUEST
-      })
+      }),
+      toDecimal (odds) {
+        if (this.detail.lottery_id === '901' || this.detail.lottery_id === '902') {
+          let f = (odds * 1)
+          let value = f.toString()
+          let rs = value.indexOf('.')
+          if (rs < 0) {
+            rs = value.length
+            value += '.'
+          }
+          if (value.length > rs + 3) {
+            let st = value.length - (rs + 3)
+            value = value.substring(0, value.length - st)
+          }
+          while (value.length <= rs + 2) {
+            value += '0'
+          }
+          return value
+        } else {
+          return odds
+        }
+      }
     },
     created () {
       this.getOrderScheme(this.$route.params.id);

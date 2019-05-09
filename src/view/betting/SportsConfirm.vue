@@ -695,6 +695,7 @@
           }
         } else {
           // 单关
+          console.log(this.bettingList)
           if (this.inputValue.length <= 0 || this.inputValue.length < this.bettingList[0].selected.length) {
             Toast('请输入投注金额')
             return
@@ -778,7 +779,7 @@
             this.toggleModel()
             this.updateOdds = data.update_odds
           } else if (this.confirm.id) {
-            if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
+            if (this.mine.balance < this.totalMoney || this.mine.balance < this.textSum) {
               this.toggle()
             } else {
               this.$router.push({
