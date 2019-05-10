@@ -695,8 +695,15 @@
           }
         } else {
           // 单关
-          console.log(this.bettingList)
-          if (this.inputValue.length <= 0 || this.inputValue.length < this.bettingList[0].selected.length) {
+          let selectedCount = 0
+          let inputValueCount = 0
+          for (let i in this.bettingList) {
+            selectedCount += this.bettingList[i].selected.length
+          }
+          for (let i in this.inputValue) {
+            inputValueCount += this.inputValue[i].length
+          }
+          if (inputValueCount <= 0 || inputValueCount < selectedCount) {
             Toast('请输入投注金额')
             return
           } else {
