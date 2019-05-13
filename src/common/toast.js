@@ -1,19 +1,20 @@
 /**
  * Created by admin on 2017/4/1.
  */
-import { Toast } from 'mint-ui'
+import { Toast as tt } from 'mint-ui'
 
-let toast = null
-
-export default function (message, position, duration) {
-  if (!toast) {
-    toast = Toast({
+let toastObj = null
+export const Toast = function (message, position, duration) {
+  if (!toastObj) {
+    toastObj = tt({
       message: message,
       position: position || 'middle'
     })
     setTimeout(() => {
-      toast.close()
-      toast = null
+      toastObj.close()
+      toastObj = null
     }, duration || 2000)
   }
 }
+export const toast = Toast
+export default Toast

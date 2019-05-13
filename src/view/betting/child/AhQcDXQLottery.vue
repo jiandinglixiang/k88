@@ -3,7 +3,7 @@
     <template v-if="currentMode === 1">
       <template v-if="isConfirm">
         <template v-for="(item, index) in selectedList">
-          <div class="scheme-box-item">
+          <div :key="index" class="scheme-box-item">
             <span @click="deleteBetting(index,item)" class="scheme-delete-icon poa-m"></span>
             <div class="padding-left-10">
               <div class="row text-center text-default-2 text-sm">
@@ -54,7 +54,7 @@
             <div :class="{selected: isSelected(item), 'border-top': index > 0}"
                  @click="selectedItem(item)"
                  class="box-item row"
-                 v-for="(item, index) in schedule.holderList">
+                 :key="index" v-for="(item, index) in schedule.holderList">
               <div class="col bg-dark">{{ item.text }}</div>
               <div :class="isStyle(item.str)" class="col-67 text-color">{{ item.value }}<span class="arrow-icon"></span>
               </div>
@@ -70,7 +70,8 @@
         <div class="col col-40">{{schedule.guest}}</div>
       </div>
       <template v-if="isConfirm">
-        <div class="box ellipsis selected text-center box-icon" v-for="item in selectedList">{{item.name}} ({{ item.text
+        <div :key="item.id" class="box ellipsis selected text-center box-icon" v-for="item in selectedList">
+          {{item.name}} ({{ item.text
           }})<span>{{ item.value }}</span>
         </div>
       </template>
@@ -84,7 +85,7 @@
           <div :class="{selected: isSelected(item), 'border-top': index > 0}"
                @click="selectedItem(item)"
                class="box-item row"
-               v-for="(item, index) in schedule.holderList">
+               :key="item.id" v-for="(item, index) in schedule.holderList">
             <div class="col bg-dark">{{ item.text }}</div>
             <div :class="isStyle(item.str)" class="col-67 text-color">{{ twoDecimal[index] }}<span
               class="arrow-icon"></span>
@@ -99,6 +100,7 @@
 <script>//
 import { SPORTS_CONFIRM_DELETE_TICKET_ONE, SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
 import { mapState } from 'vuex'
+import { toast } from '../../../common/toast'
 
 export default {
   name: 'ahQcDXQLottery',
@@ -151,7 +153,12 @@ export default {
       return items
     },
     ...mapState({
-      currentMode: state => state.betting[state.betting.lottery].mode
+      currentMode: state => state.betting[state.betting.lottery].mode,
+      bettingList: state => {
+        const obj = state.betting[state.betting.lottery]
+        const groups = obj.scheme[obj.mode === 2 ? 0 : 1]
+        return groups.getBettingList()
+      }
     })
   },
   methods: {
@@ -186,6 +193,18 @@ export default {
         this.$store.commit(SPORTS_OPTION_SELECTED)
         this.$emit('onOptionSelected')
       } else {
+        if ((this.schedule.lotteryId === 901 || this.schedule.lotteryId === 902) && this.bettingList.length >= 8) {
+          const isBett = this.bettingList.find(val => val.id === this.schedule.id)
+          if (!isBett) {
+            this.$store.commit(SPORTS_OPTION_SELECTED)
+            toast('最多选择8场')
+            return
+          }
+        }
+        f1.call(this)
+      }
+
+      function f1 () {
         this.schedule.onOptionSelected2(item)
         this.$store.commit(SPORTS_OPTION_SELECTED)
         this.$emit('onOptionSelected')

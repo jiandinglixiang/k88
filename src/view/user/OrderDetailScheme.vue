@@ -11,21 +11,21 @@
       <!--数字彩 -->
       <table cellpadding="0" cellspacing="0" class="betting-content">
         <tbody>
-        <tr v-for="(ticket, i) in detail.tickets" :key="i">
+        <tr :key="i" v-for="(ticket, i) in detail.tickets">
           <!--十一选五 快3 福彩3D-->
           <template v-if="ticket.lotteryType == 'syxw' || ticket.lotteryType == 'k3' || ticket.lotteryType == 'fc3d'">
             <td class="text-center" v-if="i === 0" v-rowspan="detail.tickets.length" width="20%">投注内容</td>
             <td :width="ticket.lotteryType == 'k3'?'30%':'20%'" class="text-center">{{ticket.playTypeText}}</td>
             <td :width="ticket.lotteryType == 'k3'?'50%':'60%'" class="text-sm">
-                <span v-for="(r, k) in ticket.result" :key="k">
+                <span :key="k" v-for="(r, k) in ticket.result">
                   <span v-if="k > 0">|</span>
                   <template v-if="r.pre">
                     <span>(</span>
-                    <span :class="{'margin-left-3': t > 0, 'text-primary': p.checked}" v-for="(p, t) in r.pre" :key="t">{{p.text}}</span>
+                    <span :class="{'margin-left-3': t > 0, 'text-primary': p.checked}" :key="t" v-for="(p, t) in r.pre">{{p.text}}</span>
                     <span>)</span>
                   </template>
-                  <span :class="{'text-primary': i.checked}" class="margin-right-3"
-                        v-for="(i,kk) in r.next" :key="kk">{{i.text}}</span>
+                  <span :class="{'text-primary': i.checked}" :key="kk"
+                        class="margin-right-3" v-for="(i,kk) in r.next">{{i.text}}</span>
                 </span>
             </td>
           </template>
