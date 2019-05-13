@@ -1,5 +1,5 @@
 <template>
-  <div class="download-panel" @click="download">
+  <div @click="download" class="download-panel">
     <!-- <img class="logo" src="../assets/down_logo.png" alt="logo"> -->
     <div class="row">
       <div class="col text-sm text-muted">
@@ -13,33 +13,39 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'downloadPanel',
-    methods: {
-      download () {
-        location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery';
-      }
+<script>//
+export default {
+  name: 'downloadPanel',
+  methods: {
+    download () {
+      location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery'
     }
   }
+}
 </script>
 
 <style scoped>
   .download-panel {
     position: fixed;
     width: 100%;
-    left: 0; bottom: 0;
+    left: 0;
+    bottom: 0;
     background: white;
     padding-left: 60px;
     height: 50px;
   }
+
   .download-panel .logo {
-    width: 38px; height: 38px;
+    width: 38px;
+    height: 38px;
     position: absolute;
-    left: 10px; top: 6px;
+    left: 10px;
+    top: 6px;
   }
+
   .download-panel .download-btn {
-    width: 105px; height: 30px;
+    width: 105px;
+    height: 30px;
     line-height: 30px;
     background: url("../assets/icon/down_btn.png") no-repeat;
     background-size: 100% 100%;

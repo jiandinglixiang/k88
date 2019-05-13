@@ -1,16 +1,15 @@
-import {PlayType} from '../../../store/constants';
+import { PlayType } from '../../../store/constants'
+
 export default class BaseItem {
   constructor (num, award, serverNum, playType, bonus) {
-    this.num = num;
-    this.award = award;
-    this.serverNum = serverNum;
-    this.bonus = bonus;
-    this.playType = playType;
-    this.isSelected = false;
+    this.num = num
+    this.award = award
+    this.serverNum = serverNum
+    this.bonus = bonus
+    this.playType = playType
+    this.isSelected = false
   }
-  setSelected (selected) {
-    this.isSelected = selected;
-  }
+
   static getTicket (text, playType) {
     return {
       betText: text,
@@ -22,5 +21,9 @@ export default class BaseItem {
       totalAmount: 2,
       lotteryType: 'k3'
     }
+  }
+
+  setSelected (selected) {
+    this.isSelected = selected
   }
 }

@@ -5,10 +5,10 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'orderExpired'
-  }
+<script>//
+export default {
+  name: 'orderExpired'
+}
 </script>
 
 <style scoped>
@@ -16,6 +16,7 @@
     text-align: center;
     padding-top: 20px;
   }
+
   .order-expired-icon {
     display: inline-block;
   }

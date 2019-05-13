@@ -1,41 +1,40 @@
 <template>
   <div class="head">
-    <span class="back-icon" @click="goBack" v-if="!hideBack"></span>
+    <span @click="goBack" class="back-icon" v-if="!hideBack"></span>
     <div>{{title}}</div>
-    <span class="order-icon" @click="goEleSport" v-if="hideOrder"></span>
+    <span @click="goEleSport" class="order-icon" v-if="hideOrder"></span>
     <span class="right">
       <slot name="right"></slot>
     </span>
   </div>
 </template>
 
-<script>
-  import router from '../router/index'
-  import { H5postmsg } from '../common/postmsg'
+<script>//
+import { H5postmsg } from '../common/postmsg'
 
-  export default {
-    name: 'head',
-    props: ['title', 'hideBack', 'goApp', 'hideOrder'],
-    methods: {
-      goBack () {
-        if (this.goApp) {
-          console.log(H5postmsg)
-          if (H5postmsg.isH5) {
-            //  h5
-            window.parent.postMessage(JSON.stringify({response: 4}), '*');
-          } else {
-            location.href = 'goAppIndex';
-          }
+export default {
+  name: 'head',
+  props: ['title', 'hideBack', 'goApp', 'hideOrder'],
+  methods: {
+    goBack () {
+      if (this.goApp) {
+        console.log(H5postmsg)
+        if (H5postmsg.isH5) {
+          //  h5
+          window.parent.postMessage(JSON.stringify({ response: 4 }), '*')
         } else {
-          router.go(-1);
+          location.href = 'goAppIndex'
         }
-      },
-      goEleSport () {
-        // 电竞订单
-        window.parent.postMessage(JSON.stringify({response: 7}), '*');
+      } else {
+        this.$router.back()
       }
+    },
+    goEleSport () {
+      // 电竞订单
+      window.parent.postMessage(JSON.stringify({ response: 7 }), '*')
     }
   }
+}
 </script>
 <style>
   @import "../style/icon.css";
@@ -51,6 +50,7 @@
     text-align: center;
     line-height: 40px;
     margin-bottom: 1px;
+
     .order-icon {
       position: absolute;
       right: 10px;

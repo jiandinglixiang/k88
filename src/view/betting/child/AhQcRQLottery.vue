@@ -46,12 +46,13 @@
             <div class="col col-40">{{schedule.guest}}</div>
           </div>
           <div class="box">
-            <div class="box-item row"
+            <div :class="{selected: isSelected(item), 'border-top': index > 1}"
                  @click="selectedItem(item)"
-                 v-for="(item, index) in schedule.holderList"
-                 :class="{selected: isSelected(item), 'border-top': index > 1}">
+                 class="box-item row"
+                 v-for="(item, index) in schedule.holderList">
               <div class="col-60 text-center">{{ item.text}}</div>
-              <div class="col text-color" :class="isStyle(item.str)">{{ twoDecimal[index] }}<span class="arrow-icon"></span>
+              <div :class="isStyle(item.str)" class="col text-color">{{ twoDecimal[index] }}<span
+                class="arrow-icon"></span>
               </div>
             </div>
           </div>
@@ -70,12 +71,12 @@
           </div>
         </div>
         <div class="box" v-else>
-          <div class="box-item row"
+          <div :class="{selected: isSelected(item), 'border-top': index > 1}"
                @click="selectedItem(item)"
-               v-for="(item, index) in schedule.holderList"
-               :class="{selected: isSelected(item), 'border-top': index > 1}">
+               class="box-item row"
+               v-for="(item, index) in schedule.holderList">
             <div class="col-60 text-center">{{ item.text }}</div>
-            <div class="col text-color" :class="isStyle(item.str)">{{ twoDecimal[index] }}<span
+            <div :class="isStyle(item.str)" class="col text-color">{{ twoDecimal[index] }}<span
               class="arrow-icon"></span></div>
           </div>
         </div>
@@ -84,163 +85,163 @@
   </div>
 </template>
 
-<script>
-  import { SPORTS_CONFIRM_DELETE_TICKET_ONE, SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
-  import { mapState } from 'vuex'
+<script>//
+import { SPORTS_CONFIRM_DELETE_TICKET_ONE, SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'ahQcRQLottery',
-    props: ['schedule', 'isConfirm', 'bonusLimit', 'amountMax', 'amountMin'],
-    data () {
-      return {
-        inputValueArray: []
-      }
-    },
-    computed: {
-      boxText () {
-        let items = []
-        let name = ''
-        this.schedule.selected.map(v => {
-          if (v.key.substring(4, 3) === '1') {
-            name = this.schedule.home
-          } else {
-            name = this.schedule.guest
-          }
-          items.push(name, v.text)
-        })
-        return items.join(' (')
-      },
-      boxValue () {
-        let items = []
-        this.schedule.selected.map(v => items.push(this.toDecimal(v.value)))
-        return items.join('')
-      },
-      twoDecimal () {
-        let items = []
-        this.schedule.holderList.map(v => {
-          items.push(this.toDecimal(v.value))
-        })
-        return items
-      },
-      selectedList () {
-        let items = []
-        let name = ''
-        let upperLimit = ''
-        this.schedule.selected.map(v => {
-          if (v.key.substring(4, 3) === '1') {
-            name = this.schedule.home
-          } else {
-            name = this.schedule.guest
-          }
-          upperLimit = Math.floor(this.bonusLimit / v.value)
-          if (upperLimit > this.amountMax) {
-            upperLimit = this.amountMax
-          } else if (upperLimit < this.amountMin) {
-            upperLimit = this.amountMin
-          }
-          items.push({
-            name: name,
-            key: v.key,
-            value: this.toDecimal(v.value),
-            text: v.text,
-            home: this.schedule.home,
-            guest: this.schedule.guest,
-            id: this.schedule.id,
-            upperLimit: upperLimit
-          })
-        })
-        return items
-      },
-      ...mapState({
-        currentMode: state => state.betting[state.betting.lottery].mode
+export default {
+  name: 'ahQcRQLottery',
+  props: ['schedule', 'isConfirm', 'bonusLimit', 'amountMax', 'amountMin'],
+  data () {
+    return {
+      inputValueArray: []
+    }
+  },
+  computed: {
+    boxText () {
+      let items = []
+      let name = ''
+      this.schedule.selected.map(v => {
+        if (v.key.substring(4, 3) === '1') {
+          name = this.schedule.home
+        } else {
+          name = this.schedule.guest
+        }
+        items.push(name, v.text)
       })
+      return items.join(' (')
     },
-    methods: {
-      toDecimal (odds) {
-        let f = (odds * 1)
-        let value = f.toString()
-        let rs = value.indexOf('.')
-        if (rs < 0) {
-          rs = value.length
-          value += '.'
+    boxValue () {
+      let items = []
+      this.schedule.selected.map(v => items.push(this.toDecimal(v.value)))
+      return items.join('')
+    },
+    twoDecimal () {
+      let items = []
+      this.schedule.holderList.map(v => {
+        items.push(this.toDecimal(v.value))
+      })
+      return items
+    },
+    selectedList () {
+      let items = []
+      let name = ''
+      let upperLimit = ''
+      this.schedule.selected.map(v => {
+        if (v.key.substring(4, 3) === '1') {
+          name = this.schedule.home
+        } else {
+          name = this.schedule.guest
         }
-        if (value.length > rs + 3) {
-          let st = value.length - (rs + 3)
-          value = value.substring(0, value.length - st)
+        upperLimit = Math.floor(this.bonusLimit / v.value)
+        if (upperLimit > this.amountMax) {
+          upperLimit = this.amountMax
+        } else if (upperLimit < this.amountMin) {
+          upperLimit = this.amountMin
         }
-        while (value.length <= rs + 2) {
-          value += '0'
-        }
-        return value
-      },
-      onOptionSelected (item) {
+        items.push({
+          name: name,
+          key: v.key,
+          value: this.toDecimal(v.value),
+          text: v.text,
+          home: this.schedule.home,
+          guest: this.schedule.guest,
+          id: this.schedule.id,
+          upperLimit: upperLimit
+        })
+      })
+      return items
+    },
+    ...mapState({
+      currentMode: state => state.betting[state.betting.lottery].mode
+    })
+  },
+  methods: {
+    toDecimal (odds) {
+      let f = (odds * 1)
+      let value = f.toString()
+      let rs = value.indexOf('.')
+      if (rs < 0) {
+        rs = value.length
+        value += '.'
+      }
+      if (value.length > rs + 3) {
+        let st = value.length - (rs + 3)
+        value = value.substring(0, value.length - st)
+      }
+      while (value.length <= rs + 2) {
+        value += '0'
+      }
+      return value
+    },
+    onOptionSelected (item) {
+      this.schedule.onOptionSelected(item)
+      this.$store.commit(SPORTS_OPTION_SELECTED)
+      this.$emit('onOptionSelected')
+    },
+    isSelected (item) {
+      return this.schedule.selected.indexOf(item) !== -1
+    },
+    selectedItem (item) {
+      if (this.currentMode === 1) {
         this.schedule.onOptionSelected(item)
         this.$store.commit(SPORTS_OPTION_SELECTED)
         this.$emit('onOptionSelected')
-      },
-      isSelected (item) {
-        return this.schedule.selected.indexOf(item) !== -1
-      },
-      selectedItem (item) {
-        if (this.currentMode === 1) {
-          this.schedule.onOptionSelected(item)
-          this.$store.commit(SPORTS_OPTION_SELECTED)
-          this.$emit('onOptionSelected')
-        } else {
-          this.schedule.onOptionSelected2(item)
-          this.$store.commit(SPORTS_OPTION_SELECTED)
-          this.$emit('onOptionSelected')
-        }
-      },
-      isStyle (item) {
-        if (item === 'u') {
-          item = 'up'
-        } else if (item === 'd') {
-          item = 'down'
-        } else {
-          item = ''
-        }
-        return item
-      },
-      deleteBetting (index, item) {
-        this.$store.commit(SPORTS_CONFIRM_DELETE_TICKET_ONE, { index, item })
-      },
-      getInputValue (e, index) {
-        this.$set(this.inputValueArray, index, {
-          index: index,
-          total: e.target.value,
-          guest: this.selectedList[index].guest,
-          home: this.selectedList[index].home,
-          id: this.selectedList[index].id,
-          key: this.selectedList[index].key,
-          name: this.selectedList[index].name,
-          text: this.selectedList[index].text,
-          value: this.selectedList[index].value,
-          upperLimit: this.selectedList[index].upperLimit
-        })
+      } else {
+        this.schedule.onOptionSelected2(item)
+        this.$store.commit(SPORTS_OPTION_SELECTED)
+        this.$emit('onOptionSelected')
+      }
+    },
+    isStyle (item) {
+      if (item === 'u') {
+        item = 'up'
+      } else if (item === 'd') {
+        item = 'down'
+      } else {
+        item = ''
+      }
+      return item
+    },
+    deleteBetting (index, item) {
+      this.$store.commit(SPORTS_CONFIRM_DELETE_TICKET_ONE, { index, item })
+    },
+    getInputValue (e, index) {
+      this.$set(this.inputValueArray, index, {
+        index: index,
+        total: e.target.value,
+        guest: this.selectedList[index].guest,
+        home: this.selectedList[index].home,
+        id: this.selectedList[index].id,
+        key: this.selectedList[index].key,
+        name: this.selectedList[index].name,
+        text: this.selectedList[index].text,
+        value: this.selectedList[index].value,
+        upperLimit: this.selectedList[index].upperLimit
+      })
 
-        // console.log(this.inputValueArray)
-      }
-    },
-    filters: {
-      parseIntBalance: function (value) {
-        value = parseInt(value)
-        return value
-      }
-    },
-    created () {
-      // console.log(JSON.parse(JSON.stringify(this.schedule)))
-      // this.$emit('update:inputValue', this.inputValueArray)
-    },
-    watch: {
-      inputValueArray (news) {
-        // console.log(news)
-        this.$emit('update:inputValue', news)
-      }
+      // console.log(this.inputValueArray)
+    }
+  },
+  filters: {
+    parseIntBalance: function (value) {
+      value = parseInt(value)
+      return value
+    }
+  },
+  created () {
+    // console.log(JSON.parse(JSON.stringify(this.schedule)))
+    // this.$emit('update:inputValue', this.inputValueArray)
+  },
+  watch: {
+    inputValueArray (news) {
+      // console.log(news)
+      this.$emit('update:inputValue', news)
     }
   }
+}
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
   .ah-football-qcrq-lottery {
     font-size: 14px;
 

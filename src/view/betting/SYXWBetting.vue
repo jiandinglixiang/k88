@@ -9,10 +9,10 @@
             <span class="side-title">{{group.name}}</span>
           </div>
           <div class="col">
-          <span class="play-ball-white"
-                :class="{active: item.selected}"
-                v-for="item in group.list"
-                @click="ballChanged(item, index)">
+          <span :class="{active: item.selected}"
+                @click="ballChanged(item, index)"
+                class="play-ball-white"
+                v-for="item in group.list">
                 {{item.id}}
           </span>
           </div>
@@ -25,61 +25,65 @@
   </div>
 </template>
 
-<script>
-  import LotteryHeader from './child/LotteryHeader.vue';
-  import LotteryContainer from './child/DigitalLotteryContainer.vue';
-  import { SET_CURRENT_LOTTERY, GET_CURRENT_LOTTERY, RECOMMEND_ISSUE_SET,
-    CURRENT_PLAY_TYPE_SELECT } from '../../store/betting/types';
-  import Lottery from '../../model/common/Lottery';
-  import { recommendIssue } from '../../common/store';
+<script>//
+import LotteryHeader from './child/LotteryHeader.vue'
+import LotteryContainer from './child/DigitalLotteryContainer.vue'
+import {
+  CURRENT_PLAY_TYPE_SELECT,
+  GET_CURRENT_LOTTERY,
+  RECOMMEND_ISSUE_SET,
+  SET_CURRENT_LOTTERY
+} from '../../store/betting/types'
+import Lottery from '../../model/common/Lottery'
+import { recommendIssue } from '../../common/store'
 
-  export default {
-    name: 'xyxwBetting',
-    data () {
-      return {
-        LOTTERY_ID: 0
-      }
+export default {
+  name: 'xyxwBetting',
+  data () {
+    return {
+      LOTTERY_ID: 0
+    }
+  },
+  computed: {
+    playTypeGroup () {
+      return this.$store.state.betting.currentLottery.playTypeGroup || []
     },
-    computed: {
-      playTypeGroup () {
-        return this.$store.state.betting.currentLottery.playTypeGroup || [];
-      },
-      lotteryObj () {
-        return this.$store.state.betting[this.LOTTERY_ID];
-      },
-      topTip () {
-        return this.$store.state.betting.currentLottery &&
-          this.$store.state.betting.currentLottery.betTip;
-      },
-      panelBallGroups () {
-        return (this.lotteryObj.initBettingPanelBallGroups && this.lotteryObj.initBettingPanelBallGroups()) || [];
-      }
+    lotteryObj () {
+      return this.$store.state.betting[this.LOTTERY_ID]
     },
-    methods: {
-      ballChanged (item, index) {
-        this.lotteryObj.onBallChanged(item, index);
-      }
+    topTip () {
+      return this.$store.state.betting.currentLottery &&
+        this.$store.state.betting.currentLottery.betTip
     },
-    created () {
-      this.LOTTERY_ID = parseInt(this.$router.currentRoute.params.id);
-      this.$store.commit(SET_CURRENT_LOTTERY, this.LOTTERY_ID);
-      if (Lottery.isSYXW(this.LOTTERY_ID)) {
-        this.$store.dispatch(GET_CURRENT_LOTTERY).then(() => {
-          let issue = recommendIssue.get();
-          if (issue) {
-            issue.playType && this.$store.commit(CURRENT_PLAY_TYPE_SELECT, issue.playType);
-            this.$store.commit(RECOMMEND_ISSUE_SET, issue);
-            recommendIssue.clear();
-          } else {
-            if ((!this.$store.state.betting[this.LOTTERY_ID].playType)) {
-              this.$store.commit(CURRENT_PLAY_TYPE_SELECT, this.$store.state.betting.currentLottery.playTypeGroup[0].list[0]);
-            }
+    panelBallGroups () {
+      return (this.lotteryObj.initBettingPanelBallGroups && this.lotteryObj.initBettingPanelBallGroups()) || []
+    }
+  },
+  methods: {
+    ballChanged (item, index) {
+      this.lotteryObj.onBallChanged(item, index)
+    }
+  },
+  created () {
+    this.LOTTERY_ID = parseInt(this.$router.currentRoute.params.id)
+    this.$store.commit(SET_CURRENT_LOTTERY, this.LOTTERY_ID)
+    if (Lottery.isSYXW(this.LOTTERY_ID)) {
+      this.$store.dispatch(GET_CURRENT_LOTTERY).then(() => {
+        let issue = recommendIssue.get()
+        if (issue) {
+          issue.playType && this.$store.commit(CURRENT_PLAY_TYPE_SELECT, issue.playType)
+          this.$store.commit(RECOMMEND_ISSUE_SET, issue)
+          recommendIssue.clear()
+        } else {
+          if ((!this.$store.state.betting[this.LOTTERY_ID].playType)) {
+            this.$store.commit(CURRENT_PLAY_TYPE_SELECT, this.$store.state.betting.currentLottery.playTypeGroup[0].list[0])
           }
-        });
-      }
-    },
-    components: {LotteryHeader, LotteryContainer}
-  }
+        }
+      })
+    }
+  },
+  components: { LotteryHeader, LotteryContainer }
+}
 </script>
 
 <style>

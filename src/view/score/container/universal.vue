@@ -1,44 +1,44 @@
 <template>
-  <div v-if="propsData.schedules.length" class="organ-item">
-    <div v-if="name||propsData.name" class="organ-item-title" @click="show">
+  <div class="organ-item" v-if="propsData.schedules.length">
+    <div @click="show" class="organ-item-title" v-if="name||propsData.name">
       <span class="left">{{ name||propsData.name }}</span>
-      <span class="right" :class="{bgPlay:rotate}"> </span>
+      <span :class="{bgPlay:rotate}" class="right"> </span>
     </div>
-    <ul v-show="ShowItem" style="padding: 0.14rem;">
+    <ul style="padding: 0.14rem;" v-show="ShowItem">
       <slot name="top"></slot>
-      <li v-for="(item,index) in propsData.schedules" :key="item.id">
+      <li :key="item.id" v-for="(item,index) in propsData.schedules">
         <slot :data="item" :index="index"></slot>
       </li>
     </ul>
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'universal',
-    props: {
-      propsData: {
-        type: Object, required: true
-      },
-      name: {type: String}
+<script>//
+export default {
+  name: 'universal',
+  props: {
+    propsData: {
+      type: Object, required: true
     },
-    data () {
-      return {
-        ItemName: '置顶比赛', // 标题名字
-        ShowItem: true, // 是否显示
-        rotate: false // 旋转
-      }
-    },
-    methods: {
-      show () {
-        this.rotate = !this.rotate
-        this.ShowItem = !this.ShowItem
-      }
+    name: { type: String }
+  },
+  data () {
+    return {
+      ItemName: '置顶比赛', // 标题名字
+      ShowItem: true, // 是否显示
+      rotate: false // 旋转
+    }
+  },
+  methods: {
+    show () {
+      this.rotate = !this.rotate
+      this.ShowItem = !this.ShowItem
     }
   }
+}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
   .organ-item-title {
     position: relative;
     font-size: 0.3125rem;

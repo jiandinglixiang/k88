@@ -1,57 +1,50 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '../view/user/Login';
-import Register from '../view/user/Register';
-import Orders from '../view/user/Orders';
-import OrderDetail from '../view/user/OrderDetail';
-import OrderDetailScheme from '../view/user/OrderDetailScheme';
-import Mine from '../view/user/Mine.vue';
-import ForgotPassword from '../view/user/ForgotPassword.vue';
-import UserInfo from '../view/user/UserInfo.vue';
-import IDCard from '../view/user/IDCard.vue';
-import BankCard from '../view/user/BankCard.vue';
-import Cash from '../view/user/Cash.vue';
-import CashDetail from '../view/user/CashDetail.vue';
-
-import Football from '../view/scheme/Football.vue';
-import FootballConfirm from '../view/scheme/FootballConfirm';
-
-import PaymentConfirm from '../view/paymennt/PaymentConfirm.vue';
-import PaymentComplete from '../view/paymennt/PayComplete.vue';
-import Payment from '../view/paymennt/Payment.vue';
-import PaymentOrder from '../view/paymennt/PaymentOrder.vue';
+import Login from './view/user/Login'
+import Register from './view/user/Register'
+import Orders from './view/user/Orders'
+import OrderDetail from './view/user/OrderDetail'
+import OrderDetailScheme from './view/user/OrderDetailScheme'
+import Mine from './view/user/Mine.vue'
+import ForgotPassword from './view/user/ForgotPassword.vue'
+import UserInfo from './view/user/UserInfo.vue'
+import IDCard from './view/user/IDCard.vue'
+import BankCard from './view/user/BankCard.vue'
+import Cash from './view/user/Cash.vue'
+import CashDetail from './view/user/CashDetail.vue'
+import Football from './view/scheme/Football.vue'
+import FootballConfirm from './view/scheme/FootballConfirm'
+import PaymentConfirm from './view/paymennt/PaymentConfirm.vue'
+import PaymentComplete from './view/paymennt/PayComplete.vue'
+import Payment from './view/paymennt/Payment.vue'
+import PaymentOrder from './view/paymennt/PaymentOrder.vue'
+import NewRegister from './view/user/NewRegister.vue'
+import FootballBetting from './view/betting/FootballBetting.vue'
+import BasketballBetting from './view/betting/BasketballBetting.vue'
+import SportsConfirm from './view/betting/SportsConfirm.vue'
+import SportsOptimize from './view/betting/SportsOptimize.vue'
+import FootballInformation from './view/information/FootballInformation.vue'
+import BasketballInformation from './view/information/BasketballInformation.vue'
+import Home from './view/home/Home.vue'
+import More from './view/home/More.vue'
+import SYXWBetting from './view/betting/SYXWBetting.vue'
+import SSQBetting from './view/betting/SSQBetting.vue'
+import K3Betting from './view/betting/K3Betting.vue'
+import FC3DBetting from './view/betting/FC3DBetting.vue'
+import SFCBetting from './view/betting/SFCBetting.vue'
+import DigitalConfirm from './view/betting/DigitalConfirm.vue'
+import SFCConfirm from './view/betting/SFCConfirm.vue'
+import WebPage from './view/WebPage.vue'
+import PromotionElevenPickFive from './view/promotion/ElevenPickFive.vue'
+import PromotionTest from './view/promotion/Test.vue'
+import PrizeList from './view/prize/List.vue'
+import PrizeDetail from './view/prize/Detail.vue'
+import PrizeSportsDetail from './view/prize/SportsDetail.vue'
+import { pageJump } from './common/store'
+import Score from './view/score/score.vue' // -我的
+import AHFooter from './view/asianHandicap/AHFooter.vue'
 
 // import Hello from '../components/Hello.vue';
-
-import NewRegister from '../view/user/NewRegister.vue';
-
-import FootballBetting from '../view/betting/FootballBetting.vue';
-import BasketballBetting from '../view/betting/BasketballBetting.vue';
-import SportsConfirm from '../view/betting/SportsConfirm.vue';
-import SportsOptimize from '../view/betting/SportsOptimize.vue';
-import FootballInformation from '../view/information/FootballInformation.vue';
-import BasketballInformation from '../view/information/BasketballInformation.vue';
-
-import Home from '../view/home/Home.vue';
-import More from '../view/home/More.vue';
-import SYXWBetting from '../view/betting/SYXWBetting.vue';
-import SSQBetting from '../view/betting/SSQBetting.vue';
-import K3Betting from '../view/betting/K3Betting.vue';
-import FC3DBetting from '../view/betting/FC3DBetting.vue';
-import SFCBetting from '../view/betting/SFCBetting.vue';
-import DigitalConfirm from '../view/betting/DigitalConfirm.vue';
-import SFCConfirm from '../view/betting/SFCConfirm.vue';
-import WebPage from '../view/WebPage.vue';
-
-import PromotionElevenPickFive from '../view/promotion/ElevenPickFive.vue';
-import PromotionTest from '../view/promotion/Test.vue';
-
-import PrizeList from '../view/prize/List.vue';
-import PrizeDetail from '../view/prize/Detail.vue';
-import PrizeSportsDetail from '../view/prize/SportsDetail.vue';
-import { pageJump } from '../common/store';
-import Score from '../view/score/score.vue';// -我的
-import AHFooter from '../view/asianHandicap/AHFooter.vue';
 
 Vue.use(Router)
 
@@ -145,8 +138,8 @@ const router = new Router({
       name: 'Payment',
       component: Payment,
       beforeEnter (to, from, next) {
-        from.name && pageJump.fromSet('Payment', from);
-        next();
+        from.name && pageJump.fromSet('Payment', from)
+        next()
       }
     }, {
       path: '/information/football/:id',
@@ -241,6 +234,6 @@ const router = new Router({
       component: AHFooter
     }
   ]
-});
+})
 
-export default router;
+export default router

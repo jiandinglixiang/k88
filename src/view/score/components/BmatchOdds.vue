@@ -1,4 +1,4 @@
-<style scoped lang="scss">
+<style lang="scss" scoped>
   .match-odds {
     height: 1.76rem;
   }
@@ -11,8 +11,8 @@
   }
 </style>
 <template>
-  <div @click="$emit('tap')"   v-if="propsData&&propsData[`701`]" class="match-odds"
-       style="position: relative;height: 1.76rem">
+  <div @click="$emit('tap')" class="match-odds" style="position: relative;height: 1.76rem"
+       v-if="propsData&&propsData[`701`]">
     <div class="item">
       {{ propsData[`701`].v0 }}
     </div>
@@ -22,11 +22,11 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'BmatchOdds',
-    props: {
-      propsData: {type: Object}
-    }
+<script>//
+export default {
+  name: 'BmatchOdds',
+  props: {
+    propsData: { type: Object }
   }
+}
 </script>

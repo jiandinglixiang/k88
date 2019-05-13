@@ -3,7 +3,7 @@
     <div class="mask"></div>
     <div class="content">
       <div class="content-hd">
-        <a href="javascript:;" class="dialog-close-icon" @click="onClose"></a>
+        <a @click="onClose" class="dialog-close-icon" href="javascript:"></a>
         {{title}}
       </div>
       <div class="content-bd">
@@ -13,22 +13,23 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'dialog',
-    props: ['title'],
-    methods: {
-      onClose () {
-        this.$emit('close');
-      }
+<script>//
+export default {
+  name: 'dialog',
+  props: ['title'],
+  methods: {
+    onClose () {
+      this.$emit('close')
     }
   }
+}
 </script>
 
 <style lang="scss">
   .dialog {
     position: absolute;
   }
+
   .dialog .mask {
     position: fixed;
     z-index: 500;
@@ -38,6 +39,7 @@
     bottom: 0;
     background: rgba(0, 0, 0, 0.6);
   }
+
   .dialog .content {
     position: fixed;
     z-index: 501;
@@ -53,12 +55,14 @@
     overflow: hidden;
     color: $cFFfFFF;
   }
+
   .dialog .content-hd {
     position: relative;
     height: 30px;
     line-height: 30px;
     text-align: center;
   }
+
   .dialog .dialog-close-icon {
     position: absolute;
     right: 10px;

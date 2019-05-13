@@ -5,15 +5,15 @@
   </div>
 </template>
 
-<script>
-  import VHead from '../../components/VHead.vue';
+<script>//
+import VHead from '../../components/VHead.vue'
 
-  export default {
-    name: 'football',
-    components: {
-      VHead
-    }
+export default {
+  name: 'football',
+  components: {
+    VHead
   }
+}
 </script>
 
 <style>

@@ -8,10 +8,10 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'serviceAgreement'
-  }
+<script>//
+export default {
+  name: 'serviceAgreement'
+}
 </script>
 
 <style scoped>
@@ -22,12 +22,16 @@
     padding-top: 10px;
     line-height: 18px;
   }
+
   .checkbox {
-    width: 14px; height: 14px;
+    width: 14px;
+    height: 14px;
     border: 1px solid #ddd;
     position: absolute;
-    left: 10px; top: 12px;
+    left: 10px;
+    top: 12px;
   }
+
   .checkbox .red-check-icon {
     display: inline-block;
     vertical-align: top;

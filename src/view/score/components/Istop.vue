@@ -37,20 +37,20 @@
   </div>
 </template>
 
-<script>
-  import { mapMutations } from 'vuex';
-  import { TO_THE_TOP } from '../../../store/score/types';
+<script>//
+import { mapMutations } from 'vuex'
+import { TO_THE_TOP } from '../../../store/score/types'
 
-  export default {
-    name: 'IsTop',
-    props: {
-      toTop: {type: null},
-      index: {type: Array}
-    },
-    methods: {
-      ...mapMutations({
-        toTheTop: TO_THE_TOP
-      })
-    }
+export default {
+  name: 'IsTop',
+  props: {
+    toTop: { type: null },
+    index: { type: Array }
+  },
+  methods: {
+    ...mapMutations({
+      toTheTop: TO_THE_TOP
+    })
   }
+}
 </script>

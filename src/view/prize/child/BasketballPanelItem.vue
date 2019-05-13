@@ -2,10 +2,10 @@
   <div class="basketball-panel-item">
     <div class="text-center text-normal">
       {{data.guest}}
-       VS
+      VS
       {{data.home}}
-      <span class="text-sm text-default" :class="data.letPointColor">[{{data.letPointText}}]</span>
-   </div>
+      <span :class="data.letPointColor" class="text-sm text-default">[{{data.letPointText}}]</span>
+    </div>
     <div class="box">
       <div class="box-content clear">
         <div class="box-item"><span>玩法</span></div>
@@ -25,17 +25,18 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'basketballPanelItem',
-    props: ['data']
-  }
+<script>//
+export default {
+  name: 'basketballPanelItem',
+  props: ['data']
+}
 </script>
 
 <style>
   .basketball-panel-item .box-item {
     width: 18%;
   }
+
   .basketball-panel-item .box-item.sfc {
     width: 28%;
   }

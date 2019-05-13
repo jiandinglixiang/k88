@@ -1,8 +1,8 @@
-import SportsPrize from '../SportsPrize';
+import SportsPrize from '../SportsPrize'
 
 export default class AHFootballPrize extends SportsPrize {
   constructor (obj) {
-    super(obj);
-    this.isAHFootBall = true;
+    super(obj)
+    this.isAHFootBall = true
   }
 }

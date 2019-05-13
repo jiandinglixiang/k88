@@ -1,4 +1,4 @@
-<style scoped lang="scss">
+<style lang="scss" scoped>
   .organ-item-title {
     position: relative;
     font-size: 0.3125rem;
@@ -36,39 +36,39 @@
 </style>
 <template>
   <div>
-    <div class="organ-item-title" @click="show">
+    <div @click="show" class="organ-item-title">
       <span class="left">置顶比赛</span>
-      <span class="right" :class="{bgPlay:rotate}"> </span>
+      <span :class="{bgPlay:rotate}" class="right"> </span>
     </div>
-    <ul v-show="ShowItem" style="padding: 0.14rem;">
+    <ul style="padding: 0.14rem;" v-show="ShowItem">
       <slot name="top"></slot>
-      <li v-for="(item,index) in propsData" :key="item.id">
+      <li :key="item.id" v-for="(item,index) in propsData">
         <slot :data="item" :index="index"></slot>
       </li>
     </ul>
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'toTheTop',
-    props: {
-      propsData: {
-        type: Array, required: true
-      },
-      name: {type: String}
+<script>//
+export default {
+  name: 'toTheTop',
+  props: {
+    propsData: {
+      type: Array, required: true
     },
-    data () {
-      return {
-        ShowItem: true, // 是否显示
-        rotate: false // 旋转
-      }
-    },
-    methods: {
-      show () {
-        this.rotate = !this.rotate
-        this.ShowItem = !this.ShowItem
-      }
+    name: { type: String }
+  },
+  data () {
+    return {
+      ShowItem: true, // 是否显示
+      rotate: false // 旋转
+    }
+  },
+  methods: {
+    show () {
+      this.rotate = !this.rotate
+      this.ShowItem = !this.ShowItem
     }
   }
+}
 </script>

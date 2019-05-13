@@ -1,16 +1,17 @@
-import SportsHolder from '../SportsHolder';
-import {BALLS, BettingScoreOdds} from '../BettingScoreOdds';
+import SportsHolder from '../SportsHolder'
+import { BALLS, BettingScoreOdds } from '../BettingScoreOdds'
 
 export default class ZJQHolder extends SportsHolder {
   constructor (obj) {
-    super(obj);
-    this.balls = obj['betting_score_odds'][BALLS];
-    this.selected = [];
-    this.setHolderList();
+    super(obj)
+    this.balls = obj['betting_score_odds'][BALLS]
+    this.selected = []
+    this.setHolderList()
   }
+
   setHolderList () {
-    this.holderList = [];
-    const ballsMap = BettingScoreOdds.getType(BALLS);
+    this.holderList = []
+    const ballsMap = BettingScoreOdds.getType(BALLS)
     for (let key in this.balls) {
       if (this.balls.hasOwnProperty(key) && ballsMap.hasOwnProperty(key)) {
         this.holderList.push({
@@ -19,13 +20,14 @@ export default class ZJQHolder extends SportsHolder {
       }
     }
   }
+
   onOptionSelected (selected) {
     if (Array.isArray(selected)) {
-      this.selected = [...selected];
+      this.selected = [...selected]
     } else {
-      const index = this.selected.indexOf(selected);
-      index !== -1 ? this.selected.splice(index, 1) : this.selected.push(selected);
+      const index = this.selected.indexOf(selected)
+      index !== -1 ? this.selected.splice(index, 1) : this.selected.push(selected)
     }
-    this.setIsChecked();
+    this.setIsChecked()
   }
 }

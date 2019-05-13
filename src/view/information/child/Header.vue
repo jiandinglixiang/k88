@@ -1,8 +1,8 @@
 <template>
-  <div class="information-header" :class="type">
+  <div :class="type" class="information-header">
     <div class="container">
       <div class="head">
-        <span class="back-icon white" @click="goBack"></span>
+        <span @click="goBack" class="back-icon white"></span>
         <div>{{detail.league}}</div>
       </div>
       <div class="row text-center">
@@ -10,7 +10,7 @@
           <div class="col">
             <div class="team-nation">{{detail.home_rank}}</div>
             <div class="team-icon">
-              <img width="40" height="40" :src="detail.home_logo" alt="">
+              <img :src="detail.home_logo" alt="" height="40" width="40">
             </div>
             <div class="team-name">{{detail.home}}</div>
           </div>
@@ -19,7 +19,7 @@
           <div class="col">
             <div class="team-nation">{{detail.guest_rank}}</div>
             <div class="team-icon">
-              <img width="40" height="40" :src="detail.guest_logo" alt="">
+              <img :src="detail.guest_logo" alt="" height="40" width="40">
             </div>
             <div class="team-name">{{detail.guest}}</div>
           </div>
@@ -43,7 +43,7 @@
           <div class="col">
             <div class="team-nation">{{detail.guest_rank}}</div>
             <div class="team-icon">
-              <img width="40" height="40" :src="detail.guest_logo" alt="">
+              <img :src="detail.guest_logo" alt="" height="40" width="40">
             </div>
             <div class="team-name">{{detail.guest}}</div>
           </div>
@@ -52,7 +52,7 @@
           <div class="col">
             <div class="team-nation">{{detail.home_rank}}</div>
             <div class="team-icon">
-              <img width="40" height="40" :src="detail.home_logo" alt="">
+              <img :src="detail.home_logo" alt="" height="40" width="40">
             </div>
             <div class="team-name">{{detail.home}}</div>
           </div>
@@ -61,53 +61,57 @@
     </div>
     <div class="margin-top row tab text-center">
       <div class="overlay"></div>
-      <div class="col" :class="{'active': active === item}" v-for="item in tabItem" @click="tabItemClick(item)">
+      <div :class="{'active': active === item}" @click="tabItemClick(item)" class="col" v-for="item in tabItem">
         {{item.value}}
       </div>
     </div>
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'informationHeader',
-    props: ['type', 'tabItem', 'active'],
-    computed: {
-      detail () {
-        return this.$store.state.information.detail;
+<script>//
+export default {
+  name: 'informationHeader',
+  props: ['type', 'tabItem', 'active'],
+  computed: {
+    detail () {
+      return this.$store.state.information.detail
+    }
+  },
+  methods: {
+    tabItemClick (item) {
+      if (this.active !== item) {
+        this.$emit('tabClick', item)
       }
     },
-    methods: {
-      tabItemClick (item) {
-        if (this.active !== item) {
-          this.$emit('tabClick', item)
-        }
-      },
-      goBack () {
-        this.$router.back();
-      }
+    goBack () {
+      this.$router.back()
     }
   }
+}
 </script>
 
 <style scoped>
-  .information-header .team-icon img{
+  .information-header .team-icon img {
     border-radius: 40px;
   }
+
   .information-header .head {
     background: transparent;
     color: white;
     font-weight: 100;
   }
+
   .information-header .head .back-icon.white {
     background: url("../../../assets/icon/white_back_icon.png") no-repeat center;
     background-size: 40% 40%;
   }
+
   .information-header {
     color: white;
     font-weight: 100;
     position: relative;
   }
+
   .information-header .team-nation {
     background: black;
     color: white;
@@ -116,22 +120,27 @@
     display: inline-block;
     padding: 1px 5px;
   }
+
   .information-header .team-icon {
     margin: 5px 0;
   }
+
   .information-header .team-name {
     font-size: 12px;
   }
+
   .information-header.football .container {
     height: 145px;
     background: url("../../../assets/football_information.png") no-repeat;
     background-size: 100% 100%;
   }
+
   .information-header.basketball .container {
     height: 145px;
     background: url("../../../assets/basketball_information.png") no-repeat;
     background-size: 100% 100%;
   }
+
   .information-header .tab {
     height: 35px;
     font-size: 12px;
@@ -140,14 +149,17 @@
     padding-bottom: 1px;
     color: #888888;
   }
+
   .information-header.football .tab {
     background: url("../../../assets/football_tab.png") no-repeat;
     background-size: 100% 100%;
   }
+
   .information-header.basketball .tab {
     background: url("../../../assets/basketball_tab.png") no-repeat;
     background-size: 100% 100%;
   }
+
   .information-header .tab .col.active {
     border-bottom: 2px solid white;
     color: white;

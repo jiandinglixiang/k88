@@ -2,8 +2,8 @@
   <div class="football-panel-item">
     <div class="text-center text-normal">
       {{data.home}}
-      <span class="text-sm text-default" :class="data.letPointColor">[{{data.letPointText}}]</span>
-       VS
+      <span :class="data.letPointColor" class="text-sm text-default">[{{data.letPointText}}]</span>
+      VS
       {{data.guest}}
     </div>
     <div class="box">
@@ -27,11 +27,11 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'footballPanelItem',
-    props: ['data']
-  }
+<script>//
+export default {
+  name: 'footballPanelItem',
+  props: ['data']
+}
 </script>
 
 <style>

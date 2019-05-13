@@ -1,55 +1,55 @@
 <template>
   <div class="bottom-nav">
     <div class="row">
-      <div class="col bottom-nav-item"
-        :class="{'active': item.key === active}"
-        v-for="item in items"
-        @click="goRedirect(item)">
-        <span class="nav-icon" :class="item.icon"></span>
+      <div :class="{'active': item.key === active}"
+           @click="goRedirect(item)"
+           class="col bottom-nav-item"
+           v-for="item in items" :key="item.key">
+        <span :class="item.icon" class="nav-icon"></span>
         <p>{{item.name}}</p>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script>//
 
-  export default {
-    name: 'bottomNav',
-    props: ['active'],
-    data () {
-      return {
-        items: [
-          {name: '首页', icon: 'home-icon', key: 'Home'},
-          {name: '开奖', icon: 'prize-icon', key: 'PrizeList'},
-          { name: '比分', icon: 'score-icon', key: 'Score' },
-          {name: '订单', icon: 'order-icon', key: 'Orders'}
-          // {name: '我的', icon: 'person-icon', key: 'Mine'}
-        ]
-      }
-    },
-    methods: {
-      goRedirect (item) {
-        if (item.key !== this.active) {
-          switch (item.key) {
-            case 'Home':
-            case 'PrizeList':
-            case 'Score':
-            case 'Mine':
-              this.$router.replace({ name: item.key })
-              break
-            case 'Orders':
-              this.$router.replace({ path: '/orders' })
-              break
-            default:
-          }
+export default {
+  name: 'bottomNav',
+  props: ['active'],
+  data () {
+    return {
+      items: [
+        { name: '首页', icon: 'home-icon', key: 'Home' },
+        { name: '开奖', icon: 'prize-icon', key: 'PrizeList' },
+        { name: '比分', icon: 'score-icon', key: 'Score' },
+        { name: '订单', icon: 'order-icon', key: 'Orders' }
+        // {name: '我的', icon: 'person-icon', key: 'Mine'}
+      ]
+    }
+  },
+  methods: {
+    goRedirect (item) {
+      if (item.key !== this.active) {
+        switch (item.key) {
+          case 'Home':
+          case 'PrizeList':
+          case 'Score':
+          case 'Mine':
+            this.$router.replace({ name: item.key })
+            break
+          case 'Orders':
+            this.$router.replace({ path: '/orders' })
+            break
+          default:
         }
       }
     }
   }
+}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
   .bottom-nav {
     position: fixed;
     width: 100%;
@@ -65,49 +65,60 @@
     padding-top: 7px;
     line-height: 15px;
   }
-  @media screen and (min-width:640px) {
+
+  @media screen and (min-width: 640px) {
     .bottom-nav {
       width: 640px;
       left: 50%;
       margin-left: -320px;
     }
   }
+
   .bottom-nav .nav-icon {
     width: 22px;
     height: 22px;
     display: inline-block;
   }
+
   .bottom-nav .bottom-nav-item.active {
     color: $cffC63A;
   }
+
   .bottom-nav .nav-icon.home-icon {
     background: url("../assets/home/home.png") no-repeat;
     background-size: 100% 100%;
   }
+
   .bottom-nav .bottom-nav-item.active .home-icon {
     background: url("../assets/home/home_active.png") no-repeat;
     background-size: 100% 100%;
   }
+
   .bottom-nav .nav-icon.order-icon {
     background: url("../assets/home/order.png") no-repeat;
     background-size: 100% 100%;
   }
+
   .bottom-nav .bottom-nav-item.active .order-icon {
     background: url("../assets/home/order_active.png") no-repeat;
     background-size: 100% 100%;
   }
+
   .bottom-nav .nav-icon.person-icon {
     background: url("../assets/home/person.png") no-repeat;
     background-size: 100% 100%;
   }
+
   .bottom-nav .bottom-nav-item.active .person-icon {
     background: url("../assets/home/person_active.png") no-repeat;
     background-size: 100% 100%;
   }
+
   .bottom-nav .nav-icon.prize-icon {
     background: url("../assets/home/prize.png") no-repeat;
     background-size: 100% 100%;
   }
+
   .bottom-nav .bottom-nav-item.active .prize-icon {
     background: url("../assets/home/prize_active.png") no-repeat;
     background-size: 100% 100%;

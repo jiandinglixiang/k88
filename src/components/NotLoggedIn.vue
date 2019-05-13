@@ -1,20 +1,20 @@
 <template>
   <div class="not-logged-in row">
     <div class="col-center">
-      <img src="../assets/mine_not_logged.png" alt="">
+      <img alt="" src="../assets/mine_not_logged.png">
       <p>请登陆查看</p>
       <!--<router-link class="btn" to="/login">马上登陆</router-link>-->
     </div>
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'NotLoggedIn'
-  }
+<script>//
+export default {
+  name: 'NotLoggedIn'
+}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
   .not-logged-in {
     width: 100%;
     height: 300px;

@@ -1,40 +1,59 @@
-export const NO_CONCEDE = 'betting_score_no_concede';
-export const CONCEDE = 'betting_score_concede';
-export const SCORES = 'betting_score_scores';
-export const BALLS = 'betting_score_balls';
-export const HALF = 'betting_score_half';
-export const SFC = 'betting_score_sfc';
-export const DXF = 'betting_score_dxf';
-export const QCRQ = 'betting_score_letball';
-export const QCDXQ = 'betting_score_sizeball';
+export const NO_CONCEDE = 'betting_score_no_concede'
+export const CONCEDE = 'betting_score_concede'
+export const SCORES = 'betting_score_scores'
+export const BALLS = 'betting_score_balls'
+export const HALF = 'betting_score_half'
+export const SFC = 'betting_score_sfc'
+export const DXF = 'betting_score_dxf'
+export const QCRQ = 'betting_score_letball'
+export const QCDXQ = 'betting_score_sizeball'
 
 export class BettingScoreOdds {
   static getShowText (lotteryId, key) {
-    let type, result;
+    let type, result
     switch (parseInt(lotteryId)) {
       case 601:
-      case 701: type = NO_CONCEDE; break;
+      case 701:
+        type = NO_CONCEDE
+        break
       case 602:
-      case 702: type = CONCEDE; break;
-      case 603: type = SCORES; break;
-      case 604: type = BALLS; break;
-      case 605: type = HALF; break;
-      case 703: type = SFC; break;
-      case 704: type = DXF; break;
-      case 901: type = QCRQ; break;
-      case 902: type = QCDXQ; break;
+      case 702:
+        type = CONCEDE
+        break
+      case 603:
+        type = SCORES
+        break
+      case 604:
+        type = BALLS
+        break
+      case 605:
+        type = HALF
+        break
+      case 703:
+        type = SFC
+        break
+      case 704:
+        type = DXF
+        break
+      case 901:
+        type = QCRQ
+        break
+      case 902:
+        type = QCDXQ
+        break
     }
     if (type === SCORES) {
       BettingScoreOdds.getType(type).map(value => {
         if (value[key]) {
-          result = value[key];
+          result = value[key]
         }
       })
     } else {
-      result = BettingScoreOdds.getType(type)[key];
+      result = BettingScoreOdds.getType(type)[key]
     }
-    return result;
+    return result
   }
+
   static getType (type) {
     switch (type) {
       case NO_CONCEDE:
@@ -51,11 +70,35 @@ export class BettingScoreOdds {
         }
       case SCORES:
         return [{
-          v10: '1:0', v20: '2:0', v21: '2:1', v30: '3:0', v31: '3:1', v32: '3:2', v40: '4:0', v41: '4:1', v42: '4:2', v50: '5:0', v51: '5:1', v52: '5:2', v90: '胜其他'
+          v10: '1:0',
+          v20: '2:0',
+          v21: '2:1',
+          v30: '3:0',
+          v31: '3:1',
+          v32: '3:2',
+          v40: '4:0',
+          v41: '4:1',
+          v42: '4:2',
+          v50: '5:0',
+          v51: '5:1',
+          v52: '5:2',
+          v90: '胜其他'
         }, {
           v00: '0:0', v11: '1:1', v22: '2:2', v33: '3:3', v99: '平其他'
         }, {
-          v01: '0:1', v02: '0:2', v12: '1:2', v03: '0:3', v13: '1:3', v23: '2:3', v04: '0:4', v14: '1:4', v24: '2:4', v05: '0:5', v15: '1:5', v25: '2:5', v09: '负其他'
+          v01: '0:1',
+          v02: '0:2',
+          v12: '1:2',
+          v03: '0:3',
+          v13: '1:3',
+          v23: '2:3',
+          v04: '0:4',
+          v14: '1:4',
+          v24: '2:4',
+          v05: '0:5',
+          v15: '1:5',
+          v25: '2:5',
+          v09: '负其他'
         }]
       case BALLS:
         return {

@@ -1,6 +1,6 @@
 <template>
   <div class="orders">
-    <v-head :hide-back="true" title="我的投注" :hideOrder="true"></v-head>
+    <v-head :hide-back="true" :hideOrder="true" title="我的投注"></v-head>
     <nav @click.stop="changeStatus" class="row text-center bg-black text-sm" data-top="y">
       <div :class="{active: listIndex['0'] === '0'}" class="col col-25" data-value="0,0"><span>全部</span></div>
       <div :class="{active: listIndex['0'] === '1'}" class="col col-25" data-value="1,-1"><span>待开奖</span></div>
@@ -36,100 +36,100 @@
   </div>
 </template>
 
-<script>
-  import VHead from '../../components/VHead'
-  import BottomNav from '../../components/BottomNav.vue'
-  import NoOrder from '../../components/NoOrders'
-  import InfiniteScrollLoading from '../../components/InfiniteScrollLoading.vue'
-  import Lottery from '../../model/common/Lottery'
-  import Toast from '../../common/toast'
-  import Http from '../../store/Http'
-  import { copy } from '../../common/util'
-  import { OrderStatus } from '../../store/constants'
+<script>//
+import VHead from '../../components/VHead'
+import BottomNav from '../../components/BottomNav.vue'
+import NoOrder from '../../components/NoOrders'
+import InfiniteScrollLoading from '../../components/InfiniteScrollLoading.vue'
+import Lottery from '../../model/common/Lottery'
+import Toast from '../../common/toast'
+import Http from '../../store/Http'
+import { copy } from '../../common/util'
+import { OrderStatus } from '../../store/constants'
 
-  export default {
-    name: 'orders',
-    data () {
-      const index = localStorage.getItem('ordersIndex') || `["0","0"]`
-      return {
-        list: [[], [], [], []],
-        listIndex: JSON.parse(index),
-        loading: true,
-        limit: 15,
-        load: true
+export default {
+  name: 'orders',
+  data () {
+    const index = localStorage.getItem('ordersIndex') || `["0","0"]`
+    return {
+      list: [[], [], [], []],
+      listIndex: JSON.parse(index),
+      loading: true,
+      limit: 15,
+      load: true
+    }
+  },
+  methods: {
+    goOrderDetail (order) {
+      const id = order.lottery_id
+      if (Lottery.isFootBall(id) || Lottery.isBasketBall(id) || Lottery.isSYXW(id) ||
+        Lottery.isDLT(id) || Lottery.isSSQ(id) || Lottery.isSFCOrRXJ(id) || Lottery.isK3(id) ||
+        Lottery.isFC3D(id) || Lottery.isAHFootBall(id)) {
+        this.$router.push({
+          name: 'OrderDetail',
+          params: { id: order.id }
+        })
+      } else {
+        Toast('该功能暂未开发!')
       }
     },
-    methods: {
-      goOrderDetail (order) {
-        const id = order.lottery_id
-        if (Lottery.isFootBall(id) || Lottery.isBasketBall(id) || Lottery.isSYXW(id) ||
-          Lottery.isDLT(id) || Lottery.isSSQ(id) || Lottery.isSFCOrRXJ(id) || Lottery.isK3(id) ||
-          Lottery.isFC3D(id) || Lottery.isAHFootBall(id)) {
-          this.$router.push({
-            name: 'OrderDetail',
-            params: { id: order.id }
-          })
+    getList (index = '0', orderType = '0', offset = 0, lotteryId = 0) {
+      this.loading = 'true'
+      return Http.get('/Order', {
+        lottery_id: lotteryId,
+        order_type: orderType,
+        offset,
+        limit: this.limit
+      }).then(list => {
+        if (list && list.length) {
+          this.$set(this.list, index, (copy(this.list[index])).concat(list.map(value => ({
+            ...value,
+            statusText: OrderStatus[value.status]
+          }))))
+          this.loading = list.length < this.limit // 是否能加载
         } else {
-          Toast('该功能暂未开发!')
+          this.loading = true
         }
-      },
-      getList (index = '0', orderType = '0', offset = 0, lotteryId = 0) {
-        this.loading = 'true'
-        return Http.get('/Order', {
-          lottery_id: lotteryId,
-          order_type: orderType,
-          offset,
-          limit: this.limit
-        }).then(list => {
-          if (list && list.length) {
-            this.$set(this.list, index, (copy(this.list[index])).concat(list.map(value => ({
-              ...value,
-              statusText: OrderStatus[value.status]
-            }))))
-            this.loading = list.length < this.limit // 是否能加载
-          } else {
-            this.loading = true
-          }
-          return list
-        })
-      },
-      changeStatus (event) {
-        // 切换
-        for (let i in event.path) {
-          if (event.path[i].dataset) {
-            if (event.path[i].dataset.top) break
-            if (event.path[i].dataset.value) {
-              const index = event.path[i].dataset.value.split(',')
-              const unEqual = index[0] !== this.listIndex[0] // 不相等
-              const isData = this.list[index[0]].length === 0 // 没有数据
-              if (unEqual && isData) {
-                this.getList(index[0], index[1], 0).then(() => {
-                  // 加载完后切换
-                  this.listIndex = index
-                  localStorage.setItem('ordersIndex', JSON.stringify(index))
-                })
-              } else {
-                this.loading = this.list[index[0]].length % 10 === 0  // 可被整除
+        return list
+      })
+    },
+    changeStatus (event) {
+      // 切换
+      for (let i in event.path) {
+        if (event.path[i].dataset) {
+          if (event.path[i].dataset.top) break
+          if (event.path[i].dataset.value) {
+            const index = event.path[i].dataset.value.split(',')
+            const unEqual = index[0] !== this.listIndex[0] // 不相等
+            const isData = this.list[index[0]].length === 0 // 没有数据
+            if (unEqual && isData) {
+              this.getList(index[0], index[1], 0).then(() => {
+                // 加载完后切换
                 this.listIndex = index
                 localStorage.setItem('ordersIndex', JSON.stringify(index))
-              }
-              break
+              })
+            } else {
+              this.loading = this.list[index[0]].length % 10 === 0  // 可被整除
+              this.listIndex = index
+              localStorage.setItem('ordersIndex', JSON.stringify(index))
             }
+            break
           }
-        }
-      },
-      loadMore () {
-        // 加载更多
-        if (!this.loading) {
-          this.getList(this.listIndex[0], this.listIndex[1], this.list[this.listIndex[0]].length)
         }
       }
     },
-    components: { VHead, NoOrder, InfiniteScrollLoading, BottomNav },
-    created () {
-      this.getList()
+    loadMore () {
+      // 加载更多
+      if (!this.loading) {
+        this.getList(this.listIndex[0], this.listIndex[1], this.list[this.listIndex[0]].length)
+      }
     }
+  },
+  components: { VHead, NoOrder, InfiniteScrollLoading, BottomNav },
+  created () {
+    this.getList()
   }
+}
 </script>
 
 <style lang="scss">

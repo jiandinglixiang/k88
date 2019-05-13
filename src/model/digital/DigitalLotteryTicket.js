@@ -1,23 +1,23 @@
-import DigitalLottery from './DigitalLottery';
-import SyxwLottery from './SyxwLottery';
-import Fc3dLottery from './Fc3dLottery';
-import K3Lottery from './K3Lottery';
+import DigitalLottery from './DigitalLottery'
+import SyxwLottery from './SyxwLottery'
+import Fc3dLottery from './Fc3dLottery'
+import K3Lottery from './K3Lottery'
 
 function selectClassByLotteryId (lotteryId) {
-  let Obj;
+  let Obj
   switch (String(lotteryId)) {
     case '1':
     case '3':
-      Obj = DigitalLottery;
-      break;
+      Obj = DigitalLottery
+      break
     case '2':
-      Obj = Fc3dLottery;
-      break;
+      Obj = Fc3dLottery
+      break
     case '5':
     case '19':
     case '22':
-      Obj = K3Lottery;
-      break;
+      Obj = K3Lottery
+      break
     case '8':
     case '9':
     case '10':
@@ -30,21 +30,21 @@ function selectClassByLotteryId (lotteryId) {
     case '17':
     case '18':
     case '4':
-      Obj = SyxwLottery;
-      break;
+      Obj = SyxwLottery
+      break
     default:
-      Obj = DigitalLottery;
+      Obj = DigitalLottery
   }
-  return Obj;
+  return Obj
 }
 
 export default class DigitalLotteryTicket {
   constructor (ticket, lotteryId, prizeNum) {
-    let Obj = selectClassByLotteryId(lotteryId);
-    let ticketObj = new Obj(ticket);
-    ticketObj.analyseBettingResult();
-    prizeNum && ticketObj.analysePrizeNum(prizeNum);
-    ticketObj.prizeResult && ticketObj.setTicketPrizeColor();
-    return ticketObj;
+    let Obj = selectClassByLotteryId(lotteryId)
+    let ticketObj = new Obj(ticket)
+    ticketObj.analyseBettingResult()
+    prizeNum && ticketObj.analysePrizeNum(prizeNum)
+    ticketObj.prizeResult && ticketObj.setTicketPrizeColor()
+    return ticketObj
   }
 }

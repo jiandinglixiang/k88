@@ -18,21 +18,24 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'infiniteScrollLoading',
-    props: ['show']
-  }
+<script>//
+export default {
+  name: 'infiniteScrollLoading',
+  props: ['show']
+}
 </script>
 
 <style>
   .infinite-scroll-loading {
-    height: 32px; line-height: 32px;
+    height: 32px;
+    line-height: 32px;
     text-align: center;
     font-size: 14px;
   }
+
   .infinite-scroll-loading .mint-spinner-fading-circle {
-    width: 20px; height: 20px;
+    width: 20px;
+    height: 20px;
     display: inline-block;
     vertical-align: middle;
   }

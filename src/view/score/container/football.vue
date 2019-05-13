@@ -1,4 +1,4 @@
-<style scoped lang="scss">
+<style lang="scss" scoped>
   .organ-item-title {
     position: relative;
     /*border-bottom: 1px solid #ddd;*/
@@ -31,9 +31,11 @@
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
   }
-  .organ-item-li{
+
+  .organ-item-li {
     background-color: $c1c1c1c;
   }
+
   .organ-item-li::before {
     content: ' ';
     display: block;
@@ -45,32 +47,32 @@
 </style>
 <template>
   <div>
-    <div class="organ-item"
-         v-for="(groups,index) in propsData"
-         :key="groups.date||index">
-      <div class="organ-item-title"
-           @click="show(groups.date_timestamp)">
+    <div :key="groups.date||index"
+         class="organ-item"
+         v-for="(groups,index) in propsData">
+      <div @click="show(groups.date_timestamp)"
+           class="organ-item-title">
         <span class="left">{{ groups.name||groups.date }}</span>
-        <span class="right" :class="{bgPlay:switchItem(groups.date_timestamp)}"> </span>
+        <span :class="{bgPlay:switchItem(groups.date_timestamp)}" class="right"> </span>
       </div>
-      <ul v-show="switchItem(groups.date_timestamp)"
+      <ul :key="list.id||ind"
           style="padding: 0.14rem;"
           v-for="(list,ind) in groups.list"
-          :key="list.id||ind">
+          v-show="switchItem(groups.date_timestamp)">
         <mine-bet-title
-          theme="football"
-          :propsImg="list.lottery_image"
-          :propsData="[list.lottery_id,list.total_amount,list.jc_info.length,list.seriesText , list.issue_no]"
-          :propsBonus="[list.status,`${list.oddsMin}~${list.oddsMax}`,list.winnings_bonus]"
-          :prizeNum="list.prize_num||list.ectypePrizeNum"
           :jcInfo="list.jc_info"
+          :prizeNum="list.prize_num||list.ectypePrizeNum"
+          :propsBonus="[list.status,`${list.oddsMin}~${list.oddsMax}`,list.winnings_bonus]"
+          :propsData="[list.lottery_id,list.total_amount,list.jc_info.length,list.seriesText , list.issue_no]"
+          :propsImg="list.lottery_image"
+          theme="football"
         />
-        <li class="organ-item-li"
-            v-for="(item,index) in list.jc_info"
-            :key="item.id||index">
+        <li :key="item.id||index"
+            class="organ-item-li"
+            v-for="(item,index) in list.jc_info">
           <football-mine
-            :props-data="item.AMatch"
             :jc-info="item"
+            :props-data="item.AMatch"
           />
         </li>
       </ul>
@@ -78,48 +80,48 @@
   </div>
 </template>
 
-<script>
-  import organList from './universal'
-  import footballMine from '../template/footballMine.vue'
-  import mineBetTitle from '../components/mineBetTitle.vue'
+<script>//
+import organList from './universal'
+import footballMine from '../template/footballMine.vue'
+import mineBetTitle from '../components/mineBetTitle.vue'
 
-  export default {
-    name: 'FootballContainer',
-    props: {
-      propsData: {type: Array}
-    },
-    data () {
-      return {
-        ShowItem: {}, // 是否显示
-        rotate: false, // 旋转
-        propsDispose: [],
-        groupsList: []
-      }
-    },
-    methods: {
-      show (time) {
-        this.rotate = !this.rotate
-        let show = {...this.ShowItem}
-        if (show[time] !== undefined) {
-          show[time] = !show[time]
-        } else {
-          show[time] = false
-        }
-        this.ShowItem = show
-      },
-      switchItem (time) {
-        if (this.ShowItem[time] !== undefined) {
-          return this.ShowItem[time]
-        } else {
-          return true
-        }
-      }
-    },
-    components: {
-      organList,
-      footballMine,
-      mineBetTitle
+export default {
+  name: 'FootballContainer',
+  props: {
+    propsData: { type: Array }
+  },
+  data () {
+    return {
+      ShowItem: {}, // 是否显示
+      rotate: false, // 旋转
+      propsDispose: [],
+      groupsList: []
     }
+  },
+  methods: {
+    show (time) {
+      this.rotate = !this.rotate
+      let show = { ...this.ShowItem }
+      if (show[time] !== undefined) {
+        show[time] = !show[time]
+      } else {
+        show[time] = false
+      }
+      this.ShowItem = show
+    },
+    switchItem (time) {
+      if (this.ShowItem[time] !== undefined) {
+        return this.ShowItem[time]
+      } else {
+        return true
+      }
+    }
+  },
+  components: {
+    organList,
+    footballMine,
+    mineBetTitle
   }
+}
 </script>
 

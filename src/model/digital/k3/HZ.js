@@ -1,17 +1,19 @@
-import K3PlayType from '../K3PlayType';
-import BaseItem from './BaseItem';
-import Random from '../../common/Random';
+import K3PlayType from '../K3PlayType'
+import BaseItem from './BaseItem'
+import Random from '../../common/Random'
 
 export default class HZ extends K3PlayType {
   constructor (lotteryId, playType) {
-    super(lotteryId, playType);
-    this.panelType = 'hz';
-    this.showShake = true;
-    this.setOptionsContent();
+    super(lotteryId, playType)
+    this.panelType = 'hz'
+    this.showShake = true
+    this.setOptionsContent()
   }
+
   getTopTip () {
-    return '猜开奖的所有号码相加的和';
+    return '猜开奖的所有号码相加的和'
   }
+
   setOptionsContent () {
     this.balls = [
       new BaseItem(3, '奖金240元', '1 1 1', 42, 240),
@@ -30,14 +32,15 @@ export default class HZ extends K3PlayType {
       new BaseItem(16, '奖金40元', '16', 41, 40),
       new BaseItem(17, '奖金80元', '17', 41, 80),
       new BaseItem(18, '奖金240元', '6 6 6', 42, 240)
-    ];
+    ]
   }
+
   getAutoBall () {
-    let r = Random.getInt(3, 18);
+    let r = Random.getInt(3, 18)
     this.balls = this.balls.map(ball => {
-      ball.setSelected(r === ball.num);
-      return ball;
-    });
-    this.stakeCount = 1;
+      ball.setSelected(r === ball.num)
+      return ball
+    })
+    this.stakeCount = 1
   }
 }

@@ -1,16 +1,16 @@
 <template>
-  <table border="0" cellspacing="1" cellpadding="0" width="100%">
+  <table border="0" cellpadding="0" cellspacing="1" width="100%">
     <thead>
     <tr class="text-dark">
       <td width="19%">场次</td>
-      <td width="31%" v-if="list && list[0] && list[0].homeFirst">主队vs客队</td>
-      <td width="31%" v-else>客队vs主队</td>
+      <td v-if="list && list[0] && list[0].homeFirst" width="31%">主队vs客队</td>
+      <td v-else width="31%">客队vs主队</td>
       <td width="31%">投注内容/出票赔率</td>
       <td width="19%">彩果</td>
     </tr>
     </thead>
     <tbody class="text-light">
-    <tr v-for="item in list">
+    <tr v-for="(item,index) in list" :key="index">
       <td>{{item.round_no}}</td>
       <td>
         {{item.homeFirst ? item.home : item.guest}}
@@ -22,7 +22,7 @@
       <td>
         <!--显示足彩和篮彩-->
         <span v-if="item.showCheck">
-          <span v-for="b in item.betting" :class="{'text-primary': b.checked}">
+          <span :class="{'text-primary': b.checked}" v-for="(b,index2) in item.betting"  :key="index2">
             <span v-show="b.id === '901'">
               <span>让球 <span v-if="b.key.substring(4, 3)=== '1'">{{ item.home }}</span>
               <span v-else>{{ item.guest }}</span>
@@ -41,54 +41,54 @@
         </span>
         <!--胜负彩和任选九-->
         <span v-else>
-          <span v-for="(b, i) in item.betting">
+          <span v-for="(b, i) in item.betting"  :key="i">
             <span :class="{'text-primary': b.checked}">{{b.text}}</span><span v-if="i < item.betting.length -1">,</span>
           </span>
         </span>
       </td>
-      <td><span v-for="r in item.result">{{r.text}} <span v-if="r.value">({{r.value}})</span><br/></span></td>
+      <td><span v-for="(r,index3) in item.result"  :key="index3">{{r.text}} <span v-if="r.value">({{r.value}})</span><br/></span></td>
     </tr>
     </tbody>
   </table>
 </template>
 
-<script>
-  export default {
-    name: 'orderTable',
-    props: ['list'],
-    computed: {
-      teamName (key) {
-        if (key.substring(4, 3) === '1') {
-          return 'item.home'
-        } else {
-          return 'item.guest'
-        }
+<script>//
+export default {
+  name: 'orderTable',
+  props: ['list'],
+  computed: {
+    teamName (key) {
+      if (key.substring(4, 3) === '1') {
+        return 'item.home'
+      } else {
+        return 'item.guest'
       }
-    },
-    methods: {
-      toDecimal (odds) {
-        if (this.list[0].lottery_id === '901' || this.list[0].lottery_id === '902') {
-          let f = (odds * 1)
-          let value = f.toString()
-          let rs = value.indexOf('.')
-          if (rs < 0) {
-            rs = value.length
-            value += '.'
-          }
-          if (value.length > rs + 3) {
-            let st = value.length - (rs + 3)
-            value = value.substring(0, value.length - st)
-          }
-          while (value.length <= rs + 2) {
-            value += '0'
-          }
-          return value
-        } else {
-          return odds
+    }
+  },
+  methods: {
+    toDecimal (odds) {
+      if (this.list[0].lottery_id === '901' || this.list[0].lottery_id === '902') {
+        let f = (odds * 1)
+        let value = f.toString()
+        let rs = value.indexOf('.')
+        if (rs < 0) {
+          rs = value.length
+          value += '.'
         }
+        if (value.length > rs + 3) {
+          let st = value.length - (rs + 3)
+          value = value.substring(0, value.length - st)
+        }
+        while (value.length <= rs + 2) {
+          value += '0'
+        }
+        return value
+      } else {
+        return odds
       }
     }
   }
+}
 </script>
 
 <style scoped>

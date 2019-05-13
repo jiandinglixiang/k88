@@ -1,11 +1,11 @@
 <template>
   <div class="sport-lottery-panel-item">
     <div class="row padding item-top">
-      <div class="col col-20 col-center text-center text-sm text-light" @click="showTip">
+      <div @click="showTip" class="col col-20 col-center text-center text-sm text-light">
         <div>{{schedule.round_no}}</div>
         <div>{{schedule.league}}</div>
         <div>{{schedule.end_time | dateFormat('hh:mm')}}截止</div>
-        <div><span class="down-gray-icon" :class="{'up': tipVisible}"></span></div>
+        <div><span :class="{'up': tipVisible}" class="down-gray-icon"></span></div>
       </div>
       <div class="col col-80">
         <template v-if="schedule.lotteryId === 601">
@@ -76,7 +76,7 @@
           <span class="item-tip-list-odds">{{schedule.average_equal_odds}}</span>
           <span class="item-tip-list-odds">{{schedule.average_lose_odds}}</span>
         </p>
-        <p class="item-tip-bottom football" @click="goDetail">详细赛事分析</p>
+        <p @click="goDetail" class="item-tip-bottom football">详细赛事分析</p>
       </template>
       <template v-else-if="schedule.lotteryType === 'basketball'">
         <p class="item-tip-list">
@@ -96,7 +96,7 @@
           <span class="item-tip-list-odds">{{schedule.average_lose_odds}}</span>
           <span class="item-tip-list-odds">{{schedule.average_win_odds}}</span>
         </p>
-        <p class="item-tip-bottom basketball" @click="goDetail">详细赛事分析</p>
+        <p @click="goDetail" class="item-tip-bottom basketball">详细赛事分析</p>
       </template>
       <template v-else-if="schedule.lotteryType == 'ahFooter'">
         <p class="item-tip-list">
@@ -118,74 +118,74 @@
           <span class="item-tip-list-odds">{{schedule.average_equal_odds}}</span>
           <span class="item-tip-list-odds">{{schedule.average_lose_odds}}</span>
         </p>
-        <p class="item-tip-bottom football" @click="goDetail">详细赛事分析</p>
+        <p @click="goDetail" class="item-tip-bottom football">详细赛事分析</p>
       </template>
     </div>
   </div>
 </template>
 
-<script>
-  import FootballSPFLottery from './FootballSPFLottery.vue'
-  import FootballRQSPFLottery from './FootballRQSPFLottery.vue'
-  import FootballBFLottery from './FootballBFLottery.vue'
-  import FootballZJQLottery from './FootballZJQLottery.vue'
-  import FootballBQCLottery from './FootballBQCLottery.vue'
-  import FootballHHLottery from './FootballHHLottery.vue'
-  import BasketballSFLottery from './BasketballSFLottery.vue'
-  import BasketballRFSFLottery from './BasketballRFSFLottery.vue'
-  import BasketballSFCLottery from './BasketballSFCLottery.vue'
-  import BasketballDXFLottery from './BasketballDXFLottery.vue'
-  import BasketballHHLottery from './BasketballHHLottery.vue'
-  import SfcSPFLottery from './SfcSPFLottery.vue'
-  import AhQcRQLottery from './AhQcRQLottery.vue'
-  import AhQcDXQLottery from './AhQcDXQLottery.vue'
-  import Toast from '../../../common/toast'
+<script>//
+import FootballSPFLottery from './FootballSPFLottery.vue'
+import FootballRQSPFLottery from './FootballRQSPFLottery.vue'
+import FootballBFLottery from './FootballBFLottery.vue'
+import FootballZJQLottery from './FootballZJQLottery.vue'
+import FootballBQCLottery from './FootballBQCLottery.vue'
+import FootballHHLottery from './FootballHHLottery.vue'
+import BasketballSFLottery from './BasketballSFLottery.vue'
+import BasketballRFSFLottery from './BasketballRFSFLottery.vue'
+import BasketballSFCLottery from './BasketballSFCLottery.vue'
+import BasketballDXFLottery from './BasketballDXFLottery.vue'
+import BasketballHHLottery from './BasketballHHLottery.vue'
+import SfcSPFLottery from './SfcSPFLottery.vue'
+import AhQcRQLottery from './AhQcRQLottery.vue'
+import AhQcDXQLottery from './AhQcDXQLottery.vue'
+import Toast from '../../../common/toast'
 
-  export default {
-    name: 'sportLotteryPanelItem',
-    props: ['schedule', 'index'],
-    data () {
-      return {
-        tipVisible: false
-      }
+export default {
+  name: 'sportLotteryPanelItem',
+  props: ['schedule', 'index'],
+  data () {
+    return {
+      tipVisible: false
+    }
+  },
+  methods: {
+    showTip () {
+      this.tipVisible = !this.tipVisible
     },
-    methods: {
-      showTip () {
-        this.tipVisible = !this.tipVisible;
-      },
-      goDetail () {
-        if (this.schedule.third_party_schedule_id) {
-          this.$router.push({
-            name: this.schedule.lotteryType === 'basketball' ? 'BasketballInformation' : 'FootballInformation',
-            params: {id: this.schedule.third_party_schedule_id}
-          })
-        } else {
-          Toast('暂时没有详细信息');
-        }
-      }
-    },
-    components: {
-      FootballSPFLottery,
-      FootballRQSPFLottery,
-      FootballBFLottery,
-      FootballZJQLottery,
-      FootballBQCLottery,
-      FootballHHLottery,
-      BasketballSFLottery,
-      BasketballRFSFLottery,
-      BasketballDXFLottery,
-      BasketballSFCLottery,
-      BasketballHHLottery,
-      SfcSPFLottery,
-      AhQcRQLottery,
-      AhQcDXQLottery
-    },
-    created () {
-      if (this.index === 0) {
-        this.showTip();
+    goDetail () {
+      if (this.schedule.third_party_schedule_id) {
+        this.$router.push({
+          name: this.schedule.lotteryType === 'basketball' ? 'BasketballInformation' : 'FootballInformation',
+          params: { id: this.schedule.third_party_schedule_id }
+        })
+      } else {
+        Toast('暂时没有详细信息')
       }
     }
+  },
+  components: {
+    FootballSPFLottery,
+    FootballRQSPFLottery,
+    FootballBFLottery,
+    FootballZJQLottery,
+    FootballBQCLottery,
+    FootballHHLottery,
+    BasketballSFLottery,
+    BasketballRFSFLottery,
+    BasketballDXFLottery,
+    BasketballSFCLottery,
+    BasketballHHLottery,
+    SfcSPFLottery,
+    AhQcRQLottery,
+    AhQcDXQLottery
+  },
+  created () {
+    if (this.index === 0) {
+      this.showTip()
+    }
   }
+}
 </script>
 
 <style lang="scss">
@@ -200,55 +200,72 @@
       }
     }
   }
+
   .sport-lottery-panel-item .down-gray-icon {
     background: url("../../../assets/betting/down_gray.png") no-repeat;
     background-size: 100% 100%;
-    width: 12px; height: 8px;
+    width: 12px;
+    height: 8px;
     display: inline-block;
     margin-top: 8px;
     transition: transform 0.5s;
   }
+
   .sport-lottery-panel-item .down-gray-icon.up {
     transform: rotate(180deg);
   }
+
   .sport-lottery-panel-item .item-tip {
     background: black;
     color: white;
     font-size: 14px;
     padding: 0 10px;
   }
+
   .sport-lottery-panel-item .item-tip .item-tip-list {
     padding: 5px;
     border-bottom: 1px dotted #777777;
     font-size: 12px;
   }
+
   .sport-lottery-panel-item .item-tip-list-odds {
     margin-right: 50px;
   }
+
   .sport-lottery-panel-item .item-tip .item-tip-list-left {
-    width: 80px; display: inline-block;
+    width: 80px;
+    display: inline-block;
     color: #6f6f70;
   }
+
   .sport-lottery-panel-item .item-tip .item-tip-bottom {
-    padding: 10px; position: relative;
-    left: 50%; margin-left: -65px;
-    color: #feb62c; padding-left: 30px;
+    padding: 10px;
+    position: relative;
+    left: 50%;
+    margin-left: -65px;
+    color: #feb62c;
+    padding-left: 30px;
     width: 130px;
   }
+
   .sport-lottery-panel-item .item-tip .item-tip-bottom.basketball {
     background: url("../../../assets/basketball.png") no-repeat left center;
     background-size: auto 50%;
   }
+
   .sport-lottery-panel-item .item-tip .item-tip-bottom.football {
     background: url("../../../assets/ball.png") no-repeat left center;
     background-size: auto 50%;
   }
+
   .sport-lottery-panel-item span.green {
     color: #4faf50;
   }
+
   .sport-lottery-panel-item span.blue {
     color: #3f6ee7;
   }
+
   .sport-lottery-panel-item span.text-primary {
     color: #f33;
   }

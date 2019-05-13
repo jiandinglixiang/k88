@@ -1,8 +1,8 @@
 <template>
   <div class="sports-prize-panel">
-    <div class="panel-top" @click="changePanelVisible">
+    <div @click="changePanelVisible" class="panel-top">
       {{holder.name}} {{holder.schedules.length}}场比赛
-      <span class="icon" :class="{'up': panelVisible}"></span>
+      <span :class="{'up': panelVisible}" class="icon"></span>
     </div>
     <div class="panel-list" v-show="panelVisible">
       <div class="panel-list-content" v-for="item in holder.schedules">
@@ -22,25 +22,25 @@
   </div>
 </template>
 
-<script>
-  import FootballPanelItem from './FootballPanelItem.vue'
-  import BasketballPanelItem from './BasketballPanelItem.vue'
+<script>//
+import FootballPanelItem from './FootballPanelItem.vue'
+import BasketballPanelItem from './BasketballPanelItem.vue'
 
-  export default {
-    name: 'sportsPrizePanel',
-    props: ['holder'],
-    data () {
-      return {
-        panelVisible: true
-      }
-    },
-    methods: {
-      changePanelVisible () {
-        this.panelVisible = !this.panelVisible;
-      }
-    },
-    components: {FootballPanelItem, BasketballPanelItem}
-  }
+export default {
+  name: 'sportsPrizePanel',
+  props: ['holder'],
+  data () {
+    return {
+      panelVisible: true
+    }
+  },
+  methods: {
+    changePanelVisible () {
+      this.panelVisible = !this.panelVisible
+    }
+  },
+  components: { FootballPanelItem, BasketballPanelItem }
+}
 </script>
 
 <style lang="scss">
@@ -125,12 +125,15 @@
   .sports-prize-panel span.green {
     color: #1AC456;
   }
+
   .sports-prize-panel span.yellow {
     color: #FF3333;
   }
+
   .sports-prize-panel span.blue {
     color: #3393FF;
   }
+
   .sports-prize-panel span.yellow-2 {
     color: #FFC63A;
   }

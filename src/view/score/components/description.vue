@@ -10,16 +10,16 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'description',
-    props: {
-      propsData: {type: Array}
-    }
-  };
+<script>//
+export default {
+  name: 'description',
+  props: {
+    propsData: { type: Array }
+  }
+}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
   .body * {
     box-sizing: border-box;
   }

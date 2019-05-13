@@ -12,8 +12,8 @@
         <span class="pull-right text-default">&#165; {{ amount }}</span>
       </div>
       <div class="margin-top-20 padding">
-        <router-link to="mine" replace tag="div" >
-          <a href="javascript:;" class="btn">完成</a>
+        <router-link replace tag="div" to="mine">
+          <a class="btn" href="javascript:">完成</a>
         </router-link>
       </div>
     </div>
@@ -21,39 +21,43 @@
   </div>
 </template>
 
-<script>
-  import VHead from '../../components/VHead.vue';
-  import CaptchaButton from '../../components/CaptchaButton';
-  import { mapState } from 'vuex';
+<script>//
+import VHead from '../../components/VHead.vue'
+import CaptchaButton from '../../components/CaptchaButton'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'cashDetail',
-    computed: {
-      ...mapState({
-        userBank: state => state.user.userBank,
-        amount: state => state.user.withDrawCashMoney
-      })
-    },
-    components: {
-      VHead, CaptchaButton
-    }
+export default {
+  name: 'cashDetail',
+  computed: {
+    ...mapState({
+      userBank: state => state.user.userBank,
+      amount: state => state.user.withDrawCashMoney
+    })
+  },
+  components: {
+    VHead, CaptchaButton
   }
+}
 </script>
 
 <style>
   .cash-detail {
-    position: relative; height: 100%;
+    position: relative;
+    height: 100%;
   }
+
   .cash-detail .prompt {
     padding: 0 0;
     color: #999999;
     font-size: 13px;
   }
-  .cash-detail .prompt .icon{
+
+  .cash-detail .prompt .icon {
     display: inline-block;
     margin: 20px 0 10px 0;
   }
-  .cash-detail .tel-panel{
+
+  .cash-detail .tel-panel {
     position: fixed;
     padding: 0 0;
     width: 100%;
@@ -65,6 +69,7 @@
     font-size: 13px;
     background-color: #F2F2F2;
   }
+
   .cash-detail .item {
     padding: 15px 10px;
     position: relative;
@@ -72,10 +77,12 @@
     font-size: 13px;
     background-color: white;
   }
+
   .cash-detail .item span {
     display: inline-block;
   }
-  .cash-detail .item.border-bottom{
+
+  .cash-detail .item.border-bottom {
     border-bottom: 1px solid #f2f2f2;
   }
 

@@ -1,7 +1,7 @@
-import { InfiniteScroll } from 'mint-ui';
-import Vue from 'vue';
+import { InfiniteScroll } from 'mint-ui'
+import Vue from 'vue'
 
-Vue.use(InfiniteScroll);
+Vue.use(InfiniteScroll)
 
 // <ul
 // v-infinite-scroll="loadMore"

@@ -5,6 +5,11 @@ import HomeLotteryItem from '../../model/HomeLotteryItem'
 import HomeLotteryIssue from '../../model/HomeLotteryIssue'
 
 let state = {
+  Device: { // 设备信息
+    navInfo: { wx: false, ios: false, android: false },
+    width: 100,
+    height: 100
+  },
   banners: [],
   issue: {},
   lotteries: [],
@@ -15,28 +20,28 @@ const actions = {
   [types.GET_BANNER] (context) {
     if (state.banners.length === 0) {
       Http.get('/Home/getBanner').then(data => {
-        context.commit(types.GET_BANNER, data);
+        context.commit(types.GET_BANNER, data)
       })
     }
   },
   [types.GET_LOTTERY_LIST] (context) {
     if (state.lotteries.length === 0) {
-      loading.show();
+      loading.show()
       return Http.get('/Lottery/getLotteryList').then(data => {
-        context.commit(types.GET_LOTTERY_LIST, data);
-        loading.hide();
+        context.commit(types.GET_LOTTERY_LIST, data)
+        loading.hide()
       })
     }
   },
   [types.LOTTERY_LIST_REFRESH] (context) {
     Http.get('/Lottery/getLotteryList').then(data => {
-      context.commit(types.GET_LOTTERY_LIST, data);
+      context.commit(types.GET_LOTTERY_LIST, data)
     })
   },
   [types.GET_RECOMMEND_ISSUE] (context) {
     if (!state.issue.lottery_id) {
       Http.get('/Home/getRecommentIssue').then(data => {
-        context.commit(types.GET_RECOMMEND_ISSUE, data);
+        context.commit(types.GET_RECOMMEND_ISSUE, data)
       })
     }
   },
@@ -44,21 +49,24 @@ const actions = {
     if (Array.isArray(state.information) === true) {
       if (state.information.length === 0) {
         Http.get('/News/getRecommendList').then(data => {
-          context.commit(types.GET_INFORMATION_LIST, data);
+          context.commit(types.GET_INFORMATION_LIST, data)
         })
       }
     }
   },
   [types.RECOMMEND_ISSUE_REFRESH] (context) {
     Http.get('/Home/getRecommentIssue').then(data => {
-      context.commit(types.GET_RECOMMEND_ISSUE, data);
+      context.commit(types.GET_RECOMMEND_ISSUE, data)
     })
   }
 }
 
 const mutations = {
+  [types.DEVICE_RESIZE] (state, params) {
+    state.Device = { width: params.width, height: params.height, navInfo: params.navInfo }
+  },
   [types.GET_BANNER] (state, banners) {
-    state.banners = banners;
+    state.banners = banners
   },
   [types.GET_LOTTERY_LIST] (state, data) {
     if (state.lotteries) {
@@ -66,14 +74,14 @@ const mutations = {
       state.lotteries.map(value => value.onClearInterval())
     }
     state.lotteries = data.list.map(value => {
-      return new HomeLotteryItem(value, data.server_time);
-    });
+      return new HomeLotteryItem(value, data.server_time)
+    })
   },
   [types.GET_RECOMMEND_ISSUE] (state, issue) {
-    state.issue = new HomeLotteryIssue(issue);
+    state.issue = new HomeLotteryIssue(issue)
   },
   [types.GET_INFORMATION_LIST] (state, data) {
-    state.information = data.list;
+    state.information = data.list
   }
 }
 

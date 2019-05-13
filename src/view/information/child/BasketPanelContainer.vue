@@ -1,10 +1,10 @@
 <template>
   <div class="basket-panel-container">
     <div class="block">
-      <div class="panel-title" @click="changeVisible">
+      <div @click="changeVisible" class="panel-title">
         {{title}}
         <p class="test">
-          <a class="cross2" :class="{cross: !visible}"></a>
+          <a :class="{cross: !visible}" class="cross2"></a>
         </p>
       </div>
       <div class="panel-container" v-show="visible">
@@ -14,29 +14,30 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'basketPanelContainer',
-    props: ['title'],
-    data () {
-      return { visible: true }
-    },
-    methods: {
-      changeVisible () {
-        this.visible = !this.visible;
-      }
+<script>//
+export default {
+  name: 'basketPanelContainer',
+  props: ['title'],
+  data () {
+    return { visible: true }
+  },
+  methods: {
+    changeVisible () {
+      this.visible = !this.visible
     }
   }
+}
 </script>
 
 <style>
-  .basket-panel-container .cross2{
+  .basket-panel-container .cross2 {
     /*background: transparent;*/
     height: 8px;
     position: relative;
     width: 2px;
     display: inline-block;
   }
+
   .basket-panel-container .cross2:after {
     background: white;
     content: "";
@@ -46,6 +47,7 @@
     top: 3px;
     width: 8px;
   }
+
   .basket-panel-container .cross {
     background: white;
     height: 8px;
@@ -57,6 +59,7 @@
   .basket-panel-container .icon-up:after {
     content: "\2191";
   }
+
   .basket-panel-container .icon-down:after {
     content: "\2193";
   }

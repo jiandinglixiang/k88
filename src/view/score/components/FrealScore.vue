@@ -1,4 +1,4 @@
-<style scoped lang="scss">
+<style lang="scss" scoped>
   .shoot-1-icon {
     width: 0.3125rem;
     height: 0.5rem;
@@ -59,8 +59,8 @@
   export default {
     name: 'realScore',
     props: {
-      propsHome: {type: Object},
-      propsGuest: {type: Object}
+      propsHome: { type: Object },
+      propsGuest: { type: Object }
     },
     methods: {
       filtration (props, who, pre) {

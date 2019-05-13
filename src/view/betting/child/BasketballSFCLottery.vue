@@ -1,14 +1,16 @@
 <template>
   <div class="basketball-sfc-lottery">
     <div class="row text-center text-default-2 text-sm">
-      <div class="col"><span class="text-primary" v-if="schedule.guest_rank">[{{schedule.guest_rank}}]</span>{{schedule.guest}}</div>
+      <div class="col"><span class="text-primary" v-if="schedule.guest_rank">[{{schedule.guest_rank}}]</span>{{schedule.guest}}
+      </div>
       <div class="col text-light">VS</div>
-      <div class="col">{{schedule.home}}<span class="text-primary" v-if="schedule.home_rank">[{{schedule.home_rank}}]</span></div>
+      <div class="col">{{schedule.home}}<span class="text-primary"
+                                              v-if="schedule.home_rank">[{{schedule.home_rank}}]</span></div>
     </div>
-    <div class="box" :class="{'box-icon': isConfirm}">
-      <div class="box-item ellipsis"
+    <div :class="{'box-icon': isConfirm}" class="box">
+      <div :class="{selected: boxText}"
            @click="onPanelShow"
-           :class="{selected: boxText}">
+           class="box-item ellipsis">
         <span>{{boxText || '请选择投注内容'}}</span>
         <span class="arrow-right"></span>
       </div>
@@ -18,112 +20,120 @@
       @close="onPanelHide()"
       v-show="bettingPanelVisible">
       <div class="table-wrap">
-        <table class="text-center text-sm" cellpadding="0" cellspacing="1">
-          <thead><tr><td colspan="3" class="blue">客胜</td></tr></thead>
+        <table cellpadding="0" cellspacing="1" class="text-center text-sm">
+          <thead>
+          <tr>
+            <td class="blue" colspan="3">客胜</td>
+          </tr>
+          </thead>
           <tbody>
-            <tr v-for="guestTd in guestTr">
-              <td v-for="guest in guestTd"
-                  @click="onDialogOptionSelected(guest)"
-                  :class="{selected: isDialogSelected(guest)}">
-                <span class="text-light margin-right-10">{{guest.text}}</span>
-                {{guest.value}}
-              </td>
-            </tr>
+          <tr v-for="guestTd in guestTr">
+            <td :class="{selected: isDialogSelected(guest)}"
+                @click="onDialogOptionSelected(guest)"
+                v-for="guest in guestTd">
+              <span class="text-light margin-right-10">{{guest.text}}</span>
+              {{guest.value}}
+            </td>
+          </tr>
           </tbody>
         </table>
-        <table class="text-center text-sm margin-top-10" cellpadding="0" cellspacing="1">
-          <thead><tr><td colspan="3" class="red">主胜</td></tr></thead>
+        <table cellpadding="0" cellspacing="1" class="text-center text-sm margin-top-10">
+          <thead>
+          <tr>
+            <td class="red" colspan="3">主胜</td>
+          </tr>
+          </thead>
           <tbody>
           <tr v-for="homeTd in homeTr">
-            <td v-for="home in homeTd"
+            <td :class="{selected: isDialogSelected(home)}"
                 @click="onDialogOptionSelected(home)"
-                :class="{selected: isDialogSelected(home)}">
+                v-for="home in homeTd">
               <span class="text-light margin-right-10">{{home.text}}</span>
               {{home.value}}
-              </td>
+            </td>
           </tr>
           </tbody>
         </table>
       </div>
       <div class="btn-wrap row">
-        <div class="col"><a href="javascript:;" @click="onPanelHide()" class="btn">取消</a></div>
-        <div class="col"><a href="javascript:;" @click="onPanelConfirm()" class="btn">确认</a></div>
+        <div class="col"><a @click="onPanelHide()" class="btn" href="javascript:">取消</a></div>
+        <div class="col"><a @click="onPanelConfirm()" class="btn" href="javascript:">确认</a></div>
       </div>
     </v-dialog>
   </div>
 </template>
 
-<script>
-  import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
-  import VDialog from '../../../components/VDialog.vue'
-  import { LotteryBasketballKey } from '../../../store/constants'
+<script>//
+import { SPORTS_OPTION_SELECTED } from '../../../store/betting/types'
+import VDialog from '../../../components/VDialog.vue'
+import { LotteryBasketballKey } from '../../../store/constants'
 
-  export default {
-    name: 'basketballSFCLottery',
-    props: ['schedule', 'isConfirm'],
-    data () {
-      return {
-        dialogItemSelected: [],
-        bettingPanelVisible: false
-      }
-    },
-    computed: {
-      homeTr () {
-        let list = [];
-        for (let i = 0; i < 2; i++) {
-          for (let j = 0; j < 3; j++) {
-            if (!list[i]) list[i] = [];
-            list[i][j] = this.schedule.holderList[i * 3 + j];
-          }
+export default {
+  name: 'basketballSFCLottery',
+  props: ['schedule', 'isConfirm'],
+  data () {
+    return {
+      dialogItemSelected: [],
+      bettingPanelVisible: false
+    }
+  },
+  computed: {
+    homeTr () {
+      let list = []
+      for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 3; j++) {
+          if (!list[i]) list[i] = []
+          list[i][j] = this.schedule.holderList[i * 3 + j]
         }
-        return list;
-      },
-      guestTr () {
-        let list = [];
-        for (let i = 0; i < 2; i++) {
-          for (let j = 0; j < 3; j++) {
-            if (!list[i]) list[i] = [];
-            list[i][j] = this.schedule.holderList[(i + 2) * 3 + j];
-          }
+      }
+      return list
+    },
+    guestTr () {
+      let list = []
+      for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 3; j++) {
+          if (!list[i]) list[i] = []
+          list[i][j] = this.schedule.holderList[(i + 2) * 3 + j]
         }
-        return list;
-      },
-      boxText () {
-        return this.schedule.selected.map(value => {
-          return LotteryBasketballKey.betting_score_sfc[value.key] || '错误'
-        }).join(',')
       }
+      return list
     },
-    methods: {
-      onDialogOptionSelected (item) {
-        const index = this.dialogItemSelected.indexOf(item);
-        index !== -1 ? this.dialogItemSelected.splice(index, 1) : this.dialogItemSelected.push(item);
-        console.log(this.dialogItemSelected);
-      },
-      onOptionSelected (item) {
-        this.schedule.onOptionSelected(item);
-        this.$store.commit(SPORTS_OPTION_SELECTED);
-        this.$emit('onOptionSelected');
-      },
-      onPanelShow () {
-        this.dialogItemSelected = [...this.schedule.selected];
-        this.bettingPanelVisible = true;
-      },
-      onPanelHide () {
-        this.bettingPanelVisible = false;
-      },
-      onPanelConfirm () {
-        this.schedule.onOptionSelected(this.dialogItemSelected);
-        this.$store.commit(SPORTS_OPTION_SELECTED);
-        this.$emit('onOptionSelected');
-        this.bettingPanelVisible = false;
-      },
-      isDialogSelected (item) {
-        return this.dialogItemSelected.indexOf(item) !== -1;
-      }
+    boxText () {
+      return this.schedule.selected.map(value => {
+        return LotteryBasketballKey.betting_score_sfc[value.key] || '错误'
+      }).join(',')
+    }
+  },
+  methods: {
+    onDialogOptionSelected (item) {
+      const index = this.dialogItemSelected.indexOf(item)
+      index !== -1 ? this.dialogItemSelected.splice(index, 1) : this.dialogItemSelected.push(item)
+      console.log(this.dialogItemSelected)
     },
-    components: {VDialog}
-  }
+    onOptionSelected (item) {
+      this.schedule.onOptionSelected(item)
+      this.$store.commit(SPORTS_OPTION_SELECTED)
+      this.$emit('onOptionSelected')
+    },
+    onPanelShow () {
+      this.dialogItemSelected = [...this.schedule.selected]
+      this.bettingPanelVisible = true
+    },
+    onPanelHide () {
+      this.bettingPanelVisible = false
+    },
+    onPanelConfirm () {
+      this.schedule.onOptionSelected(this.dialogItemSelected)
+      this.$store.commit(SPORTS_OPTION_SELECTED)
+      this.$emit('onOptionSelected')
+      this.bettingPanelVisible = false
+    },
+    isDialogSelected (item) {
+      return this.dialogItemSelected.indexOf(item) !== -1
+    }
+  },
+  components: { VDialog }
+}
 </script>
 
 <style lang="scss">
@@ -131,6 +141,7 @@
     padding-left: 10px;
     font-size: 14px;
   }
+
   .basketball-sfc-lottery .box {
     border: 1px solid $c494949;
     border-radius: 4px;
@@ -142,43 +153,57 @@
     position: relative;
     color: $c999999;
   }
+
   .basketball-sfc-lottery .box .arrow-right {
     display: none;
   }
+
   .basketball-sfc-lottery .box.box-icon .arrow-right {
-    position: absolute; right: 5px;
-    top: 10px; display: block;
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    display: block;
   }
+
   .basketball-sfc-lottery .box .box-item {
-    padding: 7px 5px; width: 100%;
+    padding: 7px 5px;
+    width: 100%;
   }
+
   .basketball-sfc-lottery .box .box-item.selected {
     background: $cffC63A;
     color: $c131313;
   }
+
   .basketball-sfc-lottery .dialog .content {
     width: 95%;
     max-width: 320px;
     /*background: #f2f2f2;*/
   }
+
   .basketball-sfc-lottery .table-wrap {
     padding: 0 10px;
   }
+
   .basketball-sfc-lottery table {
     width: 100%;
   }
+
   .basketball-sfc-lottery table td {
     background: $c313131;
     padding: 5px;
   }
+
   .basketball-sfc-lottery table td.blue {
     background: #3393FF;
     color: white;
   }
+
   .basketball-sfc-lottery table td.red {
     background: #FF3333;
     color: white;
   }
+
   .basketball-sfc-lottery table td.selected {
     color: $c131313;
     background: $cffC63A;
@@ -195,7 +220,8 @@
     margin-top: 5px;
     border-radius: 0;
   }
-  .basketball-sfc-lottery .btn-wrap .col:first-child .btn{
+
+  .basketball-sfc-lottery .btn-wrap .col:first-child .btn {
     border-right: 1px solid $c313131;
     color: #666;
   }

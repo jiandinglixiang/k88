@@ -1,25 +1,17 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import 'babel-polyfill'
 import Vue from 'vue'
-import App from './App'
+import App from './App.vue'
+import '@babel/polyfill'
 import router from './router'
 import store from './store/index'
 import './common/infiniteScroll' // 无限滚动指令
 import './common/directive' // 自定义的指令
 import './common/filter' // 自定义的过滤器
+import device from './common/device.js'
 import { H5postmsg } from './common/postmsg'
 
-Vue.config.devtools = true
+device(store)
+Vue.config.devtools = process.env.NODE_ENV !== 'production' || !!localStorage.getItem('devtools')
 Vue.config.productionTip = false
-
-// 动画暂时不用
-// import 'vueg/css/transition-min.css'
-// import vueg from 'vueg';
-// Vue.use(vueg, router, {
-//   forwardAnim: 'fadeInRight',
-//   duration: 0.2
-// });
 
 window.addEventListener('message', function (event) {
   if (H5postmsg.post && event.source === window.parent) {
@@ -30,10 +22,9 @@ window.addEventListener('message', function (event) {
     H5postmsg.source.postMessage(JSON.stringify({ response: -1 }), H5postmsg.origin)
   }
 }, false)
-new Vue({
-  el: '#app',
+
+export default new Vue({
   router,
   store,
-  template: '<App/>',
-  components: { App }
-})
+  render: h => h(App)
+}).$mount('#app')

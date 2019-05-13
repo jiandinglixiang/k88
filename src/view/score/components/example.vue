@@ -1,4 +1,4 @@
-<style scoped lang="scss">
+<style lang="scss" scoped>
   .down_gray {
     position: absolute;
     bottom: 0;
@@ -87,10 +87,10 @@
   <div class="example">
     <div @click="show" class="example-body">
       <div class="body">
-        <div v-for="item in showItem"
+        <div :class="{color73f40:item.checked}"
              :key="item.text"
              class="item"
-             :class="{color73f40:item.checked}"
+             v-for="item in showItem"
         >
           <div>{{item.text}}{{ item.id==='602'? `[${jcInfo.let_point}]`:'' }}</div>
           <div v-if="item.value">({{item.value}})</div>
@@ -103,10 +103,12 @@
           <!--图标-->
         </div>
       </div>
-      <div v-show="down" class="down-gray-details">
+      <div class="down-gray-details" v-show="down">
         <div @click="show" class="body">
-          <div v-for="item in jcInfo.betting" :key="item.text" class="item borderBottom">
-            <div :class="item.checked? 'color73f40':'color333'">{{item.text}}{{ item.id==='602'? `[${jcInfo.let_point}]`:'' }}</div>
+          <div :key="item.text" class="item borderBottom" v-for="item in jcInfo.betting">
+            <div :class="item.checked? 'color73f40':'color333'">{{item.text}}{{ item.id==='602'?
+              `[${jcInfo.let_point}]`:'' }}
+            </div>
             <div :class="item.checked? 'color73f40':'color888'" v-if="item.value">({{item.value}})</div>
           </div>
         </div>
@@ -115,31 +117,31 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'example',
-    props: {
-      jcInfo: {type: null}
-    },
-    data () {
-      return {
-        down: false,
-        downShow: false,
-        showItem: []
-      }
-    },
-    created () {
-      if (this.jcInfo.betting.length >= 2) {
-        this.showItem = [{...(this.jcInfo.betting[0])}, {...(this.jcInfo.betting[1])}];
-        this.downShow = true
-      } else {
-        this.showItem = JSON.parse(JSON.stringify(this.jcInfo.betting))
-      }
-    },
-    methods: {
-      show () {
-        this.down = !this.down
-      }
+<script>//
+export default {
+  name: 'example',
+  props: {
+    jcInfo: { type: null }
+  },
+  data () {
+    return {
+      down: false,
+      downShow: false,
+      showItem: []
+    }
+  },
+  created () {
+    if (this.jcInfo.betting.length >= 2) {
+      this.showItem = [{ ...(this.jcInfo.betting[0]) }, { ...(this.jcInfo.betting[1]) }]
+      this.downShow = true
+    } else {
+      this.showItem = JSON.parse(JSON.stringify(this.jcInfo.betting))
+    }
+  },
+  methods: {
+    show () {
+      this.down = !this.down
     }
   }
+}
 </script>

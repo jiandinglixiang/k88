@@ -1,4 +1,4 @@
-<style scoped lang="scss">
+<style lang="scss" scoped>
   .total-points {
     height: 1.23rem;
     line-height: 1.23rem;
@@ -18,13 +18,13 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'BtotalPoints',
-    props: {
-      propsData: {
-        type: Array
-      }
+<script>//
+export default {
+  name: 'BtotalPoints',
+  props: {
+    propsData: {
+      type: Array
     }
   }
+}
 </script>

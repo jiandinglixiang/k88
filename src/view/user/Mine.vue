@@ -1,11 +1,11 @@
 <template>
   <div class="mine">
-    <v-head title="个人中心" :hide-back="true"></v-head>
+    <v-head :hide-back="true" title="个人中心"></v-head>
     <div class="mine-top">
-      <img class="portrait" v-avatar="this.mine.avatar" alt="">
+      <img alt="" class="portrait" v-avatar="this.mine.avatar">
       <div class="username">{{mine.username}}</div>
       <div class="vip">
-        <img v-vip="vipIconUrl" alt="">
+        <img alt="" v-vip="vipIconUrl">
       </div>
     </div>
     <div class="info row text-center">
@@ -23,84 +23,84 @@
       </div>
     </div>
     <!--<router-link to="payment" tag="div" class="item border-top">-->
-      <!--<span class="mine-recharge-icon icon"></span>-->
-      <!--<span>充值</span>-->
-      <!--<span class="arrow-right"></span>-->
+    <!--<span class="mine-recharge-icon icon"></span>-->
+    <!--<span>充值</span>-->
+    <!--<span class="arrow-right"></span>-->
     <!--</router-link>-->
     <!--<router-link to="cash" tag="div" class="item border-top">-->
-      <!--<span class="mine-cash-icon icon"></span>-->
-      <!--<span>提现</span>-->
-      <!--<span class="arrow-right"></span>-->
+    <!--<span class="mine-cash-icon icon"></span>-->
+    <!--<span>提现</span>-->
+    <!--<span class="arrow-right"></span>-->
     <!--</router-link>-->
-    <router-link tag="div" to="orders" class="item margin-top-10">
+    <router-link class="item margin-top-10" tag="div" to="orders">
       <span class="mine-order-icon icon"></span>
       <span>我的订单</span>
       <span class="arrow-right"></span>
     </router-link>
     <!--<router-link tag="div" to="user_info" class="item border-top">-->
-      <!--<span class="mine-info-icon icon"></span>-->
-      <!--<span>个人信息</span>-->
-      <!--<span class="arrow-right"></span>-->
+    <!--<span class="mine-info-icon icon"></span>-->
+    <!--<span>个人信息</span>-->
+    <!--<span class="arrow-right"></span>-->
     <!--</router-link>-->
 
     <!--<div class="logout-panel">-->
-      <!--<a href="javascript:;" @click="logout" class="btn btn-out-line">退出登录</a>-->
+    <!--<a href="javascript:;" @click="logout" class="btn btn-out-line">退出登录</a>-->
     <!--</div>-->
     <!--<download-panel></download-panel>-->
-    <v-dialog v-show="dialogShow" @close="onCloseDialog">
+    <v-dialog @close="onCloseDialog" v-show="dialogShow">
       <p class="text-md">体验完整功能</p>
       <p class="text-md margin-top-5">请下载安装365彩票官方APP</p>
       <div class="padding margin-top-10">
-        <a target="_self" href="http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery" class="btn">立即下载</a>
+        <a class="btn" href="http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery" target="_self">立即下载</a>
       </div>
     </v-dialog>
     <bottom-nav active="Mine"></bottom-nav>
   </div>
 </template>
 
-<script>
-  import VHead from '../../components/VHead.vue';
-  import BottomNav from '../../components/BottomNav.vue';
-  import DownloadPanel from '../../components/DownloadPanel.vue';
-  import VDialog from '../../components/VDialog.vue';
-  import { mapActions, mapState } from 'vuex';
-  import { MINE_INFO, LOGOUT } from '../../store/user/types';
+<script>//
+import VHead from '../../components/VHead.vue'
+import BottomNav from '../../components/BottomNav.vue'
+import DownloadPanel from '../../components/DownloadPanel.vue'
+import VDialog from '../../components/VDialog.vue'
+import { mapActions, mapState } from 'vuex'
+import { LOGOUT, MINE_INFO } from '../../store/user/types'
 
-  export default {
-    name: 'mine',
-    data: () => {
-      return {
-        dialogShow: false
-      }
+export default {
+  name: 'mine',
+  data: () => {
+    return {
+      dialogShow: false
+    }
+  },
+  computed: {
+    ...mapState({
+      mine: state => state.user.mine
+    }),
+    vipIconUrl () {
+      // 但经验值最大时不会升了
+      return this.mine.user_exp >= this.mine.next_level_exp ? this.mine.next_level_img : this.mine.user_level_img
+    }
+  },
+  methods: {
+    onShowDialog () {
+      this.dialogShow = true
     },
-    computed: {
-      ...mapState({
-        mine: state => state.user.mine
-      }),
-      vipIconUrl () {
-        // 但经验值最大时不会升了
-        return this.mine.user_exp >= this.mine.next_level_exp ? this.mine.next_level_img : this.mine.user_level_img;
-      }
+    onCloseDialog () {
+      this.dialogShow = false
     },
-    methods: {
-      onShowDialog () {
-        this.dialogShow = true;
-      },
-      onCloseDialog () {
-        this.dialogShow = false;
-      },
-      ...mapActions({
-        getMineInfo: MINE_INFO,
-        logout: LOGOUT
-      })
-    },
-    components: { VHead, DownloadPanel, VDialog, BottomNav }
-  }
+    ...mapActions({
+      getMineInfo: MINE_INFO,
+      logout: LOGOUT
+    })
+  },
+  components: { VHead, DownloadPanel, VDialog, BottomNav }
+}
 </script>
 
 <style lang="scss">
   .ico-arrow {
-    overflow:hidden;
+    overflow: hidden;
     /*display: inline-block;*/
     display: none;
     vertical-align: middle;
@@ -111,74 +111,97 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
   }
+
   .mine {
-    position: relative; height: 100%;
+    position: relative;
+    height: 100%;
   }
+
   .mine .mine-top {
     position: relative;
     padding: 15px 10px 15px 70px;
     min-height: 80px;
     background: $c131313;
   }
+
   .mine .mine-top .portrait {
-    width: 50px; height: 50px;
+    width: 50px;
+    height: 50px;
     position: absolute;
     left: 10px;
     border-radius: 50px;
   }
+
   .mine .mine-top .username {
-    font-size: 17px; color: white;
+    font-size: 17px;
+    color: white;
     line-height: 30px;
   }
-  .mine .mine-top .vip span{
+
+  .mine .mine-top .vip span {
     display: inline-block;
   }
+
   .mine .item {
     padding: 10px 10px 10px 40px;
     background: $c1c1c1c;
     position: relative;
     color: $c999999;
   }
+
   .mine .item .icon {
     position: absolute;
     left: 12px;
   }
+
   .mine .item .arrow-right {
     position: absolute;
-    right: 10px; top: 15px;
+    right: 10px;
+    top: 15px;
   }
+
   .mine .item.border-top {
     border-top: 1px solid #ddd;
   }
+
   .mine .info {
     background: $c1c1c1c;
   }
+
   .mine .info .red-pack {
     color: #f33;
   }
+
   .mine .info .money {
     color: $cffC63A;
   }
+
   .mine .info .points {
     color: #3393ff;
   }
+
   .mine .info .border-right {
     border-right: 1px solid #313131;
   }
+
   .mine .info .col {
     padding: 10px 0;
   }
+
   .mine .logout-panel {
     position: absolute;
     padding: 0 10px;
     width: 100%;
     bottom: 60px;
   }
+
   .mine .logout-panel .btn {
     border: 1px solid #e73f40;
     background: #f2f2f2;
   }
+
   .mine .vip img {
-    width: 20px; height: 20px;
+    width: 20px;
+    height: 20px;
   }
 </style>

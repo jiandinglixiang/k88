@@ -1,4 +1,4 @@
-<style scoped lang="scss">
+<style lang="scss" scoped>
   .football-back {
     background-image: url('../../../assets/mine_back.png');
   }
@@ -99,8 +99,8 @@
   }
 </style>
 <template>
-  <li class="bet-title" :class="`${theme}-back`">
-    <img class="f-img" :src="propsImg" alt="">
+  <li :class="`${theme}-back`" class="bet-title">
+    <img :src="propsImg" alt="" class="f-img">
     <div class="body">
       <div class="body-item">
         <span class="money">¥{{propsData[1]}}</span>
@@ -109,10 +109,10 @@
       </div>
       <div class="body-item">
         <div class="green-card" v-if="propsData[0]==='20'||propsData[0]==='21'">
-          <div class="green-card-body"
-               v-for="(i,index) in sfcResult(prizeNum)"
+          <div :class="{opacity50:i.check}"
                :key="index"
-               :class="{opacity50:i.check}">{{i.txt}}
+               class="green-card-body"
+               v-for="(i,index) in sfcResult(prizeNum)">{{i.txt}}
           </div>
         </div>
         <div v-else>
@@ -124,60 +124,60 @@
             <span class="msgSpan">理论奖金:</span>
             <span class="yes-money">{{propsBonus[1]}}</span>
           </template>
-          <span class="send-icon" @click="Message"></span>
+          <span @click="Message" class="send-icon"></span>
         </div>
       </div>
     </div>
   </li>
 </template>
 
-<script>
-  import { MessageBox } from 'mint-ui'
+<script>//
+import { MessageBox } from 'mint-ui'
 
-  export default {
-    name: 'mineBetTitle',
-    props: {
-      theme: {type: String, default: ''},
-      propsImg: {type: String, default: ''},
-      propsData: {type: Array, default: []},
-      propsBonus: {type: Array, default: []},
-      jcInfo: {type: Array},
-      prizeNum: {type: null}
-    },
-    computed: {
-      showSeries () {
-        if (this.propsData[0] === '20' || this.propsData[0] === '21') {
-          return `第 ${this.propsData[4]} 期`
-        }
-        return this.propsData[3]
+export default {
+  name: 'mineBetTitle',
+  props: {
+    theme: { type: String, default: '' },
+    propsImg: { type: String, default: '' },
+    propsData: { type: Array, default: () => [] },
+    propsBonus: { type: Array, default: () => [] },
+    jcInfo: { type: Array },
+    prizeNum: { type: null }
+  },
+  computed: {
+    showSeries () {
+      if (this.propsData[0] === '20' || this.propsData[0] === '21') {
+        return `第 ${this.propsData[4]} 期`
       }
-    },
-    methods: {
-      sfcResult (arr) {
-        let add = JSON.parse(JSON.stringify(arr))
-        if (add) {
-          if (Object.prototype.toString.call(add) === '[object String]') {
-            add = add.split(',');
-          }
-          add = add.map(i => {
-            return {txt: i, check: true}
-          });
-        } else {
-          add = new Array(14);
-          for (let i = 0; i < add.length; i++) {
-            add[i] = {txt: '-', check: true}
-          }
+      return this.propsData[3]
+    }
+  },
+  methods: {
+    sfcResult (arr) {
+      let add = JSON.parse(JSON.stringify(arr))
+      if (add) {
+        if (Object.prototype.toString.call(add) === '[object String]') {
+          add = add.split(',')
         }
-        this.jcInfo.forEach((item) => {
-          if (add[item.round_no - 1]) {
-            add[item.round_no - 1].check = false
-          }
-        });
-        return add
-      },
-      Message () {
-        MessageBox('', `<p class="text-left" style="line-height:0.56rem;color:#333">该订单相关比赛当期赛况下理论奖金范围,实际赔率有浮动,仅做参考,最终以实际中奖金额为准.<br/>奖金优化方案暂不支持理论奖金计算</p>`);
+        add = add.map(i => {
+          return { txt: i, check: true }
+        })
+      } else {
+        add = new Array(14)
+        for (let i = 0; i < add.length; i++) {
+          add[i] = { txt: '-', check: true }
+        }
       }
+      this.jcInfo.forEach((item) => {
+        if (add[item.round_no - 1]) {
+          add[item.round_no - 1].check = false
+        }
+      })
+      return add
+    },
+    Message () {
+      MessageBox('', `<p class="text-left" style="line-height:0.56rem;color:#333">该订单相关比赛当期赛况下理论奖金范围,实际赔率有浮动,仅做参考,最终以实际中奖金额为准.<br/>奖金优化方案暂不支持理论奖金计算</p>`)
     }
   }
+}
 </script>

@@ -1,14 +1,14 @@
 <template>
-  <div class="prize-detail" v-infinite-scroll="listMore"
-       infinite-scroll-disabled="detail.loading"
+  <div class="prize-detail" infinite-scroll-disabled="detail.loading"
        infinite-scroll-distance="10"
-       infinite-scroll-immediate-check="false">
+       infinite-scroll-immediate-check="false"
+       v-infinite-scroll="listMore">
     <v-head :title="title"></v-head>
     <template v-for="(item, index) in detail.list">
       <digital-list-item :data="item">
         <template v-if="isK3()">
           <div slot="number" v-if="index === 0">
-            <span class="k3-item" v-for="ball in item.balls[0]" :class="'k3-' + ball + '-icon'"></span>
+            <span :class="'k3-' + ball + '-icon'" class="k3-item" v-for="ball in item.balls[0]"></span>
             <span class="k3-item-hz">和值：{{k3Hz(item.balls[0])}}</span>
           </div>
           <div slot="number" v-else>
@@ -17,15 +17,17 @@
         </template>
         <template v-else-if="isSFC()">
           <div slot="number">
-            <span class="sfc-item"
-                  :class="{'bg-white': index > 0}"
+            <span :class="{'bg-white': index > 0}"
+                  class="sfc-item"
                   v-for="ball in item.balls[0]">{{ball}}</span>
           </div>
         </template>
         <template v-else>
           <div slot="number">
-            <span class="red-ball" :class="{'bg-red-ball': index===0}" v-for="ballRed in item.balls[0]">{{ballRed}}</span>
-            <span class="blue-ball" :class="{'bg-blue-ball':  index===0}" v-for="ballBlue in item.balls[1]">{{ballBlue}}</span>
+            <span :class="{'bg-red-ball': index===0}" class="red-ball"
+                  v-for="ballRed in item.balls[0]">{{ballRed}}</span>
+            <span :class="{'bg-blue-ball':  index===0}" class="blue-ball"
+                  v-for="ballBlue in item.balls[1]">{{ballBlue}}</span>
           </div>
         </template>
         <div slot="data">
@@ -90,66 +92,66 @@
     </template>
     <infinite-scroll-loading :show="detail.loading"></infinite-scroll-loading>
     <div class="bottom-fixed">
-      <a href="javascript:;" @click="goBetting" class="btn" v-if="status">{{title}}投注</a>
-      <a href="javascript:;" class="btn disabled" v-else>暂停销售</a>
+      <a @click="goBetting" class="btn" href="javascript:" v-if="status">{{title}}投注</a>
+      <a class="btn disabled" href="javascript:" v-else>暂停销售</a>
     </div>
   </div>
 </template>
 
-<script>
-  import VHead from '../../components/VHead.vue';
-  import DigitalListItem from './child/DigitalListItem.vue';
-  import {GET_PRIZE_DETAIL_LIST, PRIZE_DETAIL_LIST_MORE} from '../../store/prize/types';
-  import InfiniteScrollLoading from '../../components/InfiniteScrollLoading.vue';
-  import Lottery from '../../model/common/Lottery';
+<script>//
+import VHead from '../../components/VHead.vue'
+import DigitalListItem from './child/DigitalListItem.vue'
+import { GET_PRIZE_DETAIL_LIST, PRIZE_DETAIL_LIST_MORE } from '../../store/prize/types'
+import InfiniteScrollLoading from '../../components/InfiniteScrollLoading.vue'
+import Lottery from '../../model/common/Lottery'
 
-  export default {
-    name: 'prizeDetail',
-    computed: {
-      detail () {
-        return this.$store.state.prize.detail;
-      },
-      title () {
-        return this.detail.list[0] && this.detail.list[0].lottery_name
-      },
-      status () {
-        return parseInt(this.detail.list[0] && this.detail.list[0].status) === 1;
-      }
+export default {
+  name: 'prizeDetail',
+  computed: {
+    detail () {
+      return this.$store.state.prize.detail
     },
-    methods: {
-      listMore () {
-        this.$store.dispatch(PRIZE_DETAIL_LIST_MORE);
-      },
-      goBetting () {
-        if (this.detail.list[0]) {
-          this.$router.push({
-            name: Lottery.getComponent(this.detail.list[0].lottery_id),
-            params: {id: this.detail.list[0].lottery_id}
-          })
-        }
-      },
-      isK3 () {
-        return Lottery.isK3(this.detail.list[0].lottery_id);
-      },
-      k3Hz (ball) {
-        return ball.reduce((a, b) => {
-          return parseInt(a) + parseInt(b);
+    title () {
+      return this.detail.list[0] && this.detail.list[0].lottery_name
+    },
+    status () {
+      return parseInt(this.detail.list[0] && this.detail.list[0].status) === 1
+    }
+  },
+  methods: {
+    listMore () {
+      this.$store.dispatch(PRIZE_DETAIL_LIST_MORE)
+    },
+    goBetting () {
+      if (this.detail.list[0]) {
+        this.$router.push({
+          name: Lottery.getComponent(this.detail.list[0].lottery_id),
+          params: { id: this.detail.list[0].lottery_id }
         })
-      },
-      isSFC () {
-        return Lottery.isSFCOrRXJ(this.detail.list[0].lottery_id);
       }
     },
-    created () {
-      const lotteryId = this.$router.currentRoute.params.lottery;
-      if (lotteryId) {
-        this.$store.dispatch(GET_PRIZE_DETAIL_LIST, lotteryId);
-      } else {
-        this.$router.back();
-      }
+    isK3 () {
+      return Lottery.isK3(this.detail.list[0].lottery_id)
     },
-    components: {VHead, DigitalListItem, InfiniteScrollLoading}
-  }
+    k3Hz (ball) {
+      return ball.reduce((a, b) => {
+        return parseInt(a) + parseInt(b)
+      })
+    },
+    isSFC () {
+      return Lottery.isSFCOrRXJ(this.detail.list[0].lottery_id)
+    }
+  },
+  created () {
+    const lotteryId = this.$router.currentRoute.params.lottery
+    if (lotteryId) {
+      this.$store.dispatch(GET_PRIZE_DETAIL_LIST, lotteryId)
+    } else {
+      this.$router.back()
+    }
+  },
+  components: { VHead, DigitalListItem, InfiniteScrollLoading }
+}
 </script>
 
 <style>
@@ -158,25 +160,34 @@
     overflow-y: auto;
     padding-bottom: 60px;
   }
+
   .prize-detail .bottom-fixed {
     position: fixed;
     width: 100%;
     height: 52px;
-    left: 0; bottom: 0;
+    left: 0;
+    bottom: 0;
     background: white;
     padding: 8px 10px;
     border-top: 1px solid #ddd;
   }
+
   .prize-detail .bottom-fixed .btn {
-    height: 35px; line-height: 35px;
+    height: 35px;
+    line-height: 35px;
   }
+
   .prize-detail .k3-item {
-    display: inline-block; margin-right: 10px;
+    display: inline-block;
+    margin-right: 10px;
   }
+
   .prize-detail .k3-item-hz {
-    vertical-align: top; margin-top: 5px;
+    vertical-align: top;
+    margin-top: 5px;
     color: #333333;
   }
+
   .prize-detail .sfc-item {
     padding: 5px;
     background: #4faf50;
@@ -184,6 +195,7 @@
     margin-right: 5px;
     font-size: 12px;
   }
+
   .prize-detail .sfc-item.bg-white {
     background: white;
     color: #333;
