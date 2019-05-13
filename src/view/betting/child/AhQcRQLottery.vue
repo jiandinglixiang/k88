@@ -189,22 +189,24 @@ export default {
       return this.schedule.selected.indexOf(item) !== -1
     },
     selectedItem (item) {
+      if ((this.schedule.lotteryId === 901 || this.schedule.lotteryId === 902) && this.bettingList.length >= 8) {
+        const isBett = this.bettingList.find(val => val.id === this.schedule.id)
+        if (!isBett) {
+          toast('最多选择8场比赛')
+          return
+        }
+      }
       if (this.currentMode === 1) {
+        f1.call(this)
+      } else {
+        f2.call(this)
+      }
+      function f1 () {
         this.schedule.onOptionSelected(item)
         this.$store.commit(SPORTS_OPTION_SELECTED)
         this.$emit('onOptionSelected')
-      } else {
-        if ((this.schedule.lotteryId === 901 || this.schedule.lotteryId === 902) && this.bettingList.length >= 8) {
-          const isBett = this.bettingList.find(val => val.id === this.schedule.id)
-          if (!isBett) {
-            toast('最多选择8场')
-            return
-          }
-        }
-        f1.call(this)
       }
-
-      function f1 () {
+      function f2 () {
         this.schedule.onOptionSelected2(item)
         this.$store.commit(SPORTS_OPTION_SELECTED)
         this.$emit('onOptionSelected')
