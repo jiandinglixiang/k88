@@ -97,14 +97,15 @@
             <!--显示足彩和篮彩-->
             <span v-if="jc.showCheck">
               <div v-for="(bet, i) in jc.betting">
-                <span :class="{'text-primary': bet.checked}" class="round-no">{{i === 0 ? jc.round_no : ''}}</span>
-                <span :class="{'text-primary': bet.checked}"
+                <span :class="{'text-primary': bet.checked,'blue-color':bet.status===1}" class="round-no">{{i === 0 ? jc.round_no : ''}}</span>
+                <span :class="{'text-primary': bet.checked,'blue-color':bet.status===1}"
                       style="display: inline-block; padding-left: 10px; min-width:62px;">
                   {{bet.text}}
                   <template v-if="jc.team && jc.team.letPointText">({{jc.team.letPointText}})</template>
                   <template v-if="jc.team && jc.team.basePointText">({{jc.team.basePointText}})</template>
-                  <template v-if="bet.value"><br/>{{`(${toDecimal(bet.value)})`}}</template>
-                  <span class="red-check-icon" v-if="bet.checked"></span><br>
+                  <template v-if="bet.value">{{`(${toDecimal(bet.value)})`}}</template>
+                                     <span class="red-check-icon" v-if="bet.checked"></span>
+                <span class="check-active" v-if="bet.status===1"></span>
                 </span>
               </div>
             </span>
@@ -139,7 +140,9 @@
         <td>
           <span v-if="item.seriesText">{{item.seriesText}}<br/></span>
           <span v-if="item.playTypeText">{{item.playTypeText}}<br/></span>
-          {{item.multiple}}倍
+          <p class="nowrap" v-if="item.lottery_id=='901'">全场让球</p>
+          <p class="nowrap" v-else-if="item.lottery_id=='902'">全场大/小球</p>
+          <span v-else>{{item.multiple}}倍</span>
         </td>
         <td>{{item.ticket_amount | currency}}</td>
         <td :class="{'text-primary': item.ticket_winnings > 0}">{{item.prizeText}}</td>
@@ -210,6 +213,34 @@ export default {
 </script>
 
 <style lang="scss">
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .blue-color {
+    color: #3692fb;
+  }
+
+  .check-active {
+    display: inline-block;
+    width: 5px;
+    height: 2px;
+    background: #3692fb;
+    line-height: 0;
+    font-size: 0;
+    vertical-align: middle;
+    -webkit-transform: rotate(45deg);
+  }
+
+  .check-active:after {
+    content: '/';
+    display: block;
+    width: 10px;
+    height: 2px;
+    background: #3692fb;
+    -webkit-transform: rotate(-90deg) translateY(-50%) translateX(50%);
+  }
+
   .text-primary {
     color: $cffC63A;
   }
@@ -270,7 +301,7 @@ export default {
     width: 60px;
     display: inline-block;
     padding-left: 10px;
-    vertical-align: top;
+    vertical-align: middle;
   }
 
   .order-scheme .betting-content {

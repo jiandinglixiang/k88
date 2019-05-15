@@ -10,7 +10,7 @@
     </tr>
     </thead>
     <tbody class="text-light">
-    <tr v-for="(item,index) in list" :key="index">
+    <tr :key="index" v-for="(item,index) in list">
       <td>{{item.round_no}}</td>
       <td>
         {{item.homeFirst ? item.home : item.guest}}
@@ -22,31 +22,46 @@
       <td>
         <!--显示足彩和篮彩-->
         <span v-if="item.showCheck">
-          <span :class="{'text-primary': b.checked}" v-for="(b,index2) in item.betting"  :key="index2">
-            <span v-show="b.id === '901'">
-              <span>让球 <span v-if="b.key.substring(4, 3)=== '1'">{{ item.home }}</span>
-              <span v-else>{{ item.guest }}</span>
-              </span>
-              <br>
-             </span>
+          <template v-if="item.lottery_id==901">
+            <span :class="{'text-primary': b.status===3,'blue-color':b.status===1}" :key="index2"
+                  v-for="(b,index2) in item.betting">
+                <span>让球 <span v-if="b.key.substring(4, 3)=== '1'">{{ item.home }}</span><span
+                  v-else>{{ item.guest }}</span></span>
+               ({{b.text}}) {{toDecimal(b.value)}}
+                                <span class="red-check-icon" v-if="b.checked"></span>
+                <span class="check-active" v-if="b.status===1"></span>
+            </span>
+          </template>
+          <template v-else-if="item.lottery_id==902">
+         <span :class="{'text-primary': b.status===3,'blue-color':b.status===1}" :key="index2"
+               v-for="(b,index2) in item.betting">
+           <span v-if="b.key.substring(4, 3)=== '1'">大</span>
+           <span v-else>小</span>
+                ({{b.text}}) {{toDecimal(b.value)}}
+                     <span class="red-check-icon" v-if="b.checked"></span>
+                <span class="check-active" v-if="b.status===1"></span>
+            </span>
+          </template>
+          <template v-else>
+              <span :class="{'text-primary': b.checked}" :key="index2" v-for="(b,index2) in item.betting">
               <span>
-                <span v-show="b.id === '902'">
-                  <span v-if="b.key.substring(4, 3)=== '1'">小</span>
-                  <span v-else>大</span>
-               </span>
                 ({{b.text}}) {{toDecimal(b.value)}}
                 <span class="red-check-icon" v-show="b.checked"></span>
               </span>
             </span>
+          </template>
         </span>
         <!--胜负彩和任选九-->
         <span v-else>
-          <span v-for="(b, i) in item.betting"  :key="i">
+          <span :key="i" v-for="(b, i) in item.betting">
             <span :class="{'text-primary': b.checked}">{{b.text}}</span><span v-if="i < item.betting.length -1">,</span>
           </span>
         </span>
       </td>
-      <td><span v-for="(r,index3) in item.result"  :key="index3">{{r.text}} <span v-if="r.value">({{r.value}})</span><br/></span></td>
+      <td><span style="color: red" v-if="item.schedule_status==='6'">已取消</span>
+        <span :key="index3"
+              v-for="(r,index3) in item.result">{{r.text}} <span
+          v-if="item.lottery_id!=901&&item.lottery_id!=902&&r.value">({{r.value}})</span><br/></span></td>
     </tr>
     </tbody>
   </table>
@@ -92,6 +107,30 @@ export default {
 </script>
 
 <style scoped>
+  .check-active {
+    display: inline-block;
+    width: 5px;
+    height: 2px;
+    background: #3692fb;
+    line-height: 0;
+    font-size: 0;
+    vertical-align: middle;
+    -webkit-transform: rotate(45deg);
+  }
+
+  .check-active:after {
+    content: '/';
+    display: block;
+    width: 10px;
+    height: 2px;
+    background: #3692fb;
+    -webkit-transform: rotate(-90deg) translateY(-50%) translateX(50%);
+  }
+
+  .blue-color {
+    color: #3692fb;
+  }
+
   table {
     text-align: center;
     font-size: 11px;

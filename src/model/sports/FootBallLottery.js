@@ -2,8 +2,8 @@ import SportsLottery from './SportsLottery'
 import { LotteryFootballKey } from '../../store/constants'
 
 export default class FootBallLottery extends SportsLottery {
-  constructor (obj) {
-    super(obj)
+  constructor (obj, id) {
+    super(obj, id)
     this.homeFirst = true
     this.showCheck = true
   }

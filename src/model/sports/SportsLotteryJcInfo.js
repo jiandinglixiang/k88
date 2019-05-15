@@ -33,7 +33,7 @@ function selectClassByLotteryId (lotteryId) {
 export default class SportsLotteryJcInfo {
   constructor (jc, lotteryId) {
     let Obj = selectClassByLotteryId(lotteryId)
-    let jcObj = new Obj(jc)
+    let jcObj = new Obj(jc, lotteryId)
     jcObj.analyseBettingOrder()
     jcObj.analyseBettingResult()
     jcObj.setBettingChecked()

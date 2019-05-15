@@ -2,9 +2,9 @@
  * 竟彩基类
  */
 export default class SportsLottery {
-  constructor (obj) {
+  constructor (obj, lotteryId) {
     this.schedule_status = obj.schedule_status
-    this.lottery_id = obj.lottery_id
+    this.lottery_id = obj.lottery_id || lotteryId
     this.betting_order = obj.betting_order
     this.result_odds = obj.result_odds
     this.score = obj.score
@@ -58,62 +58,111 @@ export default class SportsLottery {
   analyseBettingOrderByLottery (lottery) {
     if (!lottery) return
     const betting = []
-    const finalArr = this.finalArr.map(val => parseInt(val))
+    let total = 0 // 总分
+    const finalArr = Array.isArray(this.finalArr) && this.finalArr.map(val => {
+      val = parseInt(val)
+      total += val
+      return val
+    })
     const order = this.betting_order
-    if (this.lottery_id === '902' || this.lottery_id === '901') {
-      f4(function (key, key2) {
-        const val = f3(key, key2)// 计算投注的胜负3胜 1平负 0负,
-        betting.push({
-          text: lottery[key][key2].join('/'),
-          value: order[key][key2],
-          status: val,
-          checked: val === 3,
-          con: key2,
-          key: key2,
-          id: lottery[key].key
-        })
-      })
-    } else {
-      f4(function (key, key2) {
-        betting.push({
-          text: lottery[key][key2],
+    const difference = this.lottery_id === '901' ? f1 : this.lottery_id === '902' ? f2 : f3.bind(this)
+    Object.keys(order).forEach(key => {
+      order[key] && Object.keys(order[key]).forEach(key2 => {
+        lottery[key] && Array.isArray(lottery[key][key2]) && betting.push({
           value: order[key][key2],
           con: key2,
           key: key2,
-          id: lottery[key].key
+          id: lottery[key].key,
+          ...difference(key, key2)
         })
       })
-    }
+    })
     this.betting = betting
 
-    function f4 (cbk) {
-      Object.keys(order).forEach(key => {
-        order[key] && Object.keys(order[key]).forEach(key2 => {
-          if (lottery[key][key2] && Array.isArray(lottery[key][key2])) {
-            cbk(key, key2)
+    function f1 (key, key2) {
+      // 让球
+      let status = 0 // 状态
+      const big = key2.charAt(key2.length - 1) === '1'// 1是大球
+      if (Array.isArray(finalArr)) {
+        if (big) {
+          for (let letBall of lottery[key][key2]) {
+            const arr1 = finalArr[0] + letBall
+            if (arr1 > finalArr[1]) {
+              status = 3 // 中奖
+            } else if (arr1 < finalArr[1]) {
+              status = 0
+            } else {
+              status = 1
+              break
+            }
           }
-        })
-      })
+        } else {
+          for (let letBall of lottery[key][key2]) {
+            const arr1 = finalArr[1] + letBall
+            if (arr1 > finalArr[0]) {
+              status = 3 // 中奖
+            } else if (arr1 < finalArr[0]) {
+              status = 0
+            } else {
+              status = 1
+              break
+            }
+          }
+        }
+      }
+      return {
+        text: lottery[key][key2].join('/'),
+        status: status,
+        checked: status === 3
+      }
+    }
+
+    function f2 (key, key2) {
+      // 大小球
+      let status = 0 // 状态
+      const big = key2.charAt(key2.length - 1) === '1'// 1是大球
+      if (Array.isArray(finalArr)) {
+        if (big) {
+          // 买大球
+          for (let letBall of lottery[key][key2]) {
+            if (total > letBall) {
+              status = 3
+            } else if (total < letBall) {
+              status = 0
+            } else {
+              status = 1
+              break
+            }
+          }
+        } else {
+          // 买小球
+          for (let letBall of lottery[key][key2]) {
+            if (total < letBall) {
+              status = 3
+            } else if (total > letBall) {
+              status = 0
+            } else {
+              status = 1
+              break
+            }
+          }
+        }
+      }
+      return {
+        text: lottery[key][key2].join('/'),
+        status,
+        checked: status === 3
+      }
     }
 
     function f3 (key, key2) {
-      // 计算比分加让球
-      let status = 0 // 状态
-      for (let letBall of lottery[key][key2]) {
-        const arr1 = finalArr[0] + letBall
-        if (arr1 === finalArr[1]) {
-          status !== 3 && (status = 1) // 未中奖平局
-        } else if (arr1 > finalArr[1]) {
-          status = 3 // 中奖
-        }
-      }
-      return status
+      return { text: lottery[key][key2] }
     }
   }
 
   analyseBettingResultByLottery (lottery) {
     if (!lottery) return
-    if (this.finalArr && this.finalArr.length === 0) return
+    if (!this.finalArr || (this.finalArr && this.finalArr.length === 0)) return
     let result = []
     let finalArr = this.finalArr.map(val => parseInt(val))// 比分[0,1]
     let order = this.betting_order// 投注数据
@@ -198,6 +247,7 @@ export default class SportsLottery {
         result.push(temp)
       })
     }
+
     this.result = result
   }
 }
