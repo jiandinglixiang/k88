@@ -50,13 +50,20 @@ export default {
       padding: 5px 10px;
       font-size: 12px;
       position: relative;
-      color: $cCccCCc;
-
+      @if ($lotteryIg) {
+        color: $c999999;
+      } @else {
+        color: $cCccCCc;
+      }
       .icon {
+        @if ($lotteryIg) {
+          background: url("../../../assets/igdj/down_out.png") no-repeat;
+        } @else {
+          background: url("../../../assets/betting/down_out.png") no-repeat;
+        }
         position: absolute;
         right: 10px;
         top: 5px;
-        background: url("../../../assets/betting/down_out.png") no-repeat;
         background-size: 100% 100%;
         width: 18px;
         height: 18px;
@@ -73,10 +80,14 @@ export default {
       .panel-list-content {
         display: flex;
         flex-flow: row nowrap;
-        background-color: $c313131;
         padding: 5px 10px 5px 0;
-        border-bottom: 1px solid $c3f3f3f;
-
+        @if ($lotteryIg) {
+          background-color: $c131313;
+          border-bottom: 1px solid #EBEBEB;
+        } @else {
+          background-color: $c313131;
+          border-bottom: 1px solid $c3f3f3f;
+        }
         .item-left {
           font-size: 12px;
           line-height: 20px;
@@ -85,19 +96,32 @@ export default {
         .item-right {
           > div {
             > div:nth-child(1) {
-              color: $cCccCCc;
+              @if ($lotteryIg) {
+                color: $cgray;
+              } @else {
+                color: $cCccCCc;
+              }
             }
 
             .box {
-              border: 1px solid $c3f3f3f;
               border-radius: 5px;
               text-align: center;
               font-size: 12px;
-              background: $c494949;
               margin-top: 5px;
+              @if ($lotteryIg) {
+                background: $cFFfFFF;
+                border: 1px solid $cFFfFFF;
+              } @else {
+                background: $c494949;
+                border: 1px solid $c3f3f3f;
+              }
 
               .box-content:first-child {
-                border-bottom: 1px solid $c3f3f3f;
+                @if ($lotteryIg) {
+                  border-bottom: 1px solid $cEbebeb;
+                } @else {
+                  border-bottom: 1px solid $c3f3f3f;
+                }
               }
 
               .box-item {
@@ -136,5 +160,10 @@ export default {
 
   .sports-prize-panel span.yellow-2 {
     color: #FFC63A;
+  }
+  .bottom-fixed .btn {
+  @if($lotteryIg) {
+    color: $cgray;
+  }
   }
 </style>

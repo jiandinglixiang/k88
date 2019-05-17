@@ -3,8 +3,8 @@
     <!--没有登陆去登陆-->
     <not-logged-in v-if="showLogin&&isLogin"/>
     <!--竞足-->
-    <div v-else-if="switchBody[0]===1">
-      <div v-show="switchBody[1]===1">
+    <div v-else-if="switchBody[0]*1===1">
+      <div v-show="switchBody[1]*1===1">
         <div v-if="a11.groups.length">
           <to-the-top :propsData="toTop11" v-if="toTop11.length">
             <template slot-scope="props">
@@ -20,7 +20,7 @@
           </universal>
         </div>
       </div>
-      <div v-show="switchBody[1]===2">
+      <div v-show="switchBody[1]*1===2">
         <div v-if="a12.groups.length">
           <to-the-top :propsData="toTop12" v-if="toTop12.length">
             <template slot-scope="props">
@@ -36,7 +36,7 @@
           </universal>
         </div>
       </div>
-      <div v-show="switchBody[1]===3">
+      <div v-show="switchBody[1]*1===3">
         <div v-if="a13.groups.length">
           <to-the-top :propsData="toTop13" v-if="toTop13.length">
             <template slot-scope="props">
@@ -52,15 +52,15 @@
           </universal>
         </div>
       </div>
-      <div v-show="switchBody[1]===4">
+      <div v-show="switchBody[1]*1===4">
         <div v-if="a14.groups.length">
           <football-container :propsData="a14.groups"/>
         </div>
       </div>
     </div>
     <!--胜负彩-->
-    <div v-else-if="switchBody[0]===2">
-      <div v-show="switchBody[1]===1">
+    <div v-else-if="switchBody[0]*1===2">
+      <div v-show="switchBody[1]*1===1">
         <div v-if="a21.groups.length">
           <to-the-top :propsData="toTop21" v-if="toTop21.length">
             <template slot-scope="props">
@@ -75,15 +75,15 @@
           </universal>
         </div>
       </div>
-      <div v-show="switchBody[1]===2">
+      <div v-show="switchBody[1]*1===2">
         <div v-if="a22.groups.length">
           <football-container :propsData="a22.groups"/>
         </div>
       </div>
     </div>
     <!--竞篮-->
-    <div v-else-if="switchBody[0]===3">
-      <div v-show="switchBody[1]===1">
+    <div v-else-if="switchBody[0]*1===3">
+      <div v-show="switchBody[1]*1===1">
         <div v-if="a31.groups.length">
           <to-the-top :propsData="toTop31" v-if="toTop31.length">
             <template slot-scope="props">
@@ -97,7 +97,7 @@
           </universal>
         </div>
       </div>
-      <div v-show="switchBody[1]===2">
+      <div v-show="switchBody[1]*1===2">
         <div v-if="a32.groups.length">
           <to-the-top :propsData="toTop32" v-if="toTop32.length">
             <template slot-scope="props">
@@ -111,7 +111,7 @@
           </universal>
         </div>
       </div>
-      <div v-show="switchBody[1]===3">
+      <div v-show="switchBody[1]*1===3">
         <div v-if="a33.groups.length">
           <to-the-top :propsData="toTop33" v-if="toTop33.length">
             <template slot-scope="props">
@@ -125,7 +125,7 @@
           </universal>
         </div>
       </div>
-      <div v-show="switchBody[1]===4">
+      <div v-show="switchBody[1]*1===4">
         <div v-if="a34.groups.length">
           <basketball-container :propsData="a34.groups"/>
         </div>
@@ -173,11 +173,11 @@ export default {
       toTop21: state => state.score['toTop21']
     }),
     showLogin () {
-      if (this.switchBody[0] === 1 || this.switchBody[0] === 3) {
-        if (this.switchBody[1] === 4) {
+      if (this.switchBody[0]*1 === 1 || this.switchBody[0]*1 === 3) {
+        if (this.switchBody[1]*1 === 4) {
           return true
         }
-      } else if (this.switchBody[1] === 2) {
+      } else if (this.switchBody[1]*1 === 2) {
         return true
       }
       return false

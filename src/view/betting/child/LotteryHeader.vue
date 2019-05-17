@@ -162,10 +162,14 @@ export default {
 
   .sport-lottery-header .select-type {
     padding: 5px 10px;
-    border: 1px solid $cffC63A;
     border-radius: 5px;
     font-size: 16px;
     color: $cFFfFFF;
+    @if($lotteryIg) {
+      border: 1px solid $cFFfFFF;
+    } @else {
+      border: 1px solid $cffC63A;
+    }
   }
 
   .sport-lottery-header .select-type .icon {

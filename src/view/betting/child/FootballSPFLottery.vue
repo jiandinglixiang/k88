@@ -41,16 +41,26 @@ export default {
   .football-spf-lottery {
     padding-left: 10px;
     font-size: 14px;
+    @if($lotteryIg) {
+      .text-center.text-default-2 .text-light {
+        color: $cgray;
+      }
+    }
   }
 
   .football-spf-lottery .box {
-    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 13px;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+      border: 1px solid #ddd;
+    } @else {
+      background: $c494949;
+      border: 1px solid $c494949;
+    }
   }
 
   .football-spf-lottery .box .box-item {
@@ -59,7 +69,11 @@ export default {
     width: 35%;
 
     > span {
-      color: $cFFfFFF;
+      @if($lotteryIg) {
+        color: $c999999;
+      } @else {
+        color: $cFFfFFF;
+      }
 
       span {
         color: $c999999;
@@ -72,20 +86,31 @@ export default {
   }
 
   .football-spf-lottery .box .box-item.box-center > span {
-    border-left: 1px dotted $c3f3f3f;
-    border-right: 1px dotted $c3f3f3f;
     display: inline-block;
     width: 100%;
+    @if($lotteryIg) {
+      border-left: 1px dotted #ddd;
+      border-right: 1px dotted#ddd;
+    } @else {
+      border-left: 1px dotted $c3f3f3f;
+      border-right: 1px dotted $c3f3f3f;
+    }
   }
 
   .football-spf-lottery .box .box-item.selected {
     background: $cffC63A;
 
     > span {
-      color: $c131313;
-
-      span {
+      @if($lotteryIg) {
+        color: $cgray;
+        span {
+          color: $cgray;
+        }
+      } @else {
         color: $c131313;
+        span {
+          color: $c131313;
+        }
       }
     }
   }

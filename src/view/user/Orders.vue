@@ -25,13 +25,13 @@
         </div>
         <div class="desc">
           <span>{{item.buying_time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</span>
-          <span class="pull-right">{{item.type===0?'自投':'追号'}}：{{item.total_amount | currency}}</span>
+          <span class="pull-right">{{item.type*1===0?'自投':'追号'}}：{{item.total_amount | currency}}</span>
         </div>
         <span class="arrow-right"></span>
       </div>
       <infinite-scroll-loading :show="loading==='true'"/>
     </div>
-    <no-order v-show="list[listIndex['0']].length===0"/>
+    <no-order v-show="list[listIndex['0']].length*1===0"/>
     <bottom-nav active="Orders"/>
   </div>
 </template>
@@ -101,7 +101,7 @@ export default {
           if (event.path[i].dataset.value) {
             const index = event.path[i].dataset.value.split(',')
             const unEqual = index[0] !== this.listIndex[0] // 不相等
-            const isData = this.list[index[0]].length === 0 // 没有数据
+            const isData = this.list[index[0]].length*1 === 0 // 没有数据
             if (unEqual && isData) {
               this.getList(index[0], index[1], 0).then(() => {
                 // 加载完后切换
@@ -109,7 +109,7 @@ export default {
                 localStorage.setItem('ordersIndex', JSON.stringify(index))
               })
             } else {
-              this.loading = this.list[index[0]].length % 10 === 0  // 可被整除
+              this.loading = this.list[index[0]].length % 10*1 === 0  // 可被整除
               this.listIndex = index
               localStorage.setItem('ordersIndex', JSON.stringify(index))
             }
@@ -136,7 +136,11 @@ export default {
   @import "../../style/main.css";
 
   .bg-black {
-    background: $c131313;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+    } @else {
+      background: $c131313;
+    }
   }
 
   .orders nav .col {
@@ -178,8 +182,12 @@ export default {
     padding: 10px;
     position: relative;
     background: $c1c1c1c;
-    border-bottom: 1px solid #313131;
     min-height: 60px;
+    @if($lotteryIg) {
+      border-bottom: 1px solid $cEbebeb;
+    } @else {
+      border-bottom: 1px solid #313131;
+    }
   }
 
   .orders .list .item.item-avatar {
@@ -205,10 +213,14 @@ export default {
   }
 
   .orders .list .item .main {
-    color: $cFFfFFF;
     font-size: 13px;
     height: 25px;
     line-height: 25px;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $cFFfFFF;
+    }
   }
 
   .orders .list .item .main .active {

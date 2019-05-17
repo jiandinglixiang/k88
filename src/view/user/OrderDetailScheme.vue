@@ -39,7 +39,7 @@
               <template v-if="ticket.result[0].pre">
                 <span>(</span>
                 <span :class="{'margin-left-3': t > 0, 'text-primary': p.checked}"
-                      v-for="(p, t) in ticket.result[0].pre">{{p.text}}</span>
+                      :key="t" v-for="(p, t) in ticket.result[0].pre">{{p.text}}</span>
                 <span>)</span>
               </template>
               <span :class="{'text-primary': i.checked}" class="margin-right-3" v-for="i in ticket.result[0].next">{{i.text}}</span>
@@ -48,7 +48,7 @@
               <template v-if="ticket.result[1].pre">
                 <span>(</span>
                 <span :class="{'margin-left-3': t > 0, 'text-primary': p.checked}"
-                      v-for="(p, t) in ticket.result[1].pre">{{p.text}}</span>
+                      :key="t" v-for="(p, t) in ticket.result[1].pre">{{p.text}}</span>
                 <span>)</span>
               </template>
               <span :class="{'text-primary': i.checked}" class="margin-right-3" v-for="i in ticket.result[1].next">{{i.text}}</span>
@@ -97,15 +97,15 @@
             <!--显示足彩和篮彩-->
             <span v-if="jc.showCheck">
               <div v-for="(bet, i) in jc.betting">
-                <span :class="{'text-primary': bet.checked,'blue-color':bet.status===1}" class="round-no">{{i === 0 ? jc.round_no : ''}}</span>
-                <span :class="{'text-primary': bet.checked,'blue-color':bet.status===1}"
-                      style="display: inline-block; padding-left: 10px; min-width:62px;">
+                <span :class="{'text-primary': bet.checked,'blue-color':bet.status*1===1}" class="round-no">{{i === 0 ? jc.round_no : ''}}</span>
+                <span :class="{'text-primary': bet.checked,'blue-color':bet.status*1===1}"
+                      style="display: inline-block; padding-left: 5px; min-width:80px;">
                   {{bet.text}}
                   <template v-if="jc.team && jc.team.letPointText">({{jc.team.letPointText}})</template>
                   <template v-if="jc.team && jc.team.basePointText">({{jc.team.basePointText}})</template>
                   <template v-if="bet.value">{{`(${toDecimal(bet.value)})`}}</template>
                                      <span class="red-check-icon" v-if="bet.checked"></span>
-                <span class="check-active" v-if="bet.status===1"></span>
+                <span class="check-active" v-if="bet.status*1===1"></span>
                 </span>
               </div>
             </span>
@@ -152,7 +152,7 @@
       </tbody>
     </table>
     <div class="line">
-      <img alt="line" src="../../assets/scheme_line1.png">
+      <img alt="line" :src="linebg">
     </div>
     <div class="row text-center bg-darken text-sm padding text-light">
       <div class="col">出票成功：{{scheme.success_amount | currency}}元</div>
@@ -171,6 +171,11 @@ import { ORDER_SCHEME_REQUEST } from '../../store/user/types'
 
 export default {
   name: 'orderScheme',
+  data () {
+    return {
+      linebg: process.build.TYPE === 'LOTTERY_IG' ? require('../../assets/igdj/scheme_line1.png') : require('../../assets/scheme_line1.png')
+    }
+  },
   computed: {
     ...mapState({
       detail: state => state.user.orders.detail,
@@ -182,7 +187,7 @@ export default {
       getOrderScheme: ORDER_SCHEME_REQUEST
     }),
     toDecimal (odds) {
-      if (this.detail.lottery_id === '901' || this.detail.lottery_id === '902') {
+      if (this.detail.lottery_id*1 === 901 || this.detail.lottery_id*1 === 902) {
         let f = (odds * 1)
         let value = f.toString()
         let rs = value.indexOf('.')
@@ -246,7 +251,11 @@ export default {
   }
 
   .bg-darken {
-    background: #313131;
+    @if ($lotteryIg) {
+      background: $cFFfFFF;
+    } @else {
+      background: #313131;
+    }
   }
 
   .order-scheme .order-content-icon,
@@ -267,17 +276,30 @@ export default {
   }
 
   .order-scheme .table-scheme tr {
-    border-top: 1px solid #1c1c1c;
-    background: #313131;
+    @if ($lotteryIg) {
+      border-top: 1px solid #fff;
+      background: $cFFfFFF;
+    } @else {
+      border-top: 1px solid #1c1c1c;
+      background: #313131;
+    }
   }
 
   .order-scheme .table-scheme td {
-    border: 1px solid #494949;
+    @if ($lotteryIg) {
+      border: 1px solid #ddd;
+    } @else {
+      border: 1px solid #494949;
+    }
   }
 
   .order-scheme .table-scheme thead td {
     padding: 5px 0;
-    border-top: 1px solid #313131
+    @if ($lotteryIg) {
+      border-top: 1px solid $cFFfFFF;
+    } @else {
+      border-top: 1px solid #313131;
+    }
   }
 
   .order-scheme .table-scheme tbody td {

@@ -274,23 +274,37 @@ export default {
   .football-hh-lottery {
     padding-left: 10px;
     font-size: 14px;
+    @if($lotteryIg) {
+      .text-center.text-default-2 .text-light {
+        color: $cgray;
+      }
+    }
   }
 
   .football-hh-lottery .box {
-    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 14px;
     position: relative;
     padding: 0 40px 0 15px;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+      border: 1px solid $cFFfFFF;
+    } @else {
+      background: $c494949;
+      border: 1px solid $c494949;
+    }
   }
 
   .football-hh-lottery .box.selected {
     background: $cffC63A;
-    color: $c131313;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $c131313;
+    }
   }
 
   .football-hh-lottery .box.box-icon {
@@ -344,13 +358,24 @@ export default {
     padding: 10px 0;
     text-align: center;
     white-space: normal;
-    border-left: 1px solid $c3f3f3f;
-    color: white;
+    @if($lotteryIg) {
+      border-left: 1px solid #ddd;
+      background: #ddd;
+      color: $cgray;
+    } @else {
+      border-left: 1px solid $c3f3f3f;
+      color: white;
+    }
   }
 
   .football-hh-lottery .right-item-selected.gray {
-    background: #DDDDDD;
-    color: $c131313;
+    @if($lotteryIg) {
+      background:  $cCccCCc;
+      color: $cgray;
+    } @else {
+      background: #DDDDDD;
+      color: $c131313;
+    }
   }
 
   .football-hh-lottery .left-point-bottom.green {
@@ -368,7 +393,11 @@ export default {
     width: 35%;
 
     > span {
-      color: $cFFfFFF;
+      @if($lotteryIg) {
+        color: $c999999;
+      } @else {
+        color: $cFFfFFF;
+      }
 
       i {
         color: $c999999;
@@ -384,7 +413,11 @@ export default {
   }
 
   .football-hh-lottery .box .box-item.border-top {
-    border-top: 1px solid $c3f3f3f;
+    @if($lotteryIg) {
+      border-top: 1px solid #ddd;
+    } @else {
+      border-top: 1px solid $c3f3f3f;
+    }
   }
 
   .football-hh-lottery .box .box-item.box-center {
@@ -392,20 +425,31 @@ export default {
   }
 
   .football-hh-lottery .box .box-item.box-center span {
-    border-left: 1px dotted $c3f3f3f;
-    border-right: 1px dotted $c3f3f3f;
     display: inline-block;
     width: 100%;
+    @if($lotteryIg) {
+      border-left: 1px dotted #ddd;
+      border-right: 1px dotted#ddd;
+    } @else {
+      border-left: 1px dotted $c3f3f3f;
+      border-right: 1px dotted $c3f3f3f;
+    }
   }
 
   .football-hh-lottery .box .box-item.selected {
     background: $cffC63A;
 
     > span {
-      color: $c131313;
-
-      i {
+      @if($lotteryIg) {
+        color: $cgray;
+        i {
+          color: $cgray;
+        }
+      } @else {
         color: $c131313;
+        i {
+          color: $c131313;
+        }
       }
     }
   }
@@ -423,9 +467,13 @@ export default {
   }
 
   .football-hh-lottery table tbody td {
-    background: $c313131;
     padding: 5px 0;
     color: $c999999;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+    } @else {
+      background: $c313131;
+    }
   }
 
   .football-hh-lottery table tbody td .text-value {
@@ -434,10 +482,17 @@ export default {
 
   .football-hh-lottery table tbody td.selected {
     background: $cffC63A;
-    color: $c131313;
 
-    span {
+    @if($lotteryIg) {
+      color: $cgray;
+      span {
+        color: $cgray;
+      }
+    } @else {
       color: $c131313;
+      span {
+        color: $c131313;
+      }
     }
   }
 
@@ -454,19 +509,31 @@ export default {
     width: 95%;
     max-width: 320px;
     /*background: #f2f2f2;*/
+    @if($lotteryIg) {
+      background: #F2F2F2;
+    }
   }
 
   .football-hh-lottery .btn-wrap .btn {
-    background: $c131313;
     color: $cffC63A;
-    border-top: 1px solid #494949;
     margin-top: 5px;
     border-radius: 0;
+    @if($lotteryIg) {
+      background: #F2F2F2;
+      border-top: 1px solid #F2F2F2;
+    } @else {
+      background: $c131313;
+      border-top: 1px solid #494949;
+    }
   }
 
   .football-hh-lottery .btn-wrap .col:first-child .btn {
-    border-right: 1px solid #494949;
     color: #666;
+    @if($lotteryIg) {
+      border-right: 1px solid #ddd;
+    } @else {
+      border-right: 1px solid #494949;
+    }
   }
 
   .football-hh-lottery table td.green {

@@ -75,7 +75,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 
   .odds-panel .all-icon-tip {
     padding: 5px 0 5px 5px;
@@ -205,7 +205,6 @@ export default {
   }
 
   .test {
-    background-color: #3F6EE7;
     border-radius: 50px;
     height: 15px;
     width: 14px;
@@ -213,7 +212,11 @@ export default {
     float: right;
     text-align: center;
     margin-right: 20px;
+    @if($lotteryIg) {
+      background-color: #f00;
+    } @else {
+      background-color: #3F6EE7;
+    }
   }
-
 
 </style>

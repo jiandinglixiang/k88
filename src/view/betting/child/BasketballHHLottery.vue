@@ -282,6 +282,11 @@ export default {
   .basketball-hh-lottery {
     padding-left: 10px;
     font-size: 14px;
+    @if($lotteryIg) {
+      .text-center.text-default-2 .text-light {
+        color: $cgray;
+      }
+    }
   }
 
   .basketball-hh-lottery .team-name {
@@ -289,14 +294,19 @@ export default {
   }
 
   .basketball-hh-lottery .box {
-    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 13px;
     margin-right: 45px;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+      border: 1px solid $cFFfFFF;
+    } @else {
+      background: $c494949;
+      border: 1px solid $c494949;
+    }
   }
 
   .basketball-hh-lottery .box-right {
@@ -305,13 +315,18 @@ export default {
     background: #DDDDDD;
     font-size: 13px;
     float: right;
-    color: $c131313;
     margin-top: 8px;
     padding: 5px;
     border: 1px solid #ddd;
     border-radius: 4px;
     height: 136px;
     padding-top: 42px;
+    @if($lotteryIg) {
+      background: #ddd;
+      color: $cgray;
+    } @else {
+      color: $c131313;
+    }
   }
 
   /*.basketball-hh-lottery .box-right.gray {*/
@@ -320,12 +335,16 @@ export default {
   .basketball-hh-lottery .selected-box {
     padding: 5px;
     background: $cffC63A;
-    color: $c131313;
     margin-top: 5px;
     padding-right: 15px;
     text-align: center;
     border-radius: 5px;
     position: relative;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $c131313;
+    }
   }
 
   .basketball-hh-lottery .selected-box .arrow-right {
@@ -339,10 +358,14 @@ export default {
     padding: 5px 0;
     width: 50%;
     float: left;
-    color: $cFFfFFF;
 
     .text-light {
       color: $c999999;
+    }
+    @if($lotteryIg) {
+      color: $c999999;
+    } @else {
+      color: $cFFfFFF;
     }
   }
 
@@ -352,7 +375,11 @@ export default {
   }
 
   .basketball-hh-lottery .border-bottom {
-    border-bottom: 1px solid $c3f3f3f;
+    @if($lotteryIg) {
+      border-bottom: 1px solid #ddd;
+    } @else {
+      border-bottom: 1px solid $c3f3f3f;
+    }
   }
 
   .basketball-hh-lottery .box .box-item .box-item-content {
@@ -361,16 +388,25 @@ export default {
 
   .basketball-hh-lottery .box .box-item.selected {
     background: $cffC63A;
-
-    color: $c131313;
-
-    .text-light {
+    @if($lotteryIg) {
+      color: $cgray;
+      .text-light {
+        color: $cgray;
+      }
+    } @else {
       color: $c131313;
+      .text-light {
+        color: $c131313;
+      }
     }
   }
 
   .basketball-hh-lottery .box .box-item:nth-child(odd) .box-item-content {
-    border-right: 1px dotted $c3f3f3f;
+    @if($lotteryIg) {
+      border-right: 1px dotted #ddd;
+    } @else {
+      border-right: 1px dotted $c3f3f3f;
+    }
   }
 
   .basketball-hh-lottery .box .box-item .box-item-content > span {
@@ -398,6 +434,9 @@ export default {
     width: 95%;
     max-width: 320px;
     /*background: #f2f2f2;*/
+    @if($lotteryIg) {
+      background: #F2F2F2;
+    }
   }
 
   .basketball-hh-lottery .table-wrap {
@@ -409,8 +448,12 @@ export default {
   }
 
   .basketball-hh-lottery table td {
-    background: $c313131;
     padding: 5px;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+    } @else {
+      background: $c313131;
+    }
   }
 
   .basketball-hh-lottery table td.padding-vertical-0 {
@@ -434,7 +477,11 @@ export default {
 
   .basketball-hh-lottery table td.orange {
     background: $cffC63A;
-    color: white;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: white;
+    }
   }
 
   .basketball-hh-lottery table td.red {
@@ -443,24 +490,40 @@ export default {
   }
 
   .basketball-hh-lottery table td.selected {
-    color: $c131313;
     background: $cffC63A;
 
-    .text-light {
+    @if($lotteryIg) {
+      color: $cgray;
+      .text-light {
+        color: $cgray;
+      }
+    } @else {
       color: $c131313;
+      .text-light  {
+        color: $c131313;
+      }
     }
   }
 
   .basketball-hh-lottery .btn-wrap .btn {
-    background: $c131313;
     color: $cffC63A;
-    border-top: 1px solid $c313131;
     margin-top: 5px;
     border-radius: 0;
+    @if($lotteryIg) {
+      background: #F2F2F2;
+      border-top: 1px solid #F2F2F2;
+    } @else {
+      background: $c131313;
+      border-top: 1px solid $c313131;
+    }
   }
 
   .basketball-hh-lottery .btn-wrap .col:first-child .btn {
-    border-right: 1px solid $c313131;
     color: #666;
+    @if($lotteryIg) {
+      border-right: 1px solid #ddd;
+    } @else {
+      border-right: 1px solid $c313131;
+    }
   }
 </style>

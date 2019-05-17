@@ -54,18 +54,27 @@ export default {
   }
 
   .sport-lottery-panel .panel-top {
-    background: $c131313;
     padding: 5px 10px;
     font-size: 12px;
     position: relative;
-    color: $cCccCCc;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+      color: $c999999;
+    } @else {
+      background: $c131313;
+      color: $cCccCCc;
+    }
   }
 
   .sport-lottery-panel .panel-top .icon {
+    @if($lotteryIg) {
+      background: url("../../../assets/igdj/down_out.png") no-repeat;
+    } @else {
+      background: url("../../../assets/betting/down_out.png") no-repeat;
+    }
     position: absolute;
     right: 10px;
     top: 5px;
-    background: url("../../../assets/betting/down_out.png") no-repeat;
     background-size: 100% 100%;
     width: 18px;
     height: 18px;

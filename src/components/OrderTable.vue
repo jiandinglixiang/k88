@@ -106,7 +106,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .check-active {
     display: inline-block;
     width: 5px;
@@ -136,16 +136,29 @@ export default {
     font-size: 11px;
     border-spacing: 0;
     border-collapse: collapse;
-    border: 1px solid #313131;
+    @if($lotteryIg) {
+      border: 1px solid #ddd;
+      .text-dark {
+        color: $cgray;
+      }
+    } @else {
+      border: 1px solid #313131;
+    }
   }
 
   table td {
-    background: #313131;
     padding: 5px 0;
     border-left: 0;
     border-top: 0;
-    border-right: 1px solid #494949;
-    border-bottom: 1px solid #494949;
+    @if($lotteryIg) {
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      background: $cFFfFFF;
+    } @else {
+      border-right: 1px solid #494949;
+      border-bottom: 1px solid #494949;
+      background: #313131;
+    }
   }
 
   table tbody tr:last-child td {

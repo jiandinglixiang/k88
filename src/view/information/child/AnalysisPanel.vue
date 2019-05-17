@@ -78,7 +78,11 @@ export default {
 
 <style lang="scss">
   .football-information .panel-title {
-    background: $c131313 url("../../../assets/information/football_live_title_bg.png") no-repeat bottom;
+    @if($lotteryIg) {
+      background: #F2F2F2 url("../../../assets/igdj/football_live_title_bg.png") no-repeat bottom;
+    } @else {
+      background: $c131313 url("../../../assets/information/football_live_title_bg.png") no-repeat bottom;
+    }
     background-size: 100% 75%;
     height: 35px;
     line-height: 25px;
@@ -126,10 +130,18 @@ export default {
     width: 100%;
     /*background: white;*/
     border-collapse: collapse;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+      color: $cgray;
+    }
   }
 
   .football-information table tr.bg-f6 th {
-    background-color: $c1c1c1c;
+    @if($lotteryIg) {
+      background-color: $c131313;
+    } @else {
+      background-color: $c1c1c1c;
+    }
   }
 
   .football-information table th {
@@ -144,7 +156,11 @@ export default {
 
   .football-information .border-bottom-solid {
     /*border-bottom: 1px solid #dddddd;*/
-    color: $cFFfFFF;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $cFFfFFF;
+    }
   }
 
   .football-information .panel-title span {
@@ -177,12 +193,20 @@ export default {
   }
 
   .football-information .active span {
-    border-bottom: 2px solid #3393FF;
+    @if($lotteryIg) {
+      border-bottom: 2px solid #f00;
+    } @else {
+      border-bottom: 2px solid #3393FF;
+    }
   }
 
   .football-information .panel-title-head {
     padding: 10px;
-    color: $cFFfFFF;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $cFFfFFF;
+    }
   }
 
   .football-information .panel-title-head img {
@@ -193,7 +217,11 @@ export default {
   }
 
   .football-information .bg-gray {
-    background: $c1c1c1c;
     color: $c999999;
+    @if($lotteryIg) {
+      background: #F2F2F2;
+    } @else {
+      background: $c1c1c1c;
+    }
   }
 </style>

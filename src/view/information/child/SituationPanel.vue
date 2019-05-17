@@ -114,7 +114,11 @@ export default {
   }
 
   .situation-panel .block {
-    background: $c313131;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+    } @else {
+      background: $c313131;
+    }
   }
 
   .situation-panel .item {

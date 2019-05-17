@@ -51,10 +51,14 @@ export default {
     background: url("../assets/home/yellow_tip.png") no-repeat;
     background-size: 100% 100%;
     height: 28px;
-    color: $c131313;
     font-size: 12px;
     line-height: 22px;
     margin-bottom: 3px;
+    @if ($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $c131313;
+    }
   }
 
   .home-lottery-item .tip.yellow {
@@ -72,6 +76,10 @@ export default {
   }
 
   .home-lottery-item .name {
-    color: $cFFfFFF;
+    @if ($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $cFFfFFF;
+    }
   }
 </style>

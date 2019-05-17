@@ -47,6 +47,11 @@ export default {
     /*margin:0.015625%;*/
     color: $cCccCCc;
     background-color: $c1c1c1c;
+    @if ($lotteryIg) {
+      color: $c999999;
+    } @else {
+      color: $cCccCCc;
+    }
   }
 
   .organ-item-title .left {
@@ -56,9 +61,13 @@ export default {
   }
 
   .organ-item-title .right {
+    @if ($lotteryIg) {
+      background: url("../../../assets/igdj/arrow_circle_up.png") no-repeat;
+    } @else {
+      background: url("../../../assets/icon/arrow_circle_up.png") no-repeat;
+    }
     position: absolute;
     display: inline-block;
-    background: url("../../../assets/icon/arrow_circle_up.png") no-repeat;
     background-size: 100%;
     right: 0.3125rem;
     top: 0.21875rem;

@@ -64,20 +64,33 @@ export default {
     border: none;
 
     thead {
-      background-color: #1C1C1C;
       color: $c999999;
+      @if($lotteryIg) {
+        background-color: $cEbebeb;
+      } @else {
+        background-color: #1C1C1C;
+      }
     }
 
     tbody {
-      background-color: #313131;
-      color: $cFFfFFF;
+      @if($lotteryIg) {
+        background-color: $cFFfFFF;
+        color: $cgray;
+      } @else {
+        background-color: #313131;
+        color: $cFFfFFF;
+      }
     }
   }
 
   .integral-table table td {
     padding: 5px 0;
-    border: 1px solid $c494949;
     text-align: center;
+    @if($lotteryIg) {
+      border: 1px solid #ddd;
+    } @else {
+      border: 1px solid $c494949;
+    }
   }
 
   .integral-table table .rank-icon {

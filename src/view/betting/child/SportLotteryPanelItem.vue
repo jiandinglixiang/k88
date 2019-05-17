@@ -190,19 +190,32 @@ export default {
 
 <style lang="scss">
   .sport-lottery-panel-item {
-    border-bottom: 1px solid $c494949;
 
     > div.item-top {
-      background-color: $c313131;
 
       > div:nth-child(1) {
         color: $c999999;
       }
     }
+    @if($lotteryIg) {
+      border-bottom: 1px solid #EBEBEB;
+      > div.item-top {
+        background-color: $c131313;
+      }
+    } @else {
+      border-bottom: 1px solid $c494949;
+      > div.item-top {
+        background-color: $c313131;
+      }
+    }
   }
 
   .sport-lottery-panel-item .down-gray-icon {
-    background: url("../../../assets/betting/down_gray.png") no-repeat;
+    @if($lotteryIg) {
+      background: url("../../../assets/igdj/down_gray.png") no-repeat;
+    } @else {
+      background: url("../../../assets/betting/down_gray.png") no-repeat;
+    }
     background-size: 100% 100%;
     width: 12px;
     height: 8px;
@@ -216,10 +229,14 @@ export default {
   }
 
   .sport-lottery-panel-item .item-tip {
-    background: black;
     color: white;
     font-size: 14px;
     padding: 0 10px;
+    @if($lotteryIg) {
+      background: #2C2D33;
+    } @else {
+      background: black;
+    }
   }
 
   .sport-lottery-panel-item .item-tip .item-tip-list {
@@ -235,7 +252,11 @@ export default {
   .sport-lottery-panel-item .item-tip .item-tip-list-left {
     width: 80px;
     display: inline-block;
-    color: #6f6f70;
+    @if($lotteryIg) {
+      color: $cFFfFFF;
+    } @else {
+      color: #6f6f70;
+    }
   }
 
   .sport-lottery-panel-item .item-tip .item-tip-bottom {

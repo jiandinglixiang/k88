@@ -135,8 +135,17 @@
     left: auto;
     width: 100%;
     max-width: 640px;
-    background: $c131313;
     z-index: 2;
+    @if ($lotteryIg) {
+      background: $cFFfFFF;
+    } @else {
+      background: $c131313;
+    }
+    .header {
+      @if($lotteryIg){
+        background: #1A1003;
+      }
+    }
   }
 
   .paddingBottom1 {
@@ -147,31 +156,31 @@
 <template>
   <div class='score padding-bottom-50'>
     <div class='score-top'>
-      <div style="position: relative;">
+      <div style="position: relative;" class="header">
         <div style='width: 60%;margin: 0 auto;'>
           <div class='row'>
-            <div :class='{activate:lotteryType===1}' @click='switchShow([1,1])' class='switchover switchover-left'>竞足
+            <div :class='{activate:lotteryType*1===1}' @click='switchShow([1,1])' class='switchover switchover-left'>竞足
             </div>
             <!--<div @click='switchShow([2,1])' class='switchover switchover-center' :class='{activate:lotteryType===2}'>胜负彩-->
             <!--</div>-->
-            <div :class='{activate:lotteryType===3}' @click='switchShow([3,1])' class='switchover switchover-right'>竞篮
+            <div :class='{activate:lotteryType*1===3}' @click='switchShow([3,1])' class='switchover switchover-right'>竞篮
             </div>
           </div>
         </div>
         <div @click='switchShow()' class='refresh'></div>
         <div @click="goApp" class="back-icon"></div>
       </div>
-      <div class='row text-center two-title' v-if='lotteryType===2'>
-        <div :class="{'activate-child':lotteryState===1}" @click="switchShow([lotteryType,1])">
+      <div class='row text-center two-title' v-if='lotteryType*1===2'>
+        <div :class="{'activate-child':lotteryState*1===1}" @click="switchShow([lotteryType,1])">
           <div class='back-icons'>第{{(a21.groups.length&&a21.groups[SelectIndex])?a21.groups[SelectIndex].id:''}}期</div>
         </div>
-        <div :class="{'activate-child':lotteryState===2}" @click="switchShow([lotteryType,2])">我的投注</div>
+        <div :class="{'activate-child':lotteryState*1===2}" @click="switchShow([lotteryType,2])">我的投注</div>
       </div>
       <div class='row text-center four-title' v-else>
-        <div :class="{'activate-child':lotteryState===1}" @click="switchShow([lotteryType,1])">进行中</div>
-        <div :class="{'activate-child':lotteryState===2}" @click="switchShow([lotteryType,2])">已结束</div>
-        <div :class="{'activate-child':lotteryState===3}" @click="switchShow([lotteryType,3])">未开始</div>
-        <div :class="{'activate-child':lotteryState===4}" @click="switchShow([lotteryType,4])">我的投注</div>
+        <div :class="{'activate-child':lotteryState*1===1}" @click="switchShow([lotteryType,1])">进行中</div>
+        <div :class="{'activate-child':lotteryState*1===2}" @click="switchShow([lotteryType,2])">已结束</div>
+        <div :class="{'activate-child':lotteryState*1===3}" @click="switchShow([lotteryType,3])">未开始</div>
+        <div :class="{'activate-child':lotteryState*1===4}" @click="switchShow([lotteryType,4])">我的投注</div>
       </div>
     </div>
     <div v-if='a21.groups.length'>
@@ -259,7 +268,7 @@ export default {
         if (this.isMine(target)) {
           this.getMineData(target)
         } else {
-          if (target[0] === 2 && target[0] === this.lotteryType && target[1] === 1 && target[1] === this.lotteryState) {
+          if (target[0]*1 === 2 && target[0]*1 === this.lotteryType && target[1]*1 === 1 && target[1]*1 === this.lotteryState) {
             this.popupVisible = !this.popupVisible
           } else {
             this.getGameData(target)
@@ -282,9 +291,9 @@ export default {
         let SelectIndex = 1
         if (data.groups && data.groups.length) {
           data = this.disposeF(data) // 数据处理同步
-          if (target[0] === 2 && target[1] === 1) {
+          if (target[0]*1 === 2 && target[1]*1 === 1) {
             SelectIndex = data.groups.findIndex(item => {
-              return item.is_current === 1
+              return item.is_current*1 === 1
             })
             if (SelectIndex !== -1) {
               this.SelectIndex = SelectIndex
@@ -392,7 +401,7 @@ export default {
       }
       props.groups = props.groups.map(groups => {
         groups.schedules = groups.schedules.map(schedules => {
-          if (schedules.result_odds && schedules.result_odds[602] && schedules.match_status === 3 && schedules.result_odds[601]) {
+          if (schedules.result_odds && schedules.result_odds[602] && schedules.match_status*1 === 3 && schedules.result_odds[601]) {
             // console.log(schedules)
             let victory = schedules.current_score.split(':')
             schedules.result_odds.game601 = computeS(parseInt(victory[0]), parseInt(victory[1]))
@@ -408,11 +417,11 @@ export default {
       if (!target.length) {
         return
       }
-      if (target[0] === 1 || target[0] === 3) {
-        if (target[1] === 4) {
+      if (target[0]*1 === 1 || target[0]*1 === 3) {
+        if (target[1]*1 === 4) {
           return true
         }
-      } else if (target[1] === 2) {
+      } else if (target[1]*1 === 2) {
         return true
       }
       return null

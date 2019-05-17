@@ -37,13 +37,19 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    color: $cFFfFFF;
+    @if($lotteryIg) {
+      color: $cgray;
+    }
   }
 
   .football-score {
-    color: #dddddd;
     width: 2.3em;
     text-align: center;
+    @if ($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: #dddddd;
+    }
   }
 
   .basketball-score {
@@ -132,4 +138,3 @@ export default {
   }
 }
 </script>
-

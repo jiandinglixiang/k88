@@ -12,7 +12,7 @@
       <div :class="{selected: isSelected(item), 'box-center': index===1}"
            @click="onOptionSelected(item, index)"
            class="box-item"
-           v-for="(item, index) in schedule.holderList">
+           :key="index" v-for="(item, index) in schedule.holderList">
         <span>{{item.text}}<span> {{item.value}}</span></span>
       </div>
     </div>
@@ -42,18 +42,28 @@ export default {
   .football-rqspf-lottery {
     padding-left: 10px;
     font-size: 14px;
+    @if($lotteryIg) {
+      .text-center.text-default-2 .text-light {
+        color: $cgray;
+      }
+    }
   }
 
   .football-rqspf-lottery .box {
-    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 13px;
     padding-left: 15px;
     position: relative;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+      border: 1px solid #ddd;
+    } @else {
+      background: $c494949;
+      border: 1px solid $c494949;
+    }
   }
 
   .football-rqspf-lottery .box .left-point {
@@ -80,7 +90,11 @@ export default {
     width: 35%;
 
     > span {
-      color: $c999999;
+      @if($lotteryIg) {
+        color: $c999999;
+      } @else {
+        color: $cFFfFFF;
+      }
 
       span {
         color: $cFFfFFF;
@@ -92,10 +106,15 @@ export default {
     width: 30%;
 
     > span {
-      border-left: 1px dotted $c3f3f3f;
-      border-right: 1px dotted $c3f3f3f;
       display: inline-block;
       width: 100%;
+      @if($lotteryIg) {
+        border-left: 1px dotted #ddd;
+        border-right: 1px dotted#ddd;
+      } @else {
+        border-left: 1px dotted $c3f3f3f;
+        border-right: 1px dotted $c3f3f3f;
+      }
     }
   }
 
@@ -103,10 +122,16 @@ export default {
     background: $cffC63A;
 
     > span {
-      color: $c131313;
-
-      span {
+      @if($lotteryIg) {
+        color: $cgray;
+        span {
+          color: $cgray;
+        }
+      } @else {
         color: $c131313;
+        span {
+          color: $c131313;
+        }
       }
     }
   }

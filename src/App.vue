@@ -47,7 +47,6 @@ export default {
 <style lang="scss">
   @import "style/common.scss";
   @import "style/animate.scss";
-
   #app {
     width: 100%;
     position: fixed;

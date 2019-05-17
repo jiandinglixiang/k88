@@ -141,13 +141,24 @@ export default {
     width: 100%;
     bottom: 0;
     left: 0;
-    background: $c131313;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+      .text-muted {
+        color: $c999999;
+      }
+    } @else {
+      background: $c131313;
+    }
   }
 
   .sport-lottery-container .bottom-fixed .clear-icon {
+    @if($lotteryIg) {
+      background: url("../../../assets/igdj/ic_scheme_trash.png") no-repeat;
+    } @else {
+      background: url("../../../assets/betting/ic_scheme_trash.png") no-repeat;
+    }
     width: 25px;
     height: 25px;
-    background: url("../../../assets/betting/ic_scheme_trash.png") no-repeat;
     background-size: 100%;
     display: inline-block;
     margin: 3px 15px 0 5px;

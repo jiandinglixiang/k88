@@ -12,7 +12,7 @@
         <div :class="{selected: isSelected(item), 'border-bottom': index < 4}"
              @click="onOptionSelected(item, index)"
              class="box-item text-right"
-             v-for="(item, index) in schedule.holderList">
+             :key="index" v-for="(item, index) in schedule.holderList">
           <span> <i class="text-light pull-left">{{item.text}}</i> {{item.value}}</span>
         </div>
       </div>
@@ -119,24 +119,38 @@ export default {
   .football-zjq-lottery {
     padding-left: 10px;
     font-size: 14px;
+    @if($lotteryIg) {
+      .text-center.text-default-2 .text-light {
+        color: $cgray;
+      }
+    }
   }
 
   .football-zjq-lottery .box {
-    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 13px;
     position: relative;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+      border: 1px solid $cFFfFFF;
+    } @else {
+      background: $c494949;
+      border: 1px solid $c494949;
+    }
   }
 
   .football-zjq-lottery .box-text {
     height: 30px;
     line-height: 30px;
     background: $cffC63A;
-    color: $c131313;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $c131313;
+    }
   }
 
   .football-zjq-lottery .box .arrow-right {
@@ -152,16 +166,25 @@ export default {
   }
 
   .football-zjq-lottery .box .box-item.border-bottom {
-    border-bottom: 1px solid $c3f3f3f;
+    @if($lotteryIg) {
+      border-bottom: 1px solid #ddd;
+    } @else {
+      border-bottom-top: 1px solid $c3f3f3f;
+    }
   }
 
   .football-zjq-lottery .box .box-item span {
-    border-left: 1px dotted $c3f3f3f;
     display: inline-block;
     width: 100%;
     padding: 0 3px;
     box-sizing: border-box;
-    color: $cFFfFFF;
+    @if($lotteryIg) {
+      border-left: 1px dotted #ddd;
+      color: $c999999;
+    } @else {
+      border-left: 1px dotted $c3f3f3f;
+      color: $cFFfFFF;
+    }
   }
 
   @media screen and (min-width: 321px) {
@@ -181,10 +204,17 @@ export default {
   }
 
   .football-zjq-lottery .box .box-item.selected span {
-    color: $c131313;
 
-    .text-light {
+    @if($lotteryIg) {
+      color: $cgray;
+      .text-light {
+        color: $cgray;
+      }
+    } @else {
       color: $c131313;
+      .text-light {
+        color: $c131313;
+      }
     }
   }
 
@@ -198,40 +228,66 @@ export default {
   }
 
   .football-zjq-lottery table tbody td {
-    background: $c313131;
     padding: 5px;
     color: $c999999;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+    } @else {
+      background: $c313131;
+    }
   }
 
   .football-zjq-lottery table tbody td.selected {
     background: $cffC63A;
-    color: $c131313;
 
-    .text-light {
+    @if($lotteryIg) {
+      color: $cgray;
+      .text-light {
+        color: $cgray;
+      }
+    } @else {
       color: $c131313;
+      .text-light {
+        color: $c131313;
+      }
     }
   }
 
   .football-zjq-lottery table .blue {
     background: #3393FF;
+    @if($lotteryIg) {
+      color: $cFFfFFF;
+    }
   }
 
   .football-zjq-lottery .dialog .content {
     width: 95%;
     max-width: 320px;
     /*background: #f2f2f2;*/
+    @if($lotteryIg) {
+      background: #F2F2F2;
+    }
   }
 
   .football-zjq-lottery .btn-wrap .btn {
-    background: $c131313;
     color: $cffC63A;
-    border-top: 1px solid $c313131;
     margin-top: 5px;
     border-radius: 0;
+    @if($lotteryIg) {
+      background: #F2F2F2;
+      border-top: 1px solid #F2F2F2;
+    } @else {
+      background: $c131313;
+      border-top: 1px solid $c313131;
+    }
   }
 
   .football-zjq-lottery .btn-wrap .col:first-child .btn {
-    border-right: 1px solid $c313131;
     color: #666;
+    @if($lotteryIg) {
+      border-right: 1px solid #ddd;
+    } @else {
+      border-right: 1px solid $c313131;
+    }
   }
 </style>

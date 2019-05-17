@@ -162,19 +162,37 @@ export default {
 
 <style lang="scss">
   .basket-record-table {
-    color: $cFFfFFF;
-    background-color: $c313131;
+    background-color: $cFFfFFF;
+    color: $cgray;
+    @if($lotteryIg) {
+      .mint-swipe {
+        background: $cFFfFFF!important;
+        color: $cgray!important;
+      }
+    } @else {
+      background-color: $c313131;
+      color: $cFFfFFF;
+    }
   }
 
   .basket-record-table .bg-blue {
-    background: $c494949;
-    color: $cffC63A;
     /*border-top: 1px solid #3f9ae7;*/
     /*border-bottom: 1px solid #3f9ae7;*/
+    @if($lotteryIg) {
+      background: $cEbebeb;
+      color: $cgray;
+    } @else {
+      background: $c494949;
+      color: $cffC63A;
+    }
   }
 
   .basket-record-table .mint-swipe-indicator {
-    background: $cFFfFFF;
+    @if($lotteryIg) {
+      background: #ddd;
+    } @else {
+      background: $cFFfFFF;
+    }
   }
 
   .basket-record-table .mint-swipe-indicator.is-active {

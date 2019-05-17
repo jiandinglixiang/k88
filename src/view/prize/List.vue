@@ -116,14 +116,22 @@ export default {
   }
 
   .prize-list .list-item {
+    @if ($lotteryIg) {
+      background: $c1c1c1c url("../../assets/igdj/arrow_right.png") 97% center no-repeat;
+      border-bottom: 1px solid #EBEBEB;
+    } @else {
+      background: $c1c1c1c url("../../assets/icon/arrow_right.png") 97% center no-repeat;
+      border-bottom: 1px solid $c313131;
+    }
     padding: 5px 30px 10px 10px;
     position: relative;
-    background: $c1c1c1c url("../../assets/icon/arrow_right.png") 97% center no-repeat;
     background-size: 10px auto;
-    border-bottom: 1px solid $c313131;
-
     > .list-item-head > span:nth-child(1) {
-      color: $cFFfFFF;
+      @if ($lotteryIg) {
+        color: $cgray;
+      } @else {
+        color: $cFFfFFF;
+      }
     }
   }
 
@@ -152,12 +160,20 @@ export default {
   }
 
   .prize-list .prize-box.football {
-    background: #65aa23 url("../../assets/ball.png") no-repeat left center;
+    @if ($lotteryIg) {
+      background: #65aa23 url("../../assets/igdj/ball.png") no-repeat left center;
+    } @else {
+      background: #65aa23 url("../../assets/ball.png") no-repeat left center;
+    }
     background-size: auto 90%;
   }
 
   .prize-list .prize-box.basketball {
-    background: #f19b14 url("../../assets/basketball.png") no-repeat left center;
+    @if ($lotteryIg) {
+      background: #f19b14 url("../../assets/igdj/basketball.png") no-repeat left center;
+    } @else {
+      background: #f19b14 url("../../assets/basketball.png") no-repeat left center;
+    }
     background-size: auto 90%;
   }
 

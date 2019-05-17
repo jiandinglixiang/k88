@@ -53,7 +53,11 @@ export default {
     text-align: center;
     border-radius: 3px;
     overflow: hidden;
-    color: $cFFfFFF;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $cFFfFFF;
+    }
   }
 
   .dialog .content-hd {

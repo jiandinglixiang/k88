@@ -162,8 +162,12 @@ export default {
   }
 
   .sport-filter .dialog-container .top-btn-wrap a.selected {
-    color: $c131313;
     background: $cffC63A;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $c131313;
+    }
   }
 
   .sport-filter .selected-box {
@@ -195,12 +199,20 @@ export default {
     width: 50%;
     float: left;
     padding: 10px 0;
-    border-top: 1px solid $c313131;
     color: $c999999;
+    @if($lotteryIg) {
+      border-top: 1px solid #ddd;
+    } @else {
+      border-top: 1px solid $c313131;
+    }
   }
 
   .sport-filter .btn-wrap a:last-child {
-    border-left: 1px solid $c313131;
     color: $cffC63A;
+    @if($lotteryIg) {
+      border-left: 1px solid #ddd;
+    } @else {
+      border-left: 1px solid $c313131;
+    }
   }
 </style>

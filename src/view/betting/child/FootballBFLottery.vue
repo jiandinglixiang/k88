@@ -149,24 +149,38 @@ export default {
   .football-bf-lottery {
     padding-left: 10px;
     font-size: 14px;
+    @if($lotteryIg) {
+      .text-center.text-default-2 .text-light {
+        color: $cgray;
+      }
+    }
   }
 
   .football-bf-lottery .box {
-    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 14px;
     padding: 7px 0;
     position: relative;
     color: $c999999;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+      border: 1px solid $cFFfFFF;
+    } @else {
+      background: $c494949;
+      border: 1px solid $c494949;
+    }
   }
 
   .football-bf-lottery .box.selected {
     background: $cffC63A;
-    color: $c131313;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $c131313;
+    }
   }
 
   .football-bf-lottery .box.box-icon {
@@ -194,17 +208,28 @@ export default {
   }
 
   .football-bf-lottery table tbody td {
-    background: $c313131;
     padding: 3px 0;
     color: $c999999;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+    } @else {
+      background: $c313131;
+    }
   }
 
   .football-bf-lottery table tbody td.selected {
     background: $cffC63A;
-    color: $c131313;
 
-    span {
+    @if($lotteryIg) {
+      color: $cgray;
+      span {
+        color: $cgray;
+      }
+    } @else {
       color: $c131313;
+      span {
+        color: $c131313;
+      }
     }
   }
 
@@ -228,18 +253,30 @@ export default {
     width: 95%;
     max-width: 320px;
     /*background: #f2f2f2;*/
+    @if($lotteryIg) {
+      background: #F2F2F2;
+    }
   }
 
   .football-bf-lottery .btn-wrap .btn {
-    background: $c131313;
     color: $cffC63A;
-    border-top: 1px solid $c313131;
     margin-top: 5px;
     border-radius: 0;
+    @if($lotteryIg) {
+      background: #F2F2F2;
+      border-top: 1px solid #F2F2F2;
+    } @else {
+      background: $c131313;
+      border-top: 1px solid $c313131;
+    }
   }
 
   .football-bf-lottery .btn-wrap .col:first-child .btn {
-    border-right: 1px solid $c313131;
     color: #666;
+    @if($lotteryIg) {
+      border-right: 1px solid #ddd;
+    } @else {
+      border-right: 1px solid $c313131;
+    }
   }
 </style>

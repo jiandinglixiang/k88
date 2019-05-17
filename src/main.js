@@ -8,7 +8,7 @@ import './common/directive' // 自定义的指令
 import './common/filter' // 自定义的过滤器
 import device from './common/device.js'
 import { H5postmsg } from './common/postmsg'
-
+import './style/icon.scss'
 device(store)
 Vue.config.devtools = process.env.NODE_ENV !== 'production' || !!localStorage.getItem('devtools')
 Vue.config.productionTip = false

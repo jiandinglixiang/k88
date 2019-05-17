@@ -56,14 +56,19 @@ export default {
     height: 50px;
     bottom: 0;
     left: 0;
-    border-top: 1px solid #131313;
     color: $c999999;
     font-size: 12px;
     text-align: center;
     /*background: linear-gradient(top, white, #efeff0);*/
-    background: $c131313;
     padding-top: 7px;
     line-height: 15px;
+    @if ($lotteryIg) {
+      background: $cFFfFFF;
+      border-top: 1px solid $cFFfFFF;
+    } @else {
+      background: $c131313;
+      border-top: 1px solid #131313;
+    }
   }
 
   @media screen and (min-width: 640px) {
@@ -81,26 +86,46 @@ export default {
   }
 
   .bottom-nav .bottom-nav-item.active {
-    color: $cffC63A;
+    @if ($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $cffC63A;
+    }
   }
 
   .bottom-nav .nav-icon.home-icon {
-    background: url("../assets/home/home.png") no-repeat;
+    @if ($lotteryIg) {
+      background: url("../assets/igdj/home.png") no-repeat;
+    } @else {
+      background: url("../assets/home/home.png") no-repeat;
+    }
     background-size: 100% 100%;
   }
 
   .bottom-nav .bottom-nav-item.active .home-icon {
-    background: url("../assets/home/home_active.png") no-repeat;
+    @if ($lotteryIg) {
+      background: url("../assets/igdj/home_active.png") no-repeat;
+    } @else {
+      background: url("../assets/home/home_active.png") no-repeat;
+    }
     background-size: 100% 100%;
   }
 
   .bottom-nav .nav-icon.order-icon {
-    background: url("../assets/home/order.png") no-repeat;
+    @if ($lotteryIg) {
+      background: url("../assets/igdj/order.png") no-repeat;
+    } @else {
+      background: url("../assets/home/order.png") no-repeat;
+    }
     background-size: 100% 100%;
   }
 
   .bottom-nav .bottom-nav-item.active .order-icon {
-    background: url("../assets/home/order_active.png") no-repeat;
+    @if ($lotteryIg) {
+      background: url("../assets/igdj/order_active.png") no-repeat;
+    } @else {
+      background: url("../assets/home/order_active.png") no-repeat;
+    }
     background-size: 100% 100%;
   }
 
@@ -115,22 +140,38 @@ export default {
   }
 
   .bottom-nav .nav-icon.prize-icon {
-    background: url("../assets/home/prize.png") no-repeat;
+    @if ($lotteryIg) {
+      background: url("../assets/igdj/prize.png") no-repeat;
+    } @else {
+      background: url("../assets/home/prize.png") no-repeat;
+    }
     background-size: 100% 100%;
   }
 
   .bottom-nav .bottom-nav-item.active .prize-icon {
-    background: url("../assets/home/prize_active.png") no-repeat;
+    @if ($lotteryIg) {
+      background: url("../assets/igdj/prize_active.png") no-repeat;
+    } @else {
+      background: url("../assets/home/prize_active.png") no-repeat;
+    }
     background-size: 100% 100%;
   }
 
   .bottom-nav .nav-icon.score-icon {
-    background: url("../assets/home/score.png") no-repeat;
+    @if ($lotteryIg) {
+      background: url("../assets/igdj/score.png") no-repeat;
+    } @else {
+      background: url("../assets/home/score.png") no-repeat;
+    }
     background-size: 100% 100%;
   }
 
   .bottom-nav .bottom-nav-item.active .score-icon {
-    background: url("../assets/home/score_active.png") no-repeat;
+    @if ($lotteryIg) {
+      background: url("../assets/igdj/score_active.png") no-repeat;
+    } @else {
+      background: url("../assets/home/score_active.png") no-repeat;
+    }
     background-size: 100% 100%;
   }
 </style>

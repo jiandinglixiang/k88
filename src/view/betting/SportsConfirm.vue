@@ -96,7 +96,7 @@
       <div class="summary" v-if="currentMode === 1">
         <div class="text">
           <span>
-            {{ stakeCount }}注 1倍
+            {{ stakeCount1 }}注 1倍
             <span>共{{ textSum }}元</span>
           </span>
           <div class="pull-right text-light ellipsis text-right" style="width: 50%">预计奖金:{{ bonusCount }}元</div>
@@ -406,11 +406,15 @@ export default {
       }
       return sum.toFixed(2)
     },
-    stakeCount () {
+    stakeCount1 () {
       let stake = 0
+      // for (let i in this.inputValue) {
+      //   stake += this.inputValue[i].length
+      // }
       for (let i in this.inputValue) {
         stake += this.inputValue[i].length
       }
+      console.log(stake)
       return stake
     },
     bonusCount () {
@@ -996,7 +1000,6 @@ export default {
   }
 
   .sports-confirm-container .operate-wrap a {
-    border: 1px solid $cffC63A;
     border-radius: 5px;
     background: $c131313;
     text-align: center;
@@ -1006,25 +1009,46 @@ export default {
     color: $c999999;
     padding: 5px;
     font-size: 14px;
+    @if($lotteryIg) {
+      border: 1px solid $c999999;
+    } @else {
+      border: 1px solid $cffC63A;
+    }
   }
 
   .sports-confirm .bottom-fixed {
     position: fixed;
     bottom: 0;
     left: 0;
-    background: $c131313;
     width: 100%;
     height: 130px;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+    } @else {
+      background: $c131313;
+    }
   }
 
   .sports-confirm .bottom-fixed .top {
     padding: 10px;
-    border-top: 1px solid $c313131;
-    border-bottom: 1px solid $c313131;
+    @if($lotteryIg) {
+      border-top: 1px solid $cEbebeb;
+      border-bottom: 1px solid $cEbebeb;
+      >.col.col-50.col-center .text-normal {
+        color: $cgray!important;
+      }
+    } @else {
+      border-top: 1px solid $c313131;
+      border-bottom: 1px solid $c313131;
+    }
   }
 
   .sports-confirm .bottom-fixed .down-up {
-    background: url("../../assets/betting/down_out.png") no-repeat;
+    @if($lotteryIg) {
+      background: url("../../assets/igdj/down_out.png") no-repeat;
+    } @else {
+      background: url("../../assets/betting/down_out.png") no-repeat;
+    }
     background-size: 100% 100%;
     width: 20px;
     height: 20px;
@@ -1043,7 +1067,11 @@ export default {
     padding-bottom: 5px;
 
     > span:first-child {
-      color: $cFFfFFF;
+      @if($lotteryIg) {
+        color: $cgray;
+      } @else {
+        color: $cFFfFFF;
+      }
 
       span {
         color: #FF3333;
@@ -1092,13 +1120,18 @@ export default {
     width: 30px;
     height: 30px;
     line-height: 30px;
-    background: #dddddd;
-    color: $c131313;
     right: 5px;
     bottom: 13px;
     text-align: center;
     border-radius: 5px;
     display: none;
+    @if($lotteryIg) {
+      background: #ddd;
+      color: $cgray;
+    } @else {
+      background: #dddddd;
+      color: $c131313;
+    }
   }
 
   .sports-confirm .scheme-box-item .sure.selected {
@@ -1156,10 +1189,14 @@ export default {
     line-height: 35px;
     text-align: center;
     color: $c999999;
-    background: $c313131;
     display: block;
     float: left;
     font-size: 14px;
+    @if($lotteryIg) {
+      background: #F2F2F2;
+    } @else {
+      background: $c313131;
+    }
   }
 
   .sports-confirm .series-select-popup .header-nav a.active {
@@ -1168,7 +1205,11 @@ export default {
   }
 
   .sports-confirm .series-select-popup .btn-wrap {
-    border-top: 1px solid $c313131;
+    @if($lotteryIg) {
+      border-top: 1px solid #DDDDDD;
+    } @else {
+      border-top: 1px solid $c313131;
+    }
   }
 
   .sports-confirm .series-select-popup .btn-wrap a {
@@ -1180,7 +1221,11 @@ export default {
 
   .sports-confirm .series-select-popup .btn-wrap .col:last-child a {
     color: $cffC63A;
-    border-left: 1px solid $c313131;
+    @if($lotteryIg) {
+      border-left: 1px solid #DDDDDD;
+    } @else {
+      border-left: 1px solid $c313131;
+    }
   }
 
   .sports-confirm .series-select-popup .select-content {
@@ -1210,7 +1255,11 @@ export default {
   }
 
   .sports-confirm .arrow-right {
-    background: url("../../assets/betting/arrow-right.png") no-repeat;
+    @if($lotteryIg) {
+      background: url("../../assets/igdj/arrow-right.png") no-repeat;
+    } @else {
+      background: url("../../assets/betting/arrow-right.png") no-repeat;
+    }
     background-size: 100% 100%;
     width: 7px;
     height: 12px;

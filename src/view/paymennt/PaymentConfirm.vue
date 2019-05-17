@@ -102,9 +102,17 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  @if($lotteryIg) {
+    .head {
+      margin-bottom: 0;
+    }
+  }
   .payment-confirm .top {
     padding: 10px;
+    @if($lotteryIg) {
+      background-color: #1A1003;
+    }
   }
 
   .payment-confirm .top h3 {
@@ -115,6 +123,9 @@ export default {
 
   .payment-confirm .content {
     padding: 0 10px;
+    @if($lotteryIg) {
+      background-color: $cFFfFFF;
+    }
   }
 
   .payment-confirm .content .item {
@@ -197,5 +208,10 @@ export default {
 
   .payment-confirm .arrow-bottom-icon.rotate {
     transform: rotate(180deg);
+  }
+  .payment-confirm .btn {
+    @if($lotteryIg) {
+      color: $cgray;
+    }
   }
 </style>

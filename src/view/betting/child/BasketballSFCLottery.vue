@@ -140,18 +140,28 @@ export default {
   .basketball-sfc-lottery {
     padding-left: 10px;
     font-size: 14px;
+    @if($lotteryIg) {
+      .text-center.text-default-2 .text-light {
+        color: $cgray;
+      }
+    }
   }
 
   .basketball-sfc-lottery .box {
-    border: 1px solid $c494949;
     border-radius: 4px;
     overflow: hidden;
-    background: $c494949;
     text-align: center;
     margin-top: 8px;
     font-size: 13px;
     position: relative;
     color: $c999999;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+      border: 1px solid $cFFfFFF;
+    } @else {
+      background: $c494949;
+      border: 1px solid $c494949;
+    }
   }
 
   .basketball-sfc-lottery .box .arrow-right {
@@ -172,13 +182,20 @@ export default {
 
   .basketball-sfc-lottery .box .box-item.selected {
     background: $cffC63A;
-    color: $c131313;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $c131313;
+    }
   }
 
   .basketball-sfc-lottery .dialog .content {
     width: 95%;
     max-width: 320px;
     /*background: #f2f2f2;*/
+    @if($lotteryIg) {
+      background: #F2F2F2;
+    }
   }
 
   .basketball-sfc-lottery .table-wrap {
@@ -190,8 +207,12 @@ export default {
   }
 
   .basketball-sfc-lottery table td {
-    background: $c313131;
     padding: 5px;
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+    } @else {
+      background: $c313131;
+    }
   }
 
   .basketball-sfc-lottery table td.blue {
@@ -205,24 +226,38 @@ export default {
   }
 
   .basketball-sfc-lottery table td.selected {
-    color: $c131313;
     background: $cffC63A;
 
-    span {
-      color: $c131313;
+    @if($lotteryIg) {
+      span {
+        color: $cgray;
+      }
+    } @else {
+      span  {
+        color: $c131313;
+      }
     }
   }
 
   .basketball-sfc-lottery .btn-wrap .btn {
-    background: $c131313;
     color: $cffC63A;
-    border-top: 1px solid $c313131;
     margin-top: 5px;
     border-radius: 0;
+    @if($lotteryIg) {
+      background: #F2F2F2;
+      border-top: 1px solid #F2F2F2;
+    } @else {
+      background: $c131313;
+      border-top: 1px solid $c313131;
+    }
   }
 
   .basketball-sfc-lottery .btn-wrap .col:first-child .btn {
-    border-right: 1px solid $c313131;
     color: #666;
+    @if($lotteryIg) {
+      border-right: 1px solid #ddd;
+    } @else {
+      border-right: 1px solid $c313131;
+    }
   }
 </style>

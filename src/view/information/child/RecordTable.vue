@@ -139,8 +139,12 @@ export default {
 
 <style lang="scss" scoped>
   .table-container {
-    background: $c1c1c1c;
     font-size: 14px;
+    @if($lotteryIg) {
+      background: #F2F2F2;
+    } @else {
+      background: $c1c1c1c;
+    }
   }
 
   .table-container .table-header {
@@ -149,12 +153,17 @@ export default {
     text-align: center;
     font-size: 16px;
     position: relative;
-    border-bottom: 1px solid $c313131;
-    color: $cFFfFFF;
+    @if($lotteryIg) {
+      color: $cgray;
+      border-bottom: 1px solid $c131313;
+      background: $cFFfFFF;
+    } @else {
+      border-bottom: 1px solid $c313131;
+      color: $cFFfFFF;
+    }
   }
 
   .table-container .switch-arrow {
-    border: 1px solid #ddd;
     height: 16px;
     width: 16px;
     border-radius: 20px;
@@ -163,13 +172,23 @@ export default {
     position: absolute;
     right: 10px;
     top: 12px;
+    @if($lotteryIg) {
+      border: 1px solid $c999999;
+    } @else {
+      border: 1px solid #ddd;
+    }
   }
 
   .table-container .arrow-bottom-icon {
     display: inline-block;
-    margin-left: 1px;
     vertical-align: top;
-    margin-top: 3px;
+    @if($lotteryIg) {
+      margin-left: 0;
+      margin-top: 4px;
+    } @else {
+      margin-left: 1px;
+      margin-top: 3px;
+    }
   }
 
   .table-container .arrow-bottom-icon.rotate {
@@ -182,6 +201,11 @@ export default {
     border-left: 3px solid $cffC63A;
     padding-left: 5px;
     color: $cFFfFFF;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $cFFfFFF;
+    }
   }
 
   .table-container table {
@@ -193,17 +217,29 @@ export default {
 
   .table-container table thead {
     color: #B4B4B4;
+    @if($lotteryIg) {
+      background: $cEbebeb;
+    }
   }
 
   .table-container table tbody {
     font-size: 12px;
-    background-color: $c313131;
-    color: $cFFfFFF;
-  }
+    @if($lotteryIg) {
+      background: $cFFfFFF;
+      color: $cgray;
+    } @else {
+      background-color: $c313131;
+      color: $cFFfFFF;
+    }
 
+  }
   .table-container td {
     padding: 5px 0;
-    border: 1px solid $c494949;
+    @if($lotteryIg) {
+      border: 1px solid #ddd;
+    } @else {
+      border: 1px solid $c494949;
+    }
   }
 
   .table-container.collapse .table-title,

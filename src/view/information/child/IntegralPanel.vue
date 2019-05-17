@@ -72,6 +72,10 @@ export default {
 
   .integral-panel .panel-header a.active {
     background: $cffC63A;
-    color: $c131313;
+    @if($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $c131313;
+    }
   }
 </style>

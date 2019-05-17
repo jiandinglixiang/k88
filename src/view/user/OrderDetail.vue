@@ -149,11 +149,16 @@ export default {
   }
 
   .order-detail .top {
-    background: url("../../assets/icon/order_top_bg.png") no-repeat;
+    @if($lotteryIg) {
+      background: url("../../assets/igdj/order_top_bg.png") no-repeat;
+      color: $cgray;
+    } @else {
+      background: url("../../assets/icon/order_top_bg.png") no-repeat;
+      color: $cFFfFFF;
+    }
     background-size: 100% 100%;
     padding: 20px 10px 20px 75px;
     position: relative;
-    color: $cFFfFFF;
   }
 
   .order-detail .top img {

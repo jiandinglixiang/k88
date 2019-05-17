@@ -41,7 +41,11 @@ export default {
 <style lang="scss" scoped>
   .basket-team-table {
     .panel-title-head {
-      color: $cFFfFFF;
+      @if($lotteryIg) {
+        color: $cgray;
+      } @else {
+        color: $cFFfFFF;
+      }
     }
 
     table {
@@ -50,8 +54,16 @@ export default {
         color: $c999999;
       }
 
-      background-color: $c313131;
-      color: $cFFfFFF;
+      @if($lotteryIg) {
+        background-color: $cFFfFFF;
+        color: $cgray;
+        .bg-gray {
+          background-color: #F2F2F2;
+        }
+      } @else {
+        background-color: $c313131;
+        color: $cFFfFFF;
+      }
     }
   }
 </style>

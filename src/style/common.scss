@@ -221,11 +221,19 @@ input[type="text"], input[type="number"], input[type="password"] {
 }
 
 .text-default-2 {
-  color: $cCccCCc;
+  @if($lotteryIg) {
+    color: $cgray;
+  } @else {
+    color: $cCccCCc;
+  }
 }
 
 .text-dark {
-  color: #cccccc;
+  @if($lotteryIg) {
+    color: $cgray;
+  } @else {
+    color: #cccccc;
+  }
 }
 
 .text-primary {

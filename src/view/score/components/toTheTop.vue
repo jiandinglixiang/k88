@@ -5,7 +5,11 @@
     /*border-bottom: 1px solid #c9c9c9;*/
     padding: 0.21875rem 0.3125rem;
     /*margin:0.015625%;*/
-    color: $cCccCCc;
+    @if ($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $cCccCCc;
+    }
   }
 
   .organ-item-title .left {

@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     submit () {
-      if ((this.mine.identity_status) === '0') {
+      if ((this.mine.identity_status)*1 === 0) {
         Toast('请先完成身份验证!')
         return
       }

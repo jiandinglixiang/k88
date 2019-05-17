@@ -5,9 +5,13 @@
 </template>
 <style lang="scss" scoped>
   .item-title {
-    color: $c999999;
     font-size: 0.27rem;
     text-indent: 1em;
+    @if ($lotteryIg) {
+      color: #888;
+    } @else {
+      color: $c999999;
+    }
   }
 </style>
 <script>//

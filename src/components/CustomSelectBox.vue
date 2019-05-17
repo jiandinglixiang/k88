@@ -66,7 +66,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .custom-select-box .label,
   .custom-select-box .unit {
     float: left;
@@ -94,8 +94,12 @@ export default {
     line-height: 30px;
     float: left;
     text-align: center;
-    background: #f2f2f2;
     color: #999;
+    @if($lotteryIg) {
+      background: #ddd;
+    } @else {
+      background: #f2f2f2;
+    }
   }
 
   .custom-select-box .box span:first-child {

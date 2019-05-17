@@ -25,18 +25,30 @@ export default {
   }
 
   .txt1 {
-    color: $cCccCCc;
     font-size: 0.36rem;
+    @if ($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $cCccCCc;
+    }
   }
 
   .txt2 {
-    color: $cCccCCc;
     font-size: 0.36rem;
+    @if ($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $cCccCCc;
+    }
   }
 
   .txt3 {
-    color: $cCccCCc;
     font-size: 0.3rem;
+    @if ($lotteryIg) {
+      color: $cgray;
+    } @else {
+      color: $cCccCCc;
+    }
   }
 
   .body {

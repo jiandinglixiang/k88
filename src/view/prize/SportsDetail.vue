@@ -9,7 +9,7 @@
       <sports-prize-panel :holder="holder" :key="key"></sports-prize-panel>
     </template>
     <div class="bottom-fixed">
-      <a @click="goBetting" class="btn" href="javascript:" v-if="detail.status === 1">{{title}}投注</a>
+      <a @click="goBetting" class="btn" href="javascript:" v-if="detail.status*1 === 1">{{title}}投注</a>
       <a class="btn disabled" href="javascript:" v-else>暂停销售</a>
     </div>
     <mt-datetime-picker
@@ -110,5 +110,15 @@ export default {
     background-size: 100% 100%;
     display: inline-block;
     margin-top: 5px;
+  }
+  .mint-datetime-action {
+     @if($lotteryIg) {
+       color: $c999999;
+    }
+    &.mint-datetime-confirm {
+      @if($lotteryIg) {
+        color: $cffC63A;
+      }
+    }
   }
 </style>

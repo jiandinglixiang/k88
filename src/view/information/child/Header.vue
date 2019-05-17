@@ -90,7 +90,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .information-header .team-icon img {
     border-radius: 40px;
   }
@@ -107,7 +107,6 @@ export default {
   }
 
   .information-header {
-    color: white;
     font-weight: 100;
     position: relative;
   }
@@ -130,14 +129,24 @@ export default {
   }
 
   .information-header.football .container {
+    @if($lotteryIg) {
+      background: url("../../../assets/igdj/football_information.png") no-repeat;
+      color: $cFFfFFF;
+    } @else {
+      background: url("../../../assets/football_information.png") no-repeat;
+    }
     height: 145px;
-    background: url("../../../assets/football_information.png") no-repeat;
     background-size: 100% 100%;
   }
 
   .information-header.basketball .container {
+    @if($lotteryIg) {
+      background: url("../../../assets/igdj/basketball_information.png") no-repeat;
+      color: $cFFfFFF;
+    } @else {
+      background: url("../../../assets/basketball_information.png") no-repeat;
+    }
     height: 145px;
-    background: url("../../../assets/basketball_information.png") no-repeat;
     background-size: 100% 100%;
   }
 
@@ -147,7 +156,11 @@ export default {
     line-height: 35px;
     position: relative;
     padding-bottom: 1px;
-    color: #888888;
+    @if($lotteryIg) {
+      color: #ddd;
+    } @else {
+      color: #888888;
+    }
   }
 
   .information-header.football .tab {

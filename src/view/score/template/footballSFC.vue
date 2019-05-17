@@ -18,7 +18,7 @@
 </style>
 <template>
   <div>
-    <template v-if="propsData.match_status===1">
+    <template v-if="propsData.match_status*1===1">
       <div class="item-body">
         <item-title
           :propsData="[`第${propsData.round_no}场 `,propsData.league,weekDay(propsData.first_half_begin_time)]"/>
@@ -40,7 +40,7 @@
         <!--<is-top :index="index" :toTop="propsData.toTop"/>-->
       </div>
     </template>
-    <template v-else-if="propsData.match_status===2">
+    <template v-else-if="propsData.match_status*1===2">
       <div class="item-body">
         <item-title
           :propsData="[`第${propsData.round_no}场 `,propsData.league,weekDay(propsData.first_half_begin_time)]"/>
@@ -131,16 +131,16 @@ export default {
         return str
       }
 
-      if (type === 1) {
+      if (type*1 === 1) {
         return weeks[new Date(timestamp * 1000).getDay()]
-      } else if (type === 2) {
+      } else if (type*1 === 2) {
         return `${check(data.getHours())}:${check(data.getMinutes())}`
       }
       return `${check(data.getMonth() + 1)}-${check(data.getDate())} ${check(data.getHours())}:${check(data.getMinutes())}`
     },
     filtration (who) {
       let data = [this.scoreArray(who), null, null, null]
-      if (who === 0) {
+      if (who*1 === 0) {
         data[1] = this.propsData.home
         if (this.propsData.home_info) {
           data[2] = this.propsData.home_info.red_card ? this.propsData.home_info.red_card : 0

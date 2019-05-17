@@ -2,7 +2,7 @@
 const [TYPE, STATUS] = ['LOTTERY_365', ''] // 365皮肤
 // const [TYPE, STATUS] = ['LOTTERY_TF', ''] // 同发皮肤
 // const [TYPE, STATUS] = ['LOTTERY_HM', ''] // 黑马皮肤
-
+// const [TYPE, STATUS] = ['LOTTERY_IG', ''] // IG皮肤
 // -----------------------------
 module.exports = {
   lintOnSave: 'warning',
@@ -25,6 +25,9 @@ module.exports = {
           break
         case 'LOTTERY_TF':
           appIcon = `"tf_"`
+          break
+        case 'LOTTERY_IG':
+          appIcon = `"ig_"`
           break
       }
       Object.assign(args[0]['process.env'], { 'APP_ICO': appIcon }) // 图标路径

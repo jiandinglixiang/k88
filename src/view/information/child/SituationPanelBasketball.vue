@@ -183,8 +183,16 @@ export default {
 
 <style lang="scss">
   .football-information .has-con {
-    background-color: $c131313;
-    color: $c999999;
+    @if($lotteryIg) {
+      background-color: $cFFfFFF;
+      color: $cgray;
+      .active {
+        color: $cgray;
+      }
+    } @else {
+      background-color: $c131313;
+      color: $c999999;
+    }
   }
 
   .football-information .has-icon {

@@ -3,8 +3,12 @@
     position: relative;
     /*border-bottom: 1px solid #ddd;*/
     padding: 10px;
-    color: $cCccCCc;
     background-color: $c1c1c1c;
+    @if ($lotteryIg) {
+      color: $c999999;
+    } @else {
+      color: $cCccCCc;
+    }
   }
 
   .organ-item-title .left {

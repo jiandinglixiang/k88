@@ -36,21 +36,22 @@ export default {
   }
 }
 </script>
-<style>
-  @import "../style/icon.css";
-</style>
 <style lang="scss">
   .head {
     position: relative;
     padding: 0 20px;
     height: 40px;
-    background: $c131313;
     font-size: 18px;
-    color: $cFFfFFF;
     text-align: center;
     line-height: 40px;
     margin-bottom: 1px;
-
+    @if ($lotteryIg) {
+      background: #1A1003;
+      color: #fff;
+    } @else {
+      background: $c131313;
+      color: $cFFfFFF;
+    }
     .order-icon {
       position: absolute;
       right: 10px;

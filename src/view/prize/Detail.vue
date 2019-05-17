@@ -24,9 +24,9 @@
         </template>
         <template v-else>
           <div slot="number">
-            <span :class="{'bg-red-ball': index===0}" class="red-ball"
+            <span :class="{'bg-red-ball': index*1===0}" class="red-ball"
                   v-for="ballRed in item.balls[0]">{{ballRed}}</span>
-            <span :class="{'bg-blue-ball':  index===0}" class="blue-ball"
+            <span :class="{'bg-blue-ball':  index*1===0}" class="blue-ball"
                   v-for="ballBlue in item.balls[1]">{{ballBlue}}</span>
           </div>
         </template>
@@ -42,7 +42,7 @@
                 <p class="text-primary text-ml">{{(item.winnings_pool || 0) | currency}}</p>
               </div>
             </div>
-            <div class="row" v-else-if="item.lottery_id === 20">
+            <div class="row" v-else-if="item.lottery_id*1 === 20">
               <div class="col padding-top-0">
                 <span>14场销量</span>
                 <p class="text-primary text-ml">{{(item.fourteen_sales || 0) | currency}}</p>
@@ -69,7 +69,7 @@
                 <div class="col col-center"><span>{{item.winnings.second_prize_bonus}}</span></div>
               </div>
             </template>
-            <template v-else-if="item.lottery_id === 20">
+            <template v-else-if="item.lottery_id*1 === 20">
               <div class="row gray">
                 <div class="col"><span>奖项</span></div>
                 <div class="col"><span>中奖注数</span></div>

@@ -125,6 +125,12 @@ export default {
     padding: 10px;
     border-bottom: 1px solid $c313131;
     color: $cFFfFFF;
+    @if($lotteryIg) {
+      color: $cgray;
+      span {
+        color: $c999999;
+      }
+    }
   }
 
   .payment-confirm .content .item:last-child {

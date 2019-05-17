@@ -19,7 +19,7 @@
 </style>
 <template>
   <div>
-    <template v-if="propsData.match_status===1">
+    <template v-if="propsData.match_status*1===1">
       <!--未开始-->
       <div class="item-body">
         <item-title
@@ -47,7 +47,7 @@
         </div>
       </div>
     </template>
-    <template v-else-if="propsData.match_status===2">
+    <template v-else-if="propsData.match_status*1===2">
       <!--进行中-->
       <div class="item-body">
         <item-title
@@ -156,9 +156,9 @@ export default {
         return str
       }
 
-      if (type === 1) {
+      if (type*1 === 1) {
         return weeks[new Date(timestamp * 1000).getDay()]
-      } else if (type === 2) {
+      } else if (type*1 === 2) {
         return `${check(data.getHours())}:${check(data.getMinutes())}`
       }
       return `${check(data.getMonth() + 1)}-${check(data.getDate())} ${check(data.getHours())}:${check(data.getMinutes())}`

@@ -129,9 +129,9 @@ export default {
       let upperLimit = ''
       this.schedule.selected.map(v => {
         if (v.key.substring(4, 3) === '1') {
-          name = '小'
-        } else {
           name = '大'
+        } else {
+          name = '小'
         }
         upperLimit = Math.floor(this.bonusLimit / v.value)
         if (upperLimit > this.amountMax) {

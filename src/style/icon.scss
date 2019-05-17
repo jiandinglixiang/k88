@@ -8,7 +8,11 @@
 .arrow-right {
     width: 7px;
     height: 12px;
-    background: url("../assets/icon/arrow_right.png") no-repeat;
+    @if($lotteryIg) {
+        background: url("../assets/igdj/arrow_right.png") no-repeat;
+    } @else {
+        background: url("../assets/icon/arrow_right.png") no-repeat;
+    }
     background-size: 100% 100%;
 }
 
@@ -51,6 +55,13 @@
     width: 12px;
     height: 9px;
     background: url("../assets/icon/gold_check.png") no-repeat;
+    background-size: 100% 100%;
+}
+
+.blue-check-icon {
+    width: 12px;
+    height: 9px;
+    background: url("../assets/icon/blue_check.png") no-repeat;
     background-size: 100% 100%;
 }
 
@@ -176,7 +187,13 @@
 .arrow-bottom-icon {
     width: 12px;
     height: 8px;
-    background: url("../assets/icon/arrow_bottom.png") no-repeat;
+    @if($lotteryIg) {
+        width: 10px;
+        height: 6px;
+        background: url("../assets/igdj/arrow_bottom.png") no-repeat;
+    } @else {
+        background: url("../assets/icon/arrow_bottom.png") no-repeat;
+    }
     background-size: 100% 100%;
 }
 
