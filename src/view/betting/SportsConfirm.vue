@@ -401,6 +401,7 @@ export default {
       })
     },
     textSum () {
+      //  亚盘单关 投注总金额
       let sum = 0
       for (let i in this.inputValue) {
         for (let j in this.inputValue[i]) {
@@ -410,18 +411,26 @@ export default {
       return sum.toFixed(2)
     },
     stakeCount1 () {
+      // 亚盘单关 投注注数
       let stake = 0
-      // for (let i in this.inputValue) {
-      //   stake += this.inputValue[i].length
-      // }
+      let nullStake = 0
       for (let i in this.inputValue) {
         stake += this.inputValue[i].length
       }
-      console.log(stake)
+      for (let i in this.inputValue) {
+        for (let j in this.inputValue[i]) {
+          if (this.inputValue[i][j].total === '') {
+            nullStake += 1
+          }
+        }
+      }
+      if (nullStake > 0 && stake >= nullStake) {
+        stake = stake - nullStake
+      }
       return stake
     },
     bonusCount () {
-      // 单关 奖金预计
+      // 亚盘单关 奖金预计
       let count = 0
       for (let i in this.inputValue) {
         for (let j in this.inputValue[i]) {
