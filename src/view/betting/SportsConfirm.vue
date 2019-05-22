@@ -12,6 +12,7 @@
           :class="{'has-sure': betting.mode === 2,
           'padding': stylepadding,
           'stylehidden': stylehidden}"
+          :key="betting.id"
           class="scheme-box-item"
           v-for="(betting, key) in bettingList">
           <template v-if="betting.lotteryId === 601">
@@ -72,14 +73,14 @@
           <template v-else-if="betting.lotteryId === 901">
             <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
             <ah-qc-r-q-lottery :amountMax="mine.amount_max" :amountMin="mine.amount_min" :bonusLimit="bonusLimit"
-                               :inputValue.sync="inputValue[key]" :isConfirm="true"
+                               :inputValue.sync="inputValue[betting.id]" :isConfirm="true"
                                :schedule="betting"
                                @onOptionSelected="onOptionSelected"/>
           </template>
           <template v-else-if="betting.lotteryId === 902">
             <span @click="deleteBetting(key)" class="scheme-delete-icon"></span>
             <ah-qc-d-x-q-lottery :amountMax="mine.amount_max" :amountMin="mine.amount_min" :bonusLimit="bonusLimit"
-                                 :inputValue.sync="inputValue[key]" :isConfirm="true"
+                                 :inputValue.sync="inputValue[betting.id]" :isConfirm="true"
                                  :schedule="betting"
                                  @onOptionSelected="onOptionSelected"></ah-qc-d-x-q-lottery>
           </template>
@@ -214,16 +215,17 @@
           </div>
           <div class="select-content clear" v-if="popupNavIndex === 0">
           <span :class="{selected: popupIsSelected(item)}"
-                @click="popupItemSelected(item, 0)"
-                class="item"
-                v-for="item in popupList[0]">
+                :key="index"
+                @click="popupItemSelected(item, 0)" class="item"
+                v-for="(item,index) in popupList[0]">
             {{item.value}}</span>
           </div>
           <div class="select-content clear" v-else>
           <span :class="{selected: popupIsSelected(item)}"
+                :key="index"
                 @click="popupItemSelected(item, 1)"
                 class="item"
-                v-for="item in popupList[1]">
+                v-for="(item,index) in popupList[1]">
             {{item.value}}</span>
           </div>
           <div class="btn-wrap row">
@@ -261,7 +263,6 @@
 
 <script>//
 import VHead from '../../components/VHead.vue'
-import SchemeBox from '../../components/SchemeBox.vue'
 import ServiceAgreement from '../../components/ServiceAgreement.vue'
 import CustomSelectBox from '../../components/CustomSelectBox.vue'
 import {
@@ -318,7 +319,7 @@ export default {
       isShowBottom: true,
       ManyValue: {}, // 输入金额值列表
       popupInputIndex: true, // 显示单个输入框
-      inputValue: [],
+      inputValue: {},
       updateOdds: {}
     }
   },
@@ -354,6 +355,8 @@ export default {
         return '竞彩篮球'
       } else if (Lottery.isAHFootBall(this.lotteryId)) {
         return '足球亚盘'
+      } else {
+        return ''
       }
     },
     bettingList () {
@@ -428,14 +431,16 @@ export default {
       return count.toFixed(2)
     },
     stylepadding () {
-      if (this.currentMode === 2 && this.lotteryId === 901 || this.currentMode === 2 && this.lotteryId === 902) {
+      if (this.currentMode === 2 && (this.lotteryId === 901 || this.lotteryId === 902)) {
         return true
       }
+      return false
     },
     stylehidden () {
-      if (this.currentMode === 1 && this.lotteryId === 901 || this.currentMode === 1 && this.lotteryId === 902) {
+      if (this.currentMode === 1 && (this.lotteryId === 901 || this.lotteryId === 902)) {
         return true
       }
+      return false
     }
   },
   methods: {
@@ -514,6 +519,7 @@ export default {
       // this.isShow = !this.isShow;
     },
     clearBettingList () {
+      this.inputValue = []// 亚盘金额初始化
       this.$store.commit(SPORTS_CONFIRM_CLEAR_TICKETS)
       this.clearSeries()
       this.setProjectBonus()
@@ -954,7 +960,6 @@ export default {
   },
   components: {
     VHead,
-    SchemeBox,
     ServiceAgreement,
     CustomSelectBox,
     FootballSPFLottery,
@@ -1009,7 +1014,7 @@ export default {
     color: $c999999;
     padding: 5px;
     font-size: 14px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border: 1px solid $c999999;
     } @else {
       border: 1px solid $cffC63A;
@@ -1022,7 +1027,7 @@ export default {
     left: 0;
     width: 100%;
     height: 130px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
     } @else {
       background: $c131313;
@@ -1031,11 +1036,11 @@ export default {
 
   .sports-confirm .bottom-fixed .top {
     padding: 10px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-top: 1px solid $cEbebeb;
       border-bottom: 1px solid $cEbebeb;
-      >.col.col-50.col-center .text-normal {
-        color: $cgray!important;
+      > .col.col-50.col-center .text-normal {
+        color: $cgray !important;
       }
     } @else {
       border-top: 1px solid $c313131;
@@ -1044,7 +1049,7 @@ export default {
   }
 
   .sports-confirm .bottom-fixed .down-up {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: url("../../assets/igdj/down_out.png") no-repeat;
     } @else {
       background: url("../../assets/betting/down_out.png") no-repeat;
@@ -1067,7 +1072,7 @@ export default {
     padding-bottom: 5px;
 
     > span:first-child {
-      @if($lotteryIg) {
+      @if ($lotteryIg) {
         color: $cgray;
       } @else {
         color: $cFFfFFF;
@@ -1125,7 +1130,7 @@ export default {
     text-align: center;
     border-radius: 5px;
     display: none;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #ddd;
       color: $cgray;
     } @else {
@@ -1192,7 +1197,7 @@ export default {
     display: block;
     float: left;
     font-size: 14px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
     } @else {
       background: $c313131;
@@ -1205,7 +1210,7 @@ export default {
   }
 
   .sports-confirm .series-select-popup .btn-wrap {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-top: 1px solid #DDDDDD;
     } @else {
       border-top: 1px solid $c313131;
@@ -1221,7 +1226,7 @@ export default {
 
   .sports-confirm .series-select-popup .btn-wrap .col:last-child a {
     color: $cffC63A;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-left: 1px solid #DDDDDD;
     } @else {
       border-left: 1px solid $c313131;
@@ -1255,7 +1260,7 @@ export default {
   }
 
   .sports-confirm .arrow-right {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: url("../../assets/igdj/arrow-right.png") no-repeat;
     } @else {
       background: url("../../assets/betting/arrow-right.png") no-repeat;

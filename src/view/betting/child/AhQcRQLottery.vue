@@ -29,7 +29,7 @@
                   </div>
                   <div class="col">
                     <div class="input-text text-center">
-                      <input @input="getInputValue($event, index)" placeholder="请输入投注金额" type="number">
+                      <input placeholder="请输入投注金额" type="number" v-model="ValueArray[index]">
                     </div>
                   </div>
                 </div>
@@ -47,9 +47,9 @@
           </div>
           <div class="box">
             <div :class="{selected: isSelected(item), 'border-top': index > 1}"
+                 :key="index"
                  @click="selectedItem(item)"
-                 class="box-item row"
-                 :key="index" v-for="(item, index) in schedule.holderList">
+                 class="box-item row" v-for="(item, index) in schedule.holderList">
               <div class="col-60 text-center">{{ item.text}}</div>
               <div :class="isStyle(item.str)" class="col text-color">{{ twoDecimal[index] }}<span
                 class="arrow-icon"></span>
@@ -72,9 +72,9 @@
         </div>
         <div class="box" v-else>
           <div :class="{selected: isSelected(item), 'border-top': index > 1}"
+               :key="index"
                @click="selectedItem(item)"
-               class="box-item row"
-               :key="index" v-for="(item, index) in schedule.holderList">
+               class="box-item row" v-for="(item, index) in schedule.holderList">
             <div class="col-60 text-center">{{ item.text }}</div>
             <div :class="isStyle(item.str)" class="col text-color">{{ twoDecimal[index] }}<span
               class="arrow-icon"></span></div>
@@ -95,7 +95,7 @@ export default {
   props: ['schedule', 'isConfirm', 'bonusLimit', 'amountMax', 'amountMin'],
   data () {
     return {
-      inputValueArray: []
+      ValueArray: []
     }
   },
   computed: {
@@ -201,11 +201,13 @@ export default {
       } else {
         f2.call(this)
       }
+
       function f1 () {
         this.schedule.onOptionSelected(item)
         this.$store.commit(SPORTS_OPTION_SELECTED)
         this.$emit('onOptionSelected')
       }
+
       function f2 () {
         this.schedule.onOptionSelected2(item)
         this.$store.commit(SPORTS_OPTION_SELECTED)
@@ -223,12 +225,16 @@ export default {
       return item
     },
     deleteBetting (index, item) {
+      const listValue = JSON.parse(JSON.stringify(this.ValueArray))
+      listValue.splice(index, 1)
+      this.ValueArray = listValue
+      this.initInputValueArray(listValue)
       this.$store.commit(SPORTS_CONFIRM_DELETE_TICKET_ONE, { index, item })
     },
-    getInputValue (e, index) {
-      this.$set(this.inputValueArray, index, {
+    initInputValueArray (news) {
+      const arr = news.map((value, index) => ({
         index: index,
-        total: e.target.value,
+        total: value,
         guest: this.selectedList[index].guest,
         home: this.selectedList[index].home,
         id: this.selectedList[index].id,
@@ -237,9 +243,8 @@ export default {
         text: this.selectedList[index].text,
         value: this.selectedList[index].value,
         upperLimit: this.selectedList[index].upperLimit
-      })
-
-      // console.log(this.inputValueArray)
+      }))
+      this.$emit('update:inputValue', arr)
     }
   },
   filters: {
@@ -249,9 +254,8 @@ export default {
     }
   },
   watch: {
-    inputValueArray (news) {
-      // console.log(news)
-      this.$emit('update:inputValue', news)
+    ValueArray (news) {
+      this.initInputValueArray(news)
     }
   }
 }

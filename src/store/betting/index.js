@@ -329,10 +329,16 @@ const mutations = {
   },
   [types.SPORTS_CONFIRM_DELETE_TICKET_ONE] (state, { index, item }) {
     // 亚盘单关删除
+    console.log(JSON.parse(JSON.stringify(state.sportConfirm.bettingList)))
+    console.log(index, JSON.parse(JSON.stringify(item)))
     const bet = state.sportConfirm.bettingList.find(i => i.id === item.id)
     if (bet) {
-      bet.selected.splice(index, 1)// 从数组里面删除
-      bet.setIsChecked() // 实例重新计算
+      if (bet.selected.length > 1) {
+        bet.selected.splice(index, 1)// 从数组里面删除
+        bet.setIsChecked() // 实例重新计算
+      } else {
+        bet.clearSelected() // 清除实例上的数据
+      }
     } else {
       state.sportConfirm.bettingList.forEach(value => {
         value.clearSelected() // 清除实例上的数据
