@@ -37,24 +37,34 @@ export default class SportsBetting {
       })
       return value
     })
+    this.total = 0
+    this.total2 = 0
     this.setBottomTip()
   }
 
   setBottomTip () {
     let total = 0
+    let total1 = 0 // 亚盘单关
     this.groups.map(value => {
       value.schedules.map(v => {
         v.checked && total++
+        total1 += v.selected.length
       })
     })
     if (total) {
-      this.bottomTip = '已选{0}场'.format(total)
+      this.bottomTip = this.mode === 2 ? '已选{0}场'.format(total) : '已选{0}场'.format(total1)
     } else {
       this.bottomTip = this.mode === 2 ? '至少选择两场比赛' : '至少选择一场比赛'
     }
     if (this.lotteryId === 901 || this.lotteryId === 902) {
-      if (total > 8) {
-        this.bottomTip = '不能超过8场'
+      if (this.mode === 2) {
+        if (total > 8) {
+          this.bottomTip = '不能超过8场'
+        }
+      } else {
+        if (total1 > 8) {
+          this.bottomTip = '不能超过8场'
+        }
       }
     } else {
       if (total > 15) {
@@ -62,6 +72,7 @@ export default class SportsBetting {
       }
     }
     this.total = total
+    this.total2 = total1
   }
 
   clearSelected () {
