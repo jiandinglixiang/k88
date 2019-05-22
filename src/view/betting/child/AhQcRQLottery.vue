@@ -188,21 +188,8 @@ export default {
       return this.schedule.selected.indexOf(item) !== -1
     },
     selectedItem (item) {
-      console.log(item)
-
-      function f () {
-        for (let i = 0; i < this.bettingList.length; i++) {
-          for (let j = 0; j < this.bettingList[i].schedules; j++) {
-            if (this.schedule.id === this.bettingList[i].schedules[j].id && this.bettingList[i].schedules[j].checked) {
-              return false
-            }
-          }
-        }
-        return true
-      }
-
       if (this.currentMode === 1) {
-        if (this.bettingList.total2 >= 8 && f.call(this)) {
+        if (this.bettingList.total2 >= 8 && f.call(this, 1)) {
           toast('最多选择8场比赛')
           return
         }
@@ -214,6 +201,21 @@ export default {
         f2.call(this)
       }
 
+      function f (mode) {
+        const groups = this.bettingList.groups
+        for (let i = 0; i < groups.length; i++) {
+          for (let j = 0; j < groups[i].schedules.length; j++) {
+            if (this.schedule.id === groups[i].schedules[j].id && groups[i].schedules[j].checked) {
+              if (mode) {
+                // 单关继续
+                return !(groups[i].schedules[j].selected.some(value => value.key === item.key))
+              }
+              return false
+            }
+          }
+        }
+        return true
+      }
       function f1 () {
         this.schedule.onOptionSelected(item)
         this.$store.commit(SPORTS_OPTION_SELECTED)
@@ -235,16 +237,14 @@ export default {
         item = ''
       }
       return item
-    }
-    ,
+    },
     deleteBetting (index, item) {
       const listValue = JSON.parse(JSON.stringify(this.ValueArray))
       listValue.splice(index, 1)
       this.ValueArray = listValue
       this.initInputValueArray(listValue)
       this.$store.commit(SPORTS_CONFIRM_DELETE_TICKET_ONE, { index, item })
-    }
-    ,
+    },
     initInputValueArray (news) {
       const arr = news.map((value, index) => ({
         index: index,
@@ -266,8 +266,7 @@ export default {
       value = parseInt(value)
       return value
     }
-  }
-  ,
+  },
   watch: {
     ValueArray (news) {
       this.initInputValueArray(news)
