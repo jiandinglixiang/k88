@@ -156,8 +156,7 @@ export default {
       currentMode: state => state.betting[state.betting.lottery].mode,
       bettingList: state => {
         const obj = state.betting[state.betting.lottery]
-        const groups = obj.scheme[obj.mode === 2 ? 0 : 1]
-        return groups.getBettingList()
+        return obj.scheme[obj.mode === 2 ? 0 : 1]
       }
     })
   },
@@ -188,17 +187,33 @@ export default {
       return this.schedule.selected.indexOf(item) !== -1
     },
     selectedItem (item) {
-      if ((this.schedule.lotteryId === 901 || this.schedule.lotteryId === 902) && this.bettingList.length >= 8) {
-        const isBett = this.bettingList.find(val => val.id === this.schedule.id)
-        if (!isBett) {
+      if (this.currentMode === 1) {
+        if (this.bettingList.total2 >= 8 && f.call(this, 1)) {
           toast('最多选择8场比赛')
           return
         }
-      }
-      if (this.currentMode === 1) {
         f1.call(this)
+      } else if (this.bettingList.total >= 8 && f.call(this)) {
+        toast('最多选择8场比赛')
+        return ''
       } else {
         f2.call(this)
+      }
+
+      function f (mode) {
+        const groups = this.bettingList.groups
+        for (let i = 0; i < groups.length; i++) {
+          for (let j = 0; j < groups[i].schedules.length; j++) {
+            if (this.schedule.id === groups[i].schedules[j].id && groups[i].schedules[j].checked) {
+              if (mode) {
+                // 单关继续
+                return !(groups[i].schedules[j].selected.some(value => value.key === item.key))
+              }
+              return false
+            }
+          }
+        }
+        return true
       }
       function f1 () {
         this.schedule.onOptionSelected(item)
