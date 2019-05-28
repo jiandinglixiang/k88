@@ -25,6 +25,7 @@ export default {
     }
   },
   created () {
+    // 不是让球或者大小球情况下
     if (!Lottery.isAHFootBall(this.$store.state.betting.lottery)) {
       this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT, AHFootballLotteryIdList[0])
     }

@@ -268,6 +268,7 @@ import CustomSelectBox from '../../components/CustomSelectBox.vue'
 import {
   CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE,
   SPORTS_BONUS_CHANGE,
+  SPORTS_CONFIRM_BET,
   SPORTS_CONFIRM_CLEAR_TICKETS,
   SPORTS_CONFIRM_DELETE_TICKET,
   SPORTS_CONFIRM_OPTIMIZE,
@@ -307,6 +308,7 @@ export default {
   name: 'sportsConfirm',
   data () {
     return {
+      time: 0,
       popupVisible: false,
       popupNavIndex: 0,
       popupList: [[], []],
@@ -934,8 +936,19 @@ export default {
       }
     },
     refresh () {
-      this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType)
+      clearTimeout(this.time)
+      this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType).then(() => {
+        return this.$store.commit(SPORTS_CONFIRM_BET)
+      }).finally(this.fifteenTimeUpdate)
       this.toggleModel()
+    },
+    fifteenTimeUpdate () {
+      // 亚盘更新
+      this.time = setTimeout(() => {
+        this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType).then(() => {
+          return this.$store.commit(SPORTS_CONFIRM_BET)
+        }).finally(this.fifteenTimeUpdate)
+      }, 15000)
     }
   },
   created () {
@@ -963,7 +976,13 @@ export default {
           }
         }
       }
-      !Lottery.isAHFootBall(this.lotteryId) && this.setProjectBonus()
+      if (Lottery.isAHFootBall(this.lotteryId)) {
+        clearTimeout(this.time)
+        // 亚盘每15秒更新次
+        this.fifteenTimeUpdate()
+      } else {
+        this.setProjectBonus()
+      }
       this.getMineInfo()
     }
   },
@@ -985,6 +1004,10 @@ export default {
     AhQcRQLottery,
     AhQcDXQLottery,
     ExpectedBonus
+  },
+  beforeDestroy () {
+    clearTimeout(this.time)
+    console.log('销毁')
   }
 }
 </script>

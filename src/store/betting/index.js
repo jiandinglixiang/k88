@@ -195,29 +195,28 @@ const mutations = {
     }
   },
   [types.CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE] (state, data) {
+    function IndexOff (selected, newSchedules) {
+      selected.forEach(function (value) {
+        const item = newSchedules.holderList.find(value3 => value.key === value3.key)
+        // 在新数据内找到同一个item
+        item && newSchedules.onOptionSelected(item)
+      })
+    }
     // 更新数据
     const obj = state[state.lottery]
     const schemes = [...obj.scheme]
     const BetList = schemes[obj.mode === 2 ? 0 : 1].getBettingList() // 选中列表
     const objNew = new SportsBetting(data, obj.mode) // 新数据
-    const IndexOff = (selected, newSchedules) => {
-      for (let i in selected) {
-        const item = newSchedules.holderList.find(value3 => selected[i].key === value3.key)
-        // 在新数据内找到同一个item
-        item && newSchedules.onOptionSelected(item)
-      }
-    }
     BetList.forEach((value) => {
-      for (let i in objNew.groups) {
-        const schedules = objNew.groups[i].schedules.find(value2 => value2.id === value.id)
-        // 找到对应的新比赛数据
-        if (schedules) {
-          // 覆盖新数据selected列表
-          IndexOff(value.selected, schedules)
-        } else {
-          break
-        }
-      }
+      objNew.groups.find(value1 => {
+        return value1.schedules.find(value2 => {
+          if (value2.id === value.id) {
+            IndexOff(value.selected, value2)
+            return true
+          }
+          return false
+        })
+      })
     })
     objNew.setBottomTip()
     schemes[obj.mode === 2 ? 0 : 1] = objNew

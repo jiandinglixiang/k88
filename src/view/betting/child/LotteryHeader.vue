@@ -14,12 +14,12 @@
     </div>
     <div class="drop-down-panel" v-show="panelVisible">
       <div class="text-container">
-        <div class="clear" v-for="group in playTypeGroup">
+        <div :key="index" class="clear" v-for="(group,index) in playTypeGroup">
           <div class="group-name" v-show="group.name"><span class="dot"></span>{{group.name}}</div>
           <div :class="{'selected': currentType.id === item.id && currentType.sure === item.sure}"
                @click="selectPlayType(item)"
                class="text-item"
-               v-for="item in group.list">
+               :key="index" v-for="(item,index) in group.list">
             {{item.value}}
           </div>
         </div>
@@ -103,17 +103,29 @@ export default {
     updateList () {
       // 更新
       const item = this.currentType
-      if (Lottery.isFootBall(this.lottery) || Lottery.isBasketBall(this.lottery) || Lottery.isAHFootBall(this.lottery)) {
-        console.log(item)
+      if (Lottery.isAHFootBall(this.lottery)) {
+        clearTimeout(this.time)
+        this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, item).finally(this.fifteenTimeUpdate)
+      } else if (Lottery.isFootBall(this.lottery) || Lottery.isBasketBall(this.lottery)) {
         this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, item)
       } else if (Lottery.isSSQ(this.lottery) || Lottery.isDLT(this.lottery) ||
         Lottery.isSYXW(this.lottery) || Lottery.isK3(this.lottery) || Lottery.isFC3D(this.lottery)) {
         this.$store.commit(CURRENT_PLAY_TYPE_SELECT, item)
       }
+    },
+    fifteenTimeUpdate () {
+      // 亚盘更新
+      this.time = setTimeout(() => {
+        this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType).finally(this.fifteenTimeUpdate)
+      }, 15000)
     }
   },
   created () {
-    if (Lottery.isSSQ(this.lottery) || Lottery.isDLT(this.lottery) || Lottery.isK3(this.lottery) || Lottery.isFC3D(this.lottery)) {
+    if (Lottery.isAHFootBall(this.lottery)) {
+      clearTimeout(this.time)
+      // 亚盘每15秒更新次
+      setTimeout(this.fifteenTimeUpdate, 10000)
+    } else if (Lottery.isSSQ(this.lottery) || Lottery.isDLT(this.lottery) || Lottery.isK3(this.lottery) || Lottery.isFC3D(this.lottery)) {
       this.$store.dispatch(GET_CURRENT_LOTTERY).then(() => {
         let issue = recommendIssue.get()
         if (issue) {
@@ -133,6 +145,10 @@ export default {
         }
       }
     }
+  },
+  beforeDestroy () {
+    clearTimeout(this.time)
+    console.log('销毁')
   }
 }
 </script>

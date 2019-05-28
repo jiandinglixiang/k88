@@ -33,12 +33,7 @@
 </template>
 
 <script>//
-import {
-  CLEAR_SPORT_BETTING_SELECTED,
-  CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE,
-  SPORT_MODE_SELECT,
-  SPORTS_CONFIRM_BET
-} from '../../../store/betting/types'
+import { CLEAR_SPORT_BETTING_SELECTED, SPORT_MODE_SELECT, SPORTS_CONFIRM_BET } from '../../../store/betting/types'
 import SportLotteryPanel from './SportLotteryPanel.vue'
 import SportsNoMatch from './SportsNoMatch.vue'
 import SportFilter from './SportFilter.vue'
@@ -67,8 +62,7 @@ export default {
       }
     },
     ...mapState({
-      lottery: state => state.betting.lottery,
-      currentType: state => state.betting[state.betting.lottery].playType || { value: '' }
+      lottery: state => state.betting.lottery
     }),
     filterType () {
       return Lottery.isFootBall(this.lottery) ? 'football' : ''
@@ -89,22 +83,6 @@ export default {
     },
     filterConfirm (selected) {
       this.filterSelected = selected
-    }
-  },
-  mounted () {
-    const ff = () => {
-      if (!(this.$route.path === '/asianHandicap/ah_footer' || this.$route.path === '/betting/sports_confirm')) return
-      this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType).then(() => {
-        this.$route.path === '/betting/sports_confirm' && this.$store.commit(SPORTS_CONFIRM_BET)
-      }).finally(() => {
-        setTimeout(ff, 15000)
-      })
-    }
-    if (Lottery.isAHFootBall(this.lottery)) {
-      // 每15秒更新次
-      this.$nextTick(() => {
-        setTimeout(ff, 15000)
-      })
     }
   },
   components: { SportLotteryPanel, SportsNoMatch, SportFilter }
