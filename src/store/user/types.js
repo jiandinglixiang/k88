@@ -30,3 +30,5 @@ export const BASE_REGISTER = 'BASE_REGISTER'
 export const BASE_LOGIN = 'BASE_LOGIN'
 
 export const MINE_INFO = 'MINE_INFO'
+export const MINE_SIGN_IN = 'MINE_SIGN_IN'
+export const SIGN_IN_ACCEPT_THE_PRIZE = 'SIGN_IN_ACCEPT_THE_PRIZE'

@@ -6,24 +6,10 @@ import Util from '../../common/util'
 import FootballPrize from '../../model/sports/football/FootballPrize'
 import BasketballPrize from '../../model/sports/basketball/BasketballPrize'
 
-const state = {
-  list: [],
-  detail: {
-    lottery: 0,
-    loading: false,
-    offset: 0,
-    limit: 15,
-    list: []
-  },
-  sportsDetail: {
-    lottery: 0,
-    begin: 0,
-    end: 0,
-    list: []
-  }
-}
 const actions = {
   [types.GET_PRIZE_LIST] (context) {
+    const { state } = context
+
     if (state.list.length === 0) {
       loading.show()
       Http.get('/Lottery/getPrizeIssueInfo').then(data => {
@@ -33,6 +19,8 @@ const actions = {
     }
   },
   [types.GET_PRIZE_DETAIL_LIST] (context, lottery) {
+    const { state } = context
+
     loading.show()
     context.commit(types.PRIZE_DETAIL_LIST_RESET, lottery)
     Http.get('/Lottery/getPrizeIssueInfo', {
@@ -43,6 +31,7 @@ const actions = {
     })
   },
   [types.PRIZE_DETAIL_LIST_MORE] (context) {
+    const { state } = context
     context.commit(types.PRIZE_DETAIL_LIST_MORE)
     Http.get('/Lottery/getPrizeIssueInfo', {
       lottery_id: state.detail.lottery, offset: state.detail.offset, limit: state.detail.limit
@@ -51,6 +40,7 @@ const actions = {
     })
   },
   [types.GET_PRIZE_SPORTS_DETAIL] (context, lottery) {
+    const { state } = context
     loading.show()
     Http.get('/Lottery/getPrizeIssueInfo', {
       lottery_id: lottery, begin: state.sportsDetail.begin, end: state.sportsDetail.end
@@ -129,5 +119,22 @@ const mutations = {
 }
 
 export default {
-  state, mutations, actions
+  state: {
+    list: [],
+    detail: {
+      lottery: 0,
+      loading: false,
+      offset: 0,
+      limit: 15,
+      list: []
+    },
+    sportsDetail: {
+      lottery: 0,
+      begin: 0,
+      end: 0,
+      list: []
+    }
+  },
+  mutations,
+  actions
 }

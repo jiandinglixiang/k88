@@ -2,28 +2,6 @@ import * as types from './types'
 import Http from '../Http'
 import { LOTTERYIDS } from '../constants'
 
-const state = {
-  [`11`]: { groups: [] },
-  [`12`]: { groups: [] },
-  [`13`]: { groups: [] },
-  [`14`]: { groups: [] },
-  [`31`]: { groups: [] },
-  [`32`]: { groups: [] },
-  [`33`]: { groups: [] },
-  [`34`]: { groups: [] },
-  [`21`]: { groups: [] },
-  [`22`]: { groups: [] },
-  [`toTop11`]: [],
-  [`toTop12`]: [],
-  [`toTop13`]: [],
-  [`toTop31`]: [],
-  [`toTop32`]: [],
-  [`toTop33`]: [],
-  [`toTop21`]: [],
-  lotteryType: 1,
-  lotteryState: 1
-}
-
 const mutations = {
   [types.TO_THE_TOP] (state, { del, index }) {
     // 增加置顶
@@ -102,5 +80,27 @@ const actions = {
 }
 
 export default {
-  state, mutations, actions
+  state: {
+    [`11`]: { groups: [] },
+    [`12`]: { groups: [] },
+    [`13`]: { groups: [] },
+    [`14`]: { groups: [] },
+    [`31`]: { groups: [] },
+    [`32`]: { groups: [] },
+    [`33`]: { groups: [] },
+    [`34`]: { groups: [] },
+    [`21`]: { groups: [] },
+    [`22`]: { groups: [] },
+    [`toTop11`]: [],
+    [`toTop12`]: [],
+    [`toTop13`]: [],
+    [`toTop31`]: [],
+    [`toTop32`]: [],
+    [`toTop33`]: [],
+    [`toTop21`]: [],
+    lotteryType: 1,
+    lotteryState: 1
+  },
+  mutations,
+  actions
 }

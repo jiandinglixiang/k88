@@ -13,7 +13,7 @@
           <digital-scheme-item :key="key" :ticket="ticket"></digital-scheme-item>
         </div>
       </scheme-box>
-      <service-agreement></service-agreement>
+<!--      <service-agreement></service-agreement>-->
     </div>
     <div class="bottom-fixed">
       <div class="row top">
@@ -41,7 +41,6 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
 import SchemeBox from '../../components/SchemeBox.vue'
 import ServiceAgreement from '../../components/ServiceAgreement.vue'
 import CustomSelectBox from '../../components/CustomSelectBox.vue'
@@ -174,7 +173,7 @@ export default {
     }
     this.getMineInfo()
   },
-  components: { SchemeBox, ServiceAgreement, VHead, CustomSelectBox, DigitalSchemeItem }
+  components: { SchemeBox, ServiceAgreement, CustomSelectBox, DigitalSchemeItem }
 }
 </script>
 

@@ -3,7 +3,7 @@
     <v-head title="提现"></v-head>
     <div v-if="this.userBank.no!=''">
       <div>
-        <div class="padding-0-10 bg-white margin-top-10">
+        <div class="padding-0-10 margin-top-10 back-1c1c1c">
           <div class="info no-border padding-10">
             <span class="icon bank-icon" v-bind:style="{ backgroundImage: 'url('+userBank.image+')' }"></span>
             <div class="bank-info">
@@ -12,7 +12,7 @@
             </div>
           </div>
         </div>
-        <div class="padding-0-10 bg-white margin-top-10">
+        <div class="padding-0-10 margin-top-10 back-1c1c1c">
           <div class="info">
             <span class="mine-recharge-icon icon"></span>
             <input placeholder="请输入提现金额" type="text" v-model="amount">
@@ -56,14 +56,11 @@
         </div>
       </div>
     </div>
-    <div class="tel-panel">客服热线 400-835-1108</div>
   </div>
 
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
-import CaptchaButton from '../../components/CaptchaButton'
 import VDialog from '../../components/VDialog.vue'
 import Util from '../../common/util'
 import Toast from '../../common/toast'
@@ -113,7 +110,7 @@ export default {
     })
   },
   components: {
-    VHead, CaptchaButton, VDialog
+    VDialog
   },
   created () {
     this.getUserBankCard()
@@ -122,10 +119,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   .cash {
     position: relative;
     height: 100%;
+
+    .back-1c1c1c {
+      background-color: #1c1c1c;
+    }
   }
 
   .cash .red {
@@ -148,7 +149,7 @@ export default {
     height: 60px;
     line-height: 30px;
     display: inline-block;
-    color: #333333;
+    color: #fff;
     padding: 0 10px;
     margin-left: 28px;
   }
@@ -161,7 +162,7 @@ export default {
     padding: 15px 0;
     color: #333333;
     font-size: 14px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #313131;
     position: relative;
   }
 
@@ -181,7 +182,7 @@ export default {
 
   }
 
-  .cash .info input {
+  .cash .info input[type='text'] {
     display: inline-block;
     border: none;
     width: 80%;
@@ -189,6 +190,7 @@ export default {
     line-height: 28px;
     border-radius: 0;
     position: absolute;
+    background-color: #1c1c1c;
   }
 
   .cash .prompt {
@@ -229,4 +231,3 @@ export default {
     padding-bottom: 60px;
   }
 </style>
-

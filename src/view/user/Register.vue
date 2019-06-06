@@ -27,7 +27,6 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
 import CaptchaButton from '../../components/CaptchaButton'
 import Util from '../../common/util'
 import Toast from '../../common/toast'
@@ -66,14 +65,29 @@ export default {
         sms_validation: this.captcha,
         channel_type: Util.originUrlSearch()['channel_type'] || Util.urlSearch()['channel_type'],
         channel_id: Util.originUrlSearch()['channel_id'] || Util.urlSearch()['channel_id']
+      }).then((data) => {
+        this.goBack('/mine')
       })
     },
     ...mapActions({
       register: REGISTER
-    })
+    }),
+    goBack (path) {
+      const query = this.$route.query
+      // 重定向路径
+      if (query.redirect && query.back /* === '/guessingDetails' */) {
+        const redirect = query.redirect
+        delete query.redirect
+        this.$router.replace({ path: redirect, query })
+        // 返回重定向页面,带参数
+      } else {
+        this.$router.replace({ path: path || '/' })
+        // 返回根页
+      }
+    }
   },
   components: {
-    VHead, CaptchaButton
+    CaptchaButton
   }
 }
 </script>

@@ -2,25 +2,10 @@ import * as types from './types'
 import Http from '../Http'
 import loading from '../../common/loading'
 
-let state = {
-  thirdId: 0,
-  lottery: 0,
-  detail: {},
-  historyRecord: {},
-  latestRecord: [{ list: [] }, { list: [] }],
-  futureRecord: [],
-  odds: [], // 0亚盘（让）  1欧赔 2大小盘(总分)
-  changeOdds: [[], [], []],
-  teams: [],
-  points: [{}, {}, {}],
-  scoresDetail: {},
-  techDetail: [],
-  players: [],
-  events: []
-}
-
 const actions = {
   [types.INFORMATION_SCHEDULE_DETAIL] (context) {
+    const { state } = context
+
     loading.show()
     return Http.get('/Live/getScheduleDetail', {
       lottery_id: state.lottery,
@@ -31,6 +16,8 @@ const actions = {
     })
   },
   [types.INFORMATION_SCHEDULE_EVENT] (context) {
+    const { state } = context
+
     Http.get('/Live/getScheduleEvent', {
       lottery_id: state.lottery,
       third_party_schedule_id: state.thirdId
@@ -39,6 +26,8 @@ const actions = {
     })
   },
   [types.INFORMATION_RECORD_HISTORY] (context) {
+    const { state } = context
+
     Http.get('/Live/getHistoryRecord', {
       lottery_id: state.lottery,
       third_party_schedule_id: state.thirdId
@@ -47,6 +36,8 @@ const actions = {
     })
   },
   [types.INFORMATION_RECORD_LATEST_HOME] (context) {
+    const { state } = context
+
     return Http.get('/Live/getRecentRecord', {
       team_id: state.detail.home_id,
       lottery_id: state.lottery,
@@ -56,6 +47,8 @@ const actions = {
     })
   },
   [types.INFORMATION_RECORD_LATEST_GUEST] (context) {
+    const { state } = context
+
     Http.get('/Live/getRecentRecord', {
       team_id: state.detail.guest_id,
       lottery_id: state.lottery,
@@ -65,6 +58,8 @@ const actions = {
     })
   },
   [types.INFORMATION_RECORD_FUTURE_HOME] (context) {
+    const { state } = context
+
     return Http.get('/Live/getFutureRecord', {
       team_id: state.detail.home_id,
       lottery_id: state.lottery,
@@ -74,6 +69,8 @@ const actions = {
     })
   },
   [types.INFORMATION_RECORD_FUTURE_GUEST] (context) {
+    const { state } = context
+
     Http.get('/Live/getFutureRecord', {
       team_id: state.detail.guest_id,
       lottery_id: state.lottery,
@@ -83,6 +80,8 @@ const actions = {
     })
   },
   [types.INFORMATION_LATEST_ODDS] (context, index) {
+    const { state } = context
+
     return Http.get('/Live/getLasterOdds', {
       type: index,
       lottery_id: state.lottery,
@@ -92,6 +91,8 @@ const actions = {
     })
   },
   [types.INFORMATION_ODDS_CHANGE] (context, params) {
+    const { state } = context
+
     loading.show()
     Http.get('/Live/requestOddChangeListByCompany', {
       type: params['type'],
@@ -105,6 +106,8 @@ const actions = {
     })
   },
   [types.INFORMATION_TEAM_DATA] (context, params) {
+    const { state } = context
+
     return Http.get('/Live/requestTeamRecordStats', {
       team_id: params['id'],
       lottery_id: state.lottery,
@@ -117,6 +120,8 @@ const actions = {
     })
   },
   [types.INFORMATION_GAME_POINT] (context, type) {
+    const { state } = context
+
     return Http.get('/Live/getScheduleIntergral', {
       third_party_schedule_id: state.thirdId,
       type: type
@@ -126,6 +131,8 @@ const actions = {
     })
   },
   [types.INFORMATION_SCORE_DETAIL] (context) {
+    const { state } = context
+
     Http.get('/Live/requestScoreDetail', {
       lottery_id: state.lottery,
       third_party_schedule_id: state.thirdId
@@ -134,6 +141,8 @@ const actions = {
     })
   },
   [types.INFORMATION_TECHNOLOGY_TOTAL] (context) {
+    const { state } = context
+
     Http.get('/Live/requestGameTechStats', {
       lottery_id: state.lottery,
       third_party_schedule_id: state.thirdId
@@ -142,6 +151,8 @@ const actions = {
     })
   },
   [types.INFORMATION_PLAYER_DATA] (context, params) {
+    const { state } = context
+
     loading.show()
     Http.get('/Live/requestPlayerTechStats', {
       team_id: params['id'],
@@ -231,5 +242,22 @@ const mutations = {
 }
 
 export default {
-  state, mutations, actions
+  state: {
+    thirdId: 0,
+    lottery: 0,
+    detail: {},
+    historyRecord: {},
+    latestRecord: [{ list: [] }, { list: [] }],
+    futureRecord: [],
+    odds: [], // 0亚盘（让）  1欧赔 2大小盘(总分)
+    changeOdds: [[], [], []],
+    teams: [],
+    points: [{}, {}, {}],
+    scoresDetail: {},
+    techDetail: [],
+    players: [],
+    events: []
+  },
+  mutations,
+  actions
 }

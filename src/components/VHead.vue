@@ -10,23 +10,27 @@
 </template>
 
 <script>//
-import { H5postmsg } from '../common/postmsg'
 
 export default {
-  name: 'head',
-  props: ['title', 'hideBack', 'goApp', 'hideOrder'],
+  name: 'VHead',
+  props: {
+    title: String,
+    hideBack: [String, Boolean],
+    to: { type: String },
+    fn: { type: Function },
+    goApp: [String, Boolean],
+    hideOrder: [String, Boolean]
+  },
   methods: {
     goBack () {
-      if (this.goApp) {
-        console.log(H5postmsg)
-        if (H5postmsg.isH5) {
-          //  h5
-          window.parent.postMessage(JSON.stringify({ response: 4 }), '*')
-        } else {
-          location.href = 'goAppIndex'
-        }
+      if (this.fn && typeof this.fn === 'function') {
+        this.fn()
       } else {
-        this.$router.back()
+        if (this.to) {
+          this.$router.replace(this.to)
+        } else {
+          this.$router.go(-1)
+        }
       }
     },
     goEleSport () {

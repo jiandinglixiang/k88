@@ -46,15 +46,15 @@ export default {
 
 <style>
   .home-information-item {
-    border: 1px solid #ddd;
+    border: 1px solid #313131;
     border-radius: 5px;
     margin-top: 10px;
-    background: white;
+    background-color: #1c1c1c;
   }
 
   .home-information-item .top {
     height: 10px;
-    background: #e3e3e3;
+    background-color: #131313;
   }
 
   .home-information-item .information-item-container {
@@ -71,7 +71,7 @@ export default {
     top: 5px;
     border-radius: 40px;
     padding: 3px;
-    border: 1px solid #ddd;
+    border: 1px solid #313131;
     overflow: hidden;
   }
 
@@ -80,20 +80,21 @@ export default {
     height: 100%;
     border-radius: 40px;
     border: none;
-    background: #ddd;
+    background: white;
   }
 
   .home-information-item .information-item-container .title {
     padding: 10px 0 5px 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #313131;
     font-size: 15px;
     margin-right: 15px;
+    color: white;
   }
 
   .home-information-item .information-item-container .sub-title {
     font-size: 13px;
     margin-left: 10px;
-    color: #999;
+    color: white;
   }
 
   .home-information-item .information-item-container .description {

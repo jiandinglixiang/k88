@@ -35,7 +35,6 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
 import CustomSelectBox from '../../components/CustomSelectBox.vue'
 import OptimizeItem from './child/SportsOptimizeItem.vue'
 import {
@@ -177,7 +176,7 @@ export default {
   mounted () {
     this.$refs.list.style.height = (window.innerHeight - 235) + 'px'
   },
-  components: { VHead, CustomSelectBox, OptimizeItem }
+  components: { CustomSelectBox, OptimizeItem }
 }
 </script>
 

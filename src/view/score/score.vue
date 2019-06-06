@@ -2,6 +2,7 @@
   .score {
     padding-top: 94px;
     max-width: 640px;
+    background-color: #131313;
   }
 
   .switchover {
@@ -141,8 +142,9 @@
     } @else {
       background: $c131313;
     }
+
     .header {
-      @if($lotteryIg){
+      @if ($lotteryIg) {
         background: #1A1003;
       }
     }
@@ -156,7 +158,7 @@
 <template>
   <div class='score padding-bottom-50'>
     <div class='score-top'>
-      <div style="position: relative;" class="header">
+      <div class="header" style="position: relative;">
         <div style='width: 60%;margin: 0 auto;'>
           <div class='row'>
             <div :class='{activate:lotteryType*1===1}' @click='switchShow([1,1])' class='switchover switchover-left'>竞足
@@ -168,7 +170,7 @@
           </div>
         </div>
         <div @click='switchShow()' class='refresh'></div>
-        <div @click="goApp" class="back-icon"></div>
+        <!--        <div @click="goApp" class="back-icon"></div>-->
       </div>
       <div class='row text-center two-title' v-if='lotteryType*1===2'>
         <div :class="{'activate-child':lotteryState*1===1}" @click="switchShow([lotteryType,1])">
@@ -213,7 +215,6 @@
         :switchBody='[lotteryType,lotteryState]'
       />
     </div>
-    <bottom-nav active='Score'/>
   </div>
 </template>
 <script>//
@@ -225,11 +226,9 @@ import {
   SET_SWITCHOVER,
   TO_THE_TOP_INIT
 } from '../../store/score/types'
-import BottomNav from '../../components/BottomNav.vue'
 import container from './container.vue'
 import loading from '../../common/loading'
 import Compute from './components/compute.js'
-import { H5postmsg } from '../../common/postmsg'
 
 export default {
   name: 'Score',
@@ -268,7 +267,7 @@ export default {
         if (this.isMine(target)) {
           this.getMineData(target)
         } else {
-          if (target[0]*1 === 2 && target[0]*1 === this.lotteryType && target[1]*1 === 1 && target[1]*1 === this.lotteryState) {
+          if (target[0] * 1 === 2 && target[0] * 1 === this.lotteryType && target[1] * 1 === 1 && target[1] * 1 === this.lotteryState) {
             this.popupVisible = !this.popupVisible
           } else {
             this.getGameData(target)
@@ -291,9 +290,9 @@ export default {
         let SelectIndex = 1
         if (data.groups && data.groups.length) {
           data = this.disposeF(data) // 数据处理同步
-          if (target[0]*1 === 2 && target[1]*1 === 1) {
+          if (target[0] * 1 === 2 && target[1] * 1 === 1) {
             SelectIndex = data.groups.findIndex(item => {
-              return item.is_current*1 === 1
+              return item.is_current * 1 === 1
             })
             if (SelectIndex !== -1) {
               this.SelectIndex = SelectIndex
@@ -401,7 +400,7 @@ export default {
       }
       props.groups = props.groups.map(groups => {
         groups.schedules = groups.schedules.map(schedules => {
-          if (schedules.result_odds && schedules.result_odds[602] && schedules.match_status*1 === 3 && schedules.result_odds[601]) {
+          if (schedules.result_odds && schedules.result_odds[602] && schedules.match_status * 1 === 3 && schedules.result_odds[601]) {
             // console.log(schedules)
             let victory = schedules.current_score.split(':')
             schedules.result_odds.game601 = computeS(parseInt(victory[0]), parseInt(victory[1]))
@@ -417,11 +416,11 @@ export default {
       if (!target.length) {
         return
       }
-      if (target[0]*1 === 1 || target[0]*1 === 3) {
-        if (target[1]*1 === 4) {
+      if (target[0] * 1 === 1 || target[0] * 1 === 3) {
+        if (target[1] * 1 === 4) {
           return true
         }
-      } else if (target[1]*1 === 2) {
+      } else if (target[1] * 1 === 2) {
         return true
       }
       return null
@@ -438,22 +437,13 @@ export default {
           this.getMineData([this.lotteryType, this.lotteryState, i])
         }
       }
-    },
-    goApp () {
-      if (H5postmsg.isH5) {
-        //  h5
-        window.parent.postMessage(JSON.stringify({ response: 4 }), '*')
-      } else {
-        location.href = 'goAppIndex'
-      }
     }
   },
   created () {
     this.switchShow([this.lotteryType, this.lotteryState])
   },
   components: {
-    container,
-    BottomNav
+    container
   }
 }
 </script>

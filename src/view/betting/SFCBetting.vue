@@ -8,7 +8,6 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
 import Lottery from '../../model/common/Lottery'
 import SFCLotteryContainer from './child/SFCLotteryContainer.vue'
 import { GET_CURRENT_SFC_LOTTERY, SET_CURRENT_LOTTERY } from '../../store/betting/types'
@@ -35,7 +34,7 @@ export default {
     this.$store.commit(SET_CURRENT_LOTTERY, this.$router.currentRoute.params.id)
     this.$store.dispatch(GET_CURRENT_SFC_LOTTERY)
   },
-  components: { VHead, SFCLotteryContainer, SET_CURRENT_LOTTERY }
+  components: { SFCLotteryContainer, SET_CURRENT_LOTTERY }
 }
 </script>
 

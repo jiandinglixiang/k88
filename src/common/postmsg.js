@@ -4,4 +4,3 @@ export const H5postmsg = {
   origin: null,
   post: true
 }
-

@@ -16,13 +16,13 @@ export default {
     width: 18px;
     height: 18px;
     border-radius: 16px;
-    border: 1px solid #ddd;
+    border: 1px solid #999999;
     text-align: center;
-    line-height: 13px;
+    line-height: 16px;
   }
 
   .checkbox.active {
-    border: 1px solid #e73f40;
+    border: 1px solid #FFC63A;
   }
 
   .checkbox.active .red-check-icon {

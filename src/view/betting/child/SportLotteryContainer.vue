@@ -49,10 +49,10 @@ export default {
   },
   computed: {
     currentMode () {
-      return this.$store.state.betting[this.lottery].mode
+      return this.$store.state.betting[this.lottery] && this.$store.state.betting[this.lottery].mode
     },
     holders () {
-      return this.$store.state.betting[this.lottery].scheme[this.currentMode === 2 ? 0 : 1] || {}
+      return (this.$store.state.betting[this.lottery] && this.$store.state.betting[this.lottery].scheme[this.currentMode === 2 ? 0 : 1]) || {}
     },
     confirmDisabled () {
       if (Lottery.isAHFootBall(this.lottery)) {

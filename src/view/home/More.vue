@@ -24,7 +24,6 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
 import LotteryItem from '../../components/HomeLotteryItem.vue'
 import { GET_LOTTERY_LIST } from '../../store/home/types'
 import VDialog from '../../components/VDialog.vue'
@@ -49,7 +48,7 @@ export default {
   created () {
     this.$store.dispatch(GET_LOTTERY_LIST)
   },
-  components: { VHead, LotteryItem, VDialog }
+  components: { LotteryItem, VDialog }
 }
 </script>
 

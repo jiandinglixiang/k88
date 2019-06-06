@@ -3,7 +3,7 @@
     <div class="mask"></div>
     <div class="content">
       <div class="content-hd">
-        <a @click="onClose" class="dialog-close-icon" href="javascript:"></a>
+        <a @click="onClose" class="dialog-close-icon2" href="javascript:"></a>
         {{title}}
       </div>
       <div class="content-bd">
@@ -15,7 +15,7 @@
 
 <script>//
 export default {
-  name: 'dialog',
+  name: 'VDialog',
   props: ['title'],
   methods: {
     onClose () {
@@ -49,14 +49,14 @@ export default {
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    background-color: $c131313;
+    background-color: white;
     text-align: center;
     border-radius: 3px;
     overflow: hidden;
     @if($lotteryIg) {
       color: $cgray;
     } @else {
-      color: $cFFfFFF;
+      color: #131313;
     }
   }
 
@@ -67,7 +67,7 @@ export default {
     text-align: center;
   }
 
-  .dialog .dialog-close-icon {
+  .dialog .dialog-close-icon2 {
     position: absolute;
     right: 10px;
     top: 50%;

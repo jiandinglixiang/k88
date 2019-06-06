@@ -91,7 +91,7 @@
         </div>
       </div>
       <!--</scheme-box>-->
-      <service-agreement></service-agreement>
+      <!--      <service-agreement></service-agreement>-->
     </div>
     <div class="bottom-fixed ahfootball-bottom-fixed" v-if="lotteryId === 901||lotteryId === 902">
       <div class="summary" v-if="currentMode === 1">
@@ -262,8 +262,7 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
-import ServiceAgreement from '../../components/ServiceAgreement.vue'
+// import ServiceAgreement from '../../components/ServiceAgreement.vue'
 import CustomSelectBox from '../../components/CustomSelectBox.vue'
 import {
   CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE,
@@ -300,7 +299,6 @@ import SportsCalculate from '../../model/sports/SportsCalculate'
 import Lottery from '../../model/common/Lottery'
 import Toast from '../../common/toast'
 import { MINE_INFO } from '../../store/user/types'
-import { H5postmsg } from '../../common/postmsg'
 
 Vue.component(Popup.name, Popup)
 let calculate
@@ -521,12 +519,11 @@ export default {
     toggleModel () {
       this.oddsChange = !this.oddsChange
     },
-    recharge () {
-      if (H5postmsg.isH5) {
-        window.parent.postMessage(JSON.stringify({ response: 3 }), '*')
-      } else {
-        location.href = 'gorecharge'
-      }
+    recharge (lack) {
+      this.$router.push({
+        name: 'Payment',
+        query: { lack: this.totalMoney - this.mine.balance }
+      })
       // this.isShow = !this.isShow;
     },
     clearBettingList () {
@@ -602,9 +599,12 @@ export default {
       this.$store.dispatch(SPORTS_CONFIRM_PAYMENT, result).then(() => {
         if (this.confirm.id) {
           if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
-            // Toast('您的账户余额不足，请先充值！');
-            // this.$router.push({ name: 'Payment', query: {lack: (this.confirm.stakeCount * this.confirm.multiple * 2 - this.mine.balance).toFixed(2)} });
-            this.toggle()
+            Toast('您的账户余额不足，请先充值！')
+            this.$router.push({
+              name: 'Payment',
+              query: { lack: (this.confirm.stakeCount * this.confirm.multiple * 2 - this.mine.balance).toFixed(2) }
+            })
+            // this.toggle()
           } else {
             this.$router.push({
               name: 'PaymentOrder',
@@ -612,7 +612,7 @@ export default {
             })
           }
         } else {
-          // this.$router.push({ name: 'Login', query: {redirect: this.$router.currentRoute.path} });
+          this.$router.push({ name: 'Login', query: { redirect: this.$router.currentRoute.path } })
           Toast('无订单id,登录已过期,请重新登录!')
         }
       })
@@ -987,8 +987,7 @@ export default {
     }
   },
   components: {
-    VHead,
-    ServiceAgreement,
+    // ServiceAgreement,
     CustomSelectBox,
     FootballSPFLottery,
     FootballRQSPFLottery,

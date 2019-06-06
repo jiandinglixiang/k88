@@ -13,7 +13,6 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
 import { mapActions, mapState } from 'vuex'
 import { MINE_INFO } from '../../store/user/types'
 
@@ -37,8 +36,7 @@ export default {
   created () {
     this.getMineInfo()
     window.parent && window.parent.postMessage(JSON.stringify({ response: 5 }), '*')
-  },
-  components: { VHead }
+  }
 }
 </script>
 

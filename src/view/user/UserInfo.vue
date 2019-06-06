@@ -15,14 +15,8 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
-import CaptchaButton from '../../components/CaptchaButton'
-
 export default {
-  name: 'userInfo',
-  components: {
-    VHead, CaptchaButton
-  }
+  name: 'userInfo'
 }
 </script>
 
@@ -34,9 +28,9 @@ export default {
 
   .user-info .item {
     padding: 20px 10px 20px 40px;
-    background: white;
+    background: #1C1C1C;
     position: relative;
-    color: #333333;
+    color: #fff;
   }
 
   .user-info .item .icon {
@@ -51,7 +45,6 @@ export default {
   }
 
   .user-info .item.border-top {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #313131;
   }
 </style>
-

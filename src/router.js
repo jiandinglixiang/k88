@@ -40,21 +40,66 @@ import PromotionTest from './view/promotion/Test.vue'
 import PrizeList from './view/prize/List.vue'
 import PrizeDetail from './view/prize/Detail.vue'
 import PrizeSportsDetail from './view/prize/SportsDetail.vue'
-import { pageJump } from './common/store'
+import { pageJump, user } from './common/store'
 import Score from './view/score/score.vue' // -我的
 import AHFooter from './view/asianHandicap/AHFooter.vue'
-
+import Index from './view/Index.vue'
 // import Hello from '../components/Hello.vue';
-
+const SingInLaTombola = () => import('./view/user/SingInLaTombola.vue')// 签到刮奖
+const redManage = () => import('./view/user/redPacket/redManage.vue')// 红包管理st
+const redPurchase = () => import('./view/user/redPacket/redPurchase.vue')// 红包购买
+const exchangeRed = () => import('./view/user/redPacket/exchangeRed.vue')// 红包兑换end
+const integralStore = () => import('./view/user/redPacket/integralStore.vue')// 积分兑换st
+const integralDetails = () => import('./view/user/redPacket/integralDetails.vue')// 积分详情
+// 合买与跟单
+// const BuyTogether = () => import('./view/buyTogether/BuyTogether.vue')// 开始合买
+// const buyTogetherLobby = () => import('./view/buyTogether/buyTogetherLobby.vue')// 合买大厅
+// const BuyTogetherOrderDetail = () => import('./view/user/Order/OrderDetail/BuyTogetherOrderDetail.vue')// 合买订单详情
+// const Standings = () => import('./view/buyTogether/Standings.vue')// 合买战绩
+// const SubscribeList = () => import('./view/buyTogether/SubscribeList.vue')// 已购列表
+// const MerchandiserLobby = () => import('./view/merchandiser/MerchandiserLobby.vue')// 跟单大厅
+// const Crunchies = () => import('./view/merchandiser/Crunchies.vue')// 榜单
+// const RecommendDetails = () => import('./view/merchandiser/RecommendDetails.vue')// 榜单
+// const ChaseNumberDetail = () => import('./view/user/Order/OrderDetail/ChaseNumberDetail.vue')// 榜单
+// const PaymentCompound = () => import('./view/paymennt/PaymentCompound.vue')// 支付合买,推荐跟单
 Vue.use(Router)
 
 const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
-    }, {
+      component: Index,
+      children: [
+        {
+          path: '',
+          name: 'Home',
+          component: Home
+        },
+        {
+          path: 'prize/list',
+          name: 'PrizeList',
+          component: PrizeList
+        },
+        {
+          path: 'Score',
+          name: 'Score',
+          component: Score
+        },
+        {
+          path: 'orders',
+          name: 'Orders',
+          component: Orders,
+          meta: { requireAuth: true }
+        },
+        {
+          path: 'mine',
+          name: 'Mine',
+          component: Mine,
+          meta: { requireAuth: true }
+        }
+      ]
+    },
+    {
       path: '/more',
       name: 'More',
       component: More
@@ -90,17 +135,8 @@ const router = new Router({
       path: '/cash_detail',
       name: 'CashDetail',
       component: CashDetail
-    }, {
-      path: '/mine',
-      name: 'Mine',
-      component: Mine,
-      meta: { requireAuth: true }
-    }, {
-      path: '/orders',
-      name: 'Orders',
-      component: Orders,
-      meta: { requireAuth: true }
-    }, {
+    },
+    {
       path: '/orders/:id',
       name: 'OrderDetail',
       component: OrderDetail,
@@ -202,11 +238,8 @@ const router = new Router({
       path: '/web',
       name: 'WebPage',
       component: WebPage
-    }, {
-      path: '/prize/list',
-      name: 'PrizeList',
-      component: PrizeList
-    }, {
+    },
+    {
       path: '/prize/detail/:lottery',
       name: 'PrizeDetail',
       component: PrizeDetail
@@ -224,16 +257,68 @@ const router = new Router({
       component: PromotionTest
     },
     {
-      path: '/Score',
-      name: 'Score',
-      component: Score
-    },
-    {
       path: '/asianHandicap/ah_footer',
       name: 'AHFooter',
       component: AHFooter
+    },
+    {
+      path: '/redManage',
+      name: 'redManage',
+      component: redManage,
+      meta: { requireAuth: true }
+    },
+    {
+      path: '/exchangeRed',
+      name: 'exchangeRed',
+      component: exchangeRed,
+      meta: { requireAuth: true }
+    },
+    {
+      path: '/integralStore',
+      name: 'integralStore',
+      component: integralStore,
+      meta: { requireAuth: true }
+    },
+    {
+      path: '/integralDetails',
+      name: 'integralDetails',
+      component: integralDetails,
+      meta: { requireAuth: true }
+    },
+    {
+      path: '/redPurchase',
+      name: 'redPurchase',
+      component: redPurchase,
+      meta: { requireAuth: true }
+    },
+    {
+      path: '/SingInLaTombola',
+      name: 'SingInLaTombola',
+      component: SingInLaTombola,
+      meta: { requireAuth: true }
     }
   ]
+})
+
+// 全局导航钩子
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    localStorage.setItem('document_title', document.title)
+    document.title = to.meta.title
+  } else {
+    document.title = localStorage.getItem('document_title') || process.env.APP_NAME || ''
+  }
+  // 判断该路由是否需要登录权限
+  if (to.meta.requireAuth) {
+    if (user.getToken()) {
+      next()
+    } else {
+      next({ path: '/login' })
+      // 将跳转的路由path作为参数，登录成功后跳转到该路由
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

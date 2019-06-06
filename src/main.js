@@ -7,21 +7,12 @@ import './common/infiniteScroll' // 无限滚动指令
 import './common/directive' // 自定义的指令
 import './common/filter' // 自定义的过滤器
 import device from './common/device.js'
-import { H5postmsg } from './common/postmsg'
 import './style/icon.scss'
+import './style/common.scss'
+
 device(store)
 Vue.config.devtools = process.env.NODE_ENV !== 'production' || !!localStorage.getItem('devtools')
 Vue.config.productionTip = false
-
-window.addEventListener('message', function (event) {
-  if (H5postmsg.post && event.source === window.parent) {
-    H5postmsg.post = false
-    H5postmsg.isH5 = location.href.indexOf('ish5=true') !== -1
-    H5postmsg.origin = event.origin
-    H5postmsg.source = event.source
-    H5postmsg.source.postMessage(JSON.stringify({ response: -1 }), H5postmsg.origin)
-  }
-}, false)
 
 export default new Vue({
   router,

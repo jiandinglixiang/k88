@@ -6,16 +6,6 @@ import router from '../../router'
 import { pageJump } from '../../common/store'
 import { CLEAR_CONFIRM_BETTING_LIST } from '../betting/types'
 
-let state = {
-  rechargeList: [],
-  rechargeTypeId: 0,
-  rechargeObject: {},
-  rechargeResult: {},
-  confirm: {}, // 赢球大师的订单确认页
-  order: {},  // 365彩票的订单确认页
-  orderId: undefined
-}
-
 const actions = {
   [types.RECHARGE_LIST] (context) {
     loading.show()
@@ -145,5 +135,15 @@ const mutations = {
 }
 
 export default {
-  state, actions, mutations
+  state: {
+    rechargeList: [],
+    rechargeTypeId: 0,
+    rechargeObject: {},
+    rechargeResult: {},
+    confirm: {}, // 赢球大师的订单确认页
+    order: {}, // 365彩票的订单确认页
+    orderId: undefined
+  },
+  actions,
+  mutations
 }

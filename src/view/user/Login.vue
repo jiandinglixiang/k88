@@ -1,12 +1,12 @@
 <template>
   <div>
-    <v-head title="登录"></v-head>
+    <v-head :fn="goBack" title="登录"></v-head>
     <div class="login">
       <div>
         <input placeholder="请输入手机号码" type="text" v-model="phone">
       </div>
       <div class="margin-top-10">
-        <input maxlength="18" placeholder="请输入密码" type="password" v-model="password">
+        <input @keyup.enter="submit" maxlength="18" placeholder="请输入密码" type="password" v-model="password">
       </div>
       <div class="margin-top-20">
         <a @click="submit" class="btn" href="javascript:">登录</a>
@@ -22,16 +22,13 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead'
 import Util from '../../common/util'
 import Toast from '../../common/toast'
-import { mapActions, mapMutations } from 'vuex'
 import { LOGIN } from '../../store/user/types'
-import { user } from '../../common/store'
 
 export default {
   name: 'login',
-  data: function () {
+  data () {
     return {
       password: '',
       phone: '',
@@ -53,21 +50,24 @@ export default {
         Toast('请输入6-18位密码！')
         return
       }
-      this.login({ tel: this.phone, passwd: this.password })
+      this.$store.dispatch(LOGIN, { tel: this.phone, passwd: this.password }).then((data) => {
+        this.goBack('/mine')
+      })
     },
-    ...mapActions({
-      login: LOGIN
-    }),
-    ...mapMutations({
-      reLogin: LOGIN
-    })
-  },
-  created () {
-    if (user.getToken()) {
-      this.reLogin({ user_token: user.getToken() })
+    goBack (path) {
+      const query = this.$route.query
+      // 重定向路径
+      if (query.redirect && query.back /* === '/guessingDetails' */) {
+        const redirect = query.redirect
+        delete query.redirect
+        this.$router.replace({ path: redirect, query })
+        // 返回重定向页面,带参数
+      } else {
+        this.$router.replace({ path: path || '/' })
+        // 返回根页
+      }
     }
-  },
-  components: { VHead }
+  }
 }
 </script>
 

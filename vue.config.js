@@ -1,43 +1,34 @@
 // -----------------------------
-const [TYPE, STATUS] = ['LOTTERY_365', ''] // 365皮肤
-// const [TYPE, STATUS] = ['LOTTERY_TF', ''] // 同发皮肤
-// const [TYPE, STATUS] = ['LOTTERY_HM', ''] // 黑马皮肤
-// const [TYPE, STATUS] = ['LOTTERY_IG', ''] // IG皮肤
+const environmentType = 'K88'// 365电竞
+
 // -----------------------------
 module.exports = {
   lintOnSave: 'warning',
-  publicPath: './',
-  outputDir: `${TYPE}${STATUS}`,
+  publicPath: '/',
+  outputDir: environmentType,
   devServer: {
     port: 8080,
-    open: true
+    open: true,
+    proxy: {
+      '/H55': {
+        target: 'https://h5-api.tigercai.com',
+        secure: false,
+        pathRewrite: { '^/H55': '' }
+      },
+      '/H5': {
+        target: 'http://tgapi.k888.bet',
+        secure: false
+      }
+    }
   },
   chainWebpack: config => {
     config.plugin('define').tap(args => {
       // 增加环境变量
-      let appIcon = ''
-      switch (TYPE) {
-        case 'LOTTERY_365':
-          appIcon = `"365_"`
-          break
-        case 'LOTTERY_HM':
-          appIcon = `"hm_"`
-          break
-        case 'LOTTERY_TF':
-          appIcon = `"tf_"`
-          break
-        case 'LOTTERY_IG':
-          appIcon = `"ig_"`
-          break
-      }
-      Object.assign(args[0]['process.env'], { 'APP_ICO': appIcon }) // 图标路径
-      Object.assign(args[0]['process.env'], { [TYPE]: 'true' }) // 文件环境变量
-      !args[0]['process.build'] && (args[0]['process.build'] = {})
-      Object.assign(args[0]['process.build'], {
-        [TYPE]: 'true',
-        TYPE: `"${TYPE}"`,
-        STATUS: `"${STATUS}"`
-      })// js环境变量
+      let appIcon = `'${environmentType}_favicon.ico'`
+      let appName = `'${environmentType}彩票'`
+      Object.assign(args[0]['process.env'], { 'APP_ICON': `${appIcon}` })
+      Object.assign(args[0]['process.env'], { 'APP_NAME': `${appName}` })
+      Object.assign(args[0]['process.env'], { [environmentType]: 'true' })
       return args
     })
   },
@@ -47,7 +38,7 @@ module.exports = {
       sass: {
         // @/ 是 src/ 的别名
         // 所以这里假设你有 `src/variables.scss` 这个文件
-        data: `@import "@/style/${TYPE}${STATUS}.global.scss";`
+        data: `@import "@/style/LOTTERY_${environmentType}.global.scss";`
       }
     }
   }

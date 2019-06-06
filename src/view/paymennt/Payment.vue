@@ -1,23 +1,23 @@
 <template>
   <div class="payment">
-    <v-head title="充值"></v-head>
+    <v-head :fn="goBack" title="充值"></v-head>
     <div class="text-xn padding">
-      <p class="text-light">充值账号：<span class="text-default">{{mine.username}}</span></p>
+      <p class="text-light">充值账号：<span>{{mine.username}}</span></p>
       <p class="text-light margin-top-5">
-        当前余额：<span class="text-default">{{mine.balance}}元</span>
+        当前余额：<span>{{mine.balance}}元</span>
         <!--<span class="text-primary pull-right">首冲20送20>></span>-->
       </p>
       <div class="margin-top-10">
-        <input placeholder="充值金额" type="text" v-model="number">
+        <input class="input-txt" placeholder="充值金额" type="text" v-model="number">
       </div>
       <div class="money-box">
         <div class="row">
-          <div class="col" v-for="item in [10, 50, 100]">
+          <div :key="item" class="col" v-for="item in [10, 50, 100]">
             <span :class="{active: item === formatNumber}" @click="selectMoney(item)">{{item}}元</span>
           </div>
         </div>
         <div class="row margin-top-10">
-          <div class="col" v-for="item in [300, 500, 1000]">
+          <div :key="item" class="col" v-for="item in [300, 500, 1000]">
             <span :class="{active: item === formatNumber}" @click="selectMoney(item)">{{item}}元</span>
           </div>
         </div>
@@ -27,21 +27,20 @@
       </div>
     </div>
     <div class="bank-list margin-top-5">
-      <div @click="changeRechargeTypeId(item.id)" class="item" v-for="item in list">
+      <div :key="item.id" @click="changeRechargeTypeId(item.id)" class="item" v-for="item in list">
         <img :src="item.image" alt="">
         <div class="main">{{item.name}}</div>
-        <div class="desc text-light">{{item.description}}</div>
+        <div class="desc text-light">{{item.description||'......'}}</div>
         <checkbox :checked="checkId === item.id"></checkbox>
       </div>
     </div>
     <div class="padding margin-top-20">
-      <a :class="{'disabled': this.list.length === 0}" @click="submit" class="btn" href="javascript:">立即支付</a>
+      <a :class="{'disabled': list.length === 0}" @click="submit" class="btn" href="javascript:">立即支付</a>
     </div>
   </div>
 </template>
 
 <script>//
-import VHead from '../../components/VHead'
 import Checkbox from '../../components/Checkbox'
 import { mapActions, mapMutations, mapState } from 'vuex'
 import { CHANGE_RECHARGE_TYPE, RECHARGE, RECHARGE_INFO, RECHARGE_LIST } from '../../store/payment/types'
@@ -91,7 +90,20 @@ export default {
     }),
     ...mapMutations({
       changeRechargeTypeId: CHANGE_RECHARGE_TYPE
-    })
+    }),
+    goBack (path) {
+      const query = this.$route.query
+      // 重定向路径
+      if (query.redirect) {
+        const redirect = query.redirect
+        delete query.redirect
+        this.$router.replace({ path: redirect, query })
+        // 返回重定向页面,带参数
+      } else {
+        this.$router.back()
+        // 返回根页
+      }
+    }
   },
   created () {
     this.getMineInfo()
@@ -101,10 +113,13 @@ export default {
       this.rechargeInfo({ recharge_sku: id })
     }
   },
-  components: { VHead, Checkbox }
+  components: { Checkbox }
 }
 </script>
-
+<style lang="scss" scoped>
+  .payment {
+  }
+</style>
 <style>
   .payment .money-box .row .col {
     padding-right: 15px;
@@ -126,15 +141,15 @@ export default {
   }
 
   .payment .money-box .row .col span.active {
-    border: 1px solid #e73f40;
-    background: #e73f40;
+    border: 1px solid #FFC63A;
+    background: #FFC63A;
     color: white;
   }
 
   .payment .bank-list .item {
     padding: 8px 10px 8px 50px;
-    background: white;
-    border-bottom: 1px solid #ddd;
+    background: #1C1C1C;
+    border-bottom: 1px solid #313131;
     position: relative;
   }
 
@@ -154,12 +169,14 @@ export default {
     height: 25px;
     line-height: 25px;
     font-size: 14px;
+    color: white;
   }
 
   .payment .bank-list .item .desc {
     height: 18px;
     line-height: 18px;
     font-size: 12px;
+    color: #999999;
   }
 
   .payment .checkbox {

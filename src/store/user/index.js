@@ -8,103 +8,73 @@ import Order from '../../model/Order'
 import OrderScheme from '../../model/OrderScheme'
 import Toast from '../../common/toast'
 
-const state = {
-  orders: {
-    status: 0, // 当前订单列表状态 -1未开奖、0全部、1中奖、-2未中奖
-    offset: 0, // 分页偏移量
-    limit: 10, // 分页条数
-    list: null, // 列表数据
-    end: false,
-    id: 0, // 当前订单ID
-    detail: {}, // 订单详情
-    loading: false, // 是否正在加载更多数据
-    lottery_id: 0, // 彩种ID(0不区分彩种)
-    scheme: {} // 方案详情
-  },
-  token: user.getToken(),
-  mine: {}, // 个人信息页,
-  userBank: {}, // 个人银行信息
-  bankList: {}, // 银行列表
-  withDrawCashMoney: 0, // 提现金额
-  newRegisterStatus: false
-}
-
 const actions = {
   [types.GET_CAPTCHA] (context, params) {
     Http.post('/Send/msg', params) // 请求获取验证码
   },
   [types.LOGIN] (context, params) {
-    Http.post('/User/login', params).then((data) => {
-      context.commit(types.LOGIN, data)
-    })
+    return Http.post('/User/login', params).then((data) => context.commit(types.LOGIN, data))
   },
   [types.REGISTER] (context, params) {
-    Http.post('/User/register', params).then((data) => {
-      context.commit(types.LOGIN, data)
-    })
+    return Http.post('/User/register', params).then((data) => context.commit(types.LOGIN, data))
   },
   [types.BASE_REGISTER] (context, params) {
-    return Http.post('/User/register', params).then((data) => {
-      context.commit(types.BASE_LOGIN, data)
-    })
+    return Http.post('/User/register', params).then((data) => context.commit(types.BASE_LOGIN, data))
   },
   [types.NEW_REGISTER] (context, params) {
-    Http.post('/User/register', params).then((data) => {
-      context.commit(types.NEW_REGISTER, data)
-    })
+    return Http.post('/User/register', params).then((data) => context.commit(types.NEW_REGISTER, data))
   },
   [types.LOGOUT] (context) {
-    Http.get('/User/logout').then(() => {
-      context.commit(types.LOGOUT)
-    })
+    return Http.get('/User/logout').finally(() => context.commit(types.LOGOUT))
   },
   [types.FORGET_PASSWORD] (context, params) {
-    Http.post('/User/resetPassword', params).then(data => {
-      context.commit(types.FORGET_PASSWORD, data)
-    })
+    return Http.post('/User/resetPassword', params).then(data => context.commit(types.FORGET_PASSWORD, data))
   },
   [types.MINE_INFO] (context) {
     loading.show()
-    Http.get('/User').then(data => {
+    return Http.get('/User').then(data => {
       context.commit(types.MINE_INFO, data)
       loading.hide()
     })
   },
   [types.SET_IDCARD] (context, params) {
-    Http.post('/User/saveIDCard', params).then(data => {
+    return Http.post('/User/saveIDCard', params).then(data => {
       context.commit(types.SET_IDCARD, data)
     })
   },
   [types.SET_USER_BANKCARD] (context, params) {
-    Http.post('/User/saveBankCardInfo', params).then(data => {
+    return Http.post('/User/saveBankCardInfo', params).then(data => {
       context.commit(types.SET_USER_BANKCARD, data)
     })
   },
   [types.GET_USER_BANKCARD] (context) {
     loading.show()
-    Http.get('/User/getUserBankCard').then(data => {
+    return Http.get('/User/getUserBankCard').then(data => {
       context.commit(types.GET_USER_BANKCARD, data)
       loading.hide()
     })
   },
   [types.GET_BANKS_LIST] (context) {
     loading.show()
-    Http.get('/Config/fetBankList').then(data => {
+    return Http.get('/Config/fetBankList').then(data => {
       context.commit(types.GET_BANKS_LIST, data)
       loading.hide()
     })
   },
   [types.WITH_DRAW_CASH] (context, params) {
-    Http.post('/Recharge/userWithdraw', params).then(data => {
+    const { state } = context
+    return Http.post('/Recharge/userWithdraw', params).then(data => {
       context.commit(types.WITH_DRAW_CASH, data)
       state.withDrawCashMoney = params.money
     })
   },
   [types.GET_ORDERS_LIST] (context, status) {
+    const { state } = context
+
     loading.show()
     context.commit(types.ORDER_LIST_FILTER, status)
     context.commit(types.RESET_ORDERS)
-    Http.get('/Order', {
+    return Http.get('/Order', {
       lottery_id: state.orders.lottery_id,
       order_type: state.orders.status,
       offset: state.orders.offset,
@@ -115,9 +85,10 @@ const actions = {
     })
   },
   [types.ORDERS_LIST_MORE_REQUEST] (context) {
+    const { state } = context
     if (!state.orders.end) {
       context.commit(types.ORDERS_LIST_MORE_REQUEST)
-      Http.get('/Order', {
+      return Http.get('/Order', {
         lottery_id: state.orders.lottery_id,
         order_type: state.orders.status,
         offset: state.orders.offset,
@@ -128,6 +99,7 @@ const actions = {
     }
   },
   [types.ORDER_DETAIL_REQUEST] (context, id) {
+    const { state } = context
     if (state.orders.detail.id !== String(id) || !state.orders.detail.id) {
       context.commit(types.ORDER_DETAIL_REQUEST, id)
       loading.show()
@@ -142,6 +114,7 @@ const actions = {
     }
   },
   [types.ORDER_SCHEME_REQUEST] (context, id) {
+    const { state } = context
     loading.show()
     if (!state.orders.detail.id) {
       context.dispatch(types.ORDER_DETAIL_REQUEST, id).then(() => {
@@ -158,20 +131,28 @@ const actions = {
     }
   },
   [types.SCHEME_CONFIRM_CHANGE_ACCOUNT] (context) {
-    Http.get('/User/logout').then(() => {
-      context.commit(types.SCHEME_CONFIRM_CHANGE_ACCOUNT)
+    return Http.get('/User/logout').then(() => context.commit(types.SCHEME_CONFIRM_CHANGE_ACCOUNT))
+  },
+  [types.MINE_SIGN_IN] (context) {
+    loading.show()
+    return Http.get('/UserIntegral/userSign').then((data) => {
+      context.commit(types.MINE_SIGN_IN, data)
+      loading.hide()
+      return data
     })
+  },
+  [types.SIGN_IN_ACCEPT_THE_PRIZE] (context, id) {
+    Http.get('/UserIntegral/userDraw', { id })
   }
 }
 
 const mutations = {
+  [types.MINE_SIGN_IN] (state, data) {
+    state.signIn = data
+  },
   [types.LOGIN] (state, data) {
     user.setToken(data.user_token)
     state.token = data.user_token
-    const redirect = router.currentRoute.query.redirect || '/mine'
-    let query = router.currentRoute.query
-    delete query.redirect
-    router.replace({ path: redirect, query: query })
   },
   [types.BASE_LOGIN] (state, data) {
     user.setToken(data.user_token)
@@ -180,10 +161,9 @@ const mutations = {
   [types.NEW_REGISTER] (state) {
     state.newRegisterStatus = true
   },
-  [types.FORGET_PASSWORD] () {
-    user.clearToken()
+  [types.FORGET_PASSWORD] (state) {
     state.token = ''
-    router.replace({ name: 'Login', query: router.currentRoute.query })
+    user.clearToken()
   },
   [types.MINE_INFO] (state, mine) {
     state.mine = mine
@@ -208,15 +188,10 @@ const mutations = {
   [types.LOGOUT] (state) {
     state.token = ''
     user.clearToken()
-    router.replace({ name: 'Login' })
   },
   [types.CLEAR_TOKEN] (state) {
-    user.clearToken()
     state.token = ''
-    router.push({
-      name: 'Login',
-      query: { redirect: router.currentRoute.path }
-    })
+    return user.clearToken()
   },
   [types.GET_ORDERS_LIST] (state, orders) {
     orders.map(value => {
@@ -266,5 +241,26 @@ const mutations = {
 }
 
 export default {
-  state, mutations, actions
+  state: {
+    orders: {
+      status: 0, // 当前订单列表状态 -1未开奖、0全部、1中奖、-2未中奖
+      offset: 0, // 分页偏移量
+      limit: 10, // 分页条数
+      list: null, // 列表数据
+      end: false,
+      id: 0, // 当前订单ID
+      detail: {}, // 订单详情
+      loading: false, // 是否正在加载更多数据
+      lottery_id: 0, // 彩种ID(0不区分彩种)
+      scheme: {} // 方案详情
+    },
+    token: '',
+    mine: {}, // 个人信息页,
+    userBank: {}, // 个人银行信息
+    bankList: {}, // 银行列表
+    withDrawCashMoney: 0, // 提现金额
+    newRegisterStatus: false
+  },
+  mutations,
+  actions
 }

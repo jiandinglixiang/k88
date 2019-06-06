@@ -27,7 +27,6 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
 import CaptchaButton from '../../components/CaptchaButton'
 import Util from '../../common/util'
 import Toast from '../../common/toast'
@@ -64,15 +63,28 @@ export default {
       }
       this.forgetPassword({
         tel: this.phone, passwd: this.password, sms_validation: this.captcha
+      }).then(() => {
+        this.goBack('/login')
       })
     },
     ...mapActions({
       forgetPassword: FORGET_PASSWORD
-    })
+    }),
+    goBack (path) {
+      const query = this.$route.query
+      // 重定向路径
+      if (query.redirect && query.back /* === '/guessingDetails' */) {
+        const redirect = query.redirect
+        delete query.redirect
+        this.$router.replace({ path: redirect, query })
+        // 返回重定向页面,带参数
+      } else {
+        this.$router.replace({ path: path || '/' })
+        // 返回根页
+      }
+    }
   },
-  components: {
-    VHead, CaptchaButton
+  components: { CaptchaButton
   }
 }
 </script>
-

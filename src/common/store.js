@@ -1,23 +1,33 @@
 import store from 'store'
+import vuex from '../store/index'
 
-let user = {
+const user = {
   token: null,
   setToken (token) {
-    this.token = token
-    store.set('user', { token: token })
-    return this.token
+    user.token = token
+    setTimeout(function () {
+      const time = Math.floor(new Date().getTime() / 1000)
+      store.set('user', { token, time })
+    }, 10)
+    return token
   },
   getToken () {
-    if (this.token) {
-      return this.token
+    if (user.token) return user.token
+    const storeObj = store.get('user')
+    const nowTime = Math.floor(new Date().getTime() / 1000)
+    if (storeObj && storeObj.time && storeObj.token && storeObj.time > nowTime - 259200/* 3天 */) {
+      user.token = storeObj.token
+      return user.token
     }
-    this.token = store.get('user') && store.get('user')['token']
-    return this.token
+    return user.clearToken(true)
   },
-  clearToken () {
-    this.token = null
-    store.remove('user')
-    return this.token
+  clearToken (x) {
+    user.token = null
+    store.clearAll()
+    if (x) return null
+    const vx = sessionStorage.getItem('vue-x')
+    vx && vuex.replaceState(JSON.parse(vx))
+    return null
   }
 }
 let pageJump = {

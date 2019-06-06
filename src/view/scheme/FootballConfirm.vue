@@ -40,7 +40,7 @@
             </div>
           </div>
         </scheme-box>
-        <service-agreement></service-agreement>
+<!--        <service-agreement></service-agreement>-->
       </div>
       <div class="money-confirm">
         <div class="payment-tip text-default">请在
@@ -67,7 +67,6 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
 import SchemeBox from '../../components/SchemeBox'
 import CountDown from '../../components/CountDown'
 import OrderExpired from '../../components/OrderExpired'
@@ -116,7 +115,7 @@ export default {
     })
   },
   components: {
-    VHead, SchemeBox, ServiceAgreement, CountDown, OrderExpired
+    SchemeBox, ServiceAgreement, CountDown, OrderExpired
   },
   created () {
     this.getSchemeConfirm()

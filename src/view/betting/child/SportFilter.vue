@@ -49,7 +49,7 @@ export default {
     textContent () {
       let texts = []
       let current = this.$store.state.betting[this.$store.state.betting.lottery]
-      if (current.scheme[current.mode === 2 ? 0 : 1]) {
+      if (current && current.scheme[current.mode === 2 ? 0 : 1]) {
         current.scheme[current.mode === 2 ? 0 : 1].groups.map(value => {
           value.schedules.map(v => {
             if (!texts.includes(v.league)) {
@@ -64,7 +64,7 @@ export default {
     total () {
       let total = 0
       let current = this.$store.state.betting[this.$store.state.betting.lottery]
-      if (current.scheme[current.mode === 2 ? 0 : 1]) {
+      if (current && current.scheme[current.mode === 2 ? 0 : 1]) {
         current.scheme[current.mode === 2 ? 0 : 1].groups.map(value => {
           value.schedules.map(v => {
             if (this.currentSelected.includes(v.league)) {

@@ -110,14 +110,14 @@
 .mine-recharge-icon {
     width: 20px;
     height: 20px;
-    background: url("../assets/icon/mine_recharge.png") no-repeat;
+    background: url("../assets/k88/ic_mine_recharge.png") no-repeat;
     background-size: 100% 100%;
 }
 
 .mine-cash-icon {
     width: 20px;
     height: 20px;
-    background: url("../assets/icon/mine_cash.png") no-repeat;
+    background: url("../assets/k88/ic_mine_cash.png") no-repeat;
     background-size: 100% 100%;
 }
 
@@ -141,14 +141,24 @@
     background: url("../assets/icon/mine_order.png") no-repeat;
     background-size: 100% 100%;
 }
-
+.mine-info-mine {
+  width: 20px;
+  height: 20px;
+  background: url("../assets/icon/recommended.png") no-repeat;
+  background-size: 100% 100%;
+}
 .mine-info-icon {
     width: 20px;
     height: 20px;
     background: url("../assets/icon/mine_info.png") no-repeat;
     background-size: 100% 100%;
 }
-
+.mine-customer-server  {
+  width: 20px;
+  height: 20px;
+  background: url("../assets/k88/ic_mine_24h.png") no-repeat;
+  background-size: 100% 100%;
+}
 .userInfo-IDCard-icon {
     width: 20px;
     height: 20px;
@@ -168,6 +178,12 @@
     height: 15px;
     background: url("../assets/icon/close.png") no-repeat;
     background-size: 100% 100%;
+}
+.dialog-close-icon2 {
+  width: 15px;
+  height: 15px;
+  background: url("../assets/betting/confirm_clear.png") no-repeat;
+  background-size: 100% 100%;
 }
 
 .order-expired-icon {

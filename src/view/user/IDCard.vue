@@ -1,8 +1,8 @@
 <template>
   <div class="idCard">
     <v-head title="身份证信息"></v-head>
-    <div v-if="this.mine.identity_status == 1">
-      <div class="padding-0-10 bg-white margin-top-10">
+    <div v-if="mine.identity_status == 1">
+      <div class="back-1c1c1c padding-0-10 margin-top-10">
         <div class="info">
           <span class="name">姓&emsp;&emsp;名：</span>
           <span>{{ mine.realname }}</span>
@@ -43,13 +43,11 @@
         </div>
       </v-dialog>
     </div>
-    <div class="tel-panel text-center">客服热线 400-835-1108</div>
+    <!--    <div class="tel-panel text-center">客服热线 400-835-1108</div>-->
   </div>
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
-import CaptchaButton from '../../components/CaptchaButton'
 import VDialog from '../../components/VDialog.vue'
 import Util from '../../common/util'
 import Toast from '../../common/toast'
@@ -97,7 +95,7 @@ export default {
     })
   },
   components: {
-    VHead, CaptchaButton, VDialog
+    VDialog
   },
   created () {
     this.getMineInfo()
@@ -106,10 +104,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   .idCard {
     position: relative;
     height: 100%;
+
+    .back-1c1c1c{
+      background-color: #1c1c1c;
+    }
   }
 
   .idCard .padding-0-10 {
@@ -118,9 +120,9 @@ export default {
 
   .idCard .info {
     padding: 15px 0;
-    color: #333333;
+    color: #fff;
     font-size: 14px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #313131;
   }
 
   .idCard .info .name {
@@ -146,4 +148,3 @@ export default {
     font-size: 13px;
   }
 </style>
-

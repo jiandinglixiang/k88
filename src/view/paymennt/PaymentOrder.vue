@@ -51,7 +51,6 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
 import Util from '../../common/util'
 import { mapActions, mapMutations, mapState } from 'vuex'
 import { PAYMENT_ORDER, PAYMENT_ORDER_COMPLETE, SELECT_ORDER_RED_PACK } from '../../store/payment/types'
@@ -101,8 +100,7 @@ export default {
     if (search['id']) {
       this.paymentOrder(search)
     }
-  },
-  components: { VHead }
+  }
 }
 </script>
 

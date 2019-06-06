@@ -165,7 +165,6 @@
 
 <script>//
 import OrderTable from '../../components/OrderTable'
-import VHead from '../../components/VHead'
 import { mapActions, mapState } from 'vuex'
 import { ORDER_SCHEME_REQUEST } from '../../store/user/types'
 
@@ -212,7 +211,7 @@ export default {
     this.getOrderScheme(this.$route.params.id)
   },
   components: {
-    OrderTable, VHead
+    OrderTable
   }
 }
 </script>

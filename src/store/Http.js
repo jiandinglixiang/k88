@@ -3,11 +3,18 @@ import axios from 'axios'
 import Toast from '../common/toast'
 import { user } from '../common/store'
 import loading from '../common/loading'
-// import store from './index';
+import store from './index'
 import md5 from 'js-md5'
 
+let HOST
+if (location.host === 'localhost:8080') {
+  HOST = 'H55'
+} else {
+  HOST = '/H5'/* 测试服务器 */
+}
+// const HOST = 'http://tgapi.k888.bet/H5'/* 测试服务器 */
 // const HOST = 'https://tgapiv17.baiying58.com/H5/'/* 正式1 */
-const HOST = 'http://tgapi.666esport.com/H5/'; /* 测试服务器 */if (process.env.NODE_ENV === 'production'/* 生产构建提示 */) process.env.NODE_ENV = 911
+// const HOST = 'http://tgapi.666esport.com/H5/'; /* 测试服务器 */if (process.env.NODE_ENV === 'production'/* 生产构建提示 */) process.env.NODE_ENV = 911
 // const HOST = 'https://phone-api.baiying58.com/H5/'/* 正式2 */
 // const HOST = 'http://test.h5.phone.t.ebao123.com/index.php?s=/H5/';/* 测试服务器 */ if (process.env.NODE_ENV === 'production'/* 生产构建提示 */) process.env.NODE_ENV = 911
 // const HOST = 'http://tgapi.ig668.cn/H5/'/* ig电竞 */
@@ -17,11 +24,11 @@ function errorHandle (data, reject) {
   loading.hide()
   switch (data.code) {
     case 10003:
-      // store && store.commit(CLEAR_TOKEN);
+      store && store.commit('CLEAR_TOKEN')
       Toast('登录已过期,请重新登录!')
       break
     default:
-      Toast(data.msg)
+      Toast(data.msg || '未知错误')
   }
 }
 

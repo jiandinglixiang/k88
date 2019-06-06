@@ -39,6 +39,8 @@
     overflow: hidden;
     @if($lotteryIg) {
       color: $cgray;
+    }@else {
+      color: white;
     }
   }
 

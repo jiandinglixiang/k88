@@ -14,7 +14,7 @@
                 v-if="betting.lotteryId === 21">胆</span>
         </div>
       </scheme-box>
-      <service-agreement></service-agreement>
+<!--      <service-agreement></service-agreement>-->
     </div>
     <div class="bottom-fixed">
       <div class="row top">
@@ -34,7 +34,6 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
 import SchemeBox from '../../components/SchemeBox.vue'
 import ServiceAgreement from '../../components/ServiceAgreement.vue'
 import CustomSelectBox from '../../components/CustomSelectBox.vue'
@@ -155,7 +154,7 @@ export default {
     this.getMineInfo()
   },
   components: {
-    VHead, SchemeBox, ServiceAgreement, CustomSelectBox, SfcSPFLottery
+    SchemeBox, ServiceAgreement, CustomSelectBox, SfcSPFLottery
   }
 }
 </script>

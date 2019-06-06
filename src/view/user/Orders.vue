@@ -1,6 +1,6 @@
 <template>
   <div class="orders">
-    <v-head :hide-back="true" :hideOrder="true" title="我的投注"></v-head>
+    <v-head :hide-back="true" title="我的投注"></v-head>
     <nav @click.stop="changeStatus" class="row text-center bg-black text-sm" data-top="y">
       <div :class="{active: listIndex['0'] === '0'}" class="col col-25" data-value="0,0"><span>全部</span></div>
       <div :class="{active: listIndex['0'] === '1'}" class="col col-25" data-value="1,-1"><span>待开奖</span></div>
@@ -31,14 +31,11 @@
       </div>
       <infinite-scroll-loading :show="loading==='true'"/>
     </div>
-    <no-order v-show="list[listIndex['0']].length*1===0"/>
-    <bottom-nav active="Orders"/>
+    <no-order v-show="list[listIndex['0']].length===0"/>
   </div>
 </template>
 
 <script>//
-import VHead from '../../components/VHead'
-import BottomNav from '../../components/BottomNav.vue'
 import NoOrder from '../../components/NoOrders'
 import InfiniteScrollLoading from '../../components/InfiniteScrollLoading.vue'
 import Lottery from '../../model/common/Lottery'
@@ -101,7 +98,7 @@ export default {
           if (event.path[i].dataset.value) {
             const index = event.path[i].dataset.value.split(',')
             const unEqual = index[0] !== this.listIndex[0] // 不相等
-            const isData = this.list[index[0]].length*1 === 0 // 没有数据
+            const isData = this.list[index[0]].length === 0 // 没有数据
             if (unEqual && isData) {
               this.getList(index[0], index[1], 0).then(() => {
                 // 加载完后切换
@@ -109,7 +106,8 @@ export default {
                 localStorage.setItem('ordersIndex', JSON.stringify(index))
               })
             } else {
-              this.loading = this.list[index[0]].length % 10*1 === 0  // 可被整除
+              this.loading = this.list[index[0]].length % 10 === 0
+              // 可被整除
               this.listIndex = index
               localStorage.setItem('ordersIndex', JSON.stringify(index))
             }
@@ -125,7 +123,7 @@ export default {
       }
     }
   },
-  components: { VHead, NoOrder, InfiniteScrollLoading, BottomNav },
+  components: { NoOrder, InfiniteScrollLoading },
   created () {
     this.getList()
   }
@@ -136,7 +134,7 @@ export default {
   @import "../../style/main.css";
 
   .bg-black {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
     } @else {
       background: $c131313;
@@ -183,7 +181,7 @@ export default {
     position: relative;
     background: $c1c1c1c;
     min-height: 60px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-bottom: 1px solid $cEbebeb;
     } @else {
       border-bottom: 1px solid #313131;
@@ -216,7 +214,7 @@ export default {
     font-size: 13px;
     height: 25px;
     line-height: 25px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: $cFFfFFF;

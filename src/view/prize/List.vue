@@ -53,13 +53,10 @@
         </div>
       </template>
     </div>
-    <bottom-nav active="PrizeList"></bottom-nav>
   </div>
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
-import BottomNav from '../../components/BottomNav.vue'
 import { GET_PRIZE_LIST } from '../../store/prize/types'
 import Lottery from '../../model/common/Lottery'
 
@@ -105,8 +102,7 @@ export default {
   },
   created () {
     this.$store.dispatch(GET_PRIZE_LIST)
-  },
-  components: { VHead, BottomNav }
+  }
 }
 </script>
 

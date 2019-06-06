@@ -11,62 +11,10 @@ import BonusOptimizationUtil from '../../model/common/BonusOptimizationUtil'
 import Lottery from '../../model/common/Lottery'
 import SfcCalculator from '../../model/common/SfcCalculator'
 
-const state = {
-  lottery: null,
-  currentLottery: {},
-  filterPanelVisible: false,
-  [LOTTERYIDS.SYXW]: { playType: null },
-  [LOTTERYIDS.SYXW8]: { playType: null },
-  [LOTTERYIDS.SYXW18]: { playType: null },
-  [LOTTERYIDS.FC3D]: { playType: null },
-  [LOTTERYIDS.K3]: { playType: null },
-  [LOTTERYIDS.JXK3]: { playType: null },
-  [LOTTERYIDS.SSQ]: { playType: null },
-  [LOTTERYIDS.DLT]: { playType: null },
-  [LOTTERYIDS.FOOTBALL_SPF]: { playType: { id: 601, value: '胜平负' }, mode: 2, scheme: [] },
-  [LOTTERYIDS.FOOTBALL_RQSPF]: { playType: { id: 602, value: '让球胜平负' }, mode: 2, scheme: [] },
-  [LOTTERYIDS.FOOTBALL_BF]: { playType: { id: 603, value: '比分' }, mode: 2, scheme: [] },
-  [LOTTERYIDS.FOOTBALL_ZJQ]: { playType: { id: 604, value: '总进球' }, mode: 2, scheme: [] },
-  [LOTTERYIDS.FOOTBALL_BQC]: { playType: { id: 605, value: '半全场' }, mode: 2, scheme: [] },
-  [LOTTERYIDS.FOOTBALL_HH]: { playType: { id: 606, value: '混合投注' }, mode: 2, scheme: [] },
-  [LOTTERYIDS.BASKETBALL_SF]: { playType: { id: 701, value: '胜负' }, mode: 2, scheme: [] },
-  [LOTTERYIDS.BASKETBALL_RFSF]: { playType: { id: 702, value: '让分胜负' }, mode: 2, scheme: [] },
-  [LOTTERYIDS.BASKETBALL_SFC]: { playType: { id: 703, value: '胜分差' }, mode: 2, scheme: [] },
-  [LOTTERYIDS.BASKETBALL_DXF]: { playType: { id: 704, value: '大小分' }, mode: 2, scheme: [] },
-  [LOTTERYIDS.BASKETBALL_HH]: { playType: { id: 705, value: '混合过关' }, mode: 2, scheme: [] },
-  [LOTTERYIDS.SFC]: [],
-  [LOTTERYIDS.RXJ]: [],
-  [LOTTERYIDS.AHFOOTBALL_QCRQ]: { playType: { id: 901, value: '全场让球' }, mode: 2, scheme: [] },
-  [LOTTERYIDS.AHFOOTBALL_QCDXQ]: { playType: { id: 902, value: '全场大/小球' }, mode: 2, scheme: [] },
-  sfc: { issues: [], current: {} },
-  confirm: {
-    bettingList: [],
-    followTimes: 1,
-    multiple: 1,
-    id: null,
-    sign: null,
-    ticketPrice: 2,
-    addTo: false
-  },
-  sportConfirm: {
-    bettingList: [],
-    multiple: 1,
-    ticketPrice: 2,
-    mode: 2,
-    bonus: { min: 0, max: 0 },
-    stakeCount: 0,
-    series: [],
-    isMulti: false
-  },
-  optimizeList: [],
-  optimize: {
-    min: 0, max: 0, count: 0, money: 0, input: 0, index: 0, inputStatus: false
-  },
-  groupsKey: null
-}
 const LX_TYPE = [34, 35, 36, 37]
 const actions = {
   [types.GET_CURRENT_LOTTERY] (context) {
+    const { state } = context
     if (String(state.lottery) === String(state.currentLottery.lottery_id)) {
       return
     }
@@ -81,20 +29,23 @@ const actions = {
     })
   },
   [types.CURRENT_LOTTERY_REFRESH] (context) {
+    const { state } = context
     Http.get('/Lottery/getCurrentIssue', { lottery_id: state.lottery }).then(data => {
       context.commit(types.GET_CURRENT_LOTTERY, data)
     })
   },
   // 获取竟猜投注列表
   [types.GET_CURRENT_SPORT_LOTTERY] (context) {
+    const { state } = context
     Http.get('/Lottery/getJcList', { lottery_id: state.lottery, play_type: state[state.lottery].mode }).then(data => {
       context.commit(types.GET_CURRENT_SPORT_LOTTERY, data)
     })
   },
   // 获取胜负彩列表
   [types.GET_CURRENT_SFC_LOTTERY] (context) {
-    if ((parseInt(state.lottery) === 20 && state[state.lottery].length === 0) ||
-      (parseInt(state.lottery) === 21 && state[state.lottery].length === 0)) {
+    const { state } = context
+    if ((state.lottery * 1 === 20 && state[state.lottery].length === 0) ||
+      (state.lottery * 1 === 21 && state[state.lottery].length === 0)) {
       loading.show()
       Http.get('/Lottery/getCtzqList', { lottery_id: state.lottery }).then(data => {
         context.commit(types.GET_CURRENT_SFC_LOTTERY, data.result)
@@ -144,12 +95,13 @@ const actions = {
     }
   },
   [types.CURRENT_SPORT_PLAY_TYPE_SELECT] (context, data) {
+    const { state } = context
     if (state.lottery !== data.id) {
       context.commit(types.SET_CURRENT_LOTTERY, data.id)
-      const obj = state[state.lottery]
+      const obj = state[data.id]
       if (!obj.scheme[obj.mode === 2 ? 0 : 1]) {
         loading.show()
-        Http.get('/Lottery/getJcList', { lottery_id: state.lottery, play_type: obj.mode }).then(data => {
+        return Http.get('/Lottery/getJcList', { lottery_id: state.lottery, play_type: obj.mode }).then(data => {
           context.commit(types.CURRENT_SPORT_PLAY_TYPE_SELECT, data)
           loading.hide()
         })
@@ -167,8 +119,11 @@ const actions = {
     })
   },
   [types.SPORT_MODE_SELECT] (context, mode) {
+    const { state } = context
     const obj = state[state.lottery]
-    if (!obj.scheme[mode === 2 ? 0 : 1]) {
+    console.log(1)
+
+    if (obj && !obj.scheme[mode === 2 ? 0 : 1]) {
       loading.show()
       Http.get('/Lottery/getJcList', { lottery_id: state.lottery, play_type: mode }).then(data => {
         context.commit(types.SPORT_MODE_SELECT, mode)
@@ -224,8 +179,7 @@ const mutations = {
   },
   [types.CURRENT_SPORT_PLAY_TYPE_SELECT] (state, data) {
     const obj = state[state.lottery]
-    let schemes = [...obj.scheme]
-    console.log(obj, schemes, data)
+    const schemes = [...obj.scheme]
     schemes[obj.mode === 2 ? 0 : 1] = new SportsBetting(data, obj.mode)
     obj.scheme = schemes
   },
@@ -239,10 +193,10 @@ const mutations = {
   [types.SET_CURRENT_LOTTERY] (state, lottery) {
     state.lottery = lottery
   },
-  [types.CLEAR_BETTING_SELECTED] () {
+  [types.CLEAR_BETTING_SELECTED] (state) {
     state[state.lottery].clearSelected()
   },
-  [types.CONFIRM_BET] () {
+  [types.CONFIRM_BET] (state) {
     if (LX_TYPE.indexOf(state[state.lottery].playType.id) !== -1) {
       state.confirm.bettingList = state.confirm.bettingList.concat(state[state.lottery].getTickets())
     } else if (Lottery.isK3(state.lottery)) {
@@ -281,7 +235,7 @@ const mutations = {
     }
     state[state.lottery].clearSelected()
   },
-  [types.CLEAR_CONFIRM_BETTING_LIST] () {
+  [types.CLEAR_CONFIRM_BETTING_LIST] (state) {
     state.confirm.bettingList = []
     state.confirm.followTimes = 1
     state.confirm.totalAmount = 0
@@ -304,15 +258,15 @@ const mutations = {
       state.sportConfirm.sign = data.sign
     }
   },
-  [types.SPORTS_OPTION_SELECTED] () {
+  [types.SPORTS_OPTION_SELECTED] (state) {
     const obj = state[state.lottery]
     obj.scheme[obj.mode === 2 ? 0 : 1].setBottomTip()
   },
-  [types.CLEAR_SPORT_BETTING_SELECTED] () {
+  [types.CLEAR_SPORT_BETTING_SELECTED] (state) {
     const obj = state[state.lottery]
     obj.scheme[obj.mode === 2 ? 0 : 1].clearSelected()
   },
-  [types.SPORTS_CONFIRM_BET] () {
+  [types.SPORTS_CONFIRM_BET] (state) {
     const obj = state[state.lottery]
     state.sportConfirm.bettingList = obj.scheme[obj.mode === 2 ? 0 : 1].getBettingList()
     state.sportConfirm.mode = obj.mode
@@ -328,8 +282,6 @@ const mutations = {
   },
   [types.SPORTS_CONFIRM_DELETE_TICKET_ONE] (state, { index, item }) {
     // 亚盘单关删除
-    console.log(JSON.parse(JSON.stringify(state.sportConfirm.bettingList)))
-    console.log(index, JSON.parse(JSON.stringify(item)))
     const bet = state.sportConfirm.bettingList.find(i => i.id === item.id)
     if (bet) {
       if (bet.selected.length > 1) {
@@ -399,7 +351,7 @@ const mutations = {
     state.optimizeList.map((value) => {
       if (value[0].checked) {
         let money = value[0].money * value[0].stake
-        min === 0 ? min = money : ''
+        min === 0 && (min = money)
         count += value[0].stake
         if (min > money) { min = money }
       }
@@ -423,7 +375,7 @@ const mutations = {
     state.sportConfirm.series = obj.series
     state.sportConfirm.isMulti = obj.isMulti
   },
-  [types.SPORTS_CONFIRM_SERIES_CLEAR] () {
+  [types.SPORTS_CONFIRM_SERIES_CLEAR] (state) {
     state.sportConfirm.series = []
     state.sportConfirm.isMulti = false
   },
@@ -457,5 +409,59 @@ const mutations = {
 }
 
 export default {
-  state, mutations, actions
+  state: {
+    lottery: null,
+    currentLottery: {},
+    filterPanelVisible: false,
+    [LOTTERYIDS.SYXW]: { playType: null },
+    [LOTTERYIDS.SYXW8]: { playType: null },
+    [LOTTERYIDS.SYXW18]: { playType: null },
+    [LOTTERYIDS.FC3D]: { playType: null },
+    [LOTTERYIDS.K3]: { playType: null },
+    [LOTTERYIDS.JXK3]: { playType: null },
+    [LOTTERYIDS.SSQ]: { playType: null },
+    [LOTTERYIDS.DLT]: { playType: null },
+    [LOTTERYIDS.FOOTBALL_SPF]: { playType: { id: 601, value: '胜平负' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.FOOTBALL_RQSPF]: { playType: { id: 602, value: '让球胜平负' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.FOOTBALL_BF]: { playType: { id: 603, value: '比分' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.FOOTBALL_ZJQ]: { playType: { id: 604, value: '总进球' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.FOOTBALL_BQC]: { playType: { id: 605, value: '半全场' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.FOOTBALL_HH]: { playType: { id: 606, value: '混合投注' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.BASKETBALL_SF]: { playType: { id: 701, value: '胜负' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.BASKETBALL_RFSF]: { playType: { id: 702, value: '让分胜负' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.BASKETBALL_SFC]: { playType: { id: 703, value: '胜分差' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.BASKETBALL_DXF]: { playType: { id: 704, value: '大小分' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.BASKETBALL_HH]: { playType: { id: 705, value: '混合过关' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.SFC]: [],
+    [LOTTERYIDS.RXJ]: [],
+    [LOTTERYIDS.AHFOOTBALL_QCRQ]: { playType: { id: 901, value: '全场让球' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.AHFOOTBALL_QCDXQ]: { playType: { id: 902, value: '全场大/小球' }, mode: 2, scheme: [] },
+    sfc: { issues: [], current: {} },
+    confirm: {
+      bettingList: [],
+      followTimes: 1,
+      multiple: 1,
+      id: null,
+      sign: null,
+      ticketPrice: 2,
+      addTo: false
+    },
+    sportConfirm: {
+      bettingList: [],
+      multiple: 1,
+      ticketPrice: 2,
+      mode: 2,
+      bonus: { min: 0, max: 0 },
+      stakeCount: 0,
+      series: [],
+      isMulti: false
+    },
+    optimizeList: [],
+    optimize: {
+      min: 0, max: 0, count: 0, money: 0, input: 0, index: 0, inputStatus: false
+    },
+    groupsKey: null
+  },
+  mutations,
+  actions
 }

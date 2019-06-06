@@ -4,20 +4,9 @@ import loading from '../../common/loading'
 import HomeLotteryItem from '../../model/HomeLotteryItem'
 import HomeLotteryIssue from '../../model/HomeLotteryIssue'
 
-let state = {
-  Device: { // 设备信息
-    navInfo: { wx: false, ios: false, android: false },
-    width: 100,
-    height: 100
-  },
-  banners: [],
-  issue: {},
-  lotteries: [],
-  information: []
-}
-
 const actions = {
   [types.GET_BANNER] (context) {
+    const { state } = context
     if (state.banners.length === 0) {
       Http.get('/Home/getBanner').then(data => {
         context.commit(types.GET_BANNER, data)
@@ -25,6 +14,8 @@ const actions = {
     }
   },
   [types.GET_LOTTERY_LIST] (context) {
+    const { state } = context
+
     if (state.lotteries.length === 0) {
       loading.show()
       return Http.get('/Lottery/getLotteryList').then(data => {
@@ -39,6 +30,8 @@ const actions = {
     })
   },
   [types.GET_RECOMMEND_ISSUE] (context) {
+    const { state } = context
+
     if (!state.issue.lottery_id) {
       Http.get('/Home/getRecommentIssue').then(data => {
         context.commit(types.GET_RECOMMEND_ISSUE, data)
@@ -46,6 +39,8 @@ const actions = {
     }
   },
   [types.GET_INFORMATION_LIST] (context) {
+    const { state } = context
+
     if (Array.isArray(state.information) === true) {
       if (state.information.length === 0) {
         Http.get('/News/getRecommendList').then(data => {
@@ -86,5 +81,17 @@ const mutations = {
 }
 
 export default {
-  state, mutations, actions
+  state: {
+    Device: { // 设备信息
+      navInfo: { wx: false, ios: false, android: false },
+      width: 100,
+      height: 100
+    },
+    banners: [],
+    issue: {},
+    lotteries: [],
+    information: []
+  },
+  mutations,
+  actions
 }

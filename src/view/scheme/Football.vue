@@ -6,13 +6,9 @@
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
 
 export default {
-  name: 'football',
-  components: {
-    VHead
-  }
+  name: 'football'
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="home padding-bottom-50">
-    <v-head :goApp="true" title="365彩票"></v-head>
+    <v-head hide-back="true" title="K88体育"></v-head>
     <mt-swipe :auto="4000" v-show="home.banners.length > 0">
       <mt-swipe-item :key="key" v-for="(banner, key) in home.banners">
         <img :src="banner.image" @click="goBannerUrl(banner)" alt="banner" class="banner">
@@ -11,28 +11,24 @@
       <!--<recommend-lottery :issue="home.issue" @refresh="refresh"></recommend-lottery>-->
       <!--</div>-->
       <div class="lottery-box" v-if="lotteries.length > 0">
-        <template v-for="(lottery, index) in lotteries">
-          <lottery-item :lottery="lottery"></lottery-item>
+        <template>
+          <lottery-item :key="index" :lottery="lottery" v-for="(lottery, index) in lotteries"></lottery-item>
           <!--<template v-if="(index+1)%3 === 0"><hr></template>-->
         </template>
         <!--<lottery-item :lottery="moreLottery"></lottery-item>-->
       </div>
-      <!--<div class="information-list">-->
-      <!--<information-item :key="key" :information="item" v-for="(item, key) in home.information"></information-item>-->
-      <!--</div>-->
+      <div class="information-list">
+        <information-item :information="item" :key="key" v-for="(item, key) in home.information"></information-item>
+      </div>
     </div>
-    <bottom-nav active="Home"></bottom-nav>
   </div>
 </template>
 
 <script>//
-import VHead from '../../components/VHead'
-import BottomNav from '../../components/BottomNav.vue'
 import LotteryItem from '../../components/HomeLotteryItem.vue'
 import InformationItem from '../../components/HomeInformationItem.vue'
-import RecommendLottery from '../../components/HomeRecommendLottery.vue'
+// import RecommendLottery from '../../components/HomeRecommendLottery.vue'
 import { Swipe, SwipeItem } from 'mint-ui'
-import Vue from 'vue'
 import { mapActions } from 'vuex'
 import Lottery from '../../model/common/Lottery'
 import {
@@ -42,9 +38,6 @@ import {
   GET_RECOMMEND_ISSUE,
   RECOMMEND_ISSUE_REFRESH
 } from '../../store/home/types'
-
-Vue.component(Swipe.name, Swipe)
-Vue.component(SwipeItem.name, SwipeItem)
 
 export default {
   name: 'home',
@@ -65,8 +58,8 @@ export default {
     lotteries () {
       return this.home.lotteries.filter(value => {
         return Lottery.isSYXW(value.lottery_id) || Lottery.isDLT(value.lottery_id) ||
-          Lottery.isSSQ(value.lottery_id) || (value.lottery_id*1 === 6) ||
-          (value.lottery_id*1 === 7) || (value.lottery_id*1 === 5) || (value.lottery_id*1 === 30) ||
+          Lottery.isSSQ(value.lottery_id) || (value.lottery_id * 1 === 6) ||
+          (value.lottery_id * 1 === 7) || (value.lottery_id * 1 === 5) || (value.lottery_id * 1 === 30) ||
           Lottery.isFC3D(value.lottery_id) || Lottery.isSFCOrRXJ(value.lottery_id)
       })
     }
@@ -92,7 +85,13 @@ export default {
     // this.getRecommendIssue();
     this.getInformation()
   },
-  components: { VHead, BottomNav, Swipe, SwipeItem, LotteryItem, InformationItem, RecommendLottery }
+  components: {
+    [Swipe.name]: Swipe,
+    [SwipeItem.name]: SwipeItem,
+    LotteryItem,
+    InformationItem
+    // RecommendLottery
+  }
 }
 </script>
 
@@ -121,6 +120,7 @@ export default {
 
   .home .container {
     padding: 10px;
+    background: $c1c1c1c;
   }
 
   .home .container .lottery-box {

@@ -4,12 +4,6 @@ import loading from '../../common/loading'
 import { confirmOrderBetNumberHandle, confirmOrderShowTeam, seriesArray } from '../../common/algorithm'
 import Util from '../../common/util'
 
-const state = {
-  detail: {},
-  confirm: {},
-  expired: false,
-  paymentComplete: false
-}
 const actions = {
   [types.GET_SCHEME_CONFIRM] (context) {
     loading.show()
@@ -42,5 +36,12 @@ const mutations = {
 }
 
 export default {
-  state, mutations, actions
+  state: {
+    detail: {},
+    confirm: {},
+    expired: false,
+    paymentComplete: false
+  },
+  mutations,
+  actions
 }

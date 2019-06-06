@@ -13,9 +13,25 @@ import score from './score/index'
 import information from './information/index'
 
 Vue.use(Vuex)
-
-export default new Vuex.Store({
-  modules: {
-    user, scheme, payment, betting, home, prize, information, score
-  }
-})
+// 保存数据结构留作初始化使用
+sessionStorage.setItem('vue-x', JSON.stringify({
+  home: home.state,
+  user: user.state,
+  scheme: scheme.state,
+  payment: payment.state,
+  betting: betting.state,
+  prize: prize.state,
+  information: information.state,
+  score: score.state
+}))
+const modules = {
+  home,
+  user,
+  scheme,
+  payment,
+  betting,
+  prize,
+  information,
+  score
+}
+export default new Vuex.Store({ modules })

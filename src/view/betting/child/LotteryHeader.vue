@@ -57,7 +57,7 @@ export default {
   computed: {
     ...mapState({
       lottery: state => state.betting.lottery,
-      currentType: state => state.betting[state.betting.lottery].playType || { value: '' }
+      currentType: state => (state.betting[state.betting.lottery] && state.betting[state.betting.lottery].playType) || { value: '' }
     })
   },
   methods: {
@@ -65,9 +65,7 @@ export default {
       this.panelVisible = !this.panelVisible
     },
     selectPlayType (item) {
-      console.log(this.lottery, item)
       if (Lottery.isFootBall(this.lottery) || Lottery.isBasketBall(this.lottery) || Lottery.isAHFootBall(this.lottery)) {
-        console.log(item)
         this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT, item)
       } else if (Lottery.isSSQ(this.lottery) || Lottery.isDLT(this.lottery) ||
         Lottery.isSYXW(this.lottery) || Lottery.isK3(this.lottery) || Lottery.isFC3D(this.lottery)) {
@@ -124,7 +122,7 @@ export default {
     if (Lottery.isAHFootBall(this.lottery)) {
       clearTimeout(this.time)
       // 亚盘每15秒更新次
-      setTimeout(this.fifteenTimeUpdate, 10000)
+      this.fifteenTimeUpdate()
     } else if (Lottery.isSSQ(this.lottery) || Lottery.isDLT(this.lottery) || Lottery.isK3(this.lottery) || Lottery.isFC3D(this.lottery)) {
       this.$store.dispatch(GET_CURRENT_LOTTERY).then(() => {
         let issue = recommendIssue.get()

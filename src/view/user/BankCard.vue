@@ -1,8 +1,8 @@
 <template>
   <div class="bankCard">
     <v-head title="银行卡信息"></v-head>
-    <div v-if="this.userBank.no!=''">
-      <div class="padding-0-10 bg-white margin-top-10">
+    <div class="back-1c1c1c" v-if="userBank.no">
+      <div class="padding-0-10 margin-top-10">
         <div class="info">
           <span class="name">户&emsp;&emsp;名：</span>
           <span>{{ userBank.account }}</span>
@@ -22,10 +22,10 @@
       </div>
       <div class="prompt text-center margin-top-20">为了您的财产和资金安全，银行卡信息暂时不支持修改</div>
     </div>
-    <div v-else>
+    <div class="back-1c1c1c" v-else>
       <div class="register padding">
         <div>
-          <input disabled placeholder="户名" type="text" v-bind:value="this.mine.realname">
+          <input disabled placeholder="户名" type="text" v-bind:value="mine.realname">
         </div>
         <div class="margin-top-10 position-relative">
           <!--<div v-model="bank_name" @click="onShowBankDialog">{{ bank_name }}</div>-->
@@ -49,7 +49,7 @@
 
       </div>
       <!--<download-panel></download-panel>-->
-      <v-dialog @close="onCloseDialog" v-show="this.mine.identity_status=='0'&&!hasIDCard">
+      <v-dialog @close="onCloseDialog" v-show="mine.identity_status==0&&!hasIDCard">
         <p class="text-md">提示</p>
         <p class="text-md margin-top-5">请先完成身份证认证</p>
         <div class="padding margin-top-10">
@@ -64,19 +64,15 @@
         <div @click="onCloseBankDialog" class="mask"></div>
         <div class="content">
           <div @click="getBankInfo">
-            <div v-for="item in bankList">{{ item.name }}</div>
+            <div :key="item.name" v-for="item in bankList">{{ item.name }}</div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="tel-panel">客服热线 400-835-1108
     </div>
   </div>
 </template>
 
 <script>//
-import VHead from '../../components/VHead.vue'
-import CaptchaButton from '../../components/CaptchaButton'
 import VDialog from '../../components/VDialog.vue'
 import Util from '../../common/util'
 import Toast from '../../common/toast'
@@ -103,7 +99,7 @@ export default {
   },
   methods: {
     submit () {
-      if ((this.mine.identity_status)*1 === 0) {
+      if (this.mine.identity_status * 1 === 0) {
         Toast('请先完成身份验证!')
         return
       }
@@ -149,7 +145,7 @@ export default {
     })
   },
   components: {
-    VHead, CaptchaButton, VDialog
+    VDialog
   },
   created () {
     this.getMineInfo()
@@ -171,13 +167,13 @@ export default {
 
   .bankCard .info {
     padding: 15px 0;
-    color: #333333;
+    color: white;
     font-size: 14px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #313131;
   }
 
   .bankCard .info .name {
-    color: #999999;
+    color: white;
   }
 
   .bankCard .info.no-border {
@@ -186,16 +182,6 @@ export default {
 
   .bankCard .prompt {
     padding: 0 0;
-    color: #999999;
-    font-size: 13px;
-  }
-
-  .bankCard .tel-panel {
-    position: absolute;
-    padding: 0 0;
-    width: 100%;
-    bottom: 20px;
-    text-align: center;
     color: #999999;
     font-size: 13px;
   }
@@ -251,4 +237,10 @@ export default {
     position: relative;
   }
 </style>
-
+<style lang="scss" scoped>
+  .bankCard {
+    > .back-1c1c1c {
+      background-color: #1C1C1C;
+    }
+  }
+</style>

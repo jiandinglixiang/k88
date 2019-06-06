@@ -51,20 +51,18 @@ textarea {
 html, body {
   height: 100%;
   width: 100%;
-  background-color: $c131313;
-  max-width: 640px;
-  margin: 0 auto;
 }
 
 input[type="text"], input[type="number"], input[type="password"] {
   width: 100%;
   border-radius: 5px;
-  border: 1px solid #cccccc;
+  border: 1px solid #313131;
   font-size: 13px;
-  background: white;
+  background: #1c1c1c;
   height: 40px;
   line-height: 38px;
   padding: 0 10px;
+  color: white;
 }
 
 .btn {
@@ -80,9 +78,9 @@ input[type="text"], input[type="number"], input[type="password"] {
 }
 
 .btn.btn-out-line {
-  color: #FF3333;
-  background: white;
-  border: 1px solid #ccc;
+  color: #FFC63A;
+  background-color: #131313;
+  border: 1px solid #FFC63A;
 }
 
 .btn.width-45 {
@@ -221,7 +219,7 @@ input[type="text"], input[type="number"], input[type="password"] {
 }
 
 .text-default-2 {
-  @if($lotteryIg) {
+  @if ($lotteryIg) {
     color: $cgray;
   } @else {
     color: $cCccCCc;
@@ -229,7 +227,7 @@ input[type="text"], input[type="number"], input[type="password"] {
 }
 
 .text-dark {
-  @if($lotteryIg) {
+  @if ($lotteryIg) {
     color: $cgray;
   } @else {
     color: #cccccc;

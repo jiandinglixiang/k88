@@ -43,7 +43,7 @@ export function copy (obj) {
 
 export default {
   isMobile (mobile) {
-    return /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/.test(mobile)
+    return /^1[3456789]\d{9}$/.test(mobile)
   },
   passwordValid (value) {
     return /^(?=.*\d)[a-zA-Z\d]{6,18}$/.test(value)
@@ -163,7 +163,7 @@ export default {
     return weeks[new Date(timestamp * 1000).getDay()]
   },
   loadingCalculator (callbackModule) {
-    this.loadScript('{0}/static/js/calculate.js?v=20170719'.format(location.origin), function () { // 加载,并执行回调函数
+    this.loadScript('./calculate.js?v=20170719', function () { // 加载,并执行回调函数
       callbackModule(window.Module)
     })
   },
