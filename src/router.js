@@ -189,7 +189,7 @@ const router = new Router({
       path: '/xincai_register',
       name: 'NewRegister',
       component: NewRegister,
-      meta: { title: '新彩票' }
+      meta: { title: 'K88体育' }
     }, {
       path: '/betting/football',
       name: 'FootballBetting',

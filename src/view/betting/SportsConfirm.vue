@@ -207,7 +207,7 @@
       </div>
       <mt-popup
         position="bottom"
-        v-model="popupVisible">
+        class="series-mt-popup" v-model="popupVisible">
         <div class="series-select-popup">
           <div class="header-nav clear">
             <a :class="{active: popupNavIndex === 0}" @click="popupNavChange(0)" href="javascript:">自由过关</a>
@@ -709,7 +709,6 @@ export default {
                 }
               })
             }
-            console.log(result)
           } else {
             return
           }
@@ -1055,9 +1054,10 @@ export default {
   .sports-confirm .bottom-fixed {
     position: fixed;
     bottom: 0;
-    left: 0;
+    max-width: 640px;
     width: 100%;
     height: 130px;
+    margin: 0 auto;
     @if ($lotteryIg) {
       background: $cFFfFFF;
     } @else {
@@ -1214,6 +1214,10 @@ export default {
     width: 100%;
   }
 
+  .sports-confirm .series-mt-popup {
+    max-width: 640px;
+    margin: 0 auto;
+  }
   .sports-confirm .series-select-popup {
     width: 100%;
     position: relative;

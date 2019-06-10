@@ -25,7 +25,7 @@ module.exports = {
     config.plugin('define').tap(args => {
       // 增加环境变量
       let appIcon = `'${environmentType}_favicon.ico'`
-      let appName = `'${environmentType}彩票'`
+      let appName = `'${environmentType}体育'`
       Object.assign(args[0]['process.env'], { 'APP_ICON': `${appIcon}` })
       Object.assign(args[0]['process.env'], { 'APP_NAME': `${appName}` })
       Object.assign(args[0]['process.env'], { [environmentType]: 'true' })

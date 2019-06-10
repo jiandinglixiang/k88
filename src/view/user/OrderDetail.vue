@@ -47,12 +47,15 @@
         <p class="text-normal" style="line-height: 34px" v-if="detail.prizeResult">
           开奖号码：
           <template v-if="isK3(detail.lottery_id)">
-            <span :class="'k3-' + ball + '-icon'" class="k3-item" v-for="ball in detail.prizeResult[0]"></span>
+            <span :class="'k3-' + ball + '-icon'" :key="`0${index}`" class="k3-item"
+                  v-for="(ball,index) in detail.prizeResult[0]"></span>
             <span class="k3-item-hz">和值：{{k3Hz(detail.prizeResult[0])}}</span>
           </template>
           <template v-else>
-            <span class="bg-red-ball margin-right-3" v-for="item in detail.prizeResult[0]">{{item}}</span>
-            <span class="bg-blue-ball margin-right-3" v-for="item in detail.prizeResult[1]">{{item}}</span>
+            <span :key="`1${index1}`" class="bg-red-ball margin-right-3"
+                  v-for="(item, index1) in detail.prizeResult[0]">{{item}}</span>
+            <span :key="`2${index2}`" class="bg-blue-ball margin-right-3"
+                  v-for="(item, index2) in detail.prizeResult[1]">{{item}}</span>
           </template>
         </p>
         <p class="text-normal" v-else>
@@ -60,31 +63,34 @@
         </p>
         <p class="text-normal margin-top-5">投注内容：<span
           class="text-muted">{{detail.stackCount}}注,{{detail.multiple}}倍</span></p>
-        <p class="text-normal margin-top-5" v-for="item in detail.tickets">{{item.playTypeText}}：
+        <p :key="`1${index1}`" class="text-normal margin-top-5" v-for="(item,index1) in detail.tickets">
+          {{item.playTypeText}}：
           <!--十一选五-->
           <span class="text-muted" v-if="item.lotteryType == 'syxw' || item.lotteryType == 'fc3d'">
-            <span v-for="(r, k) in item.result">
+            <span :key="`2${k}`" v-for="(r, k) in item.result">
               <span v-if="k > 0">|</span>
               <template v-if="r.pre">
                 <span>(</span>
                 <span :class="{'margin-left-3': t > 0, 'text-primary': p.checked}"
-                      v-for="(p, t) in r.pre">{{p.text}}</span>
+                      :key="`3${t}`" v-for="(p, t) in r.pre">{{p.text}}</span>
                 <span>)</span>
               </template>
-              <span :class="{'text-primary': i.checked}" class="margin-right-3" v-for="i in r.next">{{i.text}}</span>
+              <span :class="{'text-primary': i.checked}" :key="`4${index4}`" class="margin-right-3"
+                    v-for="(i,index4) in r.next">{{i.text}}</span>
             </span>
           </span>
           <!--双色球和大乐透-->
           <span class="text-muted" v-else>
-            <span v-for="(r, k) in item.result">
+            <span :key="`5${k}`" v-for="(r, k) in item.result">
               <span v-if="k > 0">:</span>
               <span v-if="r.pre">
                 <span>(</span>
                 <span :class="{'margin-left-3': t > 0, 'text-primary': p.checked}"
-                      v-for="(p, t) in r.pre">{{p.text}}</span>
+                      :key="`6${t}`" v-for="(p, t) in r.pre">{{p.text}}</span>
                 <span>)</span>
               </span>
-              <span :class="{'text-primary': i.checked}" class="margin-right-3" v-for="i in r.next">{{i.text}}</span>
+              <span :class="{'text-primary': i.checked}" :key="`7${index7}`" class="margin-right-3"
+                    v-for="(i,index7) in r.next">{{i.text}}</span>
             </span>
           </span>
         </p>
@@ -149,7 +155,7 @@ export default {
   }
 
   .order-detail .top {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: url("../../assets/igdj/order_top_bg.png") no-repeat;
       color: $cgray;
     } @else {

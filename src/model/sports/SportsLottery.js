@@ -65,10 +65,10 @@ export default class SportsLottery {
       return val
     })
     const order = this.betting_order
-    const difference = this.lottery_id === '901' ? f1 : this.lottery_id === '902' ? f2 : f3.bind(this)
+    const difference = this.lottery_id === '901' ? f1 : this.lottery_id === '902' ? f2 : f3
     Object.keys(order).forEach(key => {
       order[key] && Object.keys(order[key]).forEach(key2 => {
-        lottery[key] && Array.isArray(lottery[key][key2]) && betting.push({
+        lottery[key] && lottery[key][key2] && betting.push({
           value: order[key][key2],
           con: key2,
           key: key2,

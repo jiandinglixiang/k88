@@ -28,7 +28,7 @@ function errorHandle (data, reject) {
       Toast('登录已过期,请重新登录!')
       break
     default:
-      Toast(data.msg || '未知错误')
+      data.msg && Toast(data.msg)
   }
 }
 

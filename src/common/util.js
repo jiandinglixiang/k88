@@ -146,7 +146,7 @@ export default {
     }
   },
   timeCountdown (end, callback) {
-    callback && callback((end * 1000 - Date.now()) / 1000)
+    typeof callback === 'function' && callback((end * 1000 - Date.now()) / 1000)
     const t = setInterval(() => {
       let result = (end * 1000 - Date.now()) / 1000
       if (result <= 0) {

@@ -42,7 +42,8 @@
                       :key="t" v-for="(p, t) in ticket.result[0].pre">{{p.text}}</span>
                 <span>)</span>
               </template>
-              <span :class="{'text-primary': i.checked}" class="margin-right-3" v-for="i in ticket.result[0].next">{{i.text}}</span>
+              <span :class="{'text-primary': i.checked}" :key="`02${index02}`" class="margin-right-3"
+                    v-for="(i,index02) in ticket.result[0].next">{{i.text}}</span>
             </td>
             <td class="text-sm" width="20%">
               <template v-if="ticket.result[1].pre">
@@ -51,7 +52,8 @@
                       :key="t" v-for="(p, t) in ticket.result[1].pre">{{p.text}}</span>
                 <span>)</span>
               </template>
-              <span :class="{'text-primary': i.checked}" class="margin-right-3" v-for="i in ticket.result[1].next">{{i.text}}</span>
+              <span :class="{'text-primary': i.checked}" :key="`01${index01}`" class="margin-right-3"
+                    v-for="(i,index01) in ticket.result[1].next">{{i.text}}</span>
             </td>
           </template>
         </tr>
@@ -59,18 +61,18 @@
           <td class="text-center" colspan="2">彩果</td>
           <template v-if="detail.tickets && detail.tickets[0].lotteryType === 'k3'">
             <td>
-              <span :class="'k3-' + ball + '-icon'" class="k3-item"
-                    v-for="ball in (detail.prizeResult && detail.prizeResult[0])"></span>
+              <span :class="'k3-' + ball + '-icon'" :key="`8${index8}`" class="k3-item"
+                    v-for="(ball,index8) in (detail.prizeResult && detail.prizeResult[0])"></span>
             </td>
           </template>
           <template v-else>
             <td class="text-sm">
-              <span class="bg-red-ball margin-right-3"
-                    v-for="r in (detail.prizeResult && detail.prizeResult[0])">{{r}}</span>
+              <span :key="`9${index9}`" class="bg-red-ball margin-right-3"
+                    v-for="(r,index9) in (detail.prizeResult && detail.prizeResult[0])">{{r}}</span>
             </td>
             <td v-if="detail.tickets[0].lotteryType !== 'syxw'">
-              <span class="bg-blue-ball margin-right-3"
-                    v-for="r in (detail.prizeResult && detail.prizeResult[1])">{{r}}</span>
+              <span :key="`10${index10}`" class="bg-blue-ball margin-right-3"
+                    v-for="(r,index10) in (detail.prizeResult && detail.prizeResult[1])">{{r}}</span>
             </td>
           </template>
         </tr>
@@ -91,12 +93,12 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="item in scheme.tickets">
+      <tr :key="`5${index5}`" v-for="(item,index5) in scheme.tickets">
         <td style="padding-left: 3px">
-          <div v-for="jc in item.jc_info">
+          <div :key="`6${i6}`" v-for="(jc,i6) in item.jc_info">
             <!--显示足彩和篮彩-->
             <span v-if="jc.showCheck">
-              <div v-for="(bet, i) in jc.betting">
+              <div :key="`7${i}`" v-for="(bet, i) in jc.betting">
                 <span :class="{'text-primary': bet.checked,'blue-color':bet.status*1===1}" class="round-no">{{i === 0 ? jc.round_no : ''}}</span>
                 <span :class="{'text-primary': bet.checked,'blue-color':bet.status*1===1}"
                       style="display: inline-block; padding-left: 5px; min-width:80px;">
@@ -112,28 +114,29 @@
             <!--胜负彩和任选九-->
             <span v-else>
               <span class="round-no">{{jc.round_no}}</span>
-              <span v-for="(bet, i) in jc.betting">
+              <span :key="`4${i}`" v-for="(bet, i) in jc.betting">
                 <span :class="{'text-primary': bet.checked}">{{bet.text}}</span><span
                 v-if="i < jc.betting.length -1">|</span>
               </span>
               <br>
             </span>
           </div>
-          <div v-for="(r, k) in item.result">
+          <div :key="`1${k}`" v-for="(r, k) in item.result">
             <span class="pull-left"
                   v-if="k > 0">{{item.lotteryType === 'syxw' || item.lotteryType === 'fc3d'?'|':':'}}</span>
             <template v-if="r.pre">
               <span class="pull-left">（</span>
               <span :class="{'margin-left-3': t > 0, 'text-primary': p.checked}" class="pull-left"
-                    v-for="(p, t) in r.pre">{{p.text}}</span>
+                    :key="`2${t}`" v-for="(p, t) in r.pre">{{p.text}}</span>
               <span class="pull-left">）</span>
             </template>
             <template v-if="detail.tickets && detail.tickets[0].lotteryType === 'k3'">
-              <span :class="{'text-primary': i.checked}" class="margin-right-3" v-for="i in r.next">{{i.text}}</span>
+              <span :class="{'text-primary': i.checked}" :key="`3${index3}`" class="margin-right-3"
+                    v-for="(i,index3) in r.next">{{i.text}}</span>
             </template>
             <template v-else>
-              <span :class="{'text-primary': i.checked}" class="margin-right-3 pull-left"
-                    v-for="i in r.next">{{i.text}}</span>
+              <span :class="{'text-primary': i.checked}" :key="`4${index4}`" class="margin-right-3 pull-left"
+                    v-for="(i,index4) in r.next">{{i.text}}</span>
             </template>
           </div>
         </td>
@@ -152,7 +155,7 @@
       </tbody>
     </table>
     <div class="line">
-      <img alt="line" :src="linebg">
+      <img alt="line" src="../../assets/scheme_line1.png">
     </div>
     <div class="row text-center bg-darken text-sm padding text-light">
       <div class="col">出票成功：{{scheme.success_amount | currency}}元</div>
@@ -170,11 +173,6 @@ import { ORDER_SCHEME_REQUEST } from '../../store/user/types'
 
 export default {
   name: 'orderScheme',
-  data () {
-    return {
-      linebg: process.build.TYPE === 'LOTTERY_IG' ? require('../../assets/igdj/scheme_line1.png') : require('../../assets/scheme_line1.png')
-    }
-  },
   computed: {
     ...mapState({
       detail: state => state.user.orders.detail,
@@ -186,7 +184,7 @@ export default {
       getOrderScheme: ORDER_SCHEME_REQUEST
     }),
     toDecimal (odds) {
-      if (this.detail.lottery_id*1 === 901 || this.detail.lottery_id*1 === 902) {
+      if (this.detail.lottery_id * 1 === 901 || this.detail.lottery_id * 1 === 902) {
         let f = (odds * 1)
         let value = f.toString()
         let rs = value.indexOf('.')

@@ -22,23 +22,23 @@ export default {
   },
   methods: {
     goVip () {
-      if (process.env.NODE_ENV === 'production') {
-        this.$router.push({
-          name: 'WebPage',
-          query: {
-            title: 'VIP中心',
-            url: `https://phone-api.tigercai.com/index.php?s=/Integral/User/vipCenter`
-          }
-        })
-      } else {
-        this.$router.push({
-          name: 'WebPage',
-          query: {
-            title: 'VIP中心',
-            url: `//test.h5.phone.t.ebao123.com/Integral/User/vipCenter`
-          }
-        })
-      }
+      // if (process.env.NODE_ENV === 'production') {
+      //   this.$router.push({
+      //     name: 'WebPage',
+      //     query: {
+      //       title: 'VIP中心',
+      //       url: `https://phone-api.tigercai.com/index.php?s=/Integral/User/vipCenter`
+      //     }
+      //   })
+      // } else {
+      //   this.$router.push({
+      //     name: 'WebPage',
+      //     query: {
+      //       title: 'VIP中心',
+      //       url: `//test.h5.phone.t.ebao123.com/Integral/User/vipCenter`
+      //     }
+      //   })
+      // }
     }
   }
 }

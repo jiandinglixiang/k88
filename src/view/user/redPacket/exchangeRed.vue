@@ -47,7 +47,7 @@
       <mt-button @click="exchangeCoupon" class="button-new" size="large" type="danger">立即兑换</mt-button>
     </div>
     <div class="exchange-msg">
-      兑换码一般通过活动发送,没有固定获取方式.如果您获得了兑换码,您可以用来兑换彩票红包,购买彩票时可用红包抵扣现金!
+      兑换码一般通过活动发送,没有固定获取方式.如果您获得了兑换码,您可以用来兑换K88体育红包,购买时可用红包抵扣现金!
     </div>
   </div>
 </template>
@@ -95,7 +95,7 @@ export default {
         name: 'WebPage',
         query: {
           title: '兑换红包帮助',
-          url: 'https://phone-api.tigercai.com/index.php?s=/Content/help/coupon_exchange.html'
+          url: 'http://tgapi.k888.bet/index.php?s=/Content/help/coupon_exchange.html'
         }
       })
     }

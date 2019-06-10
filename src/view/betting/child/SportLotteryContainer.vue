@@ -118,8 +118,9 @@ export default {
     padding: 7px 10px;
     width: 100%;
     bottom: 0;
-    left: 0;
-    @if($lotteryIg) {
+    max-width: 640px;
+    margin: 0 auto;
+    @if ($lotteryIg) {
       background: $cFFfFFF;
       .text-muted {
         color: $c999999;

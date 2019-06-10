@@ -48,7 +48,7 @@ export default {
     font-size: 18px;
     text-align: center;
     line-height: 40px;
-    margin-bottom: 1px;
+    /*margin-bottom: 1px;*/
     @if ($lotteryIg) {
       background: #1A1003;
       color: #fff;

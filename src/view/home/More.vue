@@ -2,7 +2,7 @@
   <div class="home-more">
     <v-head title="更多彩种"></v-head>
     <div class="home-more-container">
-      <p class="tip text-sm text-muted">提示：更多彩种请下载365彩票</p>
+      <p class="tip text-sm text-muted">提示：更多彩种请下载K88体育</p>
       <div class="box">
         <lottery-item
           :key="key"
@@ -15,9 +15,9 @@
       <p>
         <img alt="download" src="../../assets/home/download_icon.png" width="50">
       </p>
-      <p class="text-md margin-top-5">请下载安装365彩票官方APP</p>
+<!--      <p class="text-md margin-top-5">请下载安装365彩票官方APP</p>-->
       <div class="padding">
-        <a class="btn" href="http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery" target="_self">立即下载</a>
+<!--        <a class="btn" href="http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery" target="_self">立即下载</a>-->
       </div>
     </v-dialog>
   </div>

@@ -31,13 +31,13 @@ export default {
   },
   methods: {
     goWebPage () {
-      /* this.$router.push({
-        name: 'WebPage',
-        query: {
-          title: this.information.title || ' ',
-          url: this.information.webpage_url
-        }
-      }) */
+      // this.$router.push({
+      //   name: 'WebPage',
+      //   query: {
+      //     title: this.information.title || ' ',
+      //     url: this.information.webpage_url
+      //   }
+      // })
       location.href = this.information.webpage_url
     }
   }
@@ -46,15 +46,16 @@ export default {
 
 <style>
   .home-information-item {
-    border: 1px solid #313131;
+    /*border: 1px solid #313131;*/
     border-radius: 5px;
     margin-top: 10px;
     background-color: #1c1c1c;
+    overflow: hidden;
   }
 
   .home-information-item .top {
     height: 10px;
-    background-color: #131313;
+    background-color: #313131;
   }
 
   .home-information-item .information-item-container {
@@ -71,7 +72,7 @@ export default {
     top: 5px;
     border-radius: 40px;
     padding: 3px;
-    border: 1px solid #313131;
+    border: 1px solid white;
     overflow: hidden;
   }
 
@@ -94,7 +95,7 @@ export default {
   .home-information-item .information-item-container .sub-title {
     font-size: 13px;
     margin-left: 10px;
-    color: white;
+    color: #999;
   }
 
   .home-information-item .information-item-container .description {

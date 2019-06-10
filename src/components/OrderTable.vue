@@ -10,7 +10,7 @@
     </tr>
     </thead>
     <tbody class="text-light">
-    <tr :key="index" v-for="(item,index) in list">
+    <tr :key="index33" v-for="(item,index33) in list">
       <td>{{item.round_no}}</td>
       <td>
         {{item.homeFirst ? item.home : item.guest}}
@@ -22,33 +22,34 @@
       <td>
         <!--显示足彩和篮彩-->
         <span v-if="item.showCheck">
-          <template v-if="item.lottery_id==901">
+          <template v-if="item.lottery_id*1===901">
             <span :class="{'text-primary': b.status===3,'blue-color':b.status===1}" :key="index2"
                   v-for="(b,index2) in item.betting">
                 <span>让球 <span v-if="b.key.substring(4, 3)=== '1'">{{ item.home }}</span><span
                   v-else>{{ item.guest }}</span></span>
-               ({{b.text}}) {{toDecimal(b.value)}}
+               ({{b.text}}) {{toDecimal(item.lottery_id,b.value)}}
                                 <span class="red-check-icon" v-if="b.checked"></span>
                 <span class="check-active" v-if="b.status===1"></span>
             </span>
           </template>
-          <template v-else-if="item.lottery_id==902">
+          <template v-else-if="item.lottery_id*1===902">
          <span :class="{'text-primary': b.status===3,'blue-color':b.status===1}" :key="index2"
                v-for="(b,index2) in item.betting">
            <span v-if="b.key.substring(4, 3)=== '1'">大</span>
            <span v-else>小</span>
-                ({{b.text}}) {{toDecimal(b.value)}}
+                ({{b.text}}) {{toDecimal(item.lottery_id,b.value)}}
                      <span class="red-check-icon" v-if="b.checked"></span>
                 <span class="check-active" v-if="b.status===1"></span>
             </span>
           </template>
           <template v-else>
-              <span :class="{'text-primary': b.checked}" :key="index2" v-for="(b,index2) in item.betting">
+              <p :class="{'text-primary': b.checked}" :key="index2" v-for="(b,index2) in item.betting">
               <span>
-                ({{b.text}}) {{toDecimal(b.value)}}
+                ({{b.text}})
+                {{toDecimal(item.lottery_id,b.value)}}
                 <span class="red-check-icon" v-show="b.checked"></span>
               </span>
-            </span>
+            </p>
           </template>
         </span>
         <!--胜负彩和任选九-->
@@ -61,7 +62,7 @@
       <td><span style="color: red" v-if="item.schedule_status==='6'">已取消</span>
         <span :key="index3"
               v-for="(r,index3) in item.result">{{r.text}} <span
-          v-if="item.lottery_id!=901&&item.lottery_id!=902&&r.value">({{r.value}})</span><br/></span></td>
+          v-if="item.lottery_id*1!==901&&item.lottery_id*1!==902&&r.value">({{r.value}})</span><br/></span></td>
     </tr>
     </tbody>
   </table>
@@ -81,8 +82,8 @@ export default {
     }
   },
   methods: {
-    toDecimal (odds) {
-      if (this.list[0].lottery_id === '901' || this.list[0].lottery_id === '902') {
+    toDecimal (id, odds) {
+      if (id * 1 === 901 || id * 1 === 902) {
         let f = (odds * 1)
         let value = f.toString()
         let rs = value.indexOf('.')

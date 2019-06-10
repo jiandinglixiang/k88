@@ -1,24 +1,19 @@
 <template>
-  <div class="home padding-bottom-50">
-    <v-head hide-back="true" title="K88体育"></v-head>
-    <mt-swipe :auto="4000" v-show="home.banners.length > 0">
-      <mt-swipe-item :key="key" v-for="(banner, key) in home.banners">
-        <img :src="banner.image" @click="goBannerUrl(banner)" alt="banner" class="banner">
+  <div class="home">
+    <mt-swipe :auto="4000" style="height: 110px" v-show="banners.length > 0">
+      <mt-swipe-item :key="item.id" v-for="item in banners">
+        <router-link :src="item.image"
+                     :to="{name:'WebPage',query:{title:item.title,url:item.target}}"
+                     class="banner"
+                     tag="img"/>
       </mt-swipe-item>
     </mt-swipe>
     <div class="container">
-      <!--<div class="recommend-box">-->
-      <!--<recommend-lottery :issue="home.issue" @refresh="refresh"></recommend-lottery>-->
-      <!--</div>-->
-      <div class="lottery-box" v-if="lotteries.length > 0">
-        <template>
-          <lottery-item :key="index" :lottery="lottery" v-for="(lottery, index) in lotteries"></lottery-item>
-          <!--<template v-if="(index+1)%3 === 0"><hr></template>-->
-        </template>
-        <!--<lottery-item :lottery="moreLottery"></lottery-item>-->
+      <div class="lottery-box" v-show="lotteries.length > 0">
+        <lottery-item :key="lottery.lottery_id" :lottery="lottery" v-for="lottery in lotteries"></lottery-item>
       </div>
       <div class="information-list">
-        <information-item :information="item" :key="key" v-for="(item, key) in home.information"></information-item>
+        <information-item :information="item" :key="key" v-for="(item, key) in information"></information-item>
       </div>
     </div>
   </div>
@@ -29,8 +24,8 @@ import LotteryItem from '../../components/HomeLotteryItem.vue'
 import InformationItem from '../../components/HomeInformationItem.vue'
 // import RecommendLottery from '../../components/HomeRecommendLottery.vue'
 import { Swipe, SwipeItem } from 'mint-ui'
-import { mapActions } from 'vuex'
-import Lottery from '../../model/common/Lottery'
+import { mapActions, mapState } from 'vuex'
+import { LotteryIdArray } from '../../store/constants'
 import {
   GET_BANNER,
   GET_INFORMATION_LIST,
@@ -45,24 +40,33 @@ export default {
     return {
       moreLottery: {
         component: 'More',
-        tipText: '发现更多彩种',
+        tipText: '',
         lottery_image: require('../../assets/ic_more.png'),
-        lottery_name: '更多'
+        lottery_name: '敬请期待'
       }
     }
   },
   computed: {
-    home () {
-      return this.$store.state.home
-    },
-    lotteries () {
-      return this.home.lotteries.filter(value => {
-        return Lottery.isSYXW(value.lottery_id) || Lottery.isDLT(value.lottery_id) ||
-          Lottery.isSSQ(value.lottery_id) || (value.lottery_id * 1 === 6) ||
-          (value.lottery_id * 1 === 7) || (value.lottery_id * 1 === 5) || (value.lottery_id * 1 === 30) ||
-          Lottery.isFC3D(value.lottery_id) || Lottery.isSFCOrRXJ(value.lottery_id)
-      })
-    }
+    ...mapState({
+      banners: state => state.home.banners,
+      information: state => state.home.information,
+      lotteries: state => {
+        const array = []
+        for (let item of state.home.lotteries) {
+          if (LotteryIdArray.includes(item.lottery_id * 1)) array.push(item)
+          if (array.length >= 8) break
+        }
+        if (array.length) {
+          array.push({
+            component: 'More',
+            tipText: '',
+            lottery_image: require('../../assets/ic_more.png'),
+            lottery_name: '敬请期待'
+          })
+        }
+        return array
+      }
+    })
   },
   methods: {
     ...mapActions({
@@ -71,13 +75,13 @@ export default {
       getInformation: GET_INFORMATION_LIST,
       getRecommendIssue: GET_RECOMMEND_ISSUE,
       recommendIssueRefresh: RECOMMEND_ISSUE_REFRESH
-    }),
-    refresh () {
-      this.recommendIssueRefresh()
-    },
-    goBannerUrl (banner) {
-      location.href = banner.target
-    }
+    })
+    // refresh () {
+    //   this.recommendIssueRefresh()
+    // },
+    // goBannerUrl (banner) {
+    //   location.href = banner.target
+    // }
   },
   created () {
     this.getBanners()
@@ -95,44 +99,42 @@ export default {
 }
 </script>
 
-<style lang="scss">
-  .home .mint-swipe {
-    height: 110px;
-  }
-
-  .home .mint-swipe .banner {
-    width: 100%;
-    height: 100%;
-  }
-
-  .home .mint-swipe-indicators {
-    bottom: 5px;
-  }
-
-  .home .mint-swipe-indicator {
-    background: $c1c1c1c;
-    opacity: 0.3;
-  }
-
-  .home .mint-swipe-indicator.is-active {
-    opacity: 1;
-  }
-
-  .home .container {
-    padding: 10px;
-    background: $c1c1c1c;
-  }
-
-  .home .container .lottery-box {
-    /*border: 1px solid #dddddd;*/
-    background: $c1c1c1c;
-    border-radius: 5px;
+<style lang="scss" scoped>
+  .home {
     overflow: hidden;
-    margin-top: 10px;
-  }
+    margin-bottom: 50px;
 
-  .home .container .lottery-box hr {
-    border-top: 0;
-    /*border-bottom: 1px solid #ddd;*/
+    .mint-swipe .banner {
+      height: 110px;
+      width: 100%;
+    }
+
+    .mint-swipe-indicators {
+      bottom: 5px;
+    }
+
+    .mint-swipe-indicator {
+      /*   background: $c1c1c1c;*/
+      opacity: 0.3;
+    }
+
+    .mint-swipe-indicator.is-active {
+      opacity: 1;
+    }
+
+    .container {
+      margin: 10px;
+
+      .lottery-box {
+        background: $c1c1c1c;
+        border-radius: 5px;
+        margin: 10px 0;
+        overflow: hidden;
+      }
+
+      .lottery-box hr {
+        border: none;
+      }
+    }
   }
 </style>

@@ -6,11 +6,13 @@ export const LOTTERYIDS = {
   K3: 5,
   FOOTBALL: 6,
   BASKETBALL: 7,
-  AHFOOTBALL: 30,
   SYXW8: 8,
   SYXW18: 18,
   JXK3: 19,
+  SFC: 20,
+  RXJ: 21,
   JSK3: 22,
+  AHFOOTBALL: 30,
   FOOTBALL_SPF: 601,
   FOOTBALL_RQSPF: 602,
   FOOTBALL_BF: 603,
@@ -23,9 +25,7 @@ export const LOTTERYIDS = {
   BASKETBALL_DXF: 704,
   BASKETBALL_HH: 705,
   AHFOOTBALL_QCRQ: 901,
-  AHFOOTBALL_QCDXQ: 902,
-  SFC: 20,
-  RXJ: 21
+  AHFOOTBALL_QCDXQ: 902
 }
 export const LotteryId = {
   '1': '双色球',
@@ -35,7 +35,6 @@ export const LotteryId = {
   '5': '快三',
   '6': '竞彩足球',
   '7': '竞彩篮球',
-  '30': '足球亚盘',
   '8': '安徽十一选五',
   '9': '十一选五',
   '10': '十一选五',
@@ -48,6 +47,10 @@ export const LotteryId = {
   '17': '十一选五',
   '18': '十一选五',
   '19': '江西快三',
+  '20': '胜负彩',
+  '21': '任选九',
+  '22': '江苏快三',
+  '30': '足球亚盘',
   '601': '竞足-胜平负',
   '602': '竞足-让球胜平负',
   '603': '竞足-比分',
@@ -59,10 +62,10 @@ export const LotteryId = {
   '703': '竞篮-胜分差',
   '704': '竞篮-大小分',
   '705': '竞篮-混合过关',
-  '20': '胜负彩',
   '901': '亚盘-全场让球',
   '902': '亚盘-全场大/小球'
 }
+export const LotteryIdArray = Object.keys(LotteryId).map(v => v * 1)
 export const LotteryFootballKey = {
   'betting_score_no_concede': {
     key: '601',

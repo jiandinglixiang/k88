@@ -16,7 +16,9 @@
       @confirm="selectedDate"
       ref="picker"
       type="date"
-      v-model="pickerValue">
+      class="time-picker"
+      v-model="pickerValue"
+    >
     </mt-datetime-picker>
   </div>
 </template>
@@ -88,13 +90,11 @@ export default {
 
   .prize-sports-detail .bottom-fixed {
     position: fixed;
+    max-width: 640px;
     width: 100%;
-    /*height: 52px;*/
-    left: 0;
     bottom: 0;
+    margin: 0 auto;
     background: $cffC63A;
-    /*padding: 8px 10px;*/
-    /*border-top: 1px solid #ddd;*/
   }
 
   .prize-sports-detail .bottom-fixed .btn {
@@ -109,6 +109,11 @@ export default {
     background-size: 100% 100%;
     display: inline-block;
     margin-top: 5px;
+  }
+
+  .time-picker {
+    max-width: 640px;
+    margin: 0 auto;
   }
   .mint-datetime-action {
      @if($lotteryIg) {

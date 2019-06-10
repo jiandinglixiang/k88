@@ -2,7 +2,7 @@
   <div :height="Device.height"
        :width="Device.width"
        id="app"
-       style="position: relative;height: 100vh;max-width: 640px;margin: 0 auto;background-color: #131313;">
+       style="position: relative;min-height: 100vh;max-width: 640px;margin: 0 auto;background-color: #131313;">
     <router-view></router-view>
   </div>
 </template>

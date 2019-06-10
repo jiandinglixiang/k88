@@ -3,8 +3,8 @@
     <!-- <img class="logo" src="../assets/down_logo.png" alt="logo"> -->
     <div class="row">
       <div class="col text-sm text-muted">
-        <p class="margin-top-10">更多功能请下载</p>
-        <p>365彩票官方APP</p>
+<!--        <p class="margin-top-10">更多功能请下载</p>-->
+<!--        <p>365彩票官方APP</p>-->
       </div>
       <div class="col col-center text-right">
         <p class="download-btn">立即下载</p>
@@ -18,7 +18,7 @@ export default {
   name: 'downloadPanel',
   methods: {
     download () {
-      location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery'
+      // location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery'
     }
   }
 }

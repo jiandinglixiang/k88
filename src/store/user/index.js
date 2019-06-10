@@ -100,7 +100,7 @@ const actions = {
   },
   [types.ORDER_DETAIL_REQUEST] (context, id) {
     const { state } = context
-    if (state.orders.detail.id !== String(id) || !state.orders.detail.id) {
+    if (state.orders.detail.id * 1 !== id * 1 || !state.orders.detail.id) {
       context.commit(types.ORDER_DETAIL_REQUEST, id)
       loading.show()
       return Http.get(`/Order/detail`, { order_id: id }).then(data => {

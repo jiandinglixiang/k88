@@ -149,7 +149,7 @@ export default {
         name: 'WebPage',
         query: {
           title: '红包管理帮助',
-          url: 'https://phone-api.tigercai.com/index.php?s=/Content/help/coupon.html'
+          url: 'http://tgapi.k888.bet/index.php?s=/Content/help/coupon.html'
         }
       })
     },

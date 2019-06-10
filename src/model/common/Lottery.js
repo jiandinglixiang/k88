@@ -133,33 +133,33 @@ export default class Lottery {
   }
 
   static getHelpUrl (lotteryId) {
-    switch (parseInt(lotteryId)) {
+    switch (lotteryId * 1) {
       case LOTTERYIDS.SYXW:
       case LOTTERYIDS.SYXW8:
       case LOTTERYIDS.SYXW18:
-        return 'https://phone-api.tigercai.com/index.php?s=/Content/help/p5.html'
+        return 'http://tgapi.k888.bet/index.php?s=/Content/help/p5.html'
       case LOTTERYIDS.SSQ:
-        return 'https://phone-api.tigercai.com/index.php?s=/Content/help/ssq.html'
+        return 'http://tgapi.k888.bet/index.php?s=/Content/help/ssq.html'
       case LOTTERYIDS.DLT:
-        return 'https://phone-api.tigercai.com/index.php?s=/Content/help/dlt.html'
+        return 'http://tgapi.k888.bet/index.php?s=/Content/help/dlt.html'
       case LOTTERYIDS.K3:
       case LOTTERYIDS.JXK3:
       case LOTTERYIDS.JSK3:
-        return 'https://phone-api.tigercai.com/index.php?s=/Content/help/ks.html'
+        return 'http://tgapi.k888.bet/index.php?s=/Content/help/ks.html'
       case LOTTERYIDS.FOOTBALL:
-        return 'https://phone-api.tigercai.com/index.php?s=/Content/help/jczq.html'
+        return 'http://tgapi.k888.bet/index.php?s=/Content/help/jczq.html'
       case LOTTERYIDS.BASKETBALL:
-        return 'https://phone-api.tigercai.com/index.php?s=/Content/help/jclq.html'
+        return 'http://tgapi.k888.bet/index.php?s=/Content/help/jclq.html'
       case LOTTERYIDS.SFC:
-        return 'https://phone-api.tigercai.com/index.php?s=/Content/help/jcsfc.html'
+        return 'http://tgapi.k888.bet/index.php?s=/Content/help/jcsfc.html'
       case LOTTERYIDS.RXJ:
-        return 'https://phone-api.tigercai.com/index.php?s=/Content/help/jcrxj.html'
+        return 'http://tgapi.k888.bet/index.php?s=/Content/help/jcrxj.html'
       case LOTTERYIDS.FC3D:
-        return 'http://phone.api.tigercai.com/index.php?s=/Content/help/p3.html'
+        return 'http://tgapi.k888.bet/index.php?s=/Content/help/p3.html'
       case LOTTERYIDS.AHFOOTBALL:
       case LOTTERYIDS.AHFOOTBALL_QCRQ:
       case LOTTERYIDS.AHFOOTBALL_QCDXQ:
-        return 'http://tgapi.666esport.com/Content/help/jcyp.html'
+        return 'http://tgapi.k888.bet/index.php?s=/Content/help/jcyp.html'
     }
   }
 

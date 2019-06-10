@@ -89,13 +89,13 @@ export default {
     height: 100%;
     max-width: 640px;
     -webkit-overflow-scrolling: touch;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
   }
 
   .web-page iframe {
     width: 100%;
-    /*height: 100%;*/
-    z-index: 0;
+    min-height: 100%;
+    z-index: 10;
   }
 </style>
