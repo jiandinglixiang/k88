@@ -11,7 +11,7 @@
       <div :class="{selected: isSelected(item), 'box-center': index===1}"
            @click="onOptionSelected(item, index)"
            class="box-item"
-           v-for="(item, index) in schedule.holderList">
+           :key="index" v-for="(item, index) in schedule.holderList">
         <span><span>{{item.text}}</span> {{item.value}}</span>
       </div>
     </div>

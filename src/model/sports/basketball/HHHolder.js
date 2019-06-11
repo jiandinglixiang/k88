@@ -1,5 +1,6 @@
 import SportsHolder from '../SportsHolder'
 import { BettingScoreOdds, CONCEDE, DXF, NO_CONCEDE, SFC } from '../BettingScoreOdds'
+import { copy } from '../../../common/util'
 
 export default class HHHolder extends SportsHolder {
   constructor (obj) {
@@ -46,7 +47,7 @@ export default class HHHolder extends SportsHolder {
 
   onOptionSelected (selected, current) {
     if (Array.isArray(selected)) {
-      this.selected = selected.map(value => [...value])
+      this.selected = selected.map(value => copy(value))
     } else {
       const index = this.selected[current].indexOf(selected)
       index !== -1 ? this.selected[current].splice(index, 1)

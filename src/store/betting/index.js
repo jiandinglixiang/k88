@@ -184,8 +184,10 @@ const mutations = {
     obj.scheme = schemes
   },
   [types.GET_CURRENT_SPORT_LOTTERY] (state, data) {
-    // x
-    console.log(data)
+    const obj = state[state.lottery]
+    const schemes = [...obj.scheme]
+    schemes[obj.mode === 2 ? 0 : 1] = new SportsBetting(data, obj.mode)
+    obj.scheme = schemes
   },
   [types.SPORT_MODE_SELECT] (state, data) {
     state[state.lottery].mode = data

@@ -23,6 +23,7 @@ export default class SportsHolder {
     this.end_time = obj.end_time
     this.mode = obj.mode
     this.isSure = false
+    this.selected = []
     this.match_round_id = Util.timeFmt(new Date(obj.name).getTime() / 1000, 'yyyyMMdd') + '-' + obj.round_no
   }
 
@@ -33,18 +34,6 @@ export default class SportsHolder {
   onOptionSelected (item) {
     const index = this.selected.indexOf(item)
     index !== -1 ? this.selected.splice(index, 1) : this.selected.push(item)
-    this.setIsChecked()
-  }
-
-  onOptionSelected2 (item) {
-    // 过关
-    const index = this.selected.indexOf(item)
-    if (index !== -1) {
-      this.selected.splice(index, 1)
-    } else {
-      this.selected.shift()
-      this.selected.push(item)
-    }
     this.setIsChecked()
   }
 

@@ -36,6 +36,7 @@ import {
   CURRENT_SPORT_PLAY_TYPE_SELECT,
   CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE,
   GET_CURRENT_LOTTERY,
+  GET_CURRENT_SPORT_LOTTERY,
   RECOMMEND_ISSUE_SET,
   SPORTS_FILTER_PANEL_CHANGE
 } from '../../../store/betting/types'
@@ -105,7 +106,7 @@ export default {
         clearTimeout(this.time)
         this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, item).finally(this.fifteenTimeUpdate)
       } else if (Lottery.isFootBall(this.lottery) || Lottery.isBasketBall(this.lottery)) {
-        this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, item)
+        this.$store.dispatch(GET_CURRENT_SPORT_LOTTERY, item)
       } else if (Lottery.isSSQ(this.lottery) || Lottery.isDLT(this.lottery) ||
         Lottery.isSYXW(this.lottery) || Lottery.isK3(this.lottery) || Lottery.isFC3D(this.lottery)) {
         this.$store.commit(CURRENT_PLAY_TYPE_SELECT, item)
