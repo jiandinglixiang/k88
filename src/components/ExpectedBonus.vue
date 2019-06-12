@@ -48,11 +48,13 @@ export default {
       }
 
       function f1 (arr) {
+        // 计算赔率积
         let s = 1
         for (let j in arr) {
-          s *= arr[j].selected[0].value
+          const val = arr[j].selected[0].value.replace(/([0-9]+\.[0-9]{2})[0-9]*/, '$1')
+          s *= val
         }
-        return s
+        return String(s).replace(/([0-9]+\.[0-9]{2})[0-9]*/, '$1')
       }
 
       return sum

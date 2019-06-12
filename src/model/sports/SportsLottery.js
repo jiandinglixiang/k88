@@ -162,9 +162,9 @@ export default class SportsLottery {
 
   analyseBettingResultByLottery (lottery) {
     if (!lottery) return
-    if (!this.finalArr || (this.finalArr && this.finalArr.length === 0)) return
+    const finalArr = Array.isArray(this.finalArr) && this.finalArr.map(val => val * 1)// 比分[0,1]
+    if (!finalArr) return
     let result = []
-    let finalArr = this.finalArr.map(val => parseInt(val))// 比分[0,1]
     let order = this.betting_order// 投注数据
     let resultOdds = this.result_odds// 赔率
     for (let key in lottery) {
@@ -195,6 +195,7 @@ export default class SportsLottery {
           case 'betting_score_balls':
             k = +finalArr[0] + (+finalArr[1])
             if (k > 6) { k = 7 }
+            f1(key, k)
             break
           case 'betting_score_half':
             let scoreHalf = this.score.half

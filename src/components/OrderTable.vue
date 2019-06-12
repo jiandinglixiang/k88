@@ -59,7 +59,7 @@
           </span>
         </span>
       </td>
-      <td><span style="color: red" v-if="item.schedule_status==='6'">已取消</span>
+      <td><span style="color: red" v-if="item.schedule_status*1===6">已取消</span>
         <span :key="index3"
               v-for="(r,index3) in item.result">{{r.text}} <span
           v-if="item.lottery_id*1!==901&&item.lottery_id*1!==902&&r.value">({{r.value}})</span><br/></span></td>

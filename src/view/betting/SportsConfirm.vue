@@ -433,8 +433,8 @@ export default {
       // 亚盘单关 奖金预计
       let count = 0
       for (let i in this.inputValue) {
-        for (let j in this.inputValue[i]) {
-          count += (this.inputValue[i][j].total * this.inputValue[i][j].value) * 1
+        for (let j of this.inputValue[i]) {
+          count += (j.total * (j.value * 1).toFixed(2))
         }
       }
       return count.toFixed(2)

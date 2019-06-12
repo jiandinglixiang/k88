@@ -8,7 +8,7 @@ function initSeries (series) {
   if (!series) return [seriesCopy, seriesText]
   const seriesArr = series.split(',')
   if (!Array.isArray(seriesArr)) return [seriesCopy, seriesText]
-  console.log(seriesArr.length)
+  // console.log(seriesArr.length)
   for (let i = 0; i < seriesArr.length; i++) {
     seriesText = seriesText ? `${seriesText},${SeriesType[seriesArr[i]]}` : `${SeriesType[seriesArr[i]]}`
     seriesCopy.push({ key: seriesArr[i], value: SeriesType[seriesArr[i]] })

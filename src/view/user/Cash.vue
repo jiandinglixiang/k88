@@ -29,7 +29,7 @@
       <div class="item-text">
         <div class="prompt margin-top-20 padding-0-10 red">注：暂不支持信用卡提现申请</div>
         <div class="prompt margin-top-20 padding-0-10">温馨提示：<br>手续费：提现金额必须>2元，手续费2元/次，每日首次提现金额若大于50元，可免当次手续费。</div>
-        <div class="prompt margin-top-10 padding-0-10">说明：为防止套现和洗钱，根据国家相应政策要求，充值金额必须消费超过30%（不包含红包消费）才能提现。</div>
+        <div class="prompt margin-top-10 padding-0-10">说明：为防止套现和洗钱，充值金额必须消费超过100%（不包含红包消费）才能提现。</div>
         <div class="prompt margin-top-10 padding-0-10">
           由于银行批量转账批次先后原因，每天10:00前申请，13:00前到账，10:00~15:00申请，18:00前到账，15:00后申请，次日13:00前到账，如遇节假日，则顺延至第一个工作日，请了解。
         </div>
@@ -39,7 +39,7 @@
         <p class="text-md margin-top-5">每次提现系统代收2元手续费，每日<br>首笔提现若金额>=50元，可免当次<br>手续费，您确认提现</p>
         <div class="padding margin-top-10">
           <!--<router-link tag="div" to="cash_detail" class="width-45">-->
-          <a @click="submit" class="btn width-45" href="javascript:">确定</a>
+          <a @click="submit" class="btn width-45 margin-right-5" href="javascript:">确定</a>
           <!--</router-link>-->
           <a @click="onCloseDialog" class="btn width-45 bg-gray" href="javascript:">取消</a>
         </div>

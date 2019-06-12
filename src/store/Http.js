@@ -27,6 +27,9 @@ function errorHandle (data, reject) {
       store && store.commit('CLEAR_TOKEN')
       Toast('登录已过期,请重新登录!')
       break
+    case 1022303:
+      Toast('昵称包含敏感词')
+      break
     default:
       data.msg && Toast(data.msg)
   }

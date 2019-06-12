@@ -42,42 +42,34 @@
   .border-right1 {
     border-right: 1px solid #313131;
   }
-
-</style>
-<style>
   .integral-details .integral-details-item {
-    font-size: 0;
     border-bottom: 1px solid #313131;
     background-color: #1c1c1c;
-  }
-
-  .integral-details .integral-details-item > div {
-    display: inline-block;
-    width: 33.33%;
     height: 50px;
-    padding: 5px 0;
-    line-height: 40px;
-    font-size: 14px;
-    text-align: center;
-    vertical-align: middle;
-  }
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
 
-  .integral-details .integral-details-item > div.integral-details-left {
-    line-height: 20px;
-    text-align: left;
-    /*text-indent: 1em;*/
-    padding-left: 1em;
-    color: #666666;
-    word-wrap: break-word;
-    word-break: normal;
-  }
+    > div {
+      flex: 1 1 33.3%;
+      text-align: center;
+      color: white;
+    }
 
-  .color73f {
-    color: #FF3333;
-  }
+    > .integral-details-left {
+      color: #666;
+      font-size: 14px;
+      padding-left: 10px;
+      text-align: left;
+    }
 
-  .color35a {
-    color: #FFC63A;
+    .color73f {
+      color: #FF3333;
+    }
+
+    .color35a {
+      color: #FFC63A;
+    }
   }
 </style>
 <template>
@@ -96,9 +88,9 @@
     >
       <div :key="index" class="integral-details-item" v-for="(n,index) in list">
         <div class="integral-details-left">
-          <div>{{ n.time|dateFormat('yyyy-MM-dd hh:mm:ss') }}</div>
+          <span>{{ n.time|dateFormat('yyyy-MM-dd hh:mm:ss') }}</span>
         </div>
-        <div style="color: #666666;">{{ n.event_name }}</div>
+        <div><span>{{ n.event_name }}</span></div>
         <div :class="n.event_point>0 ?'color35a':'color73f'">{{ n.event_point }}</div>
       </div>
     </div>

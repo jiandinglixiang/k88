@@ -45,7 +45,7 @@
           请务必如实填写真实姓名和身份证号，两者信息必须和身份证上的内容完全一致，否则无法领奖；护照、军官证、台胞证、香港身份证、社会保障卡、机动车驾驶证等均不能领奖；
         </div>
         <div class="prompt margin-top-10">购买是个人行为，请保证以上信息是您个人的真实信息，不要使用公司或他人信息，身份证信息暂时不支持修改，请慎重填写；</div>
-        <div class="prompt margin-top-10">依据财政部《发行与销售管理暂行规定》未满18岁不得购买请务必如实填写。</div>
+<!--        <div class="prompt margin-top-10">依据财政部《发行与销售管理暂行规定》未满18岁不得购买请务必如实填写。</div>-->
 
       </div>
       <!--<download-panel></download-panel>-->
@@ -53,7 +53,7 @@
         <p class="text-md">提示</p>
         <p class="text-md margin-top-5">请先完成身份证认证</p>
         <div class="padding margin-top-10">
-          <router-link class="width-45" tag="div" to="id_card">
+          <router-link class="width-45 margin-right-5" tag="div" to="id_card">
             <a class="btn" href="javascript:">确定</a>
           </router-link>
           <a @click="onCloseDialog" class="btn width-45 bg-gray" href="javascript:">取消</a>
