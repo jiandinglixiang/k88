@@ -27,10 +27,10 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="guestTd in guestTr">
+          <tr v-for="(guestTd,index1) in guestTr" :key="index1">
             <td :class="{selected: isDialogSelected(guest)}"
                 @click="onDialogOptionSelected(guest)"
-                v-for="guest in guestTd">
+                v-for="(guest,index2) in guestTd" :key="index2">
               <span class="text-light margin-right-10">{{guest.text}}</span>
               {{guest.value}}
             </td>
@@ -44,10 +44,10 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="homeTd in homeTr">
+          <tr v-for="(homeTd,index1) in homeTr" :key="index1">
             <td :class="{selected: isDialogSelected(home)}"
                 @click="onDialogOptionSelected(home)"
-                v-for="home in homeTd">
+                v-for="(home,index2) in homeTd" :key="index2">
               <span class="text-light margin-right-10">{{home.text}}</span>
               {{home.value}}
             </td>
@@ -208,6 +208,7 @@ export default {
 
   .basketball-sfc-lottery table td {
     padding: 5px;
+    color: $cFFfFFF;
     @if($lotteryIg) {
       background: $cFFfFFF;
     } @else {
@@ -253,7 +254,8 @@ export default {
   }
 
   .basketball-sfc-lottery .btn-wrap .col:first-child .btn {
-    color: #666;
+    color: white;
+
     @if($lotteryIg) {
       border-right: 1px solid #ddd;
     } @else {

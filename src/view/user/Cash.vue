@@ -1,7 +1,7 @@
 <template>
   <div class="cash">
     <v-head title="提现"></v-head>
-    <div v-if="this.userBank.no!=''">
+    <div v-if="userBank.no!=''">
       <div>
         <div class="padding-0-10 margin-top-10 back-1c1c1c">
           <div class="info no-border padding-10">
@@ -19,7 +19,7 @@
           </div>
           <div class="info no-border">
             <span class="name">可提现金额 </span>
-            <span class="red">{{mine.balance | currency}}元</span>
+            <span class="red">{{userBank.balance | currency}}元</span>
           </div>
         </div>
         <div class="margin-top-20 padding-0-10">
@@ -47,7 +47,7 @@
     </div>
     <div v-else>
       <div class="padding">
-        <div class="prompt text-center">可提现金额 <span class="red">&#165;{{mine.balance | currency}}</span></div>
+        <div class="prompt text-center">可提现金额 <span class="red">&#165;{{userBank.balance | currency}}</span></div>
         <div class="prompt margin-top-20 text-center">您还没有完善银行信息，无法提现。<br>赶快去完善银行信息吧。</div>
         <div class="margin-top-20">
           <router-link tag="div" to="bank_card">
@@ -94,8 +94,12 @@ export default {
         Toast('请输入正确的金额!')
         return
       }
-      if (Number(this.amount) <= 2) {
+      if (this.amount <= 2) {
         Toast('提现金额不能少于2元!')
+        return
+      }
+      if (this.amount > this.userBank.balance) {
+        Toast(`输入提现金额不能大于可提现金额`)
         return
       }
       this.dialogShow = true

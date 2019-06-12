@@ -29,7 +29,7 @@
   }
 
   .color73f40 {
-    color: #FF3333;
+    color: $cFFfFFF;
   }
 
   .color333 {

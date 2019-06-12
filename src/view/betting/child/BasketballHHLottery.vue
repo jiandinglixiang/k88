@@ -449,6 +449,7 @@ export default {
 
   .basketball-hh-lottery table td {
     padding: 5px;
+    color: $cFFfFFF;
     @if($lotteryIg) {
       background: $cFFfFFF;
     } @else {
@@ -519,7 +520,8 @@ export default {
   }
 
   .basketball-hh-lottery .btn-wrap .col:first-child .btn {
-    color: #666;
+    color: white;
+
     @if($lotteryIg) {
       border-right: 1px solid #ddd;
     } @else {
