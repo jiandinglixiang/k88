@@ -217,11 +217,13 @@ const router = new Router({
     }, {
       path: '/betting/confirm',
       name: 'DigitalConfirm',
-      component: DigitalConfirm
+      component: DigitalConfirm,
+      meta: { requireAuth: true }
     }, {
       path: '/betting/sports_confirm',
       name: 'SportsConfirm',
-      component: SportsConfirm
+      component: SportsConfirm,
+      meta: { requireAuth: true, query: { back: true } }
     }, {
       path: '/betting/sfc_confirm',
       name: 'SFCConfirm',
@@ -313,7 +315,7 @@ router.beforeEach((to, from, next) => {
     if (user.getToken()) {
       next()
     } else {
-      next({ path: '/login' })
+      next({ path: '/login', query: to.meta.query })
       // 将跳转的路由path作为参数，登录成功后跳转到该路由
     }
   } else {

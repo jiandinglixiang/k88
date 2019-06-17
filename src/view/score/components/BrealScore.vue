@@ -24,12 +24,12 @@
 <template>
   <div @click="$emit('tap')" class="real-score">
     <div class="item row">
-      <div :key="i" class="child" v-for="(i,index) in showLength()">
+      <div :key="index" class="child" v-for="(i,index) in showLength()">
         {{ propsGuest.score[index]? propsGuest.score[index].score:'-' }}
       </div>
     </div>
     <div class="item row">
-      <div :key="i" class="child" v-for="(i,index) in showLength()">
+      <div :key="index" class="child" v-for="(i,index) in showLength()">
         {{propsHome.score[index]? propsHome.score[index].score:'-' }}
       </div>
     </div>

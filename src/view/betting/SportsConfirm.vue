@@ -206,8 +206,8 @@
         </div>
       </div>
       <mt-popup
-        position="bottom"
-        class="series-mt-popup" v-model="popupVisible">
+        class="series-mt-popup"
+        position="bottom" v-model="popupVisible">
         <div class="series-select-popup">
           <div class="header-nav clear">
             <a :class="{active: popupNavIndex === 0}" @click="popupNavChange(0)" href="javascript:">自由过关</a>
@@ -495,9 +495,10 @@ export default {
         // 返回单注的赔率
         let s = 1
         for (let i in arr) {
-          s *= arr[i].selected[0].value
+          const val = arr[i].selected[0].value.replace(/([0-9]+\.[0-9]{2})[0-9]*/, '$1')
+          s *= val
         }
-        return s
+        return String(s).replace(/([0-9]+\.[0-9]{2})[0-9]*/, '$1') * 1
       }
 
       upperLimit = upperLimit / stake // 平均单注赔率
@@ -622,16 +623,20 @@ export default {
       const result = {}
       if (this.confirm.mode === 2) {
         // 过关
+        let msg = '请输入正确的投注金额'
         let inputArray = []
         for (let i in this.ManyValue) {
-          if (this.ManyValue[i] !== '0' && this.ManyValue[i] !== '') {
+          if (/^\d+$/.test(this.ManyValue[i]) && this.ManyValue[i] > 0) {
             inputArray.push({
               text: i, Value: this.ManyValue[i]
             })
+          } else {
+            msg = '投注金额必须是整数'
+            break
           }
         }
         if (inputArray.length <= 0) {
-          Toast('请输入投注金额')
+          Toast(msg)
           return
         } else {
           const postArray = []
@@ -715,8 +720,8 @@ export default {
         }
       } else {
         // 单关
-        let selectedCount = 0
-        let inputValueCount = 0
+        let selectedCount = 0 // 选中个数
+        let inputValueCount = 0 // 输入个数
         for (let i in this.bettingList) {
           selectedCount += this.bettingList[i].selected.length
         }
@@ -727,77 +732,73 @@ export default {
           Toast('请输入投注金额')
           return
         } else {
-          const postArray = []
-          for (let i in this.inputValue) {
-            for (let j in this.inputValue[i]) {
-              postArray.push(this.inputValue[i][j])
-            }
-          }
-          console.log(postArray)
-          let stats = true
-          for (let i in postArray) {
-            if (postArray[i].total === '0' || postArray[i].total === '') {
-              Toast('请输入投注金额')
-              stats = false
-              break
-            }
-            if (postArray[i].total > postArray[i].upperLimit) {
-              Toast('超过投注上限,请重新输入')
-              stats = false
-              break
-            }
-          }
-          if (stats === true) {
-            if (JSON.stringify(this.updateOdds) === '{}') {
-              result.Orders = postArray.map(v => {
-                return {
-                  series: '101',
-                  lottery_id: this.lotteryId,
-                  play_type: this.confirm.mode,
-                  stake_count: '1',
-                  total_amount: v.total,
-                  schedule_orders: [{
-                    bet_number: v.key,
-                    schedule_id: v.id,
-                    is_sure: '0',
-                    odds: v.value
-                  }]
-                }
-              })
-            } else {
-              const updateOddsArray = []
-              for (let i in this.updateOdds) {
-                for (let j in this.updateOdds[i]) {
-                  updateOddsArray.push({
-                    schedule_id: i,
-                    new_odds: this.updateOdds[i][j],
-                    key: j
-                  })
-                }
+          let msg = '请输入投注金额'
+          let postArray = []
+          Object.keys(this.inputValue).find(key => !!Object.keys(this.inputValue[key]).find(key2 => {
+            const val2 = this.inputValue[key][key2]
+            if (/^\d+$/.test(val2.total) && val2.total > 0) {
+              if (val2.total > val2.upperLimit) {
+                msg = '超过投注上限,请重新输入'
+                postArray = []
+                return true
               }
-              result.Orders = postArray.map((v) => {
-                for (let i in updateOddsArray) {
-                  if (v.id === updateOddsArray[i].schedule_id && v.key === updateOddsArray[i].key) {
-                    return {
-                      series: '101',
-                      lottery_id: this.lotteryId,
-                      play_type: this.confirm.mode,
-                      stake_count: '1',
-                      total_amount: v.total,
-                      schedule_orders: [{
-                        bet_number: v.key,
-                        schedule_id: v.id,
-                        is_sure: '0',
-                        odds: updateOddsArray[i].new_odds
-                      }]
-                    }
+              postArray.push(val2)
+              return false
+            }
+            msg = '投注金额必须是整数'
+            postArray = []
+            return true
+          }))
+          if (postArray.length === 0) {
+            Toast(msg)
+            return
+          }
+          if (JSON.stringify(this.updateOdds) === '{}') {
+            result.Orders = postArray.map(v => {
+              return {
+                series: '101',
+                lottery_id: this.lotteryId,
+                play_type: this.confirm.mode,
+                stake_count: '1',
+                total_amount: v.total,
+                schedule_orders: [{
+                  bet_number: v.key,
+                  schedule_id: v.id,
+                  is_sure: '0',
+                  odds: v.value
+                }]
+              }
+            })
+          } else {
+            const updateOddsArray = []
+            for (let i in this.updateOdds) {
+              for (let j in this.updateOdds[i]) {
+                updateOddsArray.push({
+                  schedule_id: i,
+                  new_odds: this.updateOdds[i][j],
+                  key: j
+                })
+              }
+            }
+            result.Orders = postArray.map((v) => {
+              for (let i in updateOddsArray) {
+                if (v.id === updateOddsArray[i].schedule_id && v.key === updateOddsArray[i].key) {
+                  return {
+                    series: '101',
+                    lottery_id: this.lotteryId,
+                    play_type: this.confirm.mode,
+                    stake_count: '1',
+                    total_amount: v.total,
+                    schedule_orders: [{
+                      bet_number: v.key,
+                      schedule_id: v.id,
+                      is_sure: '0',
+                      odds: updateOddsArray[i].new_odds
+                    }]
                   }
                 }
-              })
-            }
-            console.log(result)
-          } else {
-            return
+              }
+            })
           }
         }
       }
@@ -1218,6 +1219,7 @@ export default {
     max-width: 640px;
     margin: 0 auto;
   }
+
   .sports-confirm .series-select-popup {
     width: 100%;
     position: relative;
@@ -1318,6 +1320,7 @@ export default {
   }
 
   .panel {
+    max-width: 640px;
     margin: 250px auto 0;
     padding: 20px 15px 15px;
     width: 70%;

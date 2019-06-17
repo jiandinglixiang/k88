@@ -57,11 +57,13 @@ export default {
     goBack (path) {
       const query = this.$route.query
       // 重定向路径
-      if (query.redirect && query.back /* === '/guessingDetails' */) {
+      if (query.redirect) {
         const redirect = query.redirect
         delete query.redirect
         this.$router.replace({ path: redirect, query })
         // 返回重定向页面,带参数
+      } else if (query.back) {
+        this.$router.back()
       } else {
         this.$router.replace({ path: path || '/' })
         // 返回根页

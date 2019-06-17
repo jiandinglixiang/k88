@@ -3,21 +3,21 @@ const environmentType = 'K88'// 365电竞
 
 // -----------------------------
 module.exports = {
-  lintOnSave: 'warning',
-  publicPath: '/',
+  // lintOnSave: 'warning',
+  publicPath: './',
   outputDir: environmentType,
   devServer: {
     port: 8080,
     open: true,
+    overlay: {
+      warnings: true,
+      errors: true
+    },
     proxy: {
-      '/H55': {
-        target: 'https://h5-api.tigercai.com',
+      '/H5': { // http://localhost:00/H5 匹配路径
+        target: 'http://tgapi.k888.bet', // 代理转发地址
         secure: false,
-        pathRewrite: { '^/H55': '' }
-      },
-      '/H5': {
-        target: 'http://tgapi.k888.bet',
-        secure: false
+        pathRewrite: { '^/H5': '/H5' } // url替换
       }
     }
   },

@@ -46,7 +46,8 @@ export default {
     return /^1[3456789]\d{9}$/.test(mobile)
   },
   passwordValid (value) {
-    return /^(?=.*\d)[a-zA-Z\d]{6,18}$/.test(value)
+    // /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/
+    return /^[0-9a-zA-Z]{6,18}$/.test(value)
   },
   smsValid (value) {
     return /^\d{6}$/.test(value)

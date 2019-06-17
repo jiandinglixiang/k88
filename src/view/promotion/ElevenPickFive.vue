@@ -23,6 +23,7 @@
           <div class="col col-80" v-if="panelBallGroups">
             <span :class="{active: item.selected}"
                   @click="ballChanged(item, 0)"
+                  :key="item.id"
                   class="play-ball-white"
                   v-for="item in panelBallGroups[0].list">
               {{item.id}}
@@ -151,7 +152,7 @@ export default {
         return
       }
       if (!Util.passwordValid(this.password)) {
-        Toast('请输入6-18位密码, 不能有特殊字符!')
+        Toast('密码只能由数字字母组成(6-18)位, 不能有特殊字符!')
         return
       }
       this.$store.dispatch(BASE_REGISTER, {

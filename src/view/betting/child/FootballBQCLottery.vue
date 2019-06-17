@@ -20,9 +20,11 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="list in tableTrList">
+          <tr :key="n7" v-for="(list,n7) in tableTrList">
             <td :class="{selected: isDialogSelected(item)}" @click="onDialogOptionSelected(item)" class="text-left"
-                v-for="item in list">
+                :key="n8"
+                v-for="(item,n8) in list"
+            >
               <span class="text-light">{{item.text}}</span>
               <span class="text-value">{{item.value}}</span>
             </td>

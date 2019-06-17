@@ -12,6 +12,7 @@ import Vue from 'vue'
 import VHead from './components/VHead.vue'
 import { mapState } from 'vuex'
 import { user } from './common/store'
+import Util from './common/util'
 
 Vue.component('v-head', VHead)
 export default {
@@ -27,6 +28,12 @@ export default {
   created () {
     const token = user.getToken()
     token && this.$store.commit('LOGIN', { 'user_token': token })
+    const type = Util.originUrlSearch()['channel_type'] || Util.urlSearch()['channel_type']
+    const id = Util.originUrlSearch()['channel_id'] || Util.urlSearch()['channel_id']
+    if (type && id) {
+      localStorage.setItem('channel_type', type)
+      localStorage.setItem('channel_id', id)
+    }
   }
   // mounted () {
   //   this.$nextTick(function () {

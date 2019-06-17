@@ -2,7 +2,7 @@
   <div class="situation-panel">
     <div class="block">
       <div class="panel-title">赛事事件</div>
-      <div class="row item" v-for="event in events">
+      <div :key="index1" class="row item" v-for="(event,index1) in events">
         <template v-if="event.event_type === 8 || event.event_type === 10 || event.event_type === 9">
           <div class="col item-left"></div>
           <div class="col col-10 item-center"><span class="football-ic-start"></span></div>
@@ -46,7 +46,7 @@
       <template v-if="techs && techs.length > 0">
         <table>
           <tbody>
-          <tr v-for="tech in techs">
+          <tr :key="index2" v-for="(tech,index2) in techs">
             <td width="13%">{{tech.home_count}}</td>
             <td width="27%">
               <total-percentage :percent="tech.home_rate" direction="left"></total-percentage>

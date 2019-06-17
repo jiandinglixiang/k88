@@ -7,7 +7,7 @@
         <a @click="clearBettingList" href="javascript:"><span class="clear-icon"></span>清空</a>
       </div>
       <scheme-box>
-        <div class="scheme-box-item has-sure" v-for="(betting, key) in bettingList">
+        <div :key="key" class="scheme-box-item has-sure" v-for="(betting, key) in bettingList">
           <span @click="deleteBetting(key)" class="scheme-delete-icon" v-if="betting.lotteryId === 21"></span>
           <sfc-s-p-f-lottery :schedule="betting" @onOptionSelected="onOptionSelected"></sfc-s-p-f-lottery>
           <span :class="{selected: betting.isSure}" @click="addSure(betting)" class="sure"

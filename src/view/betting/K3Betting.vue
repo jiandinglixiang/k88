@@ -7,7 +7,8 @@
           <div :class="{'selected': item.isSelected}"
                @click="ballChanged(item)"
                class="hz-item"
-               v-for="item in lotteryObj.balls">
+               :key="n1"
+               v-for="(item,n1) in lotteryObj.balls">
             {{item.num}} <br/> {{item.award}}
           </div>
         </div>
@@ -16,6 +17,7 @@
         <div class="item-container clear sth">
           <template v-for="(item, index) in lotteryObj.balls">
             <div :class="{'selected': item.isSelected, 'all': index === 6}"
+                 :key="index"
                  @click="ballChanged(item)"
                  class="hz-item">
               {{item.num}} <br/> {{item.award}}
@@ -33,8 +35,9 @@
                @click="ballChanged(item)"
                class="hz-item"
                v-for="(item, index) in lotteryObj.balls"
-               v-if="index < 6">
-            {{item.num}}
+               :key="index"
+          >
+            <span v-if="index < 6"> {{item.num}}</span>
           </div>
         </div>
         <div class="item-container clear sbth">
@@ -58,8 +61,9 @@
                  @click="ballChanged(item, index)"
                  class="hz-item"
                  v-for="(item, index) in lotteryObj.balls"
-                 v-if="index < 6 && index > -1">
-              {{item.num}}
+                 :key="index">
+              <span
+                v-if="index < 6 && index > -1"> {{item.num}}</span>
             </div>
           </div>
           <div class="line-head"><span>不同号</span></div>
@@ -68,8 +72,11 @@
                  @click="ballChanged(item, index)"
                  class="hz-item"
                  v-for="(item, index) in lotteryObj.balls"
-                 v-if="index < 12 && index > 5">
-              {{item.num}}
+                 :key="index"
+            >
+              <span
+                v-if="index < 12 && index > 5"> {{item.num}}</span>
+
             </div>
           </div>
         </div>
@@ -79,8 +86,11 @@
                @click="ballChanged(item, index)"
                class="hz-item"
                v-for="(item, index) in lotteryObj.balls"
-               v-if="index < 18 && index > 11">
-            {{item.num}}
+               :key="index"
+          >
+            <span
+              v-if="index < 18 && index > 11"> {{item.num}}</span>
+
           </div>
         </div>
       </template>
@@ -91,8 +101,11 @@
             <div :class="{'selected': item.isSelected}"
                  @click="ballChanged(item, index)"
                  class="hz-item"
+                 :key="index"
+
                  v-for="(item, index) in lotteryObj.balls">
-              {{item.num}}
+              <span> {{item.num}}</span>
+
             </div>
           </div>
         </div>
@@ -104,9 +117,12 @@
             <div :class="{'selected': item.isSelected}"
                  @click="ballChanged(item, index)"
                  class="hz-item"
+                 :key="index"
+
                  v-for="(item, index) in lotteryObj.balls"
-                 v-if="index < 6 && index > -1">
-              {{item.num}}
+            >
+              <span v-if="index < 6 && index > -1"> {{item.num}}</span>
+
             </div>
           </div>
         </div>
@@ -115,9 +131,10 @@
           <div :class="{'selected': item.isSelected}"
                @click="ballChanged(item, index)"
                class="hz-item"
+               :key="index"
                v-for="(item, index) in lotteryObj.balls"
-               v-if="index < 12 && index > 5">
-            {{item.num}}
+          >
+            <span v-if="index < 12 && index > 5"> {{item.num}}</span>
           </div>
         </div>
       </template>

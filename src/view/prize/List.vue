@@ -32,23 +32,23 @@
           </div>
         </div>
       </template>
-      <template v-for="item in list">
-        <div @click="goDetail(item)" class="list-item" v-if="isDigital(item.lottery_id)">
+      <template v-for="(item,n14) in list">
+        <div :key="n14" @click="goDetail(item)" class="list-item" v-if="isDigital(item.lottery_id)">
           <div class="list-item-head">
             <span class="text-normal">{{item.lottery_name}}</span>
             <span class="text-light text-sm">第{{item.issue_no}}期</span>
             <span class="text-light text-sm">{{item.prize_time | dateFormat('MM-dd')}} ({{item.week}})</span>
           </div>
           <div class="list-item-result margin-top-10" v-if="isK3(item.lottery_id)">
-            <span :class="'k3-' + ball + '-icon'" class="k3-item" v-for="ball in item.balls[0]"></span>
+            <span :class="'k3-' + ball + '-icon'" :key="n13" class="k3-item" v-for="(ball,n13) in item.balls[0]"></span>
             <span class="k3-item-hz">和值：{{k3Hz(item.balls[0])}}</span>
           </div>
           <div class="list-item-result margin-top-10" v-else-if="isSFC(item.lottery_id)">
-            <span class="sfc-item" v-for="ball in item.balls[0]">{{ball}}</span>
+            <span :key="`1${n001}`" class="sfc-item" v-for="(ball,n001) in item.balls[0]">{{ball}}</span>
           </div>
           <div class="list-item-result margin-top-10" v-else>
-            <span class="bg-red-ball" v-for="ballRed in item.balls[0]">{{ballRed}}</span>
-            <span class="bg-blue-ball" v-for="ballBlue in item.balls[1]">{{ballBlue}}</span>
+            <span :key="`2${n002}`" class="bg-red-ball" v-for="(ballRed,n002) in item.balls[0]">{{ballRed}}</span>
+            <span :key="`3${n003}`" class="bg-blue-ball" v-for="(ballBlue,n003) in item.balls[1]">{{ballBlue}}</span>
           </div>
         </div>
       </template>

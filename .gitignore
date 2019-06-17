@@ -1,9 +1,10 @@
 .DS_Store
-node_modules
+/node_modules
 /dist
 /LOTTERY_TF
 /LOTTERY_HM
 /LOTTERY_365
+/K88
 
 # local env files
 .env.local

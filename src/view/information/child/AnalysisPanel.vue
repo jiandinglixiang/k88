@@ -1,8 +1,8 @@
 <template>
   <div class="analysis-panel">
     <basket-panel-container title="球队数据">
-      <template v-for="team in teams" v-if="teams">
-        <basket-team-table :team="team"></basket-team-table>
+      <template v-if="teams">
+        <basket-team-table :key="n4" :team="team" v-for="(team,n4) in teams"></basket-team-table>
       </template>
     </basket-panel-container>
     <basket-panel-container title="近期交锋">
@@ -17,12 +17,13 @@
       <basket-record-table :id="detail.home_id" :list="latestRecord[0].list" :name="detail.home"></basket-record-table>
     </basket-panel-container>
     <basket-panel-container title="未来比赛">
-      <template v-for="(record, index) in reverse(futureRecord)" v-if="record">
-        <p class="panel-title-head">
+      <template v-for="(record, index) in reverse(futureRecord)">
+        <template v-if="record">
+          <p :key="`1`+index" class="panel-title-head">
           <img :src="index === 0 ? detail.guest_logo : detail.home_logo" alt="">
           {{record.name}}
-        </p>
-        <table class="border-bottom-solid">
+          </p>
+          <table :key="'2'+index" class="border-bottom-solid">
           <tbody>
           <tr class="bg-gray">
             <td>赛事</td>
@@ -32,7 +33,7 @@
             <td>客队</td>
             <td>相隔</td>
           </tr>
-          <tr v-for="item in record.list">
+          <tr :key="q6" v-for="(item,q6) in record.list">
             <td>{{item.league}}</td>
             <td style="color: #999999">{{item.date | dateFormat('yyyy-MM-dd')}}</td>
             <td>{{item.guest_team}}</td>
@@ -42,6 +43,7 @@
           </tr>
           </tbody>
         </table>
+        </template>
       </template>
     </basket-panel-container>
   </div>

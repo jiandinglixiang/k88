@@ -45,6 +45,7 @@ export default {
   },
   methods: {
     submit () {
+      console.log(this.password)
       if (!Util.isMobile(this.phone)) {
         Toast('请输入正确的手机号!')
         return
@@ -54,7 +55,7 @@ export default {
         return
       }
       if (!Util.passwordValid(this.password)) {
-        Toast('请输入6-18位密码, 不能有特殊字符!')
+        Toast('密码只能由数字字母组成(6-18)位, 不能有特殊字符!')
         return
       }
       if (this.password !== this.confirmPassword) {

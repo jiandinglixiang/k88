@@ -261,8 +261,9 @@ export default {
       })
     }
   },
-  mounted () {
+  created () {
     this.getUserIntegralGoodsList()
+    !this.mine.points && this.getMineInfo()
   },
   components: { redItem, entityExchange, VDialog }
 }

@@ -55,7 +55,7 @@
         </div>
         <table>
           <tbody>
-          <tr v-for="item in techs.list">
+          <tr :key="n1" v-for="(item,n1) in techs.list">
             <td width="13%">{{item.guest_count}}</td>
             <td width="27%">
               <total-percentage :percent="item.guest_rate" direction="left"></total-percentage>
@@ -95,7 +95,7 @@
             <th>3分</th>
             <th>罚球</th>
           </tr>
-          <tr v-for="item in first(players.list)">
+          <tr :key="n2" v-for="(item,n2) in first(players.list)">
             <td>{{item.player_name}}</td>
             <td>{{item.play_time}}</td>
             <td>{{item.score}}</td>
@@ -115,7 +115,7 @@
             <th>3分</th>
             <th>罚球</th>
           </tr>
-          <tr v-for="item in other(players.list)">
+          <tr :key="n3" v-for="(item,n3) in other(players.list)">
             <td>{{item.player_name}}</td>
             <td>{{item.play_time}}</td>
             <td>{{item.score}}</td>

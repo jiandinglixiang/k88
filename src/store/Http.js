@@ -7,17 +7,18 @@ import store from './index'
 import md5 from 'js-md5'
 
 let HOST
-if (location.host === 'localhost:8080') {
-  HOST = 'H55'
+if (process.env.NODE_ENV === 'production') {
+  HOST = 'http://tgapi.k888.bet/H5'
 } else {
-  HOST = '/H5'/* 测试服务器 */
+  HOST = '/H5'
 }
-// const HOST = 'http://tgapi.k888.bet/H5'/* 测试服务器 */
+
 // const HOST = 'https://tgapiv17.baiying58.com/H5/'/* 正式1 */
 // const HOST = 'http://tgapi.666esport.com/H5/'; /* 测试服务器 */if (process.env.NODE_ENV === 'production'/* 生产构建提示 */) process.env.NODE_ENV = 911
 // const HOST = 'https://phone-api.baiying58.com/H5/'/* 正式2 */
 // const HOST = 'http://test.h5.phone.t.ebao123.com/index.php?s=/H5/';/* 测试服务器 */ if (process.env.NODE_ENV === 'production'/* 生产构建提示 */) process.env.NODE_ENV = 911
 // const HOST = 'http://tgapi.ig668.cn/H5/'/* ig电竞 */
+
 // code > 0 时，失败处理
 function errorHandle (data, reject) {
   reject(data)

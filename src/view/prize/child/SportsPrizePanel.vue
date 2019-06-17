@@ -5,7 +5,7 @@
       <span :class="{'up': panelVisible}" class="icon"></span>
     </div>
     <div class="panel-list" v-show="panelVisible">
-      <div class="panel-list-content" v-for="item in holder.schedules">
+      <div :key="q4" class="panel-list-content" v-for="(item,q4) in holder.schedules">
         <div class="col col-25 col-center text-center text-light item-left">
           {{item.round_no}} <br/> {{item.league}}
         </div>

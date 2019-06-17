@@ -61,7 +61,8 @@
     </div>
     <div class="margin-top row tab text-center">
       <div class="overlay"></div>
-      <div :class="{'active': active === item}" @click="tabItemClick(item)" class="col" v-for="item in tabItem">
+      <div :class="{'active': active === item}" :key="q3" @click="tabItemClick(item)" class="col"
+           v-for="(item,q3) in tabItem">
         {{item.value}}
       </div>
     </div>

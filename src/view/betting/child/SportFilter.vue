@@ -11,7 +11,8 @@
           <div :class="{selected: textIsSelected(text)}"
                @click="textSelect(text)"
                class="text-item"
-               v-for="text in textContent">{{text}}
+               :key="`1${q8}`"
+               v-for="(text,q8) in textContent">{{text}}
           </div>
         </div>
         <div class="text-center text-light text-sm margin-top-10">

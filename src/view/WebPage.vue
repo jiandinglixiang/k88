@@ -56,7 +56,7 @@ export default {
     },
     OnLoad () {
       this.hide()
-      this.$refs.content.style.minHeight = (window.innerHeight - (this.showHead ? 41 : 0)) + 'px'
+      this.$refs.content.style.height = (window.innerHeight - (this.showHead ? 41 : 0)) + 'px'
       this.post && this.$refs.content.contentWindow.postMessage('token.Token' || '', `*`)
     },
     hide () {
@@ -82,11 +82,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .web-page {
     position: relative;
     width: 100%;
     height: 100%;
+    height: 100vh;
     max-width: 640px;
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
@@ -95,7 +96,7 @@ export default {
 
   .web-page iframe {
     width: 100%;
-    min-height: 100%;
     z-index: 10;
+    background-color: white;
   }
 </style>

@@ -56,15 +56,16 @@ export default {
         return
       }
       if (!Util.passwordValid(this.password)) {
-        Toast('请输入6-18位密码, 不能有特殊字符!')
+        Toast('密码只能由数字字母组成(6-18)位, 不能有特殊字符!')
         return
       }
+
       this.register({
         tel: this.phone,
         passwd: this.password,
         sms_validation: this.captcha,
-        channel_type: Util.originUrlSearch()['channel_type'] || Util.urlSearch()['channel_type'],
-        channel_id: Util.originUrlSearch()['channel_id'] || Util.urlSearch()['channel_id']
+        channel_type: localStorage.getItem('channel_type'),
+        channel_id: localStorage.getItem('channel_id')
       }).then((data) => {
         this.goBack('/mine')
       })

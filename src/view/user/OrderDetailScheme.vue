@@ -302,6 +302,10 @@ export default {
   .order-scheme .table-scheme tbody td {
     padding: 10px 0;
     color: $c999999;
+
+    &.text-primary {
+      color: $cffC63A;
+    }
   }
 
   .order-scheme .table-scheme tbody tr:last-child td {

@@ -60,7 +60,7 @@
         <div class="col col-30">时间</div>
         <div class="col col-70">赔率变化</div>
       </div>
-      <div class="row list-item" v-for="(record, index) in list">
+      <div :key="index" class="row list-item" v-for="(record, index) in list">
         <div class="col col-center col-30 text-light">{{record.time | dateFormat('MM-dd hh:mm')}}</div>
         <div class="col col-center col-20"></div>
         <template v-if="isFootball">

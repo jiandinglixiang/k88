@@ -4,6 +4,7 @@
       <a :class="{'active': index === activeIndex}" @click="changeTabIndex(index)"
          class="col"
          href="javascript:"
+         :key="index"
          v-for="(item, index) in tabItem">
         {{item}}
       </a>

@@ -141,7 +141,13 @@ export default {
     rechargeObject: {},
     rechargeResult: {},
     confirm: {}, // 赢球大师的订单确认页
-    order: {}, // 365彩票的订单确认页
+    order: {
+      balance: '',
+      bet_desc: '',
+      coupon_list: [],
+      lack_money: 0,
+      pay_money: 0
+    }, // 365彩票的订单确认页
     orderId: undefined
   },
   actions,

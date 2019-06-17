@@ -22,14 +22,14 @@
         <div class="title row text-center">
           <div :class="{'active': redPackTitleId === index}" @click="changeRedPackTitleId(index)"
                class="col"
-               v-for="(coupon, index) in confirm.coupon_list">
+               :key="index" v-for="(coupon, index) in confirm.coupon_list">
             {{coupon.group_name}}({{coupon.list.length}})
           </div>
         </div>
-        <div v-for="(coupon, index) in confirm.coupon_list">
+        <div :key="index" v-for="(coupon, index) in confirm.coupon_list">
           <div class="list" v-show="redPackTitleId === index">
             <div :class="{'checked': item.id === confirm.currentRedPack.id}" @click="selectRedPack(item)"
-                 class="red-pack" v-for="item in coupon.list">
+                 :key="item.id" class="red-pack" v-for="item in coupon.list">
               <h4 class="value">￥{{item.balance}}</h4>
               <h5 class="type">{{item.condition}} <span class="pull-right">{{item.end_time | getEndTime}}</span></h5>
               <span class="red-pack-check-icon"></span>
@@ -41,7 +41,7 @@
         账号余额 <span class="pull-right">{{confirm.balance | currency}}元</span>
       </div>
       <div class="item">
-        还需支付 <span class="pull-right">{{confirm.lack_money | currency}}元</span>
+        还需支付 <span class="pull-right">{{lackMoney | currency}}元</span>
       </div>
     </div>
     <div class="padding margin-top-20">
@@ -68,7 +68,14 @@ export default {
     ...mapState({
       confirm: state => state.payment.order,
       orderId: state => state.payment.orderId
-    })
+    }),
+    lackMoney () {
+      if (this.confirm.currentRedPack && this.confirm.currentRedPack.id) {
+        const sum = this.confirm.balance * 1 + this.confirm.currentRedPack.balance * 1
+        return this.confirm.pay_money > sum ? this.confirm.pay_money - sum : 0
+      }
+      return this.confirm.pay_money > this.confirm.balance ? this.confirm.pay_money - this.confirm.balance : 0
+    }
   },
   methods: {
     ...mapActions({
@@ -89,9 +96,9 @@ export default {
     changeRedPackPanel () {
       this.redPackShow = !this.redPackShow
     },
-    changeRedPackTitleId (id) {
-      if (this.redPackTitleId !== id) {
-        this.redPackTitleId = id
+    changeRedPackTitleId (index) {
+      if (this.redPackTitleId !== index) {
+        this.redPackTitleId = index
       }
     }
   },

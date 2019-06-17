@@ -8,7 +8,7 @@
         <a @click="confirmClearTickets" href="javascript:"><span class="clear-icon"></span>清空</a>
       </div>
       <scheme-box>
-        <div class="scheme-box-item" v-for="(ticket, key) in confirm.bettingList">
+        <div :key="key" class="scheme-box-item" v-for="(ticket, key) in confirm.bettingList">
           <span @click="confirmDeleteTicket(key)" class="scheme-delete-icon"></span>
           <digital-scheme-item :key="key" :ticket="ticket"></digital-scheme-item>
         </div>

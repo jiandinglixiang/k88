@@ -1,6 +1,14 @@
 <template>
   <div class="cash">
-    <v-head title="提现"></v-head>
+    <v-head title="提现">
+      <router-link :to="{
+        name: 'WebPage',
+        query: {
+          title: '提现帮助',
+          url: 'http://tgapi.k888.bet/index.php?s=/Content/help/withdraw.html'
+        }
+      }" class="question-icon" slot="right"></router-link>
+    </v-head>
     <div v-if="userBank.no!=''">
       <div>
         <div class="padding-0-10 margin-top-10 back-1c1c1c">
@@ -28,15 +36,17 @@
       </div>
       <div class="item-text">
         <div class="prompt margin-top-20 padding-0-10 red">注：暂不支持信用卡提现申请</div>
-        <div class="prompt margin-top-20 padding-0-10">温馨提示：<br>手续费：提现金额必须>2元，手续费2元/次，每日首次提现金额若大于50元，可免当次手续费。</div>
-        <div class="prompt margin-top-10 padding-0-10">说明：为防止套现和洗钱，充值金额必须消费超过100%（不包含红包消费）才能提现。</div>
+        <!--        <div class="prompt margin-top-20 padding-0-10">温馨提示：<br>手续费：提现金额必须>2元，手续费2元/次，每日首次提现金额若大于50元，可免当次手续费。</div>-->
+        <div class="prompt margin-top-10 padding-0-10">说明：消费金额(不含红包)应大于等于充值金额,且可提现额大于等于100才能提现</div>
+        <div class="prompt margin-top-10 padding-0-10">提现金额仅能提现到绑定的银行卡,并且银行卡户主名必须和账户绑定的身份证一致。</div>
         <div class="prompt margin-top-10 padding-0-10">
-          由于银行批量转账批次先后原因，每天10:00前申请，13:00前到账，10:00~15:00申请，18:00前到账，15:00后申请，次日13:00前到账，如遇节假日，则顺延至第一个工作日，请了解。
+          由于银行批量转账批次先后原因,资金到账可能会延迟,若有疑问请联系客服。
         </div>
       </div>
       <v-dialog @close="onCloseDialog" v-show="dialogShow">
         <p class="text-md">提示</p>
-        <p class="text-md margin-top-5">每次提现系统代收2元手续费，每日<br>首笔提现若金额>=50元，可免当次<br>手续费，您确认提现</p>
+        <!--        <p class="text-md margin-top-5">每次提现系统代收2元手续费，每日<br>首笔提现若金额>=50元，可免当次<br>手续费，您确认提现</p>-->
+        <p class="text-md margin-top-5">确认提现</p>
         <div class="padding margin-top-10">
           <!--<router-link tag="div" to="cash_detail" class="width-45">-->
           <a @click="submit" class="btn width-45 margin-right-5" href="javascript:">确定</a>
@@ -84,9 +94,8 @@ export default {
   methods: {
     submit () {
       this.dialogShow = false
-      const money = parseFloat(this.amount)
       this.with_draw_cash({
-        money: money.toFixed(2)
+        money: (this.amount * 1).toFixed(2)
       })
     },
     onShowDialog () {
@@ -94,15 +103,16 @@ export default {
         Toast('请输入正确的金额!')
         return
       }
-      if (this.amount <= 2) {
-        Toast('提现金额不能少于2元!')
+      if (this.amount < 100) {
+        Toast('提现金额不能少于100元!')
         return
       }
       if (this.amount > this.userBank.balance) {
         Toast(`输入提现金额不能大于可提现金额`)
         return
       }
-      this.dialogShow = true
+      this.submit()
+      // this.dialogShow = true
     },
     onCloseDialog () {
       this.dialogShow = false
@@ -124,6 +134,16 @@ export default {
 </script>
 
 <style lang="scss">
+  .question-icon {
+    background: url("../../assets/betting/question.png") no-repeat center;
+    background-size: 50% 50%;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
   .cash {
     position: relative;
     height: 100%;

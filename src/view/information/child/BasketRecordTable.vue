@@ -50,8 +50,7 @@
         <td>大小盘</td>
       </tr>
       <template v-for="(item, index) in list">
-        <template v-if="!first || index > 0">
-          <tr class="basket-record-table">
+        <tr :key="`1${index}`" class="basket-record-table" v-if="!first || index > 0">
             <td>{{item.league}}<br><span class="text-light">{{item.date | dateFormat('yy-MM-dd')}}</span></td>
             <td :class="returnTextColor(item.guest_team_id, item.score, 'left')">{{item.guest_team}}</td>
             <td>{{scoreText(item.score)}}</td>
@@ -62,9 +61,7 @@
                                           class="pull-right padding-right-10">{{basePointText(item.score, item.base_point)}}</span>
             </td>
           </tr>
-        </template>
-        <template v-else>
-          <tr class="bg-blue basket-record-table">
+        <tr :key="`2${index}`" class="bg-blue basket-record-table" v-else>
             <td>本场</td>
             <td>{{item.guest_team}}</td>
             <td>VS</td>
@@ -72,7 +69,6 @@
             <td>{{item.let_point}}</td>
             <td>{{item.base_point}}</td>
           </tr>
-        </template>
       </template>
       </tbody>
     </table>
@@ -154,6 +150,7 @@ export default {
       if (this.list) {
         return this.first ? this.list.length - 1 : this.list.length
       }
+      return 0
     }
   },
   components: { TotalPercentage }

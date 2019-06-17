@@ -15,7 +15,7 @@
       <div class="padding">
         <scheme-box>
           <div class="list">
-            <div v-for="(item, index) in confirm.schedule_orders">
+            <div :key="index" v-for="(item, index) in confirm.schedule_orders">
               <div class="scheme-line-icon" v-if="index > 0"></div>
               <div class="item row text-center text-sm text-muted">
                 <div class="col col-20 col-center text-left padding-left-10">
@@ -29,7 +29,7 @@
                   </div>
                   <div class="margin-top-5">
                     <a class="btn" href="javascript:">
-                      <span v-for="(r, i) in item.result">
+                      <span :key="i" v-for="(r, i) in item.result">
                         {{r.text}}
                         <span v-show="i < item.result.length-1">、</span>
                       </span>
@@ -49,7 +49,7 @@
         </div>
         <div class="row text-sm bg-primary">
           <div class="col col-80 bg-white left text-muted">
-            <p><span v-for="i in confirm.seriesList">{{i}} </span></p>
+            <p><span :key="n" v-for="(i,n) in confirm.seriesList">{{i}} </span></p>
             <p>{{confirm.stake_count}}注{{confirm.multiple}}倍 <span class="text-primary text-md margin-left-5">共{{confirm.total_amount | currency}}元</span>
             </p>
             <p>预计奖金：{{confirm.bonus_range | currency}}元</p>

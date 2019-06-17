@@ -6,9 +6,9 @@
         <span :class="{'rotate': collapse}" class="arrow-bottom-icon"></span>
       </div>
     </div>
-    <template v-for="(item, index) in data">
-      <div class="table-title" v-html="titleText(item, index)"></div>
-      <table border="0" cellpadding="0" cellspacing="0">
+    <template v-for="(item, index5) in data">
+      <div :key="index5" class="table-title" v-html="titleText(item, index5)"></div>
+      <table :key="index5" border="0" cellpadding="0" cellspacing="0">
         <thead>
         <tr>
           <td width="20%">赛事</td>
@@ -36,7 +36,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="record in item.list">
+        <tr :key="index3" v-for="(record,index3) in item.list">
           <td width="20%">{{record.league}}</td>
           <td width="20%">{{record.date | dateFormat('yyyy-MM-dd')}}</td>
           <template v-if="isFuture">

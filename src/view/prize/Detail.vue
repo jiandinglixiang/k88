@@ -5,29 +5,30 @@
        v-infinite-scroll="listMore">
     <v-head :title="title"></v-head>
     <template v-for="(item, index) in detail.list">
-      <digital-list-item :data="item">
+      <digital-list-item :data="item" :key="index">
         <template v-if="isK3()">
           <div slot="number" v-if="index === 0">
-            <span :class="'k3-' + ball + '-icon'" class="k3-item" v-for="ball in item.balls[0]"></span>
+            <span :class="'k3-' + ball + '-icon'" :key="n9" class="k3-item" v-for="(ball,n9) in item.balls[0]"></span>
             <span class="k3-item-hz">和值：{{k3Hz(item.balls[0])}}</span>
           </div>
           <div slot="number" v-else>
-            <span class="red-ball" v-for="ballRed in item.balls[0]">{{ballRed}}</span>
+            <span :key="n10" class="red-ball" v-for="(ballRed,n10) in item.balls[0]">{{ballRed}}</span>
           </div>
         </template>
         <template v-else-if="isSFC()">
           <div slot="number">
             <span :class="{'bg-white': index > 0}"
                   class="sfc-item"
-                  v-for="ball in item.balls[0]">{{ball}}</span>
+                  :key="q3"
+                  v-for="(ball,q3) in item.balls[0]">{{ball}}</span>
           </div>
         </template>
         <template v-else>
           <div slot="number">
-            <span :class="{'bg-red-ball': index*1===0}" class="red-ball"
-                  v-for="ballRed in item.balls[0]">{{ballRed}}</span>
-            <span :class="{'bg-blue-ball':  index*1===0}" class="blue-ball"
-                  v-for="ballBlue in item.balls[1]">{{ballBlue}}</span>
+            <span :class="{'bg-red-ball': index*1===0}" :key="`1${q1}`" class="red-ball"
+                  v-for="(ballRed,q1) in item.balls[0]">{{ballRed}}</span>
+            <span :class="{'bg-blue-ball':  index*1===0}" :key="`2${q2}`" class="blue-ball"
+                  v-for="(ballBlue,q2) in item.balls[1]">{{ballBlue}}</span>
           </div>
         </template>
         <div slot="data">
@@ -75,12 +76,12 @@
                 <div class="col"><span>中奖注数</span></div>
                 <div class="col"><span>单注奖金</span></div>
               </div>
-              <div class="row" v-for="win in item.fourteen_ranking">
+              <div :key="`1${q1}`" class="row" v-for="(win,q1) in item.fourteen_ranking">
                 <div class="col"><span>{{win.winnings_category}}</span></div>
                 <div class="col col-center"><span>{{win.winnings_stake_count}}</span></div>
                 <div class="col col-center"><span>{{win.per_winnings_bonus}}</span></div>
               </div>
-              <div class="row" v-for="win in item.nine_ranking">
+              <div :key="`2${q2}`" class="row" v-for="(win,q2) in item.nine_ranking">
                 <div class="col"><span>{{win.winnings_category}}</span></div>
                 <div class="col col-center"><span>{{win.winnings_stake_count}}</span></div>
                 <div class="col col-center"><span>{{win.per_winnings_bonus}}</span></div>
