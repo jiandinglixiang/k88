@@ -7,8 +7,8 @@
       </div>
     </div>
     <template v-for="(item, index5) in data">
-      <div :key="index5" class="table-title" v-html="titleText(item, index5)"></div>
-      <table :key="index5" border="0" cellpadding="0" cellspacing="0">
+      <div :key="`1${index5}`" class="table-title" v-html="titleText(item, index5)"></div>
+      <table :key="`2${index5}`" border="0" cellpadding="0" cellspacing="0">
         <thead>
         <tr>
           <td width="20%">赛事</td>

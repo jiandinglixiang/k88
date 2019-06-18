@@ -34,7 +34,7 @@ const actions = {
 
     if (!state.issue.lottery_id) {
       Http.get('/Home/getRecommentIssue').then(data => {
-        context.commit(types.GET_RECOMMEND_ISSUE, data)
+        data && context.commit(types.GET_RECOMMEND_ISSUE, data)
       })
     }
   },

@@ -10,6 +10,7 @@ import md5 from 'md5'
 import BonusOptimizationUtil from '../../model/common/BonusOptimizationUtil'
 import Lottery from '../../model/common/Lottery'
 import SfcCalculator from '../../model/common/SfcCalculator'
+import { recommendIssue } from '../../common/store'
 
 const LX_TYPE = [34, 35, 36, 37]
 const actions = {
@@ -106,6 +107,8 @@ const actions = {
           loading.hide()
         })
       }
+    } else {
+      context.commit(types.CURRENT_SPORT_PLAY_TYPE_SELECT)
     }
   },
   [types.CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE] ({ commit, state }, data) {
@@ -180,8 +183,43 @@ const mutations = {
   [types.CURRENT_SPORT_PLAY_TYPE_SELECT] (state, data) {
     const obj = state[state.lottery]
     const schemes = [...obj.scheme]
-    schemes[obj.mode === 2 ? 0 : 1] = new SportsBetting(data, obj.mode)
-    obj.scheme = schemes
+    const index = obj.mode === 2 ? 0 : 1
+    const preselection = recommendIssue.get()
+    let gameData = null
+    let pitch = null
+    if (data) {
+      // 数据处理
+      schemes[index] = new SportsBetting(data, obj.mode)
+      obj.scheme = schemes
+    }
+    if (preselection) {
+      // 数据预选
+      recommendIssue.clear()
+      if (preselection.lottery_id * 1 === 606 || preselection.lottery_id * 1 === 705) {
+        console.log('未处理混合投注')
+      } else if (preselection.lottery_id * 1 === schemes[index].lotteryId * 1) {
+        schemes[index].groups.find((i1, n1) => i1.schedules.find(function (i2, n2) {
+          // console.log(i2.round_no, preselection.roundNo, i2.id, preselection.scheduleId)
+          if (i2.round_no === preselection.roundNo && i2.id === preselection.scheduleId) {
+            gameData = [n1, n2]
+            return true
+          }
+          return false
+        }))
+        // 找到目标赛事
+        if (gameData && Object.prototype.toString.call(preselection.bet_number) === '[object String]') {
+          console.log(preselection)
+          pitch = preselection.bet_number.split(',')
+          pitch.forEach(item => {
+            const data = schemes[index].groups[gameData[0]].schedules[gameData[1]].holderList.find(item2 => item === item2.key)
+            if (data) {
+              schemes[index].groups[gameData[0]].schedules[gameData[1]].onOptionSelected(data)
+              obj.scheme[index].setBottomTip()
+            }
+          })
+        }
+      }
+    }
   },
   [types.GET_CURRENT_SPORT_LOTTERY] (state, data) {
     const obj = state[state.lottery]

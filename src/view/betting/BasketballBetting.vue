@@ -9,7 +9,6 @@
 import SportLotteryHeader from './child/LotteryHeader.vue'
 import SportLotteryContainer from './child/SportLotteryContainer.vue'
 import { CURRENT_SPORT_PLAY_TYPE_SELECT } from '../../store/betting/types'
-import Lottery from '../../model/common/Lottery'
 
 const BasketballLotteryIdList = [
   { id: 701, value: '胜负' },
@@ -27,9 +26,15 @@ export default {
     }
   },
   created () {
-    if (!Lottery.isBasketBall(this.$store.state.betting.lottery)) {
-      this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT, BasketballLotteryIdList[4])
-    }
+    const lottery = (this.$route.params && this.$route.params.id) || this.$store.state.betting.lottery || BasketballLotteryIdList[0].id
+    let index = BasketballLotteryIdList.findIndex(i => (lottery === i.id))
+    if (index < 0) index = 0
+    // if (!Lottery.isBasketBall(this.$store.state.betting.lottery)) {
+    this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT, {
+      ...BasketballLotteryIdList[index],
+      mode: this.$route.params.mode
+    })
+    // }
   },
   components: { SportLotteryHeader, SportLotteryContainer }
 }
