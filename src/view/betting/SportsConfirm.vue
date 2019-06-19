@@ -930,8 +930,7 @@ export default {
       this.$router.push({ name: 'SportsOptimize' })
     },
     overstep () {
-      console.log(this.bettingList)
-      if (this.bettingList.selected.length > 8) {
+      if (Lottery.isAHFootBall(this.lotteryId) && this.bettingList.selected.length > 8) {
         Toast('超出')
       }
     },

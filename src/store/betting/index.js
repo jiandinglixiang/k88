@@ -208,9 +208,9 @@ const mutations = {
         }))
         // 找到目标赛事
         if (gameData && Object.prototype.toString.call(preselection.bet_number) === '[object String]') {
-          console.log(preselection)
+          // console.log(preselection)
           pitch = preselection.bet_number.split(',')
-          pitch.forEach(item => {
+          pitch.forEach(function (item) {
             const data = schemes[index].groups[gameData[0]].schedules[gameData[1]].holderList.find(item2 => item === item2.key)
             if (data) {
               schemes[index].groups[gameData[0]].schedules[gameData[1]].onOptionSelected(data)

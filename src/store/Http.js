@@ -5,19 +5,7 @@ import { user } from '../common/store'
 import loading from '../common/loading'
 import store from './index'
 import md5 from 'js-md5'
-
-let HOST
-if (process.env.NODE_ENV === 'production') {
-  HOST = 'http://tgapi.k888.bet/H5'
-} else {
-  HOST = '/H5'
-}
-
-// const HOST = 'https://tgapiv17.baiying58.com/H5/'/* 正式1 */
-// const HOST = 'http://tgapi.666esport.com/H5/'; /* 测试服务器 */if (process.env.NODE_ENV === 'production'/* 生产构建提示 */) process.env.NODE_ENV = 911
-// const HOST = 'https://phone-api.baiying58.com/H5/'/* 正式2 */
-// const HOST = 'http://test.h5.phone.t.ebao123.com/index.php?s=/H5/';/* 测试服务器 */ if (process.env.NODE_ENV === 'production'/* 生产构建提示 */) process.env.NODE_ENV = 911
-// const HOST = 'http://tgapi.ig668.cn/H5/'/* ig电竞 */
+import { baseURL } from '../baseURL'
 
 // code > 0 时，失败处理
 function errorHandle (data, reject) {
@@ -44,6 +32,7 @@ function errorCatch (error, reject) {
 }
 
 const config = {
+  baseURL: baseURL(),
   timeout: 10000,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -81,7 +70,7 @@ function randomWord (randomFlag, min, max) {
 export default class Http {
   static get (url, params = {}) {
     return new Promise(function (resolve, reject) {
-      axios.get(HOST + '/Index/getTime', { ...config })
+      axios.get('/Index/getTime', { ...config })
         .then(response => {
           if (response.data.code === 0) {
             var currentTimeStemp = (Date.parse(new Date())) / 1000
@@ -109,7 +98,7 @@ export default class Http {
         params.nonce = nonce
         params.ssign = sign
         params.token = valToken
-        axios.get(HOST + url, { ...config, params })
+        axios.get(url, { ...config, params })
           .then(response => {
             if (response.data.code === 0) {
               resolve(response.data.data)
@@ -126,7 +115,7 @@ export default class Http {
 
   static post (url, data = {}) {
     return new Promise(function (resolve, reject) {
-      axios.get(HOST + '/Index/getTime', { ...config })
+      axios.get('/Index/getTime', { ...config })
         .then(response => {
           if (response.data.code === 0) {
             var currentTimeStemp = (Date.parse(new Date())) / 1000
@@ -152,7 +141,7 @@ export default class Http {
         var nonce = randomWord(true, 5, 32)
         var sign = md5(valToken + timestamps + nonce + secretKey)
         const params = { timestamp: timestamps, nonce: nonce, ssign: sign, token: valToken }
-        axios.post(HOST + url, data, { ...config, params })
+        axios.post(url, data, { ...config, params })
           .then(response => {
             if (response.data.code === 0) {
               resolve(response.data.data)

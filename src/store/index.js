@@ -11,6 +11,8 @@ import home from './home/index'
 import prize from './prize/index'
 import score from './score/index'
 import information from './information/index'
+import grounder from '../grounder/store/betting/index' // 滚球
+import grounderOrder from '../grounder/store/order/index' // 滚球订单
 
 Vue.use(Vuex)
 // 保存数据结构留作初始化使用
@@ -22,7 +24,9 @@ sessionStorage.setItem('vue-x', JSON.stringify({
   betting: betting.state,
   prize: prize.state,
   information: information.state,
-  score: score.state
+  score: score.state,
+  grounder: grounder.state,
+  grounderOrder: grounderOrder.state
 }))
 const modules = {
   home,
@@ -32,6 +36,8 @@ const modules = {
   betting,
   prize,
   information,
-  score
+  score,
+  grounder,
+  grounderOrder
 }
 export default new Vuex.Store({ modules })

@@ -1,14 +1,13 @@
 import { Indicator } from 'mint-ui'
 
-const loading = Indicator
-
-export default {
+export const loading = {
   show () {
-    loading.open({
+    Indicator.open({
       spinnerType: 'fading-circle'
     })
   },
   hide () {
-    loading.close()
+    Indicator.close()
   }
 }
+export default loading

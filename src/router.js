@@ -44,13 +44,6 @@ import { pageJump, user } from './common/store'
 import Score from './view/score/score.vue' // -我的
 import AHFooter from './view/asianHandicap/AHFooter.vue'
 import Index from './view/Index.vue'
-// import Hello from '../components/Hello.vue';
-const SingInLaTombola = () => import('./view/user/SingInLaTombola.vue')// 签到刮奖
-const redManage = () => import('./view/user/redPacket/redManage.vue')// 红包管理st
-const redPurchase = () => import('./view/user/redPacket/redPurchase.vue')// 红包购买
-const exchangeRed = () => import('./view/user/redPacket/exchangeRed.vue')// 红包兑换end
-const integralStore = () => import('./view/user/redPacket/integralStore.vue')// 积分兑换st
-const integralDetails = () => import('./view/user/redPacket/integralDetails.vue')// 积分详情
 // 合买与跟单
 // const BuyTogether = () => import('./view/buyTogether/BuyTogether.vue')// 开始合买
 // const buyTogetherLobby = () => import('./view/buyTogether/buyTogetherLobby.vue')// 合买大厅
@@ -62,6 +55,14 @@ const integralDetails = () => import('./view/user/redPacket/integralDetails.vue'
 // const RecommendDetails = () => import('./view/merchandiser/RecommendDetails.vue')// 榜单
 // const ChaseNumberDetail = () => import('./view/user/Order/OrderDetail/ChaseNumberDetail.vue')// 榜单
 // const PaymentCompound = () => import('./view/paymennt/PaymentCompound.vue')// 支付合买,推荐跟单
+import grounder from './grounder/router' // 滚球路由模块
+// import Hello from '../components/Hello.vue';
+const SingInLaTombola = () => import('./view/user/SingInLaTombola.vue')// 签到刮奖
+const redManage = () => import('./view/user/redPacket/redManage.vue')// 红包管理st
+const redPurchase = () => import('./view/user/redPacket/redPurchase.vue')// 红包购买
+const exchangeRed = () => import('./view/user/redPacket/exchangeRed.vue')// 红包兑换end
+const integralStore = () => import('./view/user/redPacket/integralStore.vue')// 积分兑换st
+const integralDetails = () => import('./view/user/redPacket/integralDetails.vue')// 积分详情
 Vue.use(Router)
 
 const router = new Router({
@@ -103,35 +104,43 @@ const router = new Router({
       path: '/more',
       name: 'More',
       component: More
-    }, {
+    },
+    {
       path: '/login',
       name: 'Login',
       component: Login
-    }, {
+    },
+    {
       path: '/register',
       name: 'Register',
       component: Register
-    }, {
+    },
+    {
       path: '/forgot_password',
       name: 'ForgotPassword',
       component: ForgotPassword
-    }, {
+    },
+    {
       path: '/user_info',
       name: 'UserInfo',
       component: UserInfo
-    }, {
+    },
+    {
       path: '/id_card',
       name: 'IDCard',
       component: IDCard
-    }, {
+    },
+    {
       path: '/bank_card',
       name: 'BankCard',
       component: BankCard
-    }, {
+    },
+    {
       path: '/cash',
       name: 'Cash',
       component: Cash
-    }, {
+    },
+    {
       path: '/cash_detail',
       name: 'CashDetail',
       component: CashDetail
@@ -141,35 +150,42 @@ const router = new Router({
       name: 'OrderDetail',
       component: OrderDetail,
       meta: { requireAuth: true }
-    }, {
+    },
+    {
       path: '/orders/:id/scheme',
       name: 'OrderScheme',
       component: OrderDetailScheme,
       meta: { requireAuth: true }
-    }, {
+    },
+    {
       path: '/scheme/football',
       name: 'Football',
       component: Football
-    }, {
+    },
+    {
       path: '/scheme/football/confirm',
       name: 'FootballConfirm',
       component: FootballConfirm
-    }, {
+    },
+    {
       path: '/payment/confirm',
       name: 'PaymentConfirm',
       component: PaymentConfirm,
       meta: { requireAuth: true }
-    }, {
+    },
+    {
       path: '/payment/order',
       name: 'PaymentOrder',
       component: PaymentOrder,
       meta: { requireAuth: true }
-    }, {
+    },
+    {
       path: '/payment/complete',
       name: 'PaymentComplete',
       component: PaymentComplete,
       meta: { requireAuth: true }
-    }, {
+    },
+    {
       path: '/payment',
       name: 'Payment',
       component: Payment,
@@ -177,66 +193,81 @@ const router = new Router({
         from.name && pageJump.fromSet('Payment', from)
         next()
       }
-    }, {
+    },
+    {
       path: '/information/football/:id',
       name: 'FootballInformation',
       component: FootballInformation
-    }, {
+    },
+    {
       path: '/information/basketball/:id',
       name: 'BasketballInformation',
       component: BasketballInformation
-    }, {
+    },
+    {
       path: '/xincai_register',
       name: 'NewRegister',
       component: NewRegister,
       meta: { title: 'K88体育' }
-    }, {
+    },
+    {
       path: '/betting/football',
       name: 'FootballBetting',
       component: FootballBetting
-    }, {
+    },
+    {
       path: '/betting/basketball',
       name: 'BasketballBetting',
       component: BasketballBetting
-    }, {
+    },
+    {
       path: '/betting/syxw/:id',
       name: 'SYXWBetting',
       component: SYXWBetting
-    }, {
+    },
+    {
       path: '/betting/k3/:id',
       name: 'K3Betting',
       component: K3Betting
-    }, {
+    },
+    {
       path: '/betting/sfc/:id',
       name: 'SFCBetting',
       component: SFCBetting
-    }, {
+    },
+    {
       path: '/betting/fc3d/:id',
       name: 'FC3DBetting',
       component: FC3DBetting
-    }, {
+    },
+    {
       path: '/betting/confirm',
       name: 'DigitalConfirm',
       component: DigitalConfirm,
       meta: { requireAuth: true }
-    }, {
+    },
+    {
       path: '/betting/sports_confirm',
       name: 'SportsConfirm',
       component: SportsConfirm,
       meta: { requireAuth: true, query: { back: true } }
-    }, {
+    },
+    {
       path: '/betting/sfc_confirm',
       name: 'SFCConfirm',
       component: SFCConfirm
-    }, {
+    },
+    {
       path: '/betting/sports_optimize',
       name: 'SportsOptimize',
       component: SportsOptimize
-    }, {
+    },
+    {
       path: '/betting/digital/:id',
       name: 'SSQBetting',
       component: SSQBetting
-    }, {
+    },
+    {
       path: '/web',
       name: 'WebPage',
       component: WebPage
@@ -245,15 +276,18 @@ const router = new Router({
       path: '/prize/detail/:lottery',
       name: 'PrizeDetail',
       component: PrizeDetail
-    }, {
+    },
+    {
       path: '/prize/sports_detail/:lottery/:date',
       name: 'PrizeSportsDetail',
       component: PrizeSportsDetail
-    }, {
+    },
+    {
       path: '/promotion/elevenPickFive',
       name: 'PromotionElevenPickFive',
       component: PromotionElevenPickFive
-    }, {
+    },
+    {
       path: '/promotion/test',
       name: 'PromotionTest',
       component: PromotionTest
@@ -298,7 +332,8 @@ const router = new Router({
       name: 'SingInLaTombola',
       component: SingInLaTombola,
       meta: { requireAuth: true }
-    }
+    },
+    ...grounder
   ]
 })
 
