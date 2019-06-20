@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script>
+<script>//
 import OrderTable from '../../../components/OrderTable'
 
 export default {

@@ -11,9 +11,9 @@
     </div>
     <div class="box">
       <div :class="{selected: isSelected(item)}"
+           :key="index"
            @click="onOptionSelected(item, index)"
            class="box-item"
-           :key="index"
            v-for="(item, index) in schedule.holderList">
         <span>{{item.text}} {{item.value}}</span>
       </div>

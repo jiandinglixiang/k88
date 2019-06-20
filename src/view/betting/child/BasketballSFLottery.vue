@@ -9,9 +9,9 @@
     </div>
     <div class="box">
       <div :class="{selected: isSelected(item)}"
+           :key="index"
            @click="onOptionSelected(item, index)"
            class="box-item"
-           :key="index"
            v-for="(item, index) in schedule.holderList">
         <span><span>{{item.text}}</span> {{item.value}}</span>
       </div>

@@ -30,9 +30,9 @@
       <template v-if="schedule.holderList[1].length > 0">
         <div :class="schedule.letPointsColor" class="left-point-bottom">{{schedule.letPointsText}}</div>
         <div :class="{selected: isSelected(item, 1), 'box-center': index===1}"
+             :key="index"
              @click="onOptionSelected(item, 1)"
              class="box-item border-top"
-             :key="index"
              v-for="(item, index) in schedule.holderList[1]">
           <span><i class="text-light">{{item.text}}</i> {{item.value}}</span>
         </div>
@@ -59,8 +59,8 @@
             <template v-if="schedule.holderList[0].length > 0">
               <td class="gray" style="width: 15px;">0</td>
               <td :class="{selected: isDialogSelected(item, 0)}"
-                  @click="onDialogOptionSelected(item, 0)"
                   :key="n1"
+                  @click="onDialogOptionSelected(item, 0)"
                   v-for="(item,n1) in schedule.holderList[0]">
                 <span class="text-light">{{item.text}}</span>
                 <span class="text-value">{{item.value}}</span>
@@ -74,8 +74,8 @@
             <template v-if="schedule.holderList[1].length > 0">
               <td :class="schedule.letPointsColor" style="width: 15px;">{{schedule.letPointsText}}</td>
               <td :class="{selected: isDialogSelected(item, 1)}"
-                  @click="onDialogOptionSelected(item, 1)"
                   :key="n2"
+                  @click="onDialogOptionSelected(item, 1)"
                   v-for="(item,n2) in schedule.holderList[1]">
                 <span class="text-light">{{item.text}}</span>
                 <span class="text-value">{{item.value}}</span>
@@ -98,8 +98,8 @@
             <tr :key="n3" v-for="(list,n3) in bfTrList">
               <td :class="{selected: isDialogSelected(item, 2)}"
                   :colspan="i === list.length-1 ? 8 - list.length : 1"
-                  @click="onDialogOptionSelected(item, 2)"
                   :key="i"
+                  @click="onDialogOptionSelected(item, 2)"
                   v-for="(item, i) in list">
                 <span class="text-light">{{item.text}}</span>
                 <p>{{item.value}}</p>
@@ -124,8 +124,8 @@
             <tr :key="n4" v-for="(list,n4) in zjqTrList">
               <td :class="{selected: isDialogSelected(item, 3)}"
                   :colspan="i === list.length-1 ? 8 - list.length : 1"
-                  @click="onDialogOptionSelected(item, 3)"
                   :key="i"
+                  @click="onDialogOptionSelected(item, 3)"
                   v-for="(item, i) in list">
                 <span class="text-light margin-right-10">{{item.text}}</span><span>{{item.value}}</span>
               </td>
@@ -149,8 +149,8 @@
             <tr :key="n5" v-for="(list,n5) in bqcTrList">
               <td :class="{selected: isDialogSelected(item, 4)}"
                   :colspan="i === list.length-1 ? 8 - list.length : 1"
-                  @click="onDialogOptionSelected(item, 4)"
                   :key="i"
+                  @click="onDialogOptionSelected(item, 4)"
                   v-for="(item, i) in list">
                 <span class="text-light margin-right-10">{{item.text}}</span><span>{{item.value}}</span>
               </td>

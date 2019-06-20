@@ -42,7 +42,7 @@
   </li>
 </template>
 
-<script>
+<script>//
 import Lottery from '../../../model/common/Lottery'
 import Toast from '../../../common/toast'
 
@@ -58,8 +58,8 @@ export default {
       switch (this.ShowType) {
         case 'order':
           if (Lottery.isFootBall(id) || Lottery.isBasketBall(id) || Lottery.isSYXW(id) ||
-              Lottery.isDLT(id) || Lottery.isSSQ(id) || Lottery.isSFCOrRXJ(id) || Lottery.isK3(id) ||
-              Lottery.isFC3D(id)) {
+            Lottery.isDLT(id) || Lottery.isSSQ(id) || Lottery.isSFCOrRXJ(id) || Lottery.isK3(id) ||
+            Lottery.isFC3D(id)) {
             this.$router.push({
               name: 'OrderDetail',
               params: { id: item.id }

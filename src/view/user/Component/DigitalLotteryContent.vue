@@ -62,7 +62,7 @@
   </div>
 </template>
 
-<script>
+<script>//
 import Lottery from '../../../model/common/Lottery'
 
 export default {

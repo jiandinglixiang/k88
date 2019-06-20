@@ -22,8 +22,8 @@
           <tbody>
           <tr>
             <td :class="{selected:isDialogSelected(item)}"
-                @click="onDialogOptionSelected(item, 0)"
                 :key="n1"
+                @click="onDialogOptionSelected(item, 0)"
                 v-for="(item,n1) in firstLine(schedule.holderList[0])">
               <span class="text-light">{{item.text}}</span>
               <p>{{item.value}}</p>
@@ -32,8 +32,8 @@
           <tr>
             <td :class="{selected: isDialogSelected(item)}"
                 :colspan="index === 5 ? 2 : 1"
-                @click="onDialogOptionSelected(item, 0)"
                 :key="index"
+                @click="onDialogOptionSelected(item, 0)"
                 v-for="(item, index) in secondLine(schedule.holderList[0])">
               <span class="text-light">{{item.text}}</span>
               <p>{{item.value}}</p>
@@ -51,8 +51,8 @@
           <tr>
             <td :class="{selected: isDialogSelected(item)}"
                 :colspan="index === 5 ? 2 : 1"
-                @click="onDialogOptionSelected(item, 1)"
                 :key="index"
+                @click="onDialogOptionSelected(item, 1)"
                 v-for="(item, index) in schedule.holderList[1]">
               <span class="text-light">{{item.text}}</span>
               <p>{{item.value}}</p>
@@ -69,8 +69,8 @@
           <tbody>
           <tr>
             <td :class="{selected: isDialogSelected(item)}"
-                @click="onDialogOptionSelected(item, 2)"
                 :key="n2"
+                @click="onDialogOptionSelected(item, 2)"
                 v-for="(item,n2) in firstLine(schedule.holderList[2])">
               <span class="text-light">{{item.text}}</span>
               <p>{{item.value}}</p>
@@ -79,8 +79,8 @@
           <tr>
             <td :class="{selected: isDialogSelected(item)}"
                 :colspan="index === 5 ? 2 : 1"
-                @click="onDialogOptionSelected(item, 2)"
                 :key="index"
+                @click="onDialogOptionSelected(item, 2)"
                 v-for="(item, index) in secondLine(schedule.holderList[2])">
               <span class="text-light">{{item.text}}</span>
               <p>{{item.value}}</p>

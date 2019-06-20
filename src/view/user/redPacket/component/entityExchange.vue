@@ -74,7 +74,7 @@
   }
 </style>
 
-<script>
+<script>//
 export default {
   name: 'entityExchange',
   props: {

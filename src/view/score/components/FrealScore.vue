@@ -55,7 +55,7 @@
   </div>
 </template>
 
-<script>
+<script>//
 export default {
   name: 'realScore',
   props: {

@@ -5,7 +5,7 @@
     </slot>
   </span>
 </template>
-<script>
+<script>//
 export default {
   name: 'countDown',
   data () {

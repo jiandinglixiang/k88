@@ -10,9 +10,9 @@
           </div>
           <div class="col">
           <span :class="{active: item.selected}"
+                :key="n2"
                 @click="ballChanged(item, index)"
                 class="play-ball-white"
-                :key="n2"
                 v-for="(item,n2) in group.list">
                 {{item.id}}
           </span>

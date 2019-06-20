@@ -3,8 +3,8 @@
     <div ref="carouselContainer">
       <div class="carousel">
         <div class="carousel-scroll" ref="carouselScroll">
-          <img :class="item.className" :src="item.src"
-               :key="index"
+          <img :class="item.className" :key="index"
+               :src="item.src"
                @click="imgClick(index)" alt="img" v-for="(item, index) in imgList">
         </div>
       </div>

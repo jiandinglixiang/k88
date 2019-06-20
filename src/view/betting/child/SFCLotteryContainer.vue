@@ -19,9 +19,9 @@
       v-model="popupVisible">
       <div class="issue-select-panel">
         <span :class="{checked: sfc.current.key === item.key}"
+              :key="nn"
               @click="onChangeIssue(item)"
               class="issue-item"
-              :key="nn"
               v-for="(item,nn) in sfc.issues">
           第{{item.value}}期
         </span>

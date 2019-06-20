@@ -35,8 +35,8 @@
           <tr>
             <template v-for="(item, index) in schedule.holderList">
               <td :class="{selected: isDialogSelected(item)}"
-                  @click="onDialogOptionSelected(item, index)"
                   :key="index"
+                  @click="onDialogOptionSelected(item, index)"
                   v-if="index < 4">
                 <span> <i class="text-light pull-left">{{item.text}}</i> {{item.value}}</span>
               </td>
@@ -45,8 +45,8 @@
           <tr>
             <template v-for="(item, index) in schedule.holderList">
               <td :class="{selected: isDialogSelected(item)}"
-                  @click="onDialogOptionSelected(item, index)"
                   :key="index"
+                  @click="onDialogOptionSelected(item, index)"
                   v-if="index > 3">
                 <span> <i class="text-light pull-left">{{item.text}}</i> {{item.value}}</span>
               </td>
