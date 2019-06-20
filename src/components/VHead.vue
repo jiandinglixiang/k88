@@ -56,6 +56,7 @@ export default {
       background: $c131313;
       color: $cFFfFFF;
     }
+
     .order-icon {
       position: absolute;
       right: 10px;

@@ -159,7 +159,7 @@ export default {
 <style lang="scss" scoped>
   .table-container {
     font-size: 14px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-bottom: 1px solid #ddd;
     } @else {
       border-bottom: 1px solid $c313131;
@@ -169,7 +169,7 @@ export default {
   .table-container .table-header {
     background: $c1c1c1c;
     padding: 5px 0;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: $cFFfFFF;
@@ -193,7 +193,7 @@ export default {
 
   .table-container .list {
     text-align: center;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cEbebeb;
     } @else {
       background-color: $c313131;
@@ -205,7 +205,7 @@ export default {
     line-height: 40px;
     font-size: 14px;
     color: #999;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $c131313;
     }
   }
@@ -214,7 +214,7 @@ export default {
     padding: 5px 0;
     margin-top: 0;
     font-size: 12px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-top: 1px dotted #ddd;
       color: $c999999;
     } @else {

@@ -40,7 +40,7 @@
             </div>
           </div>
         </scheme-box>
-<!--        <service-agreement></service-agreement>-->
+        <!--        <service-agreement></service-agreement>-->
       </div>
       <div class="money-confirm">
         <div class="payment-tip text-default">请在
@@ -72,7 +72,7 @@ import CountDown from '../../components/CountDown'
 import OrderExpired from '../../components/OrderExpired'
 import Toast from '../../common/toast'
 import Util from '../../common/util'
-import ServiceAgreement from '../../components/ServiceAgreement.vue'
+// import ServiceAgreement from '../../components/ServiceAgreement.vue'
 import { mapActions, mapMutations, mapState } from 'vuex'
 import { GET_SCHEME_CONFIRM, SCHEME_CONFIRM_EXPIRED } from '../../store/scheme/types'
 import { PAYMENT_CONFIRM } from '../../store/payment/types'
@@ -115,7 +115,10 @@ export default {
     })
   },
   components: {
-    SchemeBox, ServiceAgreement, CountDown, OrderExpired
+    SchemeBox,
+    // ServiceAgreement,
+    CountDown,
+    OrderExpired
   },
   created () {
     this.getSchemeConfirm()

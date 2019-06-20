@@ -173,11 +173,11 @@ export default {
       toTop21: state => state.score['toTop21']
     }),
     showLogin () {
-      if (this.switchBody[0]*1 === 1 || this.switchBody[0]*1 === 3) {
-        if (this.switchBody[1]*1 === 4) {
+      if (this.switchBody[0] * 1 === 1 || this.switchBody[0] * 1 === 3) {
+        if (this.switchBody[1] * 1 === 4) {
           return true
         }
-      } else if (this.switchBody[1]*1 === 2) {
+      } else if (this.switchBody[1] * 1 === 2) {
         return true
       }
       return false

@@ -79,7 +79,7 @@ export default class LX2 extends SYXWPlayType {
       for (let j = 1; j <= selected2; j++) {
         if ((i + j) === minRedBall) {
           team = i * j * this.bonus3
-          min > team ? min = team : ''
+          min > team && (min = team)
         }
       }
     }

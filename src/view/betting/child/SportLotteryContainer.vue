@@ -131,7 +131,7 @@ export default {
   }
 
   .sport-lottery-container .bottom-fixed .clear-icon {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: url("../../../assets/igdj/ic_scheme_trash.png") no-repeat;
     } @else {
       background: url("../../../assets/betting/ic_scheme_trash.png") no-repeat;

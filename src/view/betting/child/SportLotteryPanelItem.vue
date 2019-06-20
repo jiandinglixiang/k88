@@ -197,7 +197,8 @@ export default {
         color: $c999999;
       }
     }
-    @if($lotteryIg) {
+
+    @if ($lotteryIg) {
       border-bottom: 1px solid #EBEBEB;
       > div.item-top {
         background-color: $c131313;
@@ -211,7 +212,7 @@ export default {
   }
 
   .sport-lottery-panel-item .down-gray-icon {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: url("../../../assets/igdj/down_gray.png") no-repeat;
     } @else {
       background: url("../../../assets/betting/down_gray.png") no-repeat;
@@ -232,7 +233,7 @@ export default {
     color: white;
     font-size: 14px;
     padding: 0 10px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #2C2D33;
     } @else {
       background: black;
@@ -252,7 +253,7 @@ export default {
   .sport-lottery-panel-item .item-tip .item-tip-list-left {
     width: 80px;
     display: inline-block;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cFFfFFF;
     } @else {
       color: #6f6f70;

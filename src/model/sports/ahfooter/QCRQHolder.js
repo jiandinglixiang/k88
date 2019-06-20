@@ -23,6 +23,7 @@ export default class QCRQHolder extends SportsHolder {
     }
     this.holderList.reverse()
   }
+
   onOptionSelected2 (item) {
     // 过关
     const index = this.selected.indexOf(item)

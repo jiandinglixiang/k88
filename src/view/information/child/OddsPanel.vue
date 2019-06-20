@@ -212,7 +212,7 @@ export default {
     float: right;
     text-align: center;
     margin-right: 20px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background-color: #f00;
     } @else {
       background-color: #3F6EE7;

@@ -299,20 +299,20 @@ export default {
             }
           }
           if (toTheTop) {
-            newData = this.findToTheTop(toTheTop, data)  // {newTop, presentData}
+            newData = this.findToTheTop(toTheTop, data) // {newTop, presentData}
           }
           if (newData) {
             // 如果置顶
-            this.setLottery({ target, params: newData.presentData })  // {target, params}
+            this.setLottery({ target, params: newData.presentData }) // {target, params}
             this.setToTheTop({ target, params: newData.newTop })
           } else {
-            this.setLottery({ target, params: data })  // {target, params}
+            this.setLottery({ target, params: data }) // {target, params}
           }
         } else {
           if (toTheTop) {
             this.setToTheTop({ target, params: [] })
           }
-          this.setLottery({ target, params: data })  // {target, params}
+          this.setLottery({ target, params: data }) // {target, params}
           this.showToB = true
         }
         this.switchover(target)
@@ -345,7 +345,7 @@ export default {
           // --避免上拉重复加载
           this.setLottery({ target, params: resolve, add: target[2] })// 设置目标数据
           this.switchover(target)// 切换目标
-          if (!resolve.groups || !resolve.groups.length && !target[2]) {
+          if (!(resolve.groups || resolve.groups.length) && !target[2]) {
             // 是否显示没有比赛
             this.showToB = true
           }

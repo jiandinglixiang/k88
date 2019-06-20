@@ -37,9 +37,9 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
-    }@else {
+    } @else {
       color: white;
     }
   }

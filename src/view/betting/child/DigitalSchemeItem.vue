@@ -2,14 +2,14 @@
   <div class="digital-scheme-item">
     <div class="number">
       <span class="text-primary" v-if="ticket.lotteryType == 'syxw' || ticket.lotteryType =='fc3d'">
-        <span v-for="(r, k) in numberList">
+        <span :key="k" v-for="(r, k) in numberList">
           <span v-if="k > 0">|</span>
           <template v-if="r.pre">
             <span>(</span>
-            <span :class="{'margin-left-3': t > 0}" v-for="(p, t) in r.pre">{{p.text}}</span>
+            <span :class="{'margin-left-3': t > 0}" :key="`111${t}`" v-for="(p, t) in r.pre">{{p.text}}</span>
             <span>)</span>
           </template>
-          <span class="margin-right-3" v-for="i in r.next">{{i.text}}</span>
+          <span :key="`22${n}`" class="margin-right-3" v-for="(i,n) in r.next">{{i.text}}</span>
         </span>
       </span>
       <span class="text-green " v-else-if="ticket.lotteryType === 'k3'">
@@ -18,12 +18,13 @@
       <span v-else>
         <template v-for="(r, k) in numberList">
           <template v-if="r.pre">
-            <span :class="{'text-primary': k == 0, 'text-blue': k == 1}">(</span>
-            <span :class="{'margin-left-3': t > 0, 'text-primary': k == 0, 'text-blue': k == 1}"
+            <span :class="{'text-primary': k == 0, 'text-blue': k == 1}" :key="`111${k}`">(</span>
+            <span :class="{'margin-left-3': t > 0, 'text-primary': k == 0, 'text-blue': k == 1}" :key="`222${k}${t}`"
                   v-for="(p, t) in r.pre">{{p.text}}</span>
-            <span :class="{'text-primary': k == 0, 'text-blue': k == 1}">)</span>
+            <span :class="{'text-primary': k == 0, 'text-blue': k == 1}" :key="`333${k}`">)</span>
           </template>
-          <span :class="{'text-primary': k == 0, 'text-blue': k == 1}" class="margin-right-3" v-for="i in r.next">{{i.text}}</span>
+          <span :class="{'text-primary': k == 0, 'text-blue': k == 1}" :key="`444${k}${n4}`" class="margin-right-3"
+                v-for="(i,n4) in r.next">{{i.text}}</span>
         </template>
       </span>
     </div>

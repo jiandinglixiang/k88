@@ -25,7 +25,6 @@
 
 <script>//
 // import ArticlePurchaseHeat from '../../components/ArticlePurchaseHeat.vue'
-import loading from '../../common/loading'
 import { mapActions, mapState } from 'vuex'
 import { SIGN_IN_ACCEPT_THE_PRIZE } from '../../store/user/types'
 

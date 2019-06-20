@@ -90,7 +90,7 @@ function analyseBettingNum (betNum) {
   const comma = ','
   const verticalLine = '|'
   let bettingArr
-  if (betNum.indexOf(comma) !== -1) {   // 判断betting_num
+  if (betNum.indexOf(comma) !== -1) { // 判断betting_num
     bettingArr = betNum.split(comma).map(value => {
       return { text: value }
     })

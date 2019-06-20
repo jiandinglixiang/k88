@@ -22,8 +22,8 @@
           </div>
           <div class="col col-80" v-if="panelBallGroups">
             <span :class="{active: item.selected}"
-                  @click="ballChanged(item, 0)"
                   :key="item.id"
+                  @click="ballChanged(item, 0)"
                   class="play-ball-white"
                   v-for="item in panelBallGroups[0].list">
               {{item.id}}

@@ -140,7 +140,7 @@ export default {
 <style lang="scss" scoped>
   .table-container {
     font-size: 14px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
     } @else {
       background: $c1c1c1c;
@@ -153,7 +153,7 @@ export default {
     text-align: center;
     font-size: 16px;
     position: relative;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
       border-bottom: 1px solid $c131313;
       background: $cFFfFFF;
@@ -172,7 +172,7 @@ export default {
     position: absolute;
     right: 10px;
     top: 12px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border: 1px solid $c999999;
     } @else {
       border: 1px solid #ddd;
@@ -182,7 +182,7 @@ export default {
   .table-container .arrow-bottom-icon {
     display: inline-block;
     vertical-align: top;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       margin-left: 0;
       margin-top: 4px;
     } @else {
@@ -201,7 +201,7 @@ export default {
     border-left: 3px solid $cffC63A;
     padding-left: 5px;
     color: $cFFfFFF;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: $cFFfFFF;
@@ -217,14 +217,14 @@ export default {
 
   .table-container table thead {
     color: #B4B4B4;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cEbebeb;
     }
   }
 
   .table-container table tbody {
     font-size: 12px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
       color: $cgray;
     } @else {
@@ -233,9 +233,10 @@ export default {
     }
 
   }
+
   .table-container td {
     padding: 5px 0;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border: 1px solid #ddd;
     } @else {
       border: 1px solid $c494949;

@@ -67,4 +67,3 @@ export default class SfcCalculator {
     return 1
   }
 }
-

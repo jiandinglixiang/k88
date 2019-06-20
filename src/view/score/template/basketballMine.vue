@@ -12,7 +12,6 @@
     border-radius: 5px;
   }
 
-
   .item-body-body {
     margin-top: .34rem;
   }
@@ -122,8 +121,8 @@
 import itemTitle from '../components/title.vue'
 import Description from '../components/description.vue'
 import nameScore from '../components/nameScore.vue'
-import IsTop from '../components/Istop.vue'
-import BmatchOdds from '../components/BmatchOdds.vue'
+// import IsTop from '../components/Istop.vue'
+// import BmatchOdds from '../components/BmatchOdds.vue'
 import BtotalPoints from '../components/BtotalPoints.vue'
 import BrealScore from '../components/BrealScore.vue'
 import example from '../components/example.vue'
@@ -156,9 +155,9 @@ export default {
         return str
       }
 
-      if (type*1 === 1) {
+      if (type * 1 === 1) {
         return weeks[new Date(timestamp * 1000).getDay()]
-      } else if (type*1 === 2) {
+      } else if (type * 1 === 2) {
         return `${check(data.getHours())}:${check(data.getMinutes())}`
       }
       return `${check(data.getMonth() + 1)}-${check(data.getDate())} ${check(data.getHours())}:${check(data.getMinutes())}`
@@ -166,10 +165,10 @@ export default {
   },
   components: {
     itemTitle,
-    IsTop,
+    // IsTop,
     Description,
     nameScore,
-    BmatchOdds,
+    // BmatchOdds,
     BtotalPoints,
     BrealScore,
     example

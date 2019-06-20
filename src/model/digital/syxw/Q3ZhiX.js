@@ -49,7 +49,7 @@ export default class Q3ZhiX extends SYXWPlayType {
           if (value.indexOf(item.id) !== -1) {
             value.splice(value.indexOf(item.id), 1)
           }
-          index === key ? value.push(item.id) : ''
+          index === key && value.push(item.id)
           return value
         })
       }

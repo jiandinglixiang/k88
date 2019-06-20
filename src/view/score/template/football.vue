@@ -133,7 +133,7 @@ export default {
   methods: {
     filtration (who) {
       let data = [this.scoreArray(who), null, null, null]
-      if (who*1 === 0) {
+      if (who * 1 === 0) {
         data[1] = this.propsData.home
         if (this.propsData.home_info) {
           data[2] = this.propsData.home_info.red_card ? this.propsData.home_info.red_card : 0
@@ -169,7 +169,7 @@ export default {
         return str
       }
 
-      if (type*1 === 1) {
+      if (type * 1 === 1) {
         return weeks[new Date(timestamp * 1000).getDay()]
       } else if (type === 2) {
         return `${check(data.getHours())}:${check(data.getMinutes())}`
@@ -187,4 +187,3 @@ export default {
   }
 }
 </script>
-

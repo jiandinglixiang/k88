@@ -1,26 +1,26 @@
 <template>
   <div style="margin-bottom: 150px">
-    <router-link v-if="isId" to="scheme" tag="div" append class="padding relative bg-white margin-top-10">
+    <router-link append class="padding relative bg-white margin-top-10" tag="div" to="scheme" v-if="isId">
       <span class="text-normal text-default">方案明细</span>
       <span class="arrow-right"></span>
     </router-link>
-    <div v-else class="padding relative bg-white margin-top-10">
+    <div class="padding relative bg-white margin-top-10" v-else>
       <span class="text-normal text-default">暂无方案明细</span>
       <span class="arrow-right"></span>
     </div>
     <div class="bottom-logo margin-top-20 text-center">
-      <img src="../../../assets/bottom_logo.png" alt=""/>
+      <img alt="" src="../../../assets/bottom_logo.png"/>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'DetailFooter',
-    props: {
-      isId: {type: Boolean}
-    }
+export default {
+  name: 'DetailFooter',
+  props: {
+    isId: { type: Boolean }
   }
+}
 </script>
 
 <style scoped>

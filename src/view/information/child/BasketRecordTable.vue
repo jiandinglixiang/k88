@@ -51,24 +51,24 @@
       </tr>
       <template v-for="(item, index) in list">
         <tr :key="`1${index}`" class="basket-record-table" v-if="!first || index > 0">
-            <td>{{item.league}}<br><span class="text-light">{{item.date | dateFormat('yy-MM-dd')}}</span></td>
-            <td :class="returnTextColor(item.guest_team_id, item.score, 'left')">{{item.guest_team}}</td>
-            <td>{{scoreText(item.score)}}</td>
-            <td :class="returnTextColor(item.home_team_id, item.score, 'right')">{{item.home_team}}</td>
-            <td>{{item.let_point}}<span :class="letPointColor(item)" class="pull-right"> {{letPointText(item)}}</span>
-            </td>
-            <td>{{item.base_point}} <span :class="basePointColor(item.score, item.base_point)"
-                                          class="pull-right padding-right-10">{{basePointText(item.score, item.base_point)}}</span>
-            </td>
-          </tr>
+          <td>{{item.league}}<br><span class="text-light">{{item.date | dateFormat('yy-MM-dd')}}</span></td>
+          <td :class="returnTextColor(item.guest_team_id, item.score, 'left')">{{item.guest_team}}</td>
+          <td>{{scoreText(item.score)}}</td>
+          <td :class="returnTextColor(item.home_team_id, item.score, 'right')">{{item.home_team}}</td>
+          <td>{{item.let_point}}<span :class="letPointColor(item)" class="pull-right"> {{letPointText(item)}}</span>
+          </td>
+          <td>{{item.base_point}} <span :class="basePointColor(item.score, item.base_point)"
+                                        class="pull-right padding-right-10">{{basePointText(item.score, item.base_point)}}</span>
+          </td>
+        </tr>
         <tr :key="`2${index}`" class="bg-blue basket-record-table" v-else>
-            <td>本场</td>
-            <td>{{item.guest_team}}</td>
-            <td>VS</td>
-            <td>{{item.home_team}}</td>
-            <td>{{item.let_point}}</td>
-            <td>{{item.base_point}}</td>
-          </tr>
+          <td>本场</td>
+          <td>{{item.guest_team}}</td>
+          <td>VS</td>
+          <td>{{item.home_team}}</td>
+          <td>{{item.let_point}}</td>
+          <td>{{item.base_point}}</td>
+        </tr>
       </template>
       </tbody>
     </table>
@@ -161,10 +161,10 @@ export default {
   .basket-record-table {
     background-color: $cFFfFFF;
     color: $cgray;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       .mint-swipe {
-        background: $cFFfFFF!important;
-        color: $cgray!important;
+        background: $cFFfFFF !important;
+        color: $cgray !important;
       }
     } @else {
       background-color: $c313131;
@@ -175,7 +175,7 @@ export default {
   .basket-record-table .bg-blue {
     /*border-top: 1px solid #3f9ae7;*/
     /*border-bottom: 1px solid #3f9ae7;*/
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cEbebeb;
       color: $cgray;
     } @else {
@@ -185,7 +185,7 @@ export default {
   }
 
   .basket-record-table .mint-swipe-indicator {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #ddd;
     } @else {
       background: $cFFfFFF;

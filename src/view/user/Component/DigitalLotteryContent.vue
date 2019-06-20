@@ -16,7 +16,7 @@
           <span :key="`3${n003}`" class="bg-blue-ball margin-right-3" v-for="(item,n003) in detail.prizeResult[1]">{{item}}</span>
         </template>
       </p>
-      <p v-else class="text-normal">
+      <p class="text-normal" v-else>
         开奖号码：等待开奖中
       </p>
       <p class="text-normal margin-top-5">投注内容：<span
@@ -40,7 +40,7 @@
             </span>
           </span>
         <!--双色球和大乐透-->
-        <span v-else class="text-muted">
+        <span class="text-muted" v-else>
             <span :key="k" v-for="(r, k) in item.result">
               <span v-if="k > 0">:</span>
               <span v-if="r.pre">
@@ -63,24 +63,24 @@
 </template>
 
 <script>
-  import Lottery from '../../../model/common/Lottery'
+import Lottery from '../../../model/common/Lottery'
 
-  export default {
-    name: 'DigitalLotteryContent',
-    props: {
-      detail: {type: Object}
+export default {
+  name: 'DigitalLotteryContent',
+  props: {
+    detail: { type: Object }
+  },
+  methods: {
+    isK3 (id) {
+      return Lottery.isK3(id)
     },
-    methods: {
-      isK3 (id) {
-        return Lottery.isK3(id);
-      },
-      k3Hz (ball) {
-        return ball.reduce((a, b) => {
-          return parseInt(a) + parseInt(b);
-        })
-      }
+    k3Hz (ball) {
+      return ball.reduce((a, b) => {
+        return parseInt(a) + parseInt(b)
+      })
     }
   }
+}
 </script>
 
 <style scoped>

@@ -57,7 +57,7 @@ export default {
     padding: 5px 10px;
     font-size: 12px;
     position: relative;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
       color: $c999999;
     } @else {
@@ -67,7 +67,7 @@ export default {
   }
 
   .sport-lottery-panel .panel-top .icon {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: url("../../../assets/igdj/down_out.png") no-repeat;
     } @else {
       background: url("../../../assets/betting/down_out.png") no-repeat;

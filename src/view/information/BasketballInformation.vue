@@ -28,7 +28,7 @@
 
 <script>//
 import InformationHeader from './child/Header.vue'
-import { TabContainer, TabContainerItem } from 'mint-ui'
+// import { TabContainer, TabContainerItem } from 'mint-ui'
 import SituationPanelBasketball from './child/SituationPanelBasketball.vue'
 import AnalysisPanel from './child/AnalysisPanel.vue'
 import OddsPanel from './child/OddsPanel.vue'
@@ -115,8 +115,8 @@ export default {
   },
   components: {
     InformationHeader,
-    TabContainer,
-    TabContainerItem,
+    // TabContainer,
+    // TabContainerItem,
     SituationPanelBasketball,
     AnalysisPanel,
     OddsPanel

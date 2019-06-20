@@ -23,7 +23,8 @@
             <div :class="{selected: isSelected(item, 0)}"
                  @click="onOptionSelected(item, 0)"
                  class="box-item"
-                 v-for="item in schedule.holderList[0]">
+                 :key="m1"
+                 v-for="(item,m1) in schedule.holderList[0]">
             <span class="box-item-content">
               <span class="text-light">{{item.text}}</span>
               <span class="block">{{item.value}}</span>
@@ -39,6 +40,7 @@
             <div :class="{selected: isSelected(item, 1)}"
                  @click="onOptionSelected(item, 1)"
                  class="box-item"
+                 :key="key"
                  v-for="(item, key) in schedule.holderList[1]">
             <span class="box-item-content">
               <span class="text-light">
@@ -62,7 +64,8 @@
             <div :class="{selected: isSelected(item, 3)}"
                  @click="onOptionSelected(item, 3)"
                  class="box-item"
-                 v-for="item in schedule.holderList[3]">
+                 :key="m2"
+                 v-for="(item,m2) in schedule.holderList[3]">
             <span class="box-item-content">
               <span class="text-light">{{item.text}}</span>
               <span class="block">{{item.value}}</span>
@@ -91,7 +94,8 @@
             <template v-if="schedule.holderList[0].length > 0">
               <td :class="{selected: isDialogSelected(item, 0)}"
                   @click="onDialogOptionSelected(item, 0)"
-                  v-for="item in schedule.holderList[0]">
+                  :key="m3"
+                  v-for="(item,m3) in schedule.holderList[0]">
                 <span class="text-light">{{item.text}}</span>
                 {{item.value}}
               </td>
@@ -113,7 +117,8 @@
             <template v-if="schedule.holderList[1].length > 0">
               <td :class="{selected: isDialogSelected(item, 1)}"
                   @click="onDialogOptionSelected(item, 1)"
-                  v-for="item in schedule.holderList[1]">
+                  :key="m4"
+                  v-for="(item,m4) in schedule.holderList[1]">
                 <span class="text-light">{{item.text}}</span>
                 {{item.value}}
               </td>
@@ -135,7 +140,8 @@
             <template v-if="schedule.holderList[3].length > 0">
               <td :class="{selected: isDialogSelected(item, 3)}"
                   @click="onDialogOptionSelected(item, 3)"
-                  v-for="item in schedule.holderList[3]">
+                  :key="m5"
+                  v-for="(item,m5) in schedule.holderList[3]">
                 <span class="text-light">{{item.text}}</span>
                 {{item.value}}
               </td>
@@ -154,13 +160,14 @@
           </thead>
           <tbody>
           <template v-if="schedule.holderList[2].length > 0">
-            <tr v-for="(sfcTd, key) in sfcTr">
+            <tr :key="key" v-for="(sfcTd, key) in sfcTr">
               <td class="grayD" rowspan="2" v-if="key === 0" width="10%">客胜</td>
               <td class="orange" rowspan="2" v-if="key === 2" width="10%">主胜</td>
               <td :class="{selected: isDialogSelected(item, 2)}"
                   @click="onDialogOptionSelected(item, 2)"
                   class="padding-vertical-0"
-                  v-for="item in sfcTd">
+                  :key="m6"
+                  v-for="(item,m6) in sfcTd">
                 <span class="text-light margin-right-10">{{item.text}}</span>
                 {{item.value}}
               </td>
@@ -282,7 +289,7 @@ export default {
   .basketball-hh-lottery {
     padding-left: 10px;
     font-size: 14px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       .text-center.text-default-2 .text-light {
         color: $cgray;
       }
@@ -300,7 +307,7 @@ export default {
     margin-top: 8px;
     font-size: 13px;
     margin-right: 45px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
       border: 1px solid $cFFfFFF;
     } @else {
@@ -321,7 +328,7 @@ export default {
     border-radius: 4px;
     height: 136px;
     padding-top: 42px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #ddd;
       color: $cgray;
     } @else {
@@ -340,7 +347,7 @@ export default {
     text-align: center;
     border-radius: 5px;
     position: relative;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: $c131313;
@@ -362,7 +369,8 @@ export default {
     .text-light {
       color: $c999999;
     }
-    @if($lotteryIg) {
+
+    @if ($lotteryIg) {
       color: $c999999;
     } @else {
       color: $cFFfFFF;
@@ -375,7 +383,7 @@ export default {
   }
 
   .basketball-hh-lottery .border-bottom {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-bottom: 1px solid #ddd;
     } @else {
       border-bottom: 1px solid $c3f3f3f;
@@ -388,7 +396,7 @@ export default {
 
   .basketball-hh-lottery .box .box-item.selected {
     background: $cffC63A;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
       .text-light {
         color: $cgray;
@@ -402,7 +410,7 @@ export default {
   }
 
   .basketball-hh-lottery .box .box-item:nth-child(odd) .box-item-content {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-right: 1px dotted #ddd;
     } @else {
       border-right: 1px dotted $c3f3f3f;
@@ -434,7 +442,7 @@ export default {
     width: 95%;
     max-width: 320px;
     /*background: #f2f2f2;*/
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
     }
   }
@@ -450,7 +458,7 @@ export default {
   .basketball-hh-lottery table td {
     padding: 5px;
     color: $cFFfFFF;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
     } @else {
       background: $c313131;
@@ -478,7 +486,7 @@ export default {
 
   .basketball-hh-lottery table td.orange {
     background: $cffC63A;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: white;
@@ -493,14 +501,14 @@ export default {
   .basketball-hh-lottery table td.selected {
     background: $cffC63A;
 
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
       .text-light {
         color: $cgray;
       }
     } @else {
       color: $c131313;
-      .text-light  {
+      .text-light {
         color: $c131313;
       }
     }
@@ -510,7 +518,7 @@ export default {
     color: $cffC63A;
     margin-top: 5px;
     border-radius: 0;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
       border-top: 1px solid #F2F2F2;
     } @else {
@@ -522,7 +530,7 @@ export default {
   .basketball-hh-lottery .btn-wrap .col:first-child .btn {
     color: white;
 
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-right: 1px solid #ddd;
     } @else {
       border-right: 1px solid $c313131;

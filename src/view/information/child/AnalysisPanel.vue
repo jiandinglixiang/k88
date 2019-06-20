@@ -20,29 +20,29 @@
       <template v-for="(record, index) in reverse(futureRecord)">
         <template v-if="record">
           <p :key="`1`+index" class="panel-title-head">
-          <img :src="index === 0 ? detail.guest_logo : detail.home_logo" alt="">
-          {{record.name}}
+            <img :src="index === 0 ? detail.guest_logo : detail.home_logo" alt="">
+            {{record.name}}
           </p>
           <table :key="'2'+index" class="border-bottom-solid">
-          <tbody>
-          <tr class="bg-gray">
-            <td>赛事</td>
-            <td>日期</td>
-            <td>主队</td>
-            <td></td>
-            <td>客队</td>
-            <td>相隔</td>
-          </tr>
-          <tr :key="q6" v-for="(item,q6) in record.list">
-            <td>{{item.league}}</td>
-            <td style="color: #999999">{{item.date | dateFormat('yyyy-MM-dd')}}</td>
-            <td>{{item.guest_team}}</td>
-            <td>VS</td>
-            <td>{{item.home_team}}</td>
-            <td>{{item.date_interval}}天</td>
-          </tr>
-          </tbody>
-        </table>
+            <tbody>
+            <tr class="bg-gray">
+              <td>赛事</td>
+              <td>日期</td>
+              <td>主队</td>
+              <td></td>
+              <td>客队</td>
+              <td>相隔</td>
+            </tr>
+            <tr :key="q6" v-for="(item,q6) in record.list">
+              <td>{{item.league}}</td>
+              <td style="color: #999999">{{item.date | dateFormat('yyyy-MM-dd')}}</td>
+              <td>{{item.guest_team}}</td>
+              <td>VS</td>
+              <td>{{item.home_team}}</td>
+              <td>{{item.date_interval}}天</td>
+            </tr>
+            </tbody>
+          </table>
         </template>
       </template>
     </basket-panel-container>
@@ -80,7 +80,7 @@ export default {
 
 <style lang="scss">
   .football-information .panel-title {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2 url("../../../assets/igdj/football_live_title_bg.png") no-repeat bottom;
     } @else {
       background: $c131313 url("../../../assets/information/football_live_title_bg.png") no-repeat bottom;
@@ -132,14 +132,14 @@ export default {
     width: 100%;
     /*background: white;*/
     border-collapse: collapse;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
       color: $cgray;
     }
   }
 
   .football-information table tr.bg-f6 th {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background-color: $c131313;
     } @else {
       background-color: $c1c1c1c;
@@ -158,7 +158,7 @@ export default {
 
   .football-information .border-bottom-solid {
     /*border-bottom: 1px solid #dddddd;*/
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: $cFFfFFF;
@@ -195,7 +195,7 @@ export default {
   }
 
   .football-information .active span {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-bottom: 2px solid #f00;
     } @else {
       border-bottom: 2px solid #3393FF;
@@ -204,7 +204,7 @@ export default {
 
   .football-information .panel-title-head {
     padding: 10px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: $cFFfFFF;
@@ -220,7 +220,7 @@ export default {
 
   .football-information .bg-gray {
     color: $c999999;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
     } @else {
       background: $c1c1c1c;

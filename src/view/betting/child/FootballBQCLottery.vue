@@ -21,8 +21,8 @@
           </thead>
           <tbody>
           <tr :key="n7" v-for="(list,n7) in tableTrList">
-            <td :class="{selected: isDialogSelected(item)}" @click="onDialogOptionSelected(item)" class="text-left"
-                :key="n8"
+            <td :class="{selected: isDialogSelected(item)}" :key="n8" @click="onDialogOptionSelected(item)"
+                class="text-left"
                 v-for="(item,n8) in list"
             >
               <span class="text-light">{{item.text}}</span>
@@ -106,7 +106,7 @@ export default {
   .football-bqc-lottery {
     padding-left: 10px;
     font-size: 14px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       .text-center.text-default-2 .text-light {
         color: $cgray;
       }
@@ -122,7 +122,7 @@ export default {
     padding: 7px 0;
     position: relative;
     color: $c999999;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
       border: 1px solid $cFFfFFF;
     } @else {
@@ -148,7 +148,7 @@ export default {
 
   .football-bqc-lottery .box.selected {
     background: $cffC63A;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: $c131313;
@@ -167,7 +167,7 @@ export default {
   .football-bqc-lottery table tbody td {
     padding: 5px 10px;
     color: $c999999;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
     } @else {
       background: $c313131;
@@ -181,7 +181,7 @@ export default {
   .football-bqc-lottery table tbody td.selected {
     background: $cffC63A;
 
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
       span {
         color: $cgray;
@@ -208,7 +208,7 @@ export default {
     width: 95%;
     max-width: 320px;
     /*background: #f2f2f2;*/
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
     }
   }
@@ -217,7 +217,7 @@ export default {
     color: $cffC63A;
     margin-top: 5px;
     border-radius: 0;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
       border-top: 1px solid #F2F2F2;
     } @else {
@@ -228,7 +228,7 @@ export default {
 
   .football-bqc-lottery .btn-wrap .col:first-child .btn {
     color: #666;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-right: 1px solid #ddd;
     } @else {
       border-right: 1px solid $c313131;

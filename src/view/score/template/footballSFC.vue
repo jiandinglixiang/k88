@@ -100,8 +100,8 @@ import itemTitle from '../components/title.vue'
 import Description from '../components/description.vue'
 import nameScore from '../components/nameScore.vue'
 import realScore from '../components/FrealScore.vue'
-import IsTop from '../components/Istop.vue'
-import matchOdds from '../components/FmatchOdds.vue'
+// import IsTop from '../components/Istop.vue'
+// import matchOdds from '../components/FmatchOdds.vue'
 
 export default {
   name: 'footballSFC',
@@ -131,16 +131,16 @@ export default {
         return str
       }
 
-      if (type*1 === 1) {
+      if (type * 1 === 1) {
         return weeks[new Date(timestamp * 1000).getDay()]
-      } else if (type*1 === 2) {
+      } else if (type * 1 === 2) {
         return `${check(data.getHours())}:${check(data.getMinutes())}`
       }
       return `${check(data.getMonth() + 1)}-${check(data.getDate())} ${check(data.getHours())}:${check(data.getMinutes())}`
     },
     filtration (who) {
       let data = [this.scoreArray(who), null, null, null]
-      if (who*1 === 0) {
+      if (who * 1 === 0) {
         data[1] = this.propsData.home
         if (this.propsData.home_info) {
           data[2] = this.propsData.home_info.red_card ? this.propsData.home_info.red_card : 0
@@ -158,12 +158,11 @@ export default {
   },
   components: {
     itemTitle,
-    IsTop,
+    // IsTop,
     Description,
     nameScore,
-    realScore,
-    matchOdds
+    realScore
+    // matchOdds
   }
 }
 </script>
-

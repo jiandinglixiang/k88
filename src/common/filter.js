@@ -6,7 +6,6 @@ Vue.filter('currency', function (value) {
     const v = parseFloat(value)
     return !isNaN(v) && (v).toFixed(2)
   }
-
 })
 
 Vue.filter('dateFormat', function (value, fmt) {
@@ -40,5 +39,4 @@ Vue.filter('subStrLast4', function (value) {
     const len = v.length
     return v.substr((len - 4), 4)
   }
-
 })

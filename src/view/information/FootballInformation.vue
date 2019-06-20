@@ -37,7 +37,7 @@
 
 <script>//
 import InformationHeader from './child/Header.vue'
-import { TabContainer, TabContainerItem } from 'mint-ui'
+// import { TabContainer, TabContainerItem } from 'mint-ui'
 import RecordTable from './child/RecordTable.vue'
 import PlatePanel from './child/PlatePanel.vue'
 import IntegralPanel from './child/IntegralPanel.vue'
@@ -117,8 +117,8 @@ export default {
   },
   components: {
     InformationHeader,
-    TabContainer,
-    TabContainerItem,
+    // TabContainer,
+    // TabContainerItem,
     RecordTable,
     PlatePanel,
     IntegralPanel,

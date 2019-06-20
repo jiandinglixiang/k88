@@ -21,7 +21,8 @@
         <span :class="{checked: sfc.current.key === item.key}"
               @click="onChangeIssue(item)"
               class="issue-item"
-              v-for="item in sfc.issues">
+              :key="nn"
+              v-for="(item,nn) in sfc.issues">
           第{{item.value}}期
         </span>
       </div>

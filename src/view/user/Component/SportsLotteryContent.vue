@@ -10,15 +10,15 @@
 </template>
 
 <script>
-  import OrderTable from '../../../components/OrderTable';
+import OrderTable from '../../../components/OrderTable'
 
-  export default {
-    name: 'SportsLotteryContent',
-    props: {
-      detail: {type: Object}
-    },
-    components: {OrderTable}
-  }
+export default {
+  name: 'SportsLotteryContent',
+  props: {
+    detail: { type: Object }
+  },
+  components: { OrderTable }
+}
 </script>
 
 <style scoped>

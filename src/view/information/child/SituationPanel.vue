@@ -78,7 +78,8 @@ export default {
   name: 'situationPanel',
   computed: {
     events () {
-      return this.$store.state.information.events.reverse()
+      const t$is = this
+      return t$is.$store.state.information.events.reverse()
     },
     techs () {
       return this.$store.state.information.techDetail.list
@@ -114,7 +115,7 @@ export default {
   }
 
   .situation-panel .block {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
     } @else {
       background: $c313131;

@@ -130,7 +130,7 @@ export default {
   }
 
   .information-header.football .container {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: url("../../../assets/igdj/football_information.png") no-repeat;
       color: $cFFfFFF;
     } @else {
@@ -141,7 +141,7 @@ export default {
   }
 
   .information-header.basketball .container {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: url("../../../assets/igdj/basketball_information.png") no-repeat;
       color: $cFFfFFF;
     } @else {
@@ -157,7 +157,7 @@ export default {
     line-height: 35px;
     position: relative;
     padding-bottom: 1px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: #ddd;
     } @else {
       color: #888888;

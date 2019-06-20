@@ -19,12 +19,12 @@
 </template>
 
 <script>
-  export default {
-    name: 'OrderTopInfo',
-    props: {
-      detail: {type: Object}
-    }
+export default {
+  name: 'OrderTopInfo',
+  props: {
+    detail: { type: Object }
   }
+}
 </script>
 
 <style scoped>

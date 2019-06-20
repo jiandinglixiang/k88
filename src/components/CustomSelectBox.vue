@@ -95,7 +95,7 @@ export default {
     float: left;
     text-align: center;
     color: #999;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #ddd;
     } @else {
       background: #f2f2f2;

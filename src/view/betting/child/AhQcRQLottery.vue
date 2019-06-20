@@ -216,6 +216,7 @@ export default {
         }
         return true
       }
+
       function f1 () {
         this.schedule.onOptionSelected(item)
         this.$store.commit(SPORTS_OPTION_SELECTED)

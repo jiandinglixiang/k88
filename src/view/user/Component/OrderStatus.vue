@@ -1,20 +1,20 @@
 <template>
   <div class="OrderStatus" style="overflow: hidden">
     <div
-      v-if="status"
-      class="recommend">
+      class="recommend"
+      v-if="status">
       <div v-if="status[0]">
         <p>本单已推荐</p>
-        <p v-if="status[1]" style="color: #e73f40">本单共抽成{{ status[3] }}元</p>
-        <p v-if="status[2]" style="color: #e73f40">本单抽成{{ status[4] }}%</p>
+        <p style="color: #e73f40" v-if="status[1]">本单共抽成{{ status[3] }}元</p>
+        <p style="color: #e73f40" v-if="status[2]">本单抽成{{ status[4] }}%</p>
       </div>
       <router-link
-        tag="div"
         :to="{name: 'RecommendDetails', params: {target: JSON.stringify([0, userId])}}"
+        tag="div"
         v-else>
         <p>推荐者: {{ recommendName }}</p>
-        <p v-if="status[1]" style="color: #e73f40">本单已被抽成{{ status[3] }}元</p>
-        <p v-if="status[2]" style="color: #e73f40">本单抽成{{ status[4] }}%</p>
+        <p style="color: #e73f40" v-if="status[1]">本单已被抽成{{ status[3] }}元</p>
+        <p style="color: #e73f40" v-if="status[2]">本单抽成{{ status[4] }}%</p>
       </router-link>
     </div>
     <div v-else>
@@ -24,16 +24,16 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'OrderStatus',
-    props: {
-      userId: {type: String | Number},
-      status: {type: Array},
-      statusText: {type: String},
-      recommendName: {type: String}
-    }
+<script>//
+export default {
+  name: 'OrderStatus',
+  props: {
+    userId: [String, Number],
+    status: { type: Array },
+    statusText: { type: String },
+    recommendName: { type: String }
   }
+}
 </script>
 
 <style scoped>

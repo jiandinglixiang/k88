@@ -85,7 +85,7 @@
 </template>
 
 <script>//
-import organList from './universal'
+// import organList from './universal'
 import footballMine from '../template/footballMine.vue'
 import mineBetTitle from '../components/mineBetTitle.vue'
 
@@ -122,10 +122,9 @@ export default {
     }
   },
   components: {
-    organList,
+    // organList,
     footballMine,
     mineBetTitle
   }
 }
 </script>
-

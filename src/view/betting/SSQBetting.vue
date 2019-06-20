@@ -3,9 +3,9 @@
     <lottery-header :playTypeGroup="playTypeGroup"></lottery-header>
     <lottery-container>
       <template v-for="(group, index) in panelBallGroups">
-        <p class="group-title" v-show="group.title">{{group.title}}</p>
-        <div class="group-ball-panel">
-          <div class="group-ball-panel-item" v-for="item in group.list">
+        <p :key="`11${index}`" class="group-title" v-show="group.title">{{group.title}}</p>
+        <div :key="`22${index}`" class="group-ball-panel">
+          <div :key="n2" class="group-ball-panel-item" v-for="(item,n2) in group.list">
             <span :class="{'play-ball-blue': group.color === 'blue',active: item.selected}"
                   @click="ballChanged(item, index)"
                   class="play-ball-white">
@@ -14,7 +14,7 @@
           </div>
         </div>
         <template v-if="index < panelBallGroups.length - 1">
-          <hr>
+          <hr :key="`33${index}`">
         </template>
       </template>
     </lottery-container>

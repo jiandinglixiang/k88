@@ -12,7 +12,7 @@ export default class SfcLottery extends SportsLottery {
     const verticalLine = '|'
     let bettingArr
     let betNum = this.betting_order['betting_num']
-    if (betNum.indexOf(comma) !== -1) {   // 判断betting_num
+    if (betNum.indexOf(comma) !== -1) { // 判断betting_num
       bettingArr = betNum.split(comma).map(value => {
         return { text: value }
       })

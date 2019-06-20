@@ -9,7 +9,6 @@
     position: relative;
   }
 
-
   .item-body-body {
     margin-top: .34rem;
   }

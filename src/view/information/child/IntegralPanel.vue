@@ -1,10 +1,10 @@
 <template>
   <div class="integral-panel">
     <div class="panel-header row">
-      <a :class="{'active': index === activeIndex}" @click="changeTabIndex(index)"
+      <a :class="{'active': index === activeIndex}" :key="index"
+         @click="changeTabIndex(index)"
          class="col"
          href="javascript:"
-         :key="index"
          v-for="(item, index) in tabItem">
         {{item}}
       </a>
@@ -73,7 +73,7 @@ export default {
 
   .integral-panel .panel-header a.active {
     background: $cffC63A;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: $c131313;

@@ -126,8 +126,8 @@
                   v-if="k > 0">{{item.lotteryType === 'syxw' || item.lotteryType === 'fc3d'?'|':':'}}</span>
             <template v-if="r.pre">
               <span class="pull-left">（</span>
-              <span :class="{'margin-left-3': t > 0, 'text-primary': p.checked}" class="pull-left"
-                    :key="`2${t}`" v-for="(p, t) in r.pre">{{p.text}}</span>
+              <span :class="{'margin-left-3': t > 0, 'text-primary': p.checked}" :key="`2${t}`"
+                    class="pull-left" v-for="(p, t) in r.pre">{{p.text}}</span>
               <span class="pull-left">）</span>
             </template>
             <template v-if="detail.tickets && detail.tickets[0].lotteryType === 'k3'">

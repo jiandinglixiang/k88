@@ -18,8 +18,8 @@
         <template v-else-if="isSFC()">
           <div slot="number">
             <span :class="{'bg-white': index > 0}"
-                  class="sfc-item"
                   :key="q3"
+                  class="sfc-item"
                   v-for="(ball,q3) in item.balls[0]">{{ball}}</span>
           </div>
         </template>

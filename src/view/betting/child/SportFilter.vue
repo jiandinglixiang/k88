@@ -9,9 +9,9 @@
         </div>
         <div class="selected-box">
           <div :class="{selected: textIsSelected(text)}"
+               :key="`1${q8}`"
                @click="textSelect(text)"
                class="text-item"
-               :key="`1${q8}`"
                v-for="(text,q8) in textContent">{{text}}
           </div>
         </div>
@@ -58,7 +58,8 @@ export default {
             }
           })
         })
-        this.currentSelected = [...texts]
+        const t$is = this
+        t$is.currentSelected = [...texts]
       }
       return texts
     },
@@ -164,7 +165,7 @@ export default {
 
   .sport-filter .dialog-container .top-btn-wrap a.selected {
     background: $cffC63A;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: $c131313;
@@ -201,7 +202,7 @@ export default {
     float: left;
     padding: 10px 0;
     color: $c999999;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-top: 1px solid #ddd;
     } @else {
       border-top: 1px solid $c313131;
@@ -210,7 +211,7 @@ export default {
 
   .sport-filter .btn-wrap a:last-child {
     color: $cffC63A;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-left: 1px solid #ddd;
     } @else {
       border-left: 1px solid $c313131;

@@ -42,6 +42,7 @@
   .border-right1 {
     border-right: 1px solid #313131;
   }
+
   .integral-details .integral-details-item {
     border-bottom: 1px solid #313131;
     background-color: #1c1c1c;

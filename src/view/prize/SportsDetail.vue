@@ -14,9 +14,9 @@
     </div>
     <mt-datetime-picker
       @confirm="selectedDate"
+      class="time-picker"
       ref="picker"
       type="date"
-      class="time-picker"
       v-model="pickerValue"
     >
     </mt-datetime-picker>
@@ -115,12 +115,14 @@ export default {
     max-width: 640px;
     margin: 0 auto;
   }
+
   .mint-datetime-action {
-     @if($lotteryIg) {
-       color: $c999999;
+    @if ($lotteryIg) {
+      color: $c999999;
     }
+
     &.mint-datetime-confirm {
-      @if($lotteryIg) {
+      @if ($lotteryIg) {
         color: $cffC63A;
       }
     }

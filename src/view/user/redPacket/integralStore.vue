@@ -107,7 +107,7 @@
 
 <template>
   <div class="box-init">
-    <v-dialog @close="hied1 = false" title="兑换确认" v-show="hied1" style="background-color: white">
+    <v-dialog @close="hied1 = false" style="background-color: white" title="兑换确认" v-show="hied1">
       <div class="text-md margin-top-5">
         <div class="alert-msg">您将使用 <span>{{ purchase1.point }}</span>积分兑换</div>
         <div class="alert-red-conversion">
@@ -118,7 +118,7 @@
         <div class="alert-msg text-left">可用彩种: {{ purchase1.support_lottery }}</div>
       </div>
       <div class="padding margin-top-10">
-        <a @click="redConversion()" class="btn" href="javascript:;">兑换</a>
+        <a @click="redConversion()" class="btn" href="javascript:">兑换</a>
       </div>
     </v-dialog>
     <v-dialog @close="hied2 = false" title="兑换确认" v-show="hied2">
@@ -128,7 +128,7 @@
         <div class="alert-msg">{{ purchase2.name }}</div>
       </div>
       <div class="padding margin-top-10">
-        <a @click="entityConversion()" class="btn" href="javascript:;">兑换</a>
+        <a @click="entityConversion()" class="btn" href="javascript:">兑换</a>
       </div>
     </v-dialog>
     <div class="integral-top">

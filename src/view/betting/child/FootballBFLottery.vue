@@ -23,7 +23,8 @@
           <tr>
             <td :class="{selected:isDialogSelected(item)}"
                 @click="onDialogOptionSelected(item, 0)"
-                v-for="item in firstLine(schedule.holderList[0])">
+                :key="n1"
+                v-for="(item,n1) in firstLine(schedule.holderList[0])">
               <span class="text-light">{{item.text}}</span>
               <p>{{item.value}}</p>
             </td>
@@ -32,6 +33,7 @@
             <td :class="{selected: isDialogSelected(item)}"
                 :colspan="index === 5 ? 2 : 1"
                 @click="onDialogOptionSelected(item, 0)"
+                :key="index"
                 v-for="(item, index) in secondLine(schedule.holderList[0])">
               <span class="text-light">{{item.text}}</span>
               <p>{{item.value}}</p>
@@ -50,6 +52,7 @@
             <td :class="{selected: isDialogSelected(item)}"
                 :colspan="index === 5 ? 2 : 1"
                 @click="onDialogOptionSelected(item, 1)"
+                :key="index"
                 v-for="(item, index) in schedule.holderList[1]">
               <span class="text-light">{{item.text}}</span>
               <p>{{item.value}}</p>
@@ -67,7 +70,8 @@
           <tr>
             <td :class="{selected: isDialogSelected(item)}"
                 @click="onDialogOptionSelected(item, 2)"
-                v-for="item in firstLine(schedule.holderList[2])">
+                :key="n2"
+                v-for="(item,n2) in firstLine(schedule.holderList[2])">
               <span class="text-light">{{item.text}}</span>
               <p>{{item.value}}</p>
             </td>
@@ -76,6 +80,7 @@
             <td :class="{selected: isDialogSelected(item)}"
                 :colspan="index === 5 ? 2 : 1"
                 @click="onDialogOptionSelected(item, 2)"
+                :key="index"
                 v-for="(item, index) in secondLine(schedule.holderList[2])">
               <span class="text-light">{{item.text}}</span>
               <p>{{item.value}}</p>
@@ -149,7 +154,7 @@ export default {
   .football-bf-lottery {
     padding-left: 10px;
     font-size: 14px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       .text-center.text-default-2 .text-light {
         color: $cgray;
       }
@@ -165,7 +170,7 @@ export default {
     padding: 7px 0;
     position: relative;
     color: $c999999;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
       border: 1px solid $cFFfFFF;
     } @else {
@@ -176,7 +181,7 @@ export default {
 
   .football-bf-lottery .box.selected {
     background: $cffC63A;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: $c131313;
@@ -210,7 +215,7 @@ export default {
   .football-bf-lottery table tbody td {
     padding: 3px 0;
     color: $c999999;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
     } @else {
       background: $c313131;
@@ -220,7 +225,7 @@ export default {
   .football-bf-lottery table tbody td.selected {
     background: $cffC63A;
 
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
       span {
         color: $cgray;
@@ -253,7 +258,7 @@ export default {
     width: 95%;
     max-width: 320px;
     /*background: #f2f2f2;*/
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
     }
   }
@@ -262,7 +267,7 @@ export default {
     color: $cffC63A;
     margin-top: 5px;
     border-radius: 0;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
       border-top: 1px solid #F2F2F2;
     } @else {
@@ -273,7 +278,7 @@ export default {
 
   .football-bf-lottery .btn-wrap .col:first-child .btn {
     color: #666;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-right: 1px solid #ddd;
     } @else {
       border-right: 1px solid $c313131;

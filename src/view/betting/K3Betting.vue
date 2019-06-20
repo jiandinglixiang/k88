@@ -5,9 +5,9 @@
       <template v-if="lotteryObj.panelType === 'hz'">
         <div class="item-container clear">
           <div :class="{'selected': item.isSelected}"
+               :key="n1"
                @click="ballChanged(item)"
                class="hz-item"
-               :key="n1"
                v-for="(item,n1) in lotteryObj.balls">
             {{item.num}} <br/> {{item.award}}
           </div>
@@ -32,10 +32,10 @@
             选择3个不同号码，猜对即中40元
           </p>
           <div :class="{'selected': item.isSelected}"
+               :key="index"
                @click="ballChanged(item)"
                class="hz-item"
                v-for="(item, index) in lotteryObj.balls"
-               :key="index"
           >
             <span v-if="index < 6"> {{item.num}}</span>
           </div>
@@ -58,10 +58,10 @@
           <div class="line-head"><span>同号</span></div>
           <div class="clear">
             <div :class="{'selected': item.isSelected}"
+                 :key="index"
                  @click="ballChanged(item, index)"
                  class="hz-item"
-                 v-for="(item, index) in lotteryObj.balls"
-                 :key="index">
+                 v-for="(item, index) in lotteryObj.balls">
               <span
                 v-if="index < 6 && index > -1"> {{item.num}}</span>
             </div>
@@ -69,10 +69,10 @@
           <div class="line-head"><span>不同号</span></div>
           <div class="clear">
             <div :class="{'selected': item.isSelected}"
+                 :key="index"
                  @click="ballChanged(item, index)"
                  class="hz-item"
                  v-for="(item, index) in lotteryObj.balls"
-                 :key="index"
             >
               <span
                 v-if="index < 12 && index > 5"> {{item.num}}</span>
@@ -83,10 +83,10 @@
         <div class="item-container clear sbth margin-top-10">
           <p><span>复选</span> 猜开奖中两个指定的相同号码，奖金15元</p>
           <div :class="{'selected': item.isSelected}"
+               :key="index"
                @click="ballChanged(item, index)"
                class="hz-item"
                v-for="(item, index) in lotteryObj.balls"
-               :key="index"
           >
             <span
               v-if="index < 18 && index > 11"> {{item.num}}</span>
@@ -99,9 +99,9 @@
           <p><span>二不同</span> 选择2个不同号码，猜中即中8元</p>
           <div class="clear">
             <div :class="{'selected': item.isSelected}"
+                 :key="index"
                  @click="ballChanged(item, index)"
                  class="hz-item"
-                 :key="index"
 
                  v-for="(item, index) in lotteryObj.balls">
               <span> {{item.num}}</span>
@@ -115,9 +115,9 @@
           <p><span>胆码</span></p>
           <div class="clear">
             <div :class="{'selected': item.isSelected}"
+                 :key="index"
                  @click="ballChanged(item, index)"
                  class="hz-item"
-                 :key="index"
 
                  v-for="(item, index) in lotteryObj.balls"
             >
@@ -129,9 +129,9 @@
         <div class="item-container clear sbth margin-top-10">
           <p><span>拖码</span></p>
           <div :class="{'selected': item.isSelected}"
+               :key="index"
                @click="ballChanged(item, index)"
                class="hz-item"
-               :key="index"
                v-for="(item, index) in lotteryObj.balls"
           >
             <span v-if="index < 12 && index > 5"> {{item.num}}</span>

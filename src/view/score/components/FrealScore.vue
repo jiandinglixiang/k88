@@ -56,20 +56,20 @@
 </template>
 
 <script>
-  export default {
-    name: 'realScore',
-    props: {
-      propsHome: { type: Object },
-      propsGuest: { type: Object }
-    },
-    methods: {
-      filtration (props, who, pre) {
-        if (this[props] && this[props][who]) {
-          return this[props][who]
-        } else {
-          return `0${pre || ''}`
-        }
+export default {
+  name: 'realScore',
+  props: {
+    propsHome: { type: Object },
+    propsGuest: { type: Object }
+  },
+  methods: {
+    filtration (props, who, pre) {
+      if (this[props] && this[props][who]) {
+        return this[props][who]
+      } else {
+        return `0${pre || ''}`
       }
     }
   }
+}
 </script>

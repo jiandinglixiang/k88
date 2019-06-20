@@ -1,7 +1,7 @@
 <template>
   <div class="article-purchase-heat" v-show="list.length">
     <img alt="" class="heat" src="../assets/article_purchase_heat.png">
-    <div :class="(index+1)!==list.length&&'imaginary'" class="item" v-for="(i,index) in list" :key="index">
+    <div :class="(index+1)!==list.length&&'imaginary'" :key="index" class="item" v-for="(i,index) in list">
       <div class="item-left">
         <div class="item-left-top">
           <img :src="i.image_url" alt="">

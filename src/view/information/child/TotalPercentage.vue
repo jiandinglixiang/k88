@@ -24,6 +24,7 @@ export default {
           background: this.direction === 'left' ? 'red' : 'blue'
         }
       }
+      return {}
     }
   }
 }

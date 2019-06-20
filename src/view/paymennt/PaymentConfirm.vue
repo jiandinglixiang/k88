@@ -21,14 +21,16 @@
       <div class="item clear red-pack-container" v-show="redPackShow">
         <div class="title row text-center">
           <div :class="{'active': redPackTitleId === index}" @click="changeRedPackTitleId(index)"
+               :key="index"
                class="col"
                v-for="(coupon, index) in confirm.coupon_list">
             {{coupon.group_name}}({{coupon.list.length}})
           </div>
         </div>
-        <div v-for="(coupon, index) in confirm.coupon_list">
+        <div :key="index" v-for="(coupon, index) in confirm.coupon_list">
           <div class="list" v-show="redPackTitleId === index">
             <div :class="{'checked': item.id === confirm.currentRedPack.id}" @click="selectRedPack(item)"
+                 :key="item.id "
                  class="red-pack" v-for="item in coupon.list">
               <h4 class="value">￥{{item.balance}}</h4>
               <h5 class="type">{{item.condition}} <span class="pull-right">{{item.end_time | getEndTime}}</span></h5>
@@ -101,14 +103,15 @@ export default {
 </script>
 
 <style lang="scss">
-  @if($lotteryIg) {
+  @if ($lotteryIg) {
     .head {
       margin-bottom: 0;
     }
   }
+
   .payment-confirm .top {
     padding: 10px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background-color: #1A1003;
     }
   }
@@ -121,7 +124,7 @@ export default {
 
   .payment-confirm .content {
     padding: 0 10px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background-color: $cFFfFFF;
     }
   }
@@ -207,8 +210,9 @@ export default {
   .payment-confirm .arrow-bottom-icon.rotate {
     transform: rotate(180deg);
   }
+
   .payment-confirm .btn {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     }
   }

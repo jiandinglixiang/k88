@@ -88,11 +88,11 @@
     <a @click.stop.prevent="loginOut" class="btn logout-panel">退出登录</a>
     <download-panel v-if="dialogShow"></download-panel>
     <v-dialog @close="onCloseDialog" v-if="dialogShow">
-<!--      <p class="text-md">体验完整功能</p>-->
-<!--      <p class="text-md margin-top-5">请下载安装老虎彩票官方APP</p>-->
-<!--      <div class="padding margin-top-10">-->
-<!--        <a class="btn" href="http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery" target="_self">立即下载</a>-->
-<!--      </div>-->
+      <!--      <p class="text-md">体验完整功能</p>-->
+      <!--      <p class="text-md margin-top-5">请下载安装老虎彩票官方APP</p>-->
+      <!--      <div class="padding margin-top-10">-->
+      <!--        <a class="btn" href="http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery" target="_self">立即下载</a>-->
+      <!--      </div>-->
     </v-dialog>
   </div>
 </template>

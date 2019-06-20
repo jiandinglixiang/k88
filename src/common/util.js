@@ -3,7 +3,8 @@
  */
 
 if (!String.prototype.format) {
-  String.prototype.format = function (args) {
+  const ss = String
+  ss.prototype.format = function (args) {
     var result = this
     if (arguments.length > 0) {
       if (arguments.length === 1 && typeof (args) === 'object') {
@@ -146,15 +147,15 @@ export default {
       return /MicroMessenger/i.test(this.agent)
     }
   },
-  timeCountdown (end, callback) {
-    typeof callback === 'function' && callback((end * 1000 - Date.now()) / 1000)
+  timeCountdown (end, cbk) {
+    typeof cbk === 'function' && cbk((end * 1000 - Date.now()) / 1000)
     const t = setInterval(() => {
       let result = (end * 1000 - Date.now()) / 1000
       if (result <= 0) {
         window.clearInterval(t)
-        callback && callback(result)
+        cbk && cbk(result)
       } else {
-        callback && callback(result)
+        cbk && cbk(result)
       }
     }, 1000)
     return t

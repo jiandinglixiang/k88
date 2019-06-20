@@ -52,9 +52,9 @@
           </div>
           <div class="box-bd">
             <div :class="{selected: isSelected(item), 'border-top': index > 0}"
+                 :key="index"
                  @click="selectedItem(item)"
-                 class="box-item row"
-                 :key="index" v-for="(item, index) in schedule.holderList">
+                 class="box-item row" v-for="(item, index) in schedule.holderList">
               <div class="col bg-dark">{{ item.text }}</div>
               <div :class="isStyle(item.str)" class="col-67 text-color">{{ item.value }}<span class="arrow-icon"></span>
               </div>
@@ -83,9 +83,9 @@
         </div>
         <div class="box-bd">
           <div :class="{selected: isSelected(item), 'border-top': index > 0}"
+               :key="item.id"
                @click="selectedItem(item)"
-               class="box-item row"
-               :key="item.id" v-for="(item, index) in schedule.holderList">
+               class="box-item row" v-for="(item, index) in schedule.holderList">
             <div class="col bg-dark">{{ item.text }}</div>
             <div :class="isStyle(item.str)" class="col-67 text-color">{{ twoDecimal[index] }}<span
               class="arrow-icon"></span>
@@ -215,11 +215,13 @@ export default {
         }
         return true
       }
+
       function f1 () {
         this.schedule.onOptionSelected(item)
         this.$store.commit(SPORTS_OPTION_SELECTED)
         this.$emit('onOptionSelected')
       }
+
       function f2 () {
         this.schedule.onOptionSelected2(item)
         this.$store.commit(SPORTS_OPTION_SELECTED)

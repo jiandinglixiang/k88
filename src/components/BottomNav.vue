@@ -2,9 +2,9 @@
   <div class="bottom-nav">
     <div class="row">
       <div :class="{'active': item.key === active}"
+           :key="item.key"
            @click="goRedirect(item)"
-           class="col bottom-nav-item"
-           v-for="item in items" :key="item.key">
+           class="col bottom-nav-item" v-for="item in items">
         <span :class="item.icon" class="nav-icon"></span>
         <p>{{item.name}}</p>
       </div>

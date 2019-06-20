@@ -1,6 +1,5 @@
 import SportsHolder from '../SportsHolder'
 import { BALLS, BettingScoreOdds, CONCEDE, HALF, NO_CONCEDE, SCORES } from '../BettingScoreOdds'
-import { copy } from '../../../common/util'
 
 export default class HHHolder extends SportsHolder {
   constructor (obj) {

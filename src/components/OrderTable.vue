@@ -137,7 +137,7 @@ export default {
     font-size: 11px;
     border-spacing: 0;
     border-collapse: collapse;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border: 1px solid #ddd;
       .text-dark {
         color: $cgray;
@@ -151,7 +151,7 @@ export default {
     padding: 5px 0;
     border-left: 0;
     border-top: 0;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-right: 1px solid #ddd;
       border-bottom: 1px solid #ddd;
       background: $cFFfFFF;

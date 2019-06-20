@@ -55,6 +55,7 @@ export default {
       } @else {
         color: $cCccCCc;
       }
+
       .icon {
         @if ($lotteryIg) {
           background: url("../../../assets/igdj/down_out.png") no-repeat;
@@ -88,6 +89,7 @@ export default {
           background-color: $c313131;
           border-bottom: 1px solid $c3f3f3f;
         }
+
         .item-left {
           font-size: 12px;
           line-height: 20px;
@@ -161,9 +163,10 @@ export default {
   .sports-prize-panel span.yellow-2 {
     color: #FFC63A;
   }
+
   .bottom-fixed .btn {
-  @if($lotteryIg) {
-    color: $cgray;
-  }
+    @if ($lotteryIg) {
+      color: $cgray;
+    }
   }
 </style>

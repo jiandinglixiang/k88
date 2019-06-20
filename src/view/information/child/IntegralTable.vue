@@ -17,6 +17,7 @@
       </thead>
       <tbody>
       <tr :class="{red: detail.home_id == item.team_id, blue: detail.guest_id == item.team_id}"
+          :key="index"
           v-for="(item, index) in list">
         <template v-if="index < 3">
           <td><span :class="rankIcon(index)" class="rank-icon"></span></td>
@@ -65,7 +66,7 @@ export default {
 
     thead {
       color: $c999999;
-      @if($lotteryIg) {
+      @if ($lotteryIg) {
         background-color: $cEbebeb;
       } @else {
         background-color: #1C1C1C;
@@ -73,7 +74,7 @@ export default {
     }
 
     tbody {
-      @if($lotteryIg) {
+      @if ($lotteryIg) {
         background-color: $cFFfFFF;
         color: $cgray;
       } @else {
@@ -86,7 +87,7 @@ export default {
   .integral-table table td {
     padding: 5px 0;
     text-align: center;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border: 1px solid #ddd;
     } @else {
       border: 1px solid $c494949;

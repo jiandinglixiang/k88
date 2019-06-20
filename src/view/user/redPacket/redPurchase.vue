@@ -6,7 +6,7 @@
         <red-item :key="n.id" :propsData="n" :theme="true" @tap="payAffirm"/>
       </template>
     </div>
-    <v-dialog @close="hied = false" title="购买确认" v-show="hied" style="background-color: white">
+    <v-dialog @close="hied = false" style="background-color: white" title="购买确认" v-show="hied">
       <div class="text-md margin-top-5">
         <div class="alert-msg">您将使用 <span>{{ purchase.price }}</span>元购买</div>
         <div class="alert-red-conversion">
@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="padding margin-top-10">
-        <a @click="onCloseDialog" class="btn" href="javascript:;">购买</a>
+        <a @click="onCloseDialog" class="btn" href="javascript:">购买</a>
       </div>
     </v-dialog>
   </div>

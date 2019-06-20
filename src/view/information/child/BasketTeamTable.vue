@@ -16,7 +16,7 @@
         <td>净胜</td>
         <td>胜率</td>
       </tr>
-      <tr v-for="item in team.list">
+      <tr :key="n1" v-for="(item,n1) in team.list">
         <th>{{item.round}}</th>
         <td>{{item.game_count}}</td>
         <td>{{item.win}}</td>
@@ -41,7 +41,7 @@ export default {
 <style lang="scss" scoped>
   .basket-team-table {
     .panel-title-head {
-      @if($lotteryIg) {
+      @if ($lotteryIg) {
         color: $cgray;
       } @else {
         color: $cFFfFFF;
@@ -54,7 +54,7 @@ export default {
         color: $c999999;
       }
 
-      @if($lotteryIg) {
+      @if ($lotteryIg) {
         background-color: $cFFfFFF;
         color: $cgray;
         .bg-gray {

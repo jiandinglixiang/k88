@@ -15,9 +15,9 @@
       <p>
         <img alt="download" src="../../assets/home/download_icon.png" width="50">
       </p>
-<!--      <p class="text-md margin-top-5">请下载安装365彩票官方APP</p>-->
+      <!--      <p class="text-md margin-top-5">请下载安装365彩票官方APP</p>-->
       <div class="padding">
-<!--        <a class="btn" href="http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery" target="_self">立即下载</a>-->
+        <!--        <a class="btn" href="http://a.app.qq.com/o/simple.jsp?pkgname=co.sihe.tigerlottery" target="_self">立即下载</a>-->
       </div>
     </v-dialog>
   </div>

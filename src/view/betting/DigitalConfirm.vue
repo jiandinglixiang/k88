@@ -13,7 +13,7 @@
           <digital-scheme-item :key="key" :ticket="ticket"></digital-scheme-item>
         </div>
       </scheme-box>
-<!--      <service-agreement></service-agreement>-->
+      <!--      <service-agreement></service-agreement>-->
     </div>
     <div class="bottom-fixed">
       <div class="row top">
@@ -42,7 +42,7 @@
 
 <script>//
 import SchemeBox from '../../components/SchemeBox.vue'
-import ServiceAgreement from '../../components/ServiceAgreement.vue'
+// import ServiceAgreement from '../../components/ServiceAgreement.vue'
 import CustomSelectBox from '../../components/CustomSelectBox.vue'
 import DigitalSchemeItem from './child/DigitalSchemeItem.vue'
 import {
@@ -126,10 +126,10 @@ export default {
         Toast('倍数不能小于1')
         return
       }
-//        if (this.mine.balance < (this.stakeCount * this.confirm.followTimes * this.confirm.multiple * (this.addTo ? 3 : 2))) {
-//          Toast('余额不足');
-//          this.$router.push({ name: 'Payment', query: {lack: this.stakeCount * this.confirm.followTimes * this.confirm.multiple * (this.addTo ? 3 : 2) - this.mine.balance} });
-//        }
+      //        if (this.mine.balance < (this.stakeCount * this.confirm.followTimes * this.confirm.multiple * (this.addTo ? 3 : 2))) {
+      //          Toast('余额不足');
+      //          this.$router.push({ name: 'Payment', query: {lack: this.stakeCount * this.confirm.followTimes * this.confirm.multiple * (this.addTo ? 3 : 2) - this.mine.balance} });
+      //        }
       const result = {
         multiple: this.confirm.multiple,
         follow_times: this.confirm.followTimes,
@@ -173,7 +173,12 @@ export default {
     }
     this.getMineInfo()
   },
-  components: { SchemeBox, ServiceAgreement, CustomSelectBox, DigitalSchemeItem }
+  components: {
+    SchemeBox,
+    // ServiceAgreement
+    CustomSelectBox,
+    DigitalSchemeItem
+  }
 }
 </script>
 

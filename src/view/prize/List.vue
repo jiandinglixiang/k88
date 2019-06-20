@@ -122,6 +122,7 @@ export default {
     padding: 5px 30px 10px 10px;
     position: relative;
     background-size: 10px auto;
+
     > .list-item-head > span:nth-child(1) {
       @if ($lotteryIg) {
         color: $cgray;

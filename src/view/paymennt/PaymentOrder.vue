@@ -20,16 +20,16 @@
       </div>
       <div class="item clear red-pack-container" v-show="redPackShow">
         <div class="title row text-center">
-          <div :class="{'active': redPackTitleId === index}" @click="changeRedPackTitleId(index)"
-               class="col"
-               :key="index" v-for="(coupon, index) in confirm.coupon_list">
+          <div :class="{'active': redPackTitleId === index}" :key="index"
+               @click="changeRedPackTitleId(index)"
+               class="col" v-for="(coupon, index) in confirm.coupon_list">
             {{coupon.group_name}}({{coupon.list.length}})
           </div>
         </div>
         <div :key="index" v-for="(coupon, index) in confirm.coupon_list">
           <div class="list" v-show="redPackTitleId === index">
-            <div :class="{'checked': item.id === confirm.currentRedPack.id}" @click="selectRedPack(item)"
-                 :key="item.id" class="red-pack" v-for="item in coupon.list">
+            <div :class="{'checked': item.id === confirm.currentRedPack.id}" :key="item.id"
+                 @click="selectRedPack(item)" class="red-pack" v-for="item in coupon.list">
               <h4 class="value">￥{{item.balance}}</h4>
               <h5 class="type">{{item.condition}} <span class="pull-right">{{item.end_time | getEndTime}}</span></h5>
               <span class="red-pack-check-icon"></span>
@@ -130,7 +130,7 @@ export default {
     padding: 10px;
     border-bottom: 1px solid $c313131;
     color: $cFFfFFF;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
       span {
         color: $c999999;

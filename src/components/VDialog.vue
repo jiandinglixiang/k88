@@ -53,7 +53,7 @@ export default {
     text-align: center;
     border-radius: 3px;
     overflow: hidden;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: #131313;

@@ -24,18 +24,18 @@
     </div>
     <div class="desc">
       <span>{{item.buying_time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</span>
-      <span v-if="ShowType==='order'"
-            class="pull-right">{{item.type===0?'自投':'追号'}}：{{item.total_amount | currency}}</span>
-      <span v-else-if="ShowType==='buyTogether'" class="pull-right">
+      <span class="pull-right"
+            v-if="ShowType==='order'">{{item.type===0?'自投':'追号'}}：{{item.total_amount | currency}}</span>
+      <span class="pull-right" v-else-if="ShowType==='buyTogether'">
         <!--合买-->
      方案金额：{{item.total_amount | currency}}
       </span>
       <template v-else-if="ShowType==='chaseNumber'">
         <!--追号-->
-        <span v-if="item.status===1"
-              class="pull-right">当前{{ item.current_follow_times }}/{{ item.follow_times }}期</span>
-        <span v-else-if="item.status===2" class="pull-right">{{ item.status_desc }}</span>
-        <span v-else class="pull-right">{{ item.status_desc }}</span>
+        <span class="pull-right"
+              v-if="item.status===1">当前{{ item.current_follow_times }}/{{ item.follow_times }}期</span>
+        <span class="pull-right" v-else-if="item.status===2">{{ item.status_desc }}</span>
+        <span class="pull-right" v-else>{{ item.status_desc }}</span>
       </template>
     </div>
     <span class="arrow-right"></span>
@@ -43,58 +43,58 @@
 </template>
 
 <script>
-  import Lottery from '../../../model/common/Lottery';
-  import Toast from '../../../common/toast';
+import Lottery from '../../../model/common/Lottery'
+import Toast from '../../../common/toast'
 
-  export default {
-    name: 'OrderListItem',
-    props: {
-      item: {type: Object},
-      ShowType: {type: String}
-    },
-    methods: {
-      goOrderDetail (item) {
-        const id = item.lottery_id;
-        switch (this.ShowType) {
-          case 'order':
-            if (Lottery.isFootBall(id) || Lottery.isBasketBall(id) || Lottery.isSYXW(id) ||
+export default {
+  name: 'OrderListItem',
+  props: {
+    item: { type: Object },
+    ShowType: { type: String }
+  },
+  methods: {
+    goOrderDetail (item) {
+      const id = item.lottery_id
+      switch (this.ShowType) {
+        case 'order':
+          if (Lottery.isFootBall(id) || Lottery.isBasketBall(id) || Lottery.isSYXW(id) ||
               Lottery.isDLT(id) || Lottery.isSSQ(id) || Lottery.isSFCOrRXJ(id) || Lottery.isK3(id) ||
               Lottery.isFC3D(id)) {
-              this.$router.push({
-                name: 'OrderDetail',
-                params: {id: item.id}
-              })
-            } else {
-              Toast('该功能暂未开发!');
-            }
-            break;
-          case 'buyTogether':
-            if (Lottery.isBuyTogether(id)) {
-              this.$router.push({
-                name: 'BuyTogetherOrderDetail',
-                params: {id: item.id}
-              });
-            } else {
-              Toast('该功能暂未开发!');
-            }
-            break;
-          case 'chaseNumber':
             this.$router.push({
-              name: 'ChaseNumberDetail',
-              params: {id: item.id}
-            });
-            break;
-          default:
-        }
-      }
-    },
-    filters: {
-      SandHCollagen (val) {
-        if (!val) return '';
-        return (val * 100).toFixed(1)
+              name: 'OrderDetail',
+              params: { id: item.id }
+            })
+          } else {
+            Toast('该功能暂未开发!')
+          }
+          break
+        case 'buyTogether':
+          if (Lottery.isBuyTogether(id)) {
+            this.$router.push({
+              name: 'BuyTogetherOrderDetail',
+              params: { id: item.id }
+            })
+          } else {
+            Toast('该功能暂未开发!')
+          }
+          break
+        case 'chaseNumber':
+          this.$router.push({
+            name: 'ChaseNumberDetail',
+            params: { id: item.id }
+          })
+          break
+        default:
       }
     }
+  },
+  filters: {
+    SandHCollagen (val) {
+      if (!val) return ''
+      return (val * 100).toFixed(1)
+    }
   }
+}
 </script>
 
 <style scoped>

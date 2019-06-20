@@ -27,10 +27,10 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(guestTd,index1) in guestTr" :key="index1">
+          <tr :key="index1" v-for="(guestTd,index1) in guestTr">
             <td :class="{selected: isDialogSelected(guest)}"
-                @click="onDialogOptionSelected(guest)"
-                v-for="(guest,index2) in guestTd" :key="index2">
+                :key="index2"
+                @click="onDialogOptionSelected(guest)" v-for="(guest,index2) in guestTd">
               <span class="text-light margin-right-10">{{guest.text}}</span>
               {{guest.value}}
             </td>
@@ -44,10 +44,10 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(homeTd,index1) in homeTr" :key="index1">
+          <tr :key="index1" v-for="(homeTd,index1) in homeTr">
             <td :class="{selected: isDialogSelected(home)}"
-                @click="onDialogOptionSelected(home)"
-                v-for="(home,index2) in homeTd" :key="index2">
+                :key="index2"
+                @click="onDialogOptionSelected(home)" v-for="(home,index2) in homeTd">
               <span class="text-light margin-right-10">{{home.text}}</span>
               {{home.value}}
             </td>
@@ -140,7 +140,7 @@ export default {
   .basketball-sfc-lottery {
     padding-left: 10px;
     font-size: 14px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       .text-center.text-default-2 .text-light {
         color: $cgray;
       }
@@ -155,7 +155,7 @@ export default {
     font-size: 13px;
     position: relative;
     color: $c999999;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
       border: 1px solid $cFFfFFF;
     } @else {
@@ -182,7 +182,7 @@ export default {
 
   .basketball-sfc-lottery .box .box-item.selected {
     background: $cffC63A;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: $c131313;
@@ -193,7 +193,7 @@ export default {
     width: 95%;
     max-width: 320px;
     /*background: #f2f2f2;*/
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
     }
   }
@@ -209,7 +209,7 @@ export default {
   .basketball-sfc-lottery table td {
     padding: 5px;
     color: $cFFfFFF;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
     } @else {
       background: $c313131;
@@ -229,12 +229,12 @@ export default {
   .basketball-sfc-lottery table td.selected {
     background: $cffC63A;
 
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       span {
         color: $cgray;
       }
     } @else {
-      span  {
+      span {
         color: $c131313;
       }
     }
@@ -244,7 +244,7 @@ export default {
     color: $cffC63A;
     margin-top: 5px;
     border-radius: 0;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
       border-top: 1px solid #F2F2F2;
     } @else {
@@ -256,7 +256,7 @@ export default {
   .basketball-sfc-lottery .btn-wrap .col:first-child .btn {
     color: white;
 
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-right: 1px solid #ddd;
     } @else {
       border-right: 1px solid $c313131;

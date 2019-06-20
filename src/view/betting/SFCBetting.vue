@@ -34,7 +34,9 @@ export default {
     this.$store.commit(SET_CURRENT_LOTTERY, this.$router.currentRoute.params.id)
     this.$store.dispatch(GET_CURRENT_SFC_LOTTERY)
   },
-  components: { SFCLotteryContainer, SET_CURRENT_LOTTERY }
+  components: {
+    SFCLotteryContainer
+  }
 }
 </script>
 

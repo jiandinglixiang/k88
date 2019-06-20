@@ -75,11 +75,10 @@
 </style>
 
 <script>
-  export default {
-    name: 'entityExchange',
-    props: {
-      propsData: {type: Object}
-    }
+export default {
+  name: 'entityExchange',
+  props: {
+    propsData: { type: Object }
   }
+}
 </script>
-

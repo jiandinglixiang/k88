@@ -160,6 +160,7 @@ const mutations = {
         item && newSchedules.onOptionSelected(item)
       })
     }
+
     // 更新数据
     const obj = state[state.lottery]
     const schemes = [...obj.scheme]

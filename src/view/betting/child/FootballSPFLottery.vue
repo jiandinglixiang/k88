@@ -9,9 +9,9 @@
     </div>
     <div class="box">
       <div :class="{selected: isSelected(item), 'box-center': index===1}"
+           :key="index"
            @click="onOptionSelected(item, index)"
-           class="box-item"
-           :key="index" v-for="(item, index) in schedule.holderList">
+           class="box-item" v-for="(item, index) in schedule.holderList">
         <span><span>{{item.text}}</span> {{item.value}}</span>
       </div>
     </div>
@@ -41,7 +41,7 @@ export default {
   .football-spf-lottery {
     padding-left: 10px;
     font-size: 14px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       .text-center.text-default-2 .text-light {
         color: $cgray;
       }
@@ -54,7 +54,7 @@ export default {
     text-align: center;
     margin-top: 8px;
     font-size: 13px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
       border: 1px solid #ddd;
     } @else {
@@ -69,7 +69,7 @@ export default {
     width: 35%;
 
     > span {
-      @if($lotteryIg) {
+      @if ($lotteryIg) {
         color: $c999999;
       } @else {
         color: $cFFfFFF;
@@ -88,9 +88,9 @@ export default {
   .football-spf-lottery .box .box-item.box-center > span {
     display: inline-block;
     width: 100%;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-left: 1px dotted #ddd;
-      border-right: 1px dotted#ddd;
+      border-right: 1px dotted #ddd;
     } @else {
       border-left: 1px dotted $c3f3f3f;
       border-right: 1px dotted $c3f3f3f;
@@ -101,7 +101,7 @@ export default {
     background: $cffC63A;
 
     > span {
-      @if($lotteryIg) {
+      @if ($lotteryIg) {
         color: $cgray;
         span {
           color: $cgray;

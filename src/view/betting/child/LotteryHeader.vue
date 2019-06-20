@@ -17,9 +17,9 @@
         <div :key="index" class="clear" v-for="(group,index) in playTypeGroup">
           <div class="group-name" v-show="group.name"><span class="dot"></span>{{group.name}}</div>
           <div :class="{'selected': currentType.id === item.id && currentType.sure === item.sure}"
+               :key="index"
                @click="selectPlayType(item)"
-               class="text-item"
-               :key="index" v-for="(item,index) in group.list">
+               class="text-item" v-for="(item,index) in group.list">
             {{item.value}}
           </div>
         </div>
@@ -180,7 +180,7 @@ export default {
     border-radius: 5px;
     font-size: 16px;
     color: $cFFfFFF;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border: 1px solid $cFFfFFF;
     } @else {
       border: 1px solid $cffC63A;

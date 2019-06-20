@@ -4,6 +4,7 @@
       <div class="carousel">
         <div class="carousel-scroll" ref="carouselScroll">
           <img :class="item.className" :src="item.src"
+               :key="index"
                @click="imgClick(index)" alt="img" v-for="(item, index) in imgList">
         </div>
       </div>

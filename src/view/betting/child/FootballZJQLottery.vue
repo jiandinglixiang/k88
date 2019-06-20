@@ -10,9 +10,9 @@
     <template v-if="!isConfirm">
       <div class="box">
         <div :class="{selected: isSelected(item), 'border-bottom': index < 4}"
+             :key="index"
              @click="onOptionSelected(item, index)"
-             class="box-item text-right"
-             :key="index" v-for="(item, index) in schedule.holderList">
+             class="box-item text-right" v-for="(item, index) in schedule.holderList">
           <span> <i class="text-light pull-left">{{item.text}}</i> {{item.value}}</span>
         </div>
       </div>
@@ -36,6 +36,7 @@
             <template v-for="(item, index) in schedule.holderList">
               <td :class="{selected: isDialogSelected(item)}"
                   @click="onDialogOptionSelected(item, index)"
+                  :key="index"
                   v-if="index < 4">
                 <span> <i class="text-light pull-left">{{item.text}}</i> {{item.value}}</span>
               </td>
@@ -45,6 +46,7 @@
             <template v-for="(item, index) in schedule.holderList">
               <td :class="{selected: isDialogSelected(item)}"
                   @click="onDialogOptionSelected(item, index)"
+                  :key="index"
                   v-if="index > 3">
                 <span> <i class="text-light pull-left">{{item.text}}</i> {{item.value}}</span>
               </td>
@@ -119,7 +121,7 @@ export default {
   .football-zjq-lottery {
     padding-left: 10px;
     font-size: 14px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       .text-center.text-default-2 .text-light {
         color: $cgray;
       }
@@ -133,7 +135,7 @@ export default {
     margin-top: 8px;
     font-size: 13px;
     position: relative;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
       border: 1px solid $cFFfFFF;
     } @else {
@@ -146,7 +148,7 @@ export default {
     height: 30px;
     line-height: 30px;
     background: $cffC63A;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
     } @else {
       color: $c131313;
@@ -166,7 +168,7 @@ export default {
   }
 
   .football-zjq-lottery .box .box-item.border-bottom {
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-bottom: 1px solid #ddd;
     } @else {
       border-bottom-top: 1px solid $c3f3f3f;
@@ -178,7 +180,7 @@ export default {
     width: 100%;
     padding: 0 3px;
     box-sizing: border-box;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-left: 1px dotted #ddd;
       color: $c999999;
     } @else {
@@ -205,7 +207,7 @@ export default {
 
   .football-zjq-lottery .box .box-item.selected span {
 
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
       .text-light {
         color: $cgray;
@@ -230,7 +232,7 @@ export default {
   .football-zjq-lottery table tbody td {
     padding: 5px;
     color: $c999999;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
     } @else {
       background: $c313131;
@@ -240,7 +242,7 @@ export default {
   .football-zjq-lottery table tbody td.selected {
     background: $cffC63A;
 
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cgray;
       .text-light {
         color: $cgray;
@@ -255,7 +257,7 @@ export default {
 
   .football-zjq-lottery table .blue {
     background: #3393FF;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       color: $cFFfFFF;
     }
   }
@@ -264,7 +266,7 @@ export default {
     width: 95%;
     max-width: 320px;
     /*background: #f2f2f2;*/
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
     }
   }
@@ -273,7 +275,7 @@ export default {
     color: $cffC63A;
     margin-top: 5px;
     border-radius: 0;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: #F2F2F2;
       border-top: 1px solid #F2F2F2;
     } @else {
@@ -284,7 +286,7 @@ export default {
 
   .football-zjq-lottery .btn-wrap .col:first-child .btn {
     color: #666;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-right: 1px solid #ddd;
     } @else {
       border-right: 1px solid $c313131;

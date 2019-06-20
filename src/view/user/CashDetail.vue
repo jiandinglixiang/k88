@@ -71,6 +71,7 @@ export default {
     color: #999999;
     font-size: 13px;
     background-color: #1C1C1C;
+
     .pull-right {
       color: white;
     }

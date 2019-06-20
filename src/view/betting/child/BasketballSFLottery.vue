@@ -11,6 +11,7 @@
       <div :class="{selected: isSelected(item)}"
            @click="onOptionSelected(item, index)"
            class="box-item"
+           :key="index"
            v-for="(item, index) in schedule.holderList">
         <span><span>{{item.text}}</span> {{item.value}}</span>
       </div>
@@ -41,7 +42,7 @@ export default {
   .basketball-sf-lottery {
     padding-left: 10px;
     font-size: 14px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       .text-center.text-default-2 .text-light {
         color: $cgray;
       }
@@ -54,7 +55,7 @@ export default {
     text-align: center;
     margin-top: 8px;
     font-size: 13px;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       background: $cFFfFFF;
       border: 1px solid #ddd;
     } @else {
@@ -69,7 +70,7 @@ export default {
     width: 50%;
 
     > span {
-      @if($lotteryIg) {
+      @if ($lotteryIg) {
         color: $c999999;
       } @else {
         color: $cFFfFFF;
@@ -84,7 +85,7 @@ export default {
   .basketball-sf-lottery .box .box-item:first-child > span {
     display: inline-block;
     width: 100%;
-    @if($lotteryIg) {
+    @if ($lotteryIg) {
       border-right: 1px dotted #ddd;
     } @else {
       border-right: 1px dotted $c3f3f3f;
@@ -95,7 +96,7 @@ export default {
     background: $cffC63A;
 
     > span {
-      @if($lotteryIg) {
+      @if ($lotteryIg) {
         color: $cgray;
         span {
           color: $cgray;

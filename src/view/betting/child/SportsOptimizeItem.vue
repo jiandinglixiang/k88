@@ -27,7 +27,7 @@
         <span>客队</span>
         <span>投注内容</span>
       </div>
-      <div class="list-item-panel-row clear" v-for="(game,q7) in item"   :key="`2${q7}`" >
+      <div :key="`2${q7}`" class="list-item-panel-row clear" v-for="(game,q7) in item">
         <span>{{game.roundNo}}</span>
         <span>{{game.home}}</span>
         <span>{{game.guest}}</span>

@@ -14,7 +14,7 @@
                 v-if="betting.lotteryId === 21">胆</span>
         </div>
       </scheme-box>
-<!--      <service-agreement></service-agreement>-->
+      <!--      <service-agreement></service-agreement>-->
     </div>
     <div class="bottom-fixed">
       <div class="row top">
@@ -35,7 +35,7 @@
 
 <script>//
 import SchemeBox from '../../components/SchemeBox.vue'
-import ServiceAgreement from '../../components/ServiceAgreement.vue'
+// import ServiceAgreement from '../../components/ServiceAgreement.vue'
 import CustomSelectBox from '../../components/CustomSelectBox.vue'
 import SfcSPFLottery from './child/SfcSPFLottery.vue'
 import {
@@ -108,10 +108,10 @@ export default {
         Toast('注数不能小于1')
         return
       }
-//        if (this.mine.balance < (this.confirm.multiple * this.confirm.stakeCount * 2)) {
-//          Toast('余额不足');
-//          this.$router.push({ name: 'Payment', query: {lack: this.confirm.multiple * this.confirm.stakeCount * 2 - this.mine.balance} });
-//        }
+      //        if (this.mine.balance < (this.confirm.multiple * this.confirm.stakeCount * 2)) {
+      //          Toast('余额不足');
+      //          this.$router.push({ name: 'Payment', query: {lack: this.confirm.multiple * this.confirm.stakeCount * 2 - this.mine.balance} });
+      //        }
       let result = {
         issue_no: this.issue.value,
         multiple: this.confirm.multiple,
@@ -154,7 +154,10 @@ export default {
     this.getMineInfo()
   },
   components: {
-    SchemeBox, ServiceAgreement, CustomSelectBox, SfcSPFLottery
+    SchemeBox,
+    // ServiceAgreement,
+    CustomSelectBox,
+    SfcSPFLottery
   }
 }
 </script>

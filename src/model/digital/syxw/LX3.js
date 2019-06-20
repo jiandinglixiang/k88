@@ -51,7 +51,7 @@ export default class LX3 extends SYXWPlayType {
           if (value.indexOf(item.id) !== -1) {
             value.splice(value.indexOf(item.id), 1)
           }
-          index === key ? value.push(item.id) : ''
+          index === key && value.push(item.id)
           return value
         })
       }
@@ -84,7 +84,7 @@ export default class LX3 extends SYXWPlayType {
         for (let z = 1; z <= selected3; z++) {
           if ((i + j + z) === minRedBall) {
             team = i * j * z * this.bonus3
-            min > team ? min = team : ''
+            min > team && (min = team)
           }
         }
       }
