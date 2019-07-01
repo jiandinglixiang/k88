@@ -120,6 +120,12 @@ export const HTTP = {
   },
   demo2 (name, name2) {
     return Http.post('/Index/getTime', { name, name2 }, {})
+  },
+  getOrderDetail (OrderId) {
+    return Http.get('/Order/detail', { order_id: OrderId })
+  },
+  getOrderDetailRequest (OrderId) {
+    return Http.get('/Order/program', { order_id: OrderId, offset: 0, limit: 100000 })
   }
 }
 
