@@ -1,11 +1,11 @@
 <template>
   <div class="user-info">
     <v-head title="个人信息"></v-head>
-    <router-link class="item margin-top-20" tag="div" to="id_card">
-      <span class="userInfo-IDCard-icon icon"></span>
-      <span>身份证信息</span>
-      <span class="arrow-right"></span>
-    </router-link>
+<!--    <router-link class="item margin-top-20" tag="div" to="id_card">-->
+<!--      <span class="userInfo-IDCard-icon icon"></span>-->
+<!--      <span>身份证信息</span>-->
+<!--      <span class="arrow-right"></span>-->
+<!--    </router-link>-->
     <router-link class="item border-top" tag="div" to="bank_card">
       <span class="userInfo-bankCard-icon icon"></span>
       <span>银行卡信息</span>

@@ -320,7 +320,7 @@ export default {
       ManyValue: {}, // 输入金额值列表
       popupInputIndex: true, // 显示单个输入框
       inputValue: {},
-      updateOdds: {}
+      updateOdds: null
     }
   },
   computed: {
@@ -431,13 +431,24 @@ export default {
     },
     bonusCount () {
       // 亚盘单关 奖金预计
-      let count = 0
-      for (let i in this.inputValue) {
-        for (let j of this.inputValue[i]) {
-          count += (j.total * (j.value * 1).toFixed(2))
-        }
-      }
-      return count.toFixed(2)
+      // let count = 0
+      // for (let i in this.inputValue) {
+      //   if (this.inputValue[i]) {
+      //     for (let j of this.inputValue[i]) {
+      //       if (/^\d+$/.test(j.total) && j.total > 0) {
+      //         count += (j.total * (j.value * 1).toFixed(2))
+      //       }
+      //     }
+      //   }
+      // }
+      return Object.keys(this.inputValue).reduce((total, key) => {
+        return total + this.inputValue[key].reduce((total2, value) => {
+          if (value) {
+            return total2 + value.total * (value.value * 1)
+          }
+          return total2
+        }, total)
+      }, 0).toFixed(2)
     },
     stylepadding () {
       if (this.currentMode === 2 && (this.lotteryId === 901 || this.lotteryId === 902)) {
@@ -618,190 +629,312 @@ export default {
         }
       })
     },
+    confirmPaymentYpGG () {
+      // 过关
+      let [msg, scheduleOrders] = ['请输入正确的投注金额', false]
+      const [lotteryId, MatchMode] = [this.lotteryId, this.confirm.mode]
+      const Orders = []
+
+      function scheduleOrdersInit () {
+        scheduleOrders = this.bettingList.map(value => {
+          const data = {
+            bet_number: value.selected[0].key,
+            schedule_id: value.id,
+            is_sure: value.isSure ? 1 : 0,
+            odds: value.selected[0].value
+          }
+          if (this.updateOdds && this.updateOdds[data.schedule_id] && this.updateOdds[data.schedule_id][data.bet_number]) {
+            // 更新赔率
+            data.odds = this.updateOdds[data.schedule_id][data.bet_number]
+          }
+          return data
+        })
+        return scheduleOrders
+      }
+
+      const findMsg = this.popupArray.find(value => {
+        // value = { key: '102', stake: 3, text: '201', upperLimit: 8200, value: '2串1' }
+        const money = this.ManyValue[value.text] // 投注金额
+        if (!money) return false
+        if (!(/^\d+$/.test(money))) {
+          msg = '投注金额必须是整数'
+          return msg
+        }
+        if (money < 2) {
+          msg = '单注金额必须大于等于2元'
+          return msg
+        }
+        if (money > value.upperLimit) {
+          msg = '金额超过投注上限,请重新输入'
+          return msg
+        }
+        Orders.push({
+          series: value.key,
+          lottery_id: lotteryId,
+          play_type: MatchMode,
+          stake_count: value.stake,
+          total_amount: money,
+          schedule_orders: scheduleOrders || scheduleOrdersInit.call(this)
+        })
+        return false
+      })
+      if (!Orders.length) {
+        Toast(msg)
+        return
+      } else if (findMsg) {
+        Toast(msg)
+        return
+      }
+      return Orders
+    },
+    confirmPaymentYpDG () {
+      // 单关 inputValue输入金额
+      const Orders = []
+      let msg = '请输入正确的投注金额'
+      const [lotteryId, MatchMode] = [this.lotteryId, this.confirm.mode]
+
+      function initOdds (id, key) {
+        if (this.updateOdds && this.updateOdds[id] && this.updateOdds[id][key]) {
+          // 更新赔率
+          return this.updateOdds[id][key]
+        }
+        return false
+      }
+
+      const findMsg = Object.keys(this.inputValue).find(key => {
+        if (this.inputValue[key] && this.inputValue[key].length) {
+          return this.inputValue[key].find(value => {
+            if (!value || !value.total) return false
+            if (!(/^\d+$/.test(value.total))) {
+              msg = '投注金额必须是整数'
+              return msg
+            }
+            if (value.total < 20) {
+              msg = '单注金额必须大于等于20元'
+              return msg
+            }
+            if (value.total > value.upperLimit) {
+              msg = '金额超过投注上限,请重新输入'
+              return msg
+            }
+            Orders.push({
+              series: '101',
+              lottery_id: lotteryId,
+              play_type: MatchMode,
+              stake_count: '1',
+              total_amount: value.total,
+              schedule_orders: [{
+                bet_number: value.key,
+                schedule_id: value.id,
+                is_sure: '0',
+                odds: initOdds.call(this, value.id, value.key) || value.value
+              }]
+            })
+            return false
+          })
+        }
+        return false
+      })
+      if (!Orders.length) {
+        Toast(msg)
+        return
+      } else if (findMsg) {
+        Toast(msg)
+        return
+      }
+      // console.log(JSON.parse(JSON.stringify(Orders)), findMsg)
+      return Orders
+    },
     confirmPaymentYp () {
       // 亚盘下单
       const result = {}
+      // if (this.confirm.mode === 2) {
+      //   // 过关
+      //   let msg = '请输入正确的投注金额'
+      //   let inputArray = []
+      //   for (let i in this.ManyValue) {
+      //     if (/^\d+$/.test(this.ManyValue[i]) && this.ManyValue[i] > 0) {
+      //       inputArray.push({
+      //         text: i, Value: this.ManyValue[i]
+      //       })
+      //     } else {
+      //       msg = '投注金额必须是整数'
+      //       break
+      //     }
+      //   }
+      //   if (inputArray.length <= 0) {
+      //     Toast(msg)
+      //     return
+      //   } else {
+      //     const postArray = []
+      //     for (let i in this.popupArray) {
+      //       for (let j in inputArray) {
+      //         if (this.popupArray[i].text.toLowerCase() === inputArray[j].text.toLowerCase()) {
+      //           postArray.push({
+      //             key: this.popupArray[i].key,
+      //             value: this.popupArray[i].value,
+      //             text: this.popupArray[i].text,
+      //             stake: this.popupArray[i].stake,
+      //             upperLimit: this.popupArray[i].upperLimit,
+      //             total: inputArray[j].Value
+      //           })
+      //         }
+      //       }
+      //     }
+      //     let stats = true
+      //     for (let i in postArray) {
+      //       if (postArray[i].total > postArray[i].upperLimit) {
+      //         Toast(postArray[i].value + '超过投注上限,请重新输入')
+      //         stats = false
+      //         break
+      //       }
+      //     }
+      //     if (stats === true) {
+      //       if (JSON.stringify(this.updateOdds) === '{}') {
+      //         result.Orders = postArray.map((v) => {
+      //           return {
+      //             series: v.key,
+      //             lottery_id: this.lotteryId,
+      //             play_type: this.confirm.mode,
+      //             stake_count: v.stake,
+      //             total_amount: v.total,
+      //             schedule_orders: this.bettingList.map(value => {
+      //               return {
+      //                 bet_number: value.selected[0].key,
+      //                 schedule_id: value.id,
+      //                 is_sure: value.isSure ? 1 : 0,
+      //                 odds: value.selected[0].value
+      //               }
+      //             })
+      //           }
+      //         })
+      //       } else {
+      //         const updateOddsArray = []
+      //         for (let i in this.updateOdds) {
+      //           for (let j in this.updateOdds[i]) {
+      //             updateOddsArray.push({
+      //               schedule_id: i,
+      //               new_odds: this.updateOdds[i][j],
+      //               key: j
+      //             })
+      //           }
+      //         }
+      //         result.Orders = postArray.map((v) => {
+      //           return {
+      //             series: v.key,
+      //             lottery_id: this.lotteryId,
+      //             play_type: this.confirm.mode,
+      //             stake_count: v.stake,
+      //             total_amount: v.total,
+      //             schedule_orders: this.bettingList.map(value => {
+      //               for (let i in updateOddsArray) {
+      //                 if (value.id === updateOddsArray[i].schedule_id) {
+      //                   return {
+      //                     bet_number: value.selected[0].key,
+      //                     schedule_id: value.id,
+      //                     is_sure: value.isSure ? 1 : 0,
+      //                     odds: updateOddsArray[i].new_odds
+      //                   }
+      //                 }
+      //               }
+      //             })
+      //           }
+      //         })
+      //       }
+      //     } else {
+      //       return
+      //     }
+      //   }
+      // } else {
+      //   // 单关
+      //   let selectedCount = 0 // 选中个数
+      //   let inputValueCount = 0 // 输入个数
+      //   for (let i in this.bettingList) {
+      //     selectedCount += this.bettingList[i].selected.length
+      //   }
+      //   for (let i in this.inputValue) {
+      //     inputValueCount += this.inputValue[i].length
+      //   }
+      //   if (inputValueCount <= 0 || inputValueCount < selectedCount) {
+      //     Toast('请输入投注金额')
+      //     return
+      //   } else {
+      //     let msg = '请输入投注金额'
+      //     let postArray = []
+      //     Object.keys(this.inputValue).find(key => !!Object.keys(this.inputValue[key]).find(key2 => {
+      //       const val2 = this.inputValue[key][key2]
+      //       if (/^\d+$/.test(val2.total) && val2.total > 0) {
+      //         if (val2.total > val2.upperLimit) {
+      //           msg = '超过投注上限,请重新输入'
+      //           postArray = []
+      //           return true
+      //         }
+      //         postArray.push(val2)
+      //         return false
+      //       }
+      //       msg = '投注金额必须是整数'
+      //       postArray = []
+      //       return true
+      //     }))
+      //     if (postArray.length === 0) {
+      //       Toast(msg)
+      //       return
+      //     }
+      //     if (JSON.stringify(this.updateOdds) === '{}') {
+      //       result.Orders = postArray.map(v => {
+      //         return {
+      //           series: '101',
+      //           lottery_id: this.lotteryId,
+      //           play_type: this.confirm.mode,
+      //           stake_count: '1',
+      //           total_amount: v.total,
+      //           schedule_orders: [{
+      //             bet_number: v.key,
+      //             schedule_id: v.id,
+      //             is_sure: '0',
+      //             odds: v.value
+      //           }]
+      //         }
+      //       })
+      //     } else {
+      //       const updateOddsArray = []
+      //       for (let i in this.updateOdds) {
+      //         for (let j in this.updateOdds[i]) {
+      //           updateOddsArray.push({
+      //             schedule_id: i,
+      //             new_odds: this.updateOdds[i][j],
+      //             key: j
+      //           })
+      //         }
+      //       }
+      //       result.Orders = postArray.map((v) => {
+      //         for (let i in updateOddsArray) {
+      //           if (v.id === updateOddsArray[i].schedule_id && v.key === updateOddsArray[i].key) {
+      //             return {
+      //               series: '101',
+      //               lottery_id: this.lotteryId,
+      //               play_type: this.confirm.mode,
+      //               stake_count: '1',
+      //               total_amount: v.total,
+      //               schedule_orders: [{
+      //                 bet_number: v.key,
+      //                 schedule_id: v.id,
+      //                 is_sure: '0',
+      //                 odds: updateOddsArray[i].new_odds
+      //               }]
+      //             }
+      //           }
+      //         }
+      //       })
+      //     }
+      //   }
+      // }
       if (this.confirm.mode === 2) {
-        // 过关
-        let msg = '请输入正确的投注金额'
-        let inputArray = []
-        for (let i in this.ManyValue) {
-          if (/^\d+$/.test(this.ManyValue[i]) && this.ManyValue[i] > 0) {
-            inputArray.push({
-              text: i, Value: this.ManyValue[i]
-            })
-          } else {
-            msg = '投注金额必须是整数'
-            break
-          }
-        }
-        if (inputArray.length <= 0) {
-          Toast(msg)
-          return
-        } else {
-          const postArray = []
-          for (let i in this.popupArray) {
-            for (let j in inputArray) {
-              if (this.popupArray[i].text.toLowerCase() === inputArray[j].text.toLowerCase()) {
-                postArray.push({
-                  key: this.popupArray[i].key,
-                  value: this.popupArray[i].value,
-                  text: this.popupArray[i].text,
-                  stake: this.popupArray[i].stake,
-                  upperLimit: this.popupArray[i].upperLimit,
-                  total: inputArray[j].Value
-                })
-              }
-            }
-          }
-          let stats = true
-          for (let i in postArray) {
-            if (postArray[i].total > postArray[i].upperLimit) {
-              Toast(postArray[i].value + '超过投注上限,请重新输入')
-              stats = false
-              break
-            }
-          }
-          if (stats === true) {
-            if (JSON.stringify(this.updateOdds) === '{}') {
-              result.Orders = postArray.map((v) => {
-                return {
-                  series: v.key,
-                  lottery_id: this.lotteryId,
-                  play_type: this.confirm.mode,
-                  stake_count: v.stake,
-                  total_amount: v.total,
-                  schedule_orders: this.bettingList.map(value => {
-                    return {
-                      bet_number: value.selected[0].key,
-                      schedule_id: value.id,
-                      is_sure: value.isSure ? 1 : 0,
-                      odds: value.selected[0].value
-                    }
-                  })
-                }
-              })
-            } else {
-              const updateOddsArray = []
-              for (let i in this.updateOdds) {
-                for (let j in this.updateOdds[i]) {
-                  updateOddsArray.push({
-                    schedule_id: i,
-                    new_odds: this.updateOdds[i][j],
-                    key: j
-                  })
-                }
-              }
-              result.Orders = postArray.map((v) => {
-                return {
-                  series: v.key,
-                  lottery_id: this.lotteryId,
-                  play_type: this.confirm.mode,
-                  stake_count: v.stake,
-                  total_amount: v.total,
-                  schedule_orders: this.bettingList.map(value => {
-                    for (let i in updateOddsArray) {
-                      if (value.id === updateOddsArray[i].schedule_id) {
-                        return {
-                          bet_number: value.selected[0].key,
-                          schedule_id: value.id,
-                          is_sure: value.isSure ? 1 : 0,
-                          odds: updateOddsArray[i].new_odds
-                        }
-                      }
-                    }
-                  })
-                }
-              })
-            }
-          } else {
-            return
-          }
-        }
+        result.Orders = this.confirmPaymentYpGG()
       } else {
-        // 单关
-        let selectedCount = 0 // 选中个数
-        let inputValueCount = 0 // 输入个数
-        for (let i in this.bettingList) {
-          selectedCount += this.bettingList[i].selected.length
-        }
-        for (let i in this.inputValue) {
-          inputValueCount += this.inputValue[i].length
-        }
-        if (inputValueCount <= 0 || inputValueCount < selectedCount) {
-          Toast('请输入投注金额')
-          return
-        } else {
-          let msg = '请输入投注金额'
-          let postArray = []
-          Object.keys(this.inputValue).find(key => !!Object.keys(this.inputValue[key]).find(key2 => {
-            const val2 = this.inputValue[key][key2]
-            if (/^\d+$/.test(val2.total) && val2.total > 0) {
-              if (val2.total > val2.upperLimit) {
-                msg = '超过投注上限,请重新输入'
-                postArray = []
-                return true
-              }
-              postArray.push(val2)
-              return false
-            }
-            msg = '投注金额必须是整数'
-            postArray = []
-            return true
-          }))
-          if (postArray.length === 0) {
-            Toast(msg)
-            return
-          }
-          if (JSON.stringify(this.updateOdds) === '{}') {
-            result.Orders = postArray.map(v => {
-              return {
-                series: '101',
-                lottery_id: this.lotteryId,
-                play_type: this.confirm.mode,
-                stake_count: '1',
-                total_amount: v.total,
-                schedule_orders: [{
-                  bet_number: v.key,
-                  schedule_id: v.id,
-                  is_sure: '0',
-                  odds: v.value
-                }]
-              }
-            })
-          } else {
-            const updateOddsArray = []
-            for (let i in this.updateOdds) {
-              for (let j in this.updateOdds[i]) {
-                updateOddsArray.push({
-                  schedule_id: i,
-                  new_odds: this.updateOdds[i][j],
-                  key: j
-                })
-              }
-            }
-            result.Orders = postArray.map((v) => {
-              for (let i in updateOddsArray) {
-                if (v.id === updateOddsArray[i].schedule_id && v.key === updateOddsArray[i].key) {
-                  return {
-                    series: '101',
-                    lottery_id: this.lotteryId,
-                    play_type: this.confirm.mode,
-                    stake_count: '1',
-                    total_amount: v.total,
-                    schedule_orders: [{
-                      bet_number: v.key,
-                      schedule_id: v.id,
-                      is_sure: '0',
-                      odds: updateOddsArray[i].new_odds
-                    }]
-                  }
-                }
-              }
-            })
-          }
-        }
+        result.Orders = this.confirmPaymentYpDG()
       }
+      if (!result.Orders) return
       this.$store.dispatch(SPORTS_CONFIRM_PAYMENT_PREBETYP, result).then((data) => {
         if (data.update_odds) {
           this.toggleModel()
@@ -818,6 +951,8 @@ export default {
         } else {
           Toast('无订单id,登录已过期,请重新登录!')
         }
+      }).catch(() => {
+        this.$router.back()
       })
     },
     getPopupList () {
@@ -899,7 +1034,7 @@ export default {
       calculate.setPlayType(this.lotteryId)
       if (this.series.length > 0) {
         calculate.setProjectBonus(this.series, this.bettingList, this.confirm.multiple).then((value) => {
-          console.log(value)
+          // console.log(value)
           if (value.count) {
             calculate.tickets = value.betlist
             this.$store.commit(SPORTS_BONUS_CHANGE, value)

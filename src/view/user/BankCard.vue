@@ -25,7 +25,7 @@
     <div class="back-1c1c1c" v-else>
       <div class="register padding">
         <div>
-          <input disabled placeholder="户名" type="text" v-bind:value="mine.realname">
+          <input placeholder="开户名" type="text" v-model="realname">
         </div>
         <div class="margin-top-10 position-relative">
           <!--<div v-model="bank_name" @click="onShowBankDialog">{{ bank_name }}</div>-->
@@ -42,23 +42,27 @@
           <a @click="submit" class="btn" href="javascript:">提交</a>
         </div>
         <div class="prompt margin-top-20">
-          请务必如实填写真实姓名和身份证号，两者信息必须和身份证上的内容完全一致，否则无法领奖；护照、军官证、台胞证、香港身份证、社会保障卡、机动车驾驶证等均不能领奖；
+          请务必如实填写以上信息，购买属于个人行为，请确保以上信息属于您个人的真实信息，不要使用公司或者他人信息。
+<!--          ；护照、军官证、台胞证、香港身份证、社会保障卡、机动车驾驶证等均不能领奖；-->
         </div>
-        <div class="prompt margin-top-10">购买是个人行为，请保证以上信息是您个人的真实信息，不要使用公司或他人信息，身份证信息暂时不支持修改，请慎重填写；</div>
+        <div class="prompt margin-top-10">
+<!--          购买是个人行为，请保证以上信息是您个人的真实信息，不要使用公司或他人信息;-->
+<!--          身份证信息暂时不支持修改，请慎重填写；-->
+        </div>
         <!--        <div class="prompt margin-top-10">依据财政部《发行与销售管理暂行规定》未满18岁不得购买请务必如实填写。</div>-->
 
       </div>
       <!--<download-panel></download-panel>-->
-      <v-dialog @close="onCloseDialog" v-show="mine.identity_status==0&&!hasIDCard">
-        <p class="text-md">提示</p>
-        <p class="text-md margin-top-5">请先完成身份证认证</p>
-        <div class="padding margin-top-10">
-          <router-link class="width-45 margin-right-5" tag="div" to="id_card">
-            <a class="btn" href="javascript:">确定</a>
-          </router-link>
-          <a @click="onCloseDialog" class="btn width-45 bg-gray" href="javascript:">取消</a>
-        </div>
-      </v-dialog>
+      <!--      <v-dialog @close="onCloseDialog" v-show="mine.identity_status==0&&!hasIDCard">-->
+      <!--        <p class="text-md">提示</p>-->
+      <!--        <p class="text-md margin-top-5">请先完成身份证认证</p>-->
+      <!--        <div class="padding margin-top-10">-->
+      <!--          <router-link class="width-45 margin-right-5" tag="div" to="id_card">-->
+      <!--            <a class="btn" href="javascript:">确定</a>-->
+      <!--          </router-link>-->
+      <!--          <a @click="onCloseDialog" class="btn width-45 bg-gray" href="javascript:">取消</a>-->
+      <!--        </div>-->
+      <!--      </v-dialog>-->
       <!--<bankList-panel></bankList-panel>-->
       <div class="bank-dialog" v-show="dialogShow">
         <div @click="onCloseBankDialog" class="mask"></div>
@@ -73,7 +77,6 @@
 </template>
 
 <script>//
-import VDialog from '../../components/VDialog.vue'
 import Util from '../../common/util'
 import Toast from '../../common/toast'
 import { mapActions, mapState } from 'vuex'
@@ -83,10 +86,11 @@ export default {
   name: 'bankCard',
   data: () => {
     return {
+      realname: '',
       bank_name: '',
       bank_no: '',
       bank_address: '',
-      hasIDCard: false,
+      // hasIDCard: false,
       dialogShow: false
     }
   },
@@ -99,8 +103,12 @@ export default {
   },
   methods: {
     submit () {
-      if (this.mine.identity_status * 1 === 0) {
-        Toast('请先完成身份验证!')
+      if (!this.realname) {
+        Toast('开户名称不能为空!')
+        return
+      }
+      if (!(/^[\u0391-\uFFE5A-Za-z]+$/.test(this.realname))) {
+        Toast('开户名称只能输入中英文!')
         return
       }
       if (!Util.isNull(this.bank_name)) {
@@ -116,15 +124,18 @@ export default {
         return
       }
       this.setBankCard({
-        type: this.bank_name, address: this.bank_address, no: this.bank_no, account: this.mine.realname
+        type: this.bank_name,
+        address: this.bank_address,
+        no: this.bank_no,
+        account: this.realname
       })
     },
-    onShowDialog () {
-      this.hasIDCard = false
-    },
-    onCloseDialog () {
-      this.hasIDCard = true
-    },
+    // onShowDialog () {
+    //   this.hasIDCard = false
+    // },
+    // onCloseDialog () {
+    //   this.hasIDCard = true
+    // },
     onShowBankDialog () {
       this.dialogShow = true
     },
@@ -143,9 +154,6 @@ export default {
       getBanksList: GET_BANKS_LIST,
       setBankCard: SET_USER_BANKCARD
     })
-  },
-  components: {
-    VDialog
   },
   created () {
     this.getMineInfo()

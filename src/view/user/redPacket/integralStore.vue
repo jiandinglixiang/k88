@@ -20,7 +20,7 @@
     height: .7rem;
     line-height: .7rem;
     padding-left: 18.3%;
-    background-image: url("../../../assets/icon/red_item_icon.png");
+    background-image: url("../../../grounder/assets/red_item_icon.png");
     background-size: auto 100%;
     background-repeat: no-repeat;
     background-position: 7% 0;

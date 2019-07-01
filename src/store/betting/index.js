@@ -75,15 +75,14 @@ const actions = {
     }
   },
   [types.SPORTS_CONFIRM_PAYMENT_PREBETYP] (context, result) {
-    if (context.rootState.user.token) {
-      loading.show()
-      const mdStr = '{0}{1}{2}Ehcv2b1AvWAMSey2'.format(result.Orders[0].lottery_id, result.Orders[0].play_type, parseInt(result.Orders[0].total_amount))
-      return Http.post('/WebBet/preBetYp?lottery_id={0}&product_name=LHCP&sign={1}'.format(result.Orders[0].lottery_id, md5(mdStr)), result).then(data => {
-        context.commit(types.SPORTS_CONFIRM_PAYMENT_PREBETYP, data)
-        loading.hide()
-        return data
-      })
-    }
+    if (!context.rootState.user.token) Promise.reject(new Error('未登录'))
+    loading.show()
+    const mdStr = '{0}{1}{2}Ehcv2b1AvWAMSey2'.format(result.Orders[0].lottery_id, result.Orders[0].play_type, parseInt(result.Orders[0].total_amount))
+    return Http.post('/WebBet/preBetYp?lottery_id={0}&product_name=LHCP&sign={1}'.format(result.Orders[0].lottery_id, md5(mdStr)), result).then(data => {
+      context.commit(types.SPORTS_CONFIRM_PAYMENT_PREBETYP, data)
+      loading.hide()
+      return data
+    })
   },
   [types.SFC_CONFIRM_PAYMENT] (context, result) {
     if (context.rootState.user.token) {
@@ -124,7 +123,6 @@ const actions = {
   [types.SPORT_MODE_SELECT] (context, mode) {
     const { state } = context
     const obj = state[state.lottery]
-    console.log(1)
 
     if (obj && !obj.scheme[mode === 2 ? 0 : 1]) {
       loading.show()

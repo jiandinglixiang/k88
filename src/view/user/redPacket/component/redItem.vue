@@ -25,9 +25,8 @@
   }
 
   .red-item-top {
-    background-image: url("../../../../assets/red_packet_back_2.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    background: url("../../../../grounder/assets/shop_redbag_bg1top.png") no-repeat left top, url("../../../../grounder/assets/shop_redbag_bg1bottom.png") no-repeat left bottom;
+    background-size: 100% 1.03rem, 100% 0.6rem;
     height: 1.63rem;
     width: 100%;
     color: white;

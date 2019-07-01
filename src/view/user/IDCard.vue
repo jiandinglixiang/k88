@@ -13,7 +13,7 @@
         </div>
         <div class="info no-border">
           <span class="name">手机号码：</span>
-          <span>{{ mine.username }}</span>
+          <span>{{ mine.tel }}</span>
         </div>
       </div>
       <div class="prompt text-center margin-top-20">身份证信息暂时不支持修改</div>
@@ -30,9 +30,11 @@
           <a @click="submit" class="btn" href="javascript:">提交</a>
         </div>
         <div class="prompt margin-top-20">
-          请务必如实填写真实姓名和身份证号，两者信息必须和身份证上的内容完全一致，否则无法领奖；护照、军官证、台胞证、香港身份证、社会保障卡、机动车驾驶证等均不能领奖；
+          请务必如实填写以上信息，购买属于个人行为，请确保以上信息属于您个人的真实信息，不要使用公司或者他人信息。
+<!--          请务必如实填写真实姓名和身份证号，两者信息必须和身份证上的内容完全一致，否则无法领奖；-->
+<!--          护照、军官证、台胞证、香港身份证、社会保障卡、机动车驾驶证等均不能领奖；-->
         </div>
-        <div class="prompt margin-top-10">购买是个人行为，请保证以上信息是您个人的真实信息，不要使用公司或他人信息，身份证信息暂时不支持修改，请慎重填写；</div>
+<!--        <div class="prompt margin-top-10">购买是个人行为，请保证以上信息是您个人的真实信息，不要使用公司或他人信息，身份证信息暂时不支持修改，请慎重填写；</div>-->
         <!--        <div class="prompt margin-top-10">依据财政部《体育发行与销售管理暂行规定》未满18岁不得购买请务必如实填写。</div>-->
       </div>
       <v-dialog @close="onCloseDialog" v-show="dialogShow">

@@ -2,7 +2,7 @@
 import Axios from 'axios'
 import { user } from '../common/store'
 import md5 from 'js-md5'
-import { baseURL } from '../baseURL'
+import { baseURL } from '../../baseURL'
 
 function randomWord (randomFlag, min, max) {
   var str = ''

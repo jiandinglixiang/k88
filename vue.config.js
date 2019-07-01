@@ -1,11 +1,12 @@
 // -----------------------------
+const { baseURL } = require('./baseURL')
+const outputURL = baseURL().match(/(\w+):\/\/([^/:]+)(:\d*)?([^# ]*)/)
 const environmentType = 'K88'// 365电竞
-
 // -----------------------------
 module.exports = {
   // lintOnSave: 'warning',
-  publicPath: '/',
-  outputDir: environmentType,
+  publicPath: './',
+  outputDir: `${environmentType}-${(outputURL && outputURL[2]) || 'dev'}`,
   devServer: {
     port: 8080,
     open: false,
@@ -14,16 +15,16 @@ module.exports = {
       errors: true
     },
     proxy: {
-      '/test': { // http://localhost:00/H5 匹配路径
+      '^/dev/H5': {
         target: 'http://tgapi.666esport.com', // 代理转发地址
-        secure: false,
         changeOrigin: true,
-        pathRewrite: { '^/test': '/H5' }
+        pathRewrite: { '^/dev/H5': '/H5' }
       },
-      '/H5': { // http://localhost:00/H5 匹配路径
+      '^/prod/H5': {
         target: 'http://tgapi.k888.bet', // 代理转发地址
         secure: false,
-        changeOrigin: true
+        changeOrigin: true,
+        pathRewrite: { '^/prod/H5': '/H5' }
       }
     }
   },

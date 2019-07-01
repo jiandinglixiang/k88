@@ -1,11 +1,15 @@
 <template>
-  <div class="head">
-    <span @click="goBack" class="back-icon" v-if="!hideBack"></span>
-    <div>{{title}}</div>
-    <span @click="goEleSport" class="order-icon" v-if="hideOrder"></span>
-    <span class="right">
-      <slot name="right"></slot>
-    </span>
+  <div :class="{'v-fixed':isFixed}" style="height: 40px">
+    <div id="v-head">
+      <div class="v-left" @click.stop="goBack" v-if="!hideBack"></div>
+      <div class="v-center">
+        {{title}}
+        <slot name="centre"></slot>
+      </div>
+      <div class="v-right">
+        <slot name="right"></slot>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -14,6 +18,7 @@
 export default {
   name: 'VHead',
   props: {
+    isFixed: [String, Number, Boolean],
     title: String,
     hideBack: [String, Boolean],
     to: { type: String },
@@ -32,58 +37,84 @@ export default {
           this.$router.go(-1)
         }
       }
-    },
-    goEleSport () {
-      // 电竞订单
-      window.parent.postMessage(JSON.stringify({ response: 7 }), '*')
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+  .v-fixed > #v-head {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    max-width: 640px;
+  }
+
+  #v-head {
+    position: relative;
+    width: 100%;
+
+    > .v-left {
+      left: 0;
+      top: 0;
+      position: absolute;
+      background: url("../assets/icon/white_back_icon.png") no-repeat center;
+      background-size: 8px 15px;
+      width: 40px;
+      height: 40px;
+    }
+
+    > .v-center {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: center;
+      background: $c131313;
+      color: $cFFfFFF;
+      font-size: 15px;
+    }
+
+    > .v-right {
+      position: absolute;
+      height: 40px;
+      right: 0;
+      top: 0;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+</style>
 <style lang="scss">
   .head {
+    width: 100%;
     position: relative;
     padding: 0 20px;
     height: 40px;
-    font-size: 18px;
-    text-align: center;
-    line-height: 40px;
-    /*margin-bottom: 1px;*/
-    @if ($lotteryIg) {
-      background: #1A1003;
-      color: #fff;
-    } @else {
-      background: $c131313;
-      color: $cFFfFFF;
-    }
-
-    .order-icon {
-      position: absolute;
-      right: 10px;
-      top: 2px;
-      width: 36px;
-      height: 36px;
-      background: url("../assets/icon/icon_electronic_sports.png") no-repeat center;
-      -webkit-background-size: cover;
-      background-size: cover;
-    }
-  }
-
-  .head .back-icon {
-    position: absolute;
-    left: 5px;
-    top: 0;
-    background: url("../assets/icon/white_back_icon.png") no-repeat center;
-    background-size: 50% 50%;
-    height: 40px;
-    width: 25px;
-  }
-
-  .head .right {
-    position: absolute;
-    right: 10px;
-    font-size: 14px;
+    background: $c131313;
     color: $cFFfFFF;
-    top: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+
+    > .back-icon {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: url("../assets/icon/white_back_icon.png") no-repeat center;
+      background-size: 8px 15px;
+      width: 40px;
+      height: 40px;
+    }
+
+    > .right {
+      height: 40px;
+      right: 0;
+      top: 0;
+      position: absolute;
+    }
   }
 </style>

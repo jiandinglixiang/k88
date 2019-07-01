@@ -8,6 +8,7 @@ const AHFooter = 'AHFooter'
 const K3Betting = 'K3Betting'
 const SFCBetting = 'SFCBetting'
 const FC3DBetting = 'FC3DBetting'
+export const GrounderBetting = 'GrounderBetting'
 
 export default class Lottery {
   static getComponent (lotteryId) {
@@ -38,7 +39,8 @@ export default class Lottery {
       [LOTTERYIDS.BASKETBALL_HH]: BasketballBetting,
       [LOTTERYIDS.AHFOOTBALL]: AHFooter,
       [LOTTERYIDS.AHFOOTBALL_QCRQ]: AHFooter,
-      [LOTTERYIDS.AHFOOTBALL_QCDXQ]: AHFooter
+      [LOTTERYIDS.AHFOOTBALL_QCDXQ]: AHFooter,
+      [LOTTERYIDS.GROUNDER]: GrounderBetting
     }
     return LotteryComponent[lotteryId]
   }

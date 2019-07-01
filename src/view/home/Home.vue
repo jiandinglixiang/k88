@@ -9,10 +9,10 @@
       </mt-swipe-item>
     </mt-swipe>
     <div class="container">
-      <div class="recommend-box" v-if="issue">
+      <div class="recommend-box" v-show="issue.lottery_id">
         <recommend-lottery :issue="issue" @refresh="refresh"></recommend-lottery>
       </div>
-      <div class="lottery-box" v-show="lotteries.length > 0">
+      <div class="lottery-box" v-show="lotteries.length">
         <lottery-item :key="lottery.lottery_id" :lottery="lottery" v-for="lottery in lotteries"></lottery-item>
       </div>
       <!--      <div class="information-list">-->

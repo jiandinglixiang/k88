@@ -12,12 +12,12 @@
       </div>
       <div class="money-box">
         <div class="row">
-          <div :key="item" class="col" v-for="item in [10, 50, 100]">
+          <div :key="item" class="col" v-for="item in [300, 500, 1000]">
             <span :class="{active: item === formatNumber}" @click="selectMoney(item)">{{item}}元</span>
           </div>
         </div>
         <div class="row margin-top-10">
-          <div :key="item" class="col" v-for="item in [300, 500, 1000]">
+          <div :key="item" class="col" v-for="item in [2000, 3000, 5000]">
             <span :class="{active: item === formatNumber}" @click="selectMoney(item)">{{item}}元</span>
           </div>
         </div>

@@ -9,7 +9,7 @@
         }
       }" class="question-icon" slot="right"></router-link>
     </v-head>
-    <div v-if="userBank.no!=''">
+    <div v-if="userBank.no">
       <div>
         <div class="padding-0-10 margin-top-10 back-1c1c1c">
           <div class="info no-border padding-10">
@@ -38,7 +38,7 @@
         <div class="prompt margin-top-20 padding-0-10 red">注：暂不支持信用卡提现申请</div>
         <!--        <div class="prompt margin-top-20 padding-0-10">温馨提示：<br>手续费：提现金额必须>2元，手续费2元/次，每日首次提现金额若大于50元，可免当次手续费。</div>-->
         <div class="prompt margin-top-10 padding-0-10">说明：消费金额(不含红包)应大于等于充值金额,且可提现额大于等于100才能提现</div>
-        <div class="prompt margin-top-10 padding-0-10">提现金额仅能提现到绑定的银行卡,并且银行卡户主名必须和账户绑定的身份证一致。</div>
+        <div class="prompt margin-top-10 padding-0-10">提现金额仅能提现到绑定的银行卡</div>
         <div class="prompt margin-top-10 padding-0-10">
           由于银行批量转账批次先后原因,资金到账可能会延迟,若有疑问请联系客服。
         </div>

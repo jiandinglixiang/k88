@@ -123,6 +123,7 @@ export default class HomeLotteryItem {
       case LOTTERYIDS.AHFOOTBALL:
       case LOTTERYIDS.SFC:
       case LOTTERYIDS.RXJ:
+      case LOTTERYIDS.GROUNDER:
         this.tipText = this.short_slogon
         break
       default:

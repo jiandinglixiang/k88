@@ -25,7 +25,8 @@ export const LOTTERYIDS = {
   BASKETBALL_DXF: 704,
   BASKETBALL_HH: 705,
   AHFOOTBALL_QCRQ: 901,
-  AHFOOTBALL_QCDXQ: 902
+  AHFOOTBALL_QCDXQ: 902,
+  GROUNDER: 44
 }
 export const LotteryId = {
   '1': '双色球',
@@ -63,7 +64,8 @@ export const LotteryId = {
   '704': '竞篮-大小分',
   '705': '竞篮-混合过关',
   '901': '亚盘-全场让球',
-  '902': '亚盘-全场大/小球'
+  '902': '亚盘-全场大/小球',
+  [LOTTERYIDS.GROUNDER]: '滚盘'
 }
 export const LotteryIdArray = Object.keys(LotteryId).map(v => v * 1)
 export const LotteryFootballKey = {

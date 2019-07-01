@@ -5,7 +5,7 @@ import { user } from '../common/store'
 import loading from '../common/loading'
 import store from './index'
 import md5 from 'js-md5'
-import { baseURL } from '../baseURL'
+import { baseURL } from '../../baseURL'
 
 // code > 0 时，失败处理
 function errorHandle (data, reject) {
