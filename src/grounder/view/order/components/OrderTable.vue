@@ -3,6 +3,7 @@
     <tr>
       <th>场次</th>
       <th>主队vs客队</th>
+      <th>即时比分</th>
       <th>投注内容/出票赔率</th>
       <th>彩果</th>
     </tr>
@@ -16,20 +17,37 @@
         <p>{{item.guest}}</p>
       </td>
       <td>
+        <p>0-2</p>
+      </td>
+      <td>
         <p class="state-0">让球 <span>布拉加</span> <br><span>(-1.5/-2.0）</span><span>2.35</span></p>
       </td>
       <td>
-        <p>最终</p>
-        <p>5-1</p>
+        <p v-html="Fruit(item, status)"></p>
       </td>
     </tr>
   </table>
 </template>
 
 <script>//
+
 export default {
   name: 'OrderTable',
-  props: ['list']
+  props: ['list', 'status'],
+  methods: {
+    Fruit (n, status) {
+      let _html = ``
+      let finalArr = n.schedule_final_score.split(':')
+      if (status === 4 || status === 5) {
+        _html = `<p>最终</p><p>${finalArr[0]}-${finalArr[1]}</p>`
+      } else if (status === 11) {
+        _html = `<p class="text-primary">取消</p>`
+      } else {
+        _html = ``
+      }
+      return _html
+    }
+  }
 }
 </script>
 
@@ -39,22 +57,30 @@ export default {
     background: $c313131;
     border-collapse: collapse;
     color: $c999999;
-    th {color: $cCccCCc}
+
+    th {
+      color: $cCccCCc
+    }
+
     th, td {
       padding: 9px 0;
       border-top: 1px solid #494949;
       border-right: 1px solid #494949;
       text-align: center;
     }
+
     > tr > th {
       border-top: none
     }
+
     > tr > td:last-child,
     > tr > th:last-child {
       border-right: none;
     }
+
     .state-0 {
       color: $cffC63A;
+
       &:after {
         content: '';
         display: inline-block;
