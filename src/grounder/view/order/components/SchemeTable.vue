@@ -13,7 +13,7 @@
           <p class="state-0" :key="index2" v-for="(jc, index2) in ticket.jc_info">{{jc.round_no}} </p>
         </td>
         <td>
-          <p v-html="GameName(0)"></p>
+          <p v-html="GameName(ticket.lottery_id)"></p>
         </td>
         <td>
           <p>{{ticket.ticket_amount}}</p>
@@ -40,13 +40,13 @@ export default {
   props: ['scheme'],
   methods: {
     GameName (lotteryid) {
-      let _html = ''
-      if (lotteryid === 0) {
-        _html = '<p>滚盘<br>全场让球</p>'
-      } else if (lotteryid === 1) {
-        _html = '<p>滚盘<br>全场大小球</p>'
+      let _html = ``
+      if (lotteryid === '903') {
+        _html = `<p>滚盘<br>全场让球</p>`
+      } else if (lotteryid === '904') {
+        _html = `<p>滚盘<br>全场大小球</p>`
       } else {
-        _html = ''
+        _html = ``
       }
       return _html
     },
