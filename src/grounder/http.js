@@ -3,6 +3,8 @@ import Axios from 'axios'
 import { user } from '../common/store'
 import md5 from 'js-md5'
 import { baseURL } from '../../baseURL'
+import store from '../store'
+import Toast from '../common/toast.js'
 
 function randomWord (randomFlag, min, max) {
   var str = ''
@@ -22,34 +24,43 @@ function randomWord (randomFlag, min, max) {
 
 function codeInit (data) {
   // code识别初始化message
-  console.log(data)
+  // console.log(data)
   switch (data.code * 1) {
     case 10003:
       data.msg = '登录已过期,请重新登录!'
+      store && store.commit('CLEAR_TOKEN')
+      Toast(data.msg)
       break
     case 1022303:
       data.msg = '昵称包含敏感词'
       break
+    case 10006:
+      data.msg = '余额不足,请充值'
+      break
     default:
-      data.msg = '昵称包含敏感词'
+      data.msg = ''
   }
   return data
 }
 
 function transform (data) {
-  if (Object.prototype.toString.call(data) === '[object FormData]') {
+  const type = Object.prototype.toString.call(data)
+  if (type === '[object FormData]') {
     return data
+  } else if (type === '[object Object]') {
+    return JSON.stringify(data)
   }
-  const formData = new FormData()
-  data && Object.keys(data).forEach(function (key) {
-    // console.log(key)
-    data[key] && formData.append(key, data[key])
-  })
-  return formData
+  return data
+  // const formData = new FormData()
+  // data && Object.keys(data).forEach(function (key) {
+  //   // console.log(key)
+  //   formData.append(key, data[key] || '')
+  // })
+  // return formData
 }
 
 const Request = Axios.create({
-  'timeout': 1000,
+  'timeout': 15000,
   'baseURL': baseURL(),
   'headers': { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
   'transformRequest': [transform],
@@ -79,7 +90,7 @@ Request.interceptors.response.use(function (response) {
   return Promise.reject(error)
 })
 */
-const Http = {
+export const Http = {
   async get (url, params = {}, data = {}) {
     const data1 = await Request.get('/Index/getTime')
     if (data1.data.code * 1 !== 0) return Promise.reject(new Error({ msg: '错误' }))
@@ -93,8 +104,8 @@ const Http = {
     params.ssign = sign
     params.token = Token
     const data2 = await Request.get(url, { params, data })
-    // if (data2.data.code * 1 !== 0) return Promise.reject(new Error({ msg: '错误' }))
-    return { data: data2.data }
+    if (data2.data.code * 1 !== 0) return Promise.reject(data2.data)
+    return Promise.resolve(data2.data.data)
   },
   async post (url, data = {}, params = {}) {
     const data1 = await Request.get('/Index/getTime')
@@ -109,8 +120,8 @@ const Http = {
     params.ssign = sign
     params.token = Token
     const data2 = await Request.post(url, data, { params })
-    // if (data2.data.code * 1 !== 0) return Promise.reject(new Error({ msg: '错误' }))
-    return { data: data2.data }
+    if (data2.data.code * 1 !== 0) return Promise.reject(data2.data)
+    return Promise.resolve(data2.data.data)
   }
 }
 
@@ -126,6 +137,15 @@ export const HTTP = {
   },
   getOrderDetailRequest (OrderId) {
     return Http.get('/Order/program', { order_id: OrderId, offset: 0, limit: 100000 })
+  },
+  getLotteryGetJcList (lotteryId, playType) {
+    return Http.get('/Lottery/getJcList', { 'lottery_id': lotteryId, 'play_type': playType })
+  },
+  getUserInfo () {
+    return Http.get('/User')
+  },
+  getUserCouponList (id) {
+    return Http.get('/User/couponList', { lottery_id: id })
   }
 }
 

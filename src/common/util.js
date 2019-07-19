@@ -27,15 +27,22 @@ if (!String.prototype.format) {
   }
 }
 
+export function floor (x) {
+  if (/^\d+(\.\d+)?$/.test(x)) return (Math.floor(x * 100) / 100).toFixed(2)
+  return x
+}
 export function copy (obj) {
   const type = Object.prototype.toString.call(obj)
   let val
   if (type === '[object Array]') {
-    val = []
-    for (let i in obj) val[i] = copy(obj[i])
+    val = obj.map(function (value) {
+      return copy(value)
+    })
   } else if (type === '[object Object]') {
     val = {}
-    for (let i in obj) val[i] = copy(obj[i])
+    Object.keys(obj).forEach(function (key) {
+      val[key] = copy(obj[key])
+    })
   } else {
     val = obj
   }

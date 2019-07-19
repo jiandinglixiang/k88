@@ -134,7 +134,7 @@
     <div class="integral-top">
       <v-head title="积分商城">
         <router-link slot="right"
-                     style="color: #fff"
+                     style="color: #fff;margin-right: 10px;"
                      tag="span"
                      to="integralDetails"
         >积分明细

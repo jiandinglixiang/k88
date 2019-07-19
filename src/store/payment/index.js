@@ -50,7 +50,13 @@ const actions = {
       loading.hide()
     }, (error) => {
       if (error.data && error.data.lack_money > 0) {
-        router.push({ name: 'Payment', query: { lack: error.data.lack_money } })
+        Toast(error.msg)
+        error.code * 1 === 10006 && router.replace({
+          name: 'Payment',
+          query: {
+            lack: (Math.floor((error.data.lack_money) / 300) * 300 + 300).toFixed(2)
+          }
+        })
       }
       loading.hide()
     })

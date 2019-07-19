@@ -1,94 +1,126 @@
 <template>
   <ul class="g-grounder-betting">
-    <li v-for="n in 5" :key="n">
+    <li v-for="(n,x) in schedules" :key="n.id" v-show="filterShow(n.league)">
       <div class="g-bet-content">
-        <div class="g-Match-message g-click-up">
+        <div class="g-Match-message" @click.stop="swAnalyze(x)" :class="show[x]&&'g-click-up'">
           <img class="g-msg-icon" src="../assets/ic_gun.png"/>
           <p class="g-msg-name">
-            <span>001</span>
-            <span>阿根廷甲级</span>
-            <span>联赛</span>
+            <span>{{n.round_no}}</span>
+            <span>{{n.league}}</span>
+            <!--            <span>联赛</span>-->
           </p>
-          <p class="g-msg-time">90:00</p>
-          <img src="../assets/ic_closeall.png" class="g-msg-lock" alt="" width="15" height="15">
+          <p class="g-msg-time">{{timeInit(n)}}</p>
+          <img v-show="n.is_lock" src="../assets/ic_closeall.png" class="g-msg-lock" alt="" width="15" height="15">
         </div>
-        <div class="g-Match-button">
-          <div class="g-button-vs">
-            <p>图库曼竞技图库曼竞技图库曼竞技图库曼竞技图库曼竞技图库曼竞技图库曼竞技图库曼竞技</p>
-            <div>11-7</div>
-            <p>图库曼竞技</p>
-          </div>
-          <ul v-show="0" class="g-button-body-rq">
-            <li>
-              <div>进球</div>
-              <div>大</div>
-              <div>小</div>
-            </li>
-            <li v-for="n of 4" :key="n">
-              <div>3.5/4.0</div>
-              <div class="down">2.01</div>
-              <div class="active-select up">2.01</div>
-            </li>
-          </ul>
-          <ul v-show="1" class="g-button-body-dxq">
-            <li>
-              <div><span>0.0/+0.5</span><span>3.59</span></div>
-              <div><span>0.0/+0.5</span><span>3.59</span></div>
-            </li>
-            <li>
-              <div class="lock"><span>0.0/+0.5</span><span>3.59</span></div>
-              <div><span>0.0/+0.5</span><span class="down">3.59</span></div>
-            </li>
-            <li>
-              <div class="active-select"><span>0.0/+0.5</span><span>3.59</span></div>
-              <div><span>0.0/+0.5</span><span class="up">3.59</span></div>
-            </li>
-          </ul>
-        </div>
+        <grounder-bet-item
+          :lottery-id="lotteryId"
+          :item="n"
+          :schedules-id="schedulesId"
+        />
       </div>
-      <div class="g-bet-analyze" v-show="0">
+      <div class="g-bet-analyze" v-show="show[x]">
         <p>
           <span>历史交锋</span>
-          <span>近4次交战,卡利阿美离家</span>
-          <span style="color: #FF3333">1胜</span>
-          <span style="color: #3393FF">1平</span>
-          <span style="color: #1AC456">1负</span>
+          <span>近{{n.history_fight.games_count}}次交战，
+          {{n.home}}</span>
+          <span style="color: #FF3333">{{n.history_fight.win}}胜</span>
+          <span style="color: #3393FF">{{n.history_fight.equal}}平</span>
+          <span style="color: #1AC456">{{n.history_fight.lose}}负</span>
         </p>
         <p>
           <span>近期战绩</span>
-          <span>主队</span><span>1胜</span><span>1平</span> <span>1负</span>
+          <span>主队</span><span>{{n.latest_record.home.win}}胜</span><span>{{n.latest_record.home.equal}}平</span> <span>{{n.latest_record.home.lose}}负</span>
           <span></span>
-          <span>客队</span> <span>1胜</span> <span>1平</span> <span>1负</span>
+          <span>客队</span> <span>{{n.latest_record.guest.win}}胜</span> <span>{{n.latest_record.guest.equal}}平</span>
+          <span>{{n.latest_record.guest.lose}}负</span>
         </p>
         <p>
           <span>平均赔率</span>
-          <span>2.848</span> <span>2.848</span> <span>2.848</span>
+          <span>{{n.average_win_odds}}</span> <span>{{n.average_equal_odds}}</span> <span>{{n.average_lose_odds}}</span>
         </p>
-        <div><img src="../../assets/ball.png" alt="">详细赛事分析</div>
+        <div @click="goDetail(n)"><img src="../../assets/ball.png" alt="">详细赛事分析</div>
       </div>
     </li>
   </ul>
 </template>
 
 <script>// 亚盘投注
+import { Toast } from '../../common/toast.js'
+import GrounderBetItem from './GrounderBetItem.vue'
+
 export default {
-  name: 'GrounderBetting'
+  name: 'GrounderBetting',
+  components: { GrounderBetItem },
+  props: {
+    filterArr: [Array, Boolean], // false默认不过滤,[]过滤
+    schedules: Array,
+    schedulesId: [String, Number],
+    lotteryId: Number
+  },
+  data () {
+    return {
+      show: []
+    }
+  },
+  methods: {
+    timeInit (n) {
+      const gameStauts = n.game_stauts * 1
+      const STATUS = {
+        '0': '未开始',
+        '1': '上半场',
+        '2': '中场休息',
+        '3': '下半场',
+        '4': '加时',
+        '5': '点球',
+        '-1': '比赛结束',
+        '-10': '比赛取消',
+        '-11': '待定',
+        '-12': '比赛终止',
+        '-13': '比赛待恢复',
+        '-14': '比赛推迟'
+      }
+      if (gameStauts === 1 || gameStauts === 3) {
+        const duration = gameStauts === 3 ? 45 * 60 : 90 * 60 // 持续时间
+        const past = duration - (n.server_time - n.start_time) // 现在时间与开始时间差额
+        const m = Math.floor(past / 60)
+        const ms = past - m * 60
+        return `${m}:${ms > 9 ? ms : ms + '0'}`
+      }
+      return STATUS[gameStauts]
+    },
+    filterShow (league) {
+      if (this.filterArr === false) return true
+      return this.filterArr.some(value => league === value.value)
+    },
+    swAnalyze (x) {
+      this.$set(this.show, x, !this.show[x])
+    },
+    goDetail (x) {
+      if (x.third_party_schedule_id) {
+        this.$router.push({
+          name: 'FootballInformation',
+          params: { id: x.third_party_schedule_id }
+        })
+      } else {
+        Toast('暂时没有详细信息')
+      }
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
   .g-grounder-betting {
     > li {
-      border-bottom: 1px solid #494949;
 
       .g-bet-content {
         background-color: #313131;
-        padding: 0 10px 10px 5px;
+        padding: 0 10px 5px 5px;
         /*height: 115px;*/
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
-
+        border-bottom: 1px solid #494949;
         .g-Match-message {
           width: 20%;
           text-align: center;
@@ -104,7 +136,7 @@ export default {
           }
 
           .g-msg-name {
-            margin-top: 5px;
+            /*margin-top: 5px;*/
             display: flex;
             flex-flow: column nowrap;
             align-items: center;
@@ -164,219 +196,11 @@ export default {
               border-radius: 6px;
             }
           }
-
-          .g-button-body-rq {
-            width: 100%;
-            text-align: center;
-
-            > li {
-              display: flex;
-              flex-flow: row nowrap;
-              align-items: center;
-
-              div:first-child {
-                width: 20%;
-              }
-
-              div:nth-child(n+2) {
-                width: 40%;
-              }
-            }
-
-            > li:first-child {
-
-              div:nth-child(1) {
-                line-height: 17px;
-                background-color: #494949;
-                border-top-left-radius: 2px;
-              }
-
-              div:nth-child(2) {
-                line-height: 17px;
-                color: white;
-                background-color: #FF3333;
-              }
-
-              div:nth-child(3) {
-                line-height: 17px;
-                color: white;
-                background-color: #3393FF;
-                border-top-right-radius: 2px;
-              }
-            }
-
-            > li:nth-child(n+2) {
-              font-weight: 500;
-
-              div:first-child {
-                background-color: #DDDDDD;
-                color: #131313;
-                height: 30px;
-                line-height: 30px;
-                border-bottom: 1px solid #3F3F3F;
-              }
-
-              div:nth-child(2) {
-                border-right: 1px dashed #3F3F3F;
-              }
-
-              div:nth-child(n+2) {
-                height: 30px;
-                line-height: 30px;
-                background-color: #494949;
-                border-bottom: 1px solid #3F3F3F;
-              }
-
-              div.active-select {
-                color: #131313;
-                background-color: #FFC63A;
-              }
-
-              .up {
-                color: #1AC456;
-
-                &:after {
-                  display: inline-block;
-                  content: '';
-                  width: 0;
-                  height: 0;
-                  border-left: 6px solid transparent;
-                  border-right: 6px solid transparent;
-                  border-bottom: 6px solid #1AC456;
-                  margin: 0 0 2px 4px;
-                }
-              }
-
-              .down {
-                color: #FF3333;
-
-                &:after {
-                  display: inline-block;
-                  content: '';
-                  width: 0;
-                  height: 0;
-                  border-left: 6px solid transparent;
-                  border-right: 6px solid transparent;
-                  border-top: 6px solid #FF3333;
-                  margin: 0 0 2px 4px;
-                }
-              }
-            }
-
-            > li:last-child {
-              > div:first-child {
-                border-bottom: 0;
-                border-bottom-left-radius: 2px;
-              }
-
-              > div:nth-child(2) {
-                border-bottom: 0;
-              }
-
-              > div:last-child {
-                border-bottom: 0;
-                border-bottom-right-radius: 2px;
-              }
-            }
-          }
-
-          .g-button-body-dxq {
-            width: 100%;
-            overflow: hidden;
-            border-radius: 2px;
-
-            > li {
-              display: flex;
-              flex-flow: row nowrap;
-
-              div {
-                background-color: #494949;
-                height: 30px;
-                line-height: 30px;
-                width: 50%;
-                display: flex;
-                flex-flow: row nowrap;
-                align-items: center;
-                font-weight: 500;
-
-                span:first-child {
-                  width: 65%;
-                  overflow: hidden;
-                  text-align: center;
-                  white-space: nowrap;
-                  text-overflow: ellipsis;
-                  color: #999999;
-                }
-
-                span:last-child {
-                  color: white;
-                  width: 35%;
-                  overflow: hidden;
-                  white-space: nowrap;
-                  text-overflow: ellipsis;
-                }
-
-                span.up {
-                  color: #1AC456;
-
-                  &:after {
-                    display: inline-block;
-                    content: '';
-                    width: 0;
-                    height: 0;
-                    border-left: 6px solid transparent;
-                    border-right: 6px solid transparent;
-                    border-bottom: 6px solid #1AC456;
-                    margin: 0 0 2px 4px;
-                  }
-                }
-
-                span.down {
-                  color: #FF3333;
-
-                  &:after {
-                    display: inline-block;
-                    content: '';
-                    width: 0;
-                    height: 0;
-                    border-left: 6px solid transparent;
-                    border-right: 6px solid transparent;
-                    border-top: 6px solid #FF3333;
-                    margin: 0 0 2px 4px;
-                  }
-                }
-              }
-
-              div.active-select {
-                background-color: #FFC63A;
-
-                span {
-                  color: #131313;
-                }
-              }
-
-              div.lock {
-                span {
-                  display: none;
-                }
-
-                background: url("../assets/ic_selclose.png") no-repeat center center, url("../assets/ya_rang_bg.png") no-repeat left top;
-                background-size: 10px 15px, 100% 100%;
-              }
-
-              div:last-child {
-                border-left: 1px dashed #3F3F3F;
-              }
-            }
-
-            > li:nth-child(n+ 2) {
-              border-top: 1px solid #3F3F3F;
-            }
-          }
         }
       }
 
       .g-bet-analyze {
+        padding-bottom: 5px;
         background-color: #1C1C1C;
 
         > p {

@@ -40,7 +40,9 @@ export default class Lottery {
       [LOTTERYIDS.AHFOOTBALL]: AHFooter,
       [LOTTERYIDS.AHFOOTBALL_QCRQ]: AHFooter,
       [LOTTERYIDS.AHFOOTBALL_QCDXQ]: AHFooter,
-      [LOTTERYIDS.GROUNDER]: GrounderBetting
+      [LOTTERYIDS.GROUNDER_FOOTBALL]: GrounderBetting,
+      [LOTTERYIDS.GROUNDER_FOOTBALL_DXQ]: GrounderBetting,
+      [LOTTERYIDS.GROUNDER_FOOTBALL_RQ]: GrounderBetting
     }
     return LotteryComponent[lotteryId]
   }
@@ -161,6 +163,10 @@ export default class Lottery {
       case LOTTERYIDS.AHFOOTBALL:
       case LOTTERYIDS.AHFOOTBALL_QCRQ:
       case LOTTERYIDS.AHFOOTBALL_QCDXQ:
+        return 'http://tgapi.k888.bet/index.php?s=/Content/help/jcyp.html'
+      case LOTTERYIDS.GROUNDER_FOOTBALL:
+      case LOTTERYIDS.GROUNDER_FOOTBALL_RQ:
+      case LOTTERYIDS.GROUNDER_FOOTBALL_DXQ:
         return 'http://tgapi.k888.bet/index.php?s=/Content/help/jcyp.html'
     }
   }
