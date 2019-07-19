@@ -3,7 +3,7 @@
     <v-head title="方案明细"></v-head>
     <div class="detail">
       <div class="title"><i class="icon order-content-icon"></i>投注内容</div>
-      <order-table :list="details.jc_info"></order-table>
+      <order-table :list="details.jc_info" :status="details.status"></order-table>
       <div class="title"><i class="icon order-scheme-icon"></i>方案明细</div>
       <scheme-table :scheme="scheme"></scheme-table>
     </div>

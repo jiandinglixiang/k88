@@ -54,6 +54,7 @@
 import Util from '../../common/util'
 import { mapActions, mapMutations, mapState } from 'vuex'
 import { PAYMENT_ORDER, PAYMENT_ORDER_COMPLETE, SELECT_ORDER_RED_PACK } from '../../store/payment/types'
+import { MessageBox } from 'mint-ui'
 
 let search = {}
 export default {
@@ -85,7 +86,27 @@ export default {
     ...mapMutations({
       selectRedPack: SELECT_ORDER_RED_PACK
     }),
-    submit () {
+    async submit () {
+      let sum = this.confirm.balance * 1
+      if (this.confirm.currentRedPack && this.confirm.currentRedPack.type * 1 === 1 && this.confirm.currentRedPack.id) {
+        sum += this.confirm.currentRedPack.balance * 1
+      }
+      if (this.confirm.pay_money > sum) {
+        const action = await MessageBox({
+          title: '',
+          message: '余额不足,请充值',
+          showCancelButton: true,
+          confirmButtonText: '去充值',
+          confirmButtonClass: 'order-message-box'
+        })
+        if (action === 'confirm') {
+          return this.$router.push({
+            name: 'Payment',
+            query: { lack: (Math.floor((this.confirm.pay_money - sum) / 100) * 100 + 300).toFixed(2) }
+          })
+        }
+        return action
+      }
       this.payment({
         coupon_id: (this.confirm.currentRedPack && this.confirm.currentRedPack.id) || 0,
         id: search['id'],
@@ -112,6 +133,10 @@ export default {
 </script>
 
 <style lang="scss">
+  button.order-message-box {
+    background-color: $cffC63A;
+    color: $c131313;
+  }
   .payment-confirm .top {
     padding: 10px;
   }

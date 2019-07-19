@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'v-fixed':isFixed}" style="height: 40px">
+  <div :class="{'v-fixed':isFixed}" style="height: 41px">
     <div id="v-head">
       <div class="v-left" @click.stop="goBack" v-if="!hideBack"></div>
       <div class="v-center">

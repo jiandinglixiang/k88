@@ -3,7 +3,6 @@ import Http from '../Http'
 import loading from '../../common/loading'
 import HomeLotteryItem from '../../model/HomeLotteryItem'
 import HomeLotteryIssue from '../../model/HomeLotteryIssue'
-import { LOTTERYIDS } from '../constants'
 
 const actions = {
   [types.GET_BANNER] (context) {
@@ -69,12 +68,12 @@ const mutations = {
       // 取消定时器
       state.lotteries.map(value => value.onClearInterval())
     }
-    if (process.env.NODE_ENV !== 'production') {
-      const grounder = JSON.parse(JSON.stringify(data.list[0]))
-      grounder.lottery_id = `${LOTTERYIDS.GROUNDER}`
-      grounder.lottery_name = '滚盘'
-      data.list.push(grounder)
-    }
+    // if (process.env.NODE_ENV !== 'production') {
+    // const grounder = JSON.parse(JSON.stringify(data.list[0]))
+    // grounder.lottery_id = `${LOTTERYIDS.GROUNDER_FOOTBALL_RQ}`
+    // grounder.lottery_name = '滚盘'
+    // data.list.push({ ...grounder })
+    // }
     state.lotteries = data.list.map(value => {
       return new HomeLotteryItem(value, data.server_time)
     })

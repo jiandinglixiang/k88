@@ -1,29 +1,47 @@
 <template>
   <ul class="s-select-game">
-    <li>全场让球</li>
-    <li>全场大/小球</li>
-    <li>全场大/小球</li>
-    <li>全场让球</li>
-    <li>全场大/小球</li>
-    <li>全场大/小球</li>
-    <li class="active-select">全场让球</li>
-    <li>全场大/小球</li>
-    <li>全场大/小球</li>
+    <li v-for="n of list"
+        :key="n[keys]"
+        :class="classShow(n)"
+        @click.stop="switchTarget(n)"
+    >{{n.value}}
+    </li>
   </ul>
 </template>
 
 <script>//
+
 export default {
-  name: 'SelectGame'
+  name: 'SelectGame',
+  props: {
+    list: Array,
+    keys: String,
+    target: [Number, Array]
+  },
+  methods: {
+    switchTarget (id) {
+      // console.log(id)
+      this.$emit('switchTarget', id)
+    },
+    classShow (item) {
+      if (Array.isArray(this.target)) {
+        return this.target.some(val => {
+          return val[this.keys] === item[this.keys]
+        }) && 'active-select'
+      }
+      return item[this.keys] === this.target && 'active-select'
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
   .s-select-game {
     width: 100%;
-    align-content: flex-start;
+    align-self: flex-start;
     display: flex;
     flex-flow: row wrap;
+    background-color: #171717;
 
     >li {
       font-weight: bold;

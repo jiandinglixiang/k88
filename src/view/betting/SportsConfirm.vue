@@ -235,18 +235,18 @@
         </div>
       </mt-popup>
     </template>
-    <div class="modal" id="modal-recharge" v-show="isShow">
-      <div class="panel">
-        <div class="tit">
-          <h1>余额不足，无法下注，</h1>
-          <h1>请先充值！</h1>
-        </div>
-        <div class="btns">
-          <div @click="toggle()" class="btn-cancel">取消</div>
-          <div @click="recharge()" class="btn-sure btn-recharge">充值</div>
-        </div>
-      </div>
-    </div>
+    <!--    <div class="modal" id="modal-recharge" v-show="isShow">-->
+    <!--      <div class="panel">-->
+    <!--        <div class="tit">-->
+    <!--          <h1>余额不足，无法下注，</h1>-->
+    <!--          <h1>请先充值！</h1>-->
+    <!--        </div>-->
+    <!--        <div class="btns">-->
+    <!--          <div @click="toggle()" class="btn-cancel">取消</div>-->
+    <!--          <div @click="recharge()" class="btn-sure btn-recharge">充值</div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
     <div class="modal" id="modal-error" v-show="oddsChange">
       <div class="panel">
         <div class="tit">
@@ -314,7 +314,7 @@ export default {
       popupSelected: [],
       isMulti: false,
       sure: 0,
-      isShow: false,
+      // isShow: false,
       oddsChange: false,
       isShowBottom: true,
       ManyValue: {}, // 输入金额值列表
@@ -525,9 +525,6 @@ export default {
     addBetting () {
       this.$router.back()
     },
-    toggle () {
-      this.isShow = !this.isShow
-    },
     toggleModel () {
       this.oddsChange = !this.oddsChange
     },
@@ -578,12 +575,10 @@ export default {
     },
     confirmPayment () {
       if (this.series.length <= 0) {
-        Toast('请选择投注方式')
-        return
+        return Toast('请选择投注方式')
       }
-      if (this.confirm.multiple < 1) {
-        Toast('倍数不能小于1')
-        return
+      if (this.confirm.multiple < 5) {
+        return Toast('不能小于5倍')
       }
 
       let seriesArr = []
@@ -610,19 +605,19 @@ export default {
       }
       this.$store.dispatch(SPORTS_CONFIRM_PAYMENT, result).then(() => {
         if (this.confirm.id) {
-          if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
-            Toast('您的账户余额不足，请先充值！')
-            this.$router.push({
-              name: 'Payment',
-              query: { lack: (this.confirm.stakeCount * this.confirm.multiple * 2 - this.mine.balance).toFixed(2) }
-            })
-            // this.toggle()
-          } else {
-            this.$router.push({
-              name: 'PaymentOrder',
-              query: { id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP' }
-            })
-          }
+          // if (this.mine.balance < (this.confirm.stakeCount * this.confirm.multiple * 2)) {
+          //   Toast('您的账户余额不足，请先充值！')
+          //   this.$router.push({
+          //     name: 'Payment',
+          //     query: { lack: (this.confirm.stakeCount * this.confirm.multiple * 2 - this.mine.balance).toFixed(2) }
+          //   })
+          // this.toggle()
+          // } else {
+          this.$router.push({
+            name: 'PaymentOrder',
+            query: { id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP' }
+          })
+          // }
         } else {
           this.$router.push({ name: 'Login', query: { redirect: this.$router.currentRoute.path } })
           Toast('无订单id,登录已过期,请重新登录!')
@@ -661,11 +656,11 @@ export default {
           return msg
         }
         if (money < 2) {
-          msg = '单注金额必须大于等于2元'
+          msg = '投注金额必须大于2元'
           return msg
         }
         if (money > value.upperLimit) {
-          msg = '金额超过投注上限,请重新输入'
+          msg = '投注金额超过上限,请重新输入'
           return msg
         }
         Orders.push({
@@ -710,11 +705,11 @@ export default {
               return msg
             }
             if (value.total < 20) {
-              msg = '单注金额必须大于等于20元'
+              msg = '投注金额必须大于20元'
               return msg
             }
             if (value.total > value.upperLimit) {
-              msg = '金额超过投注上限,请重新输入'
+              msg = '投注金额超过上限,请重新输入'
               return msg
             }
             Orders.push({
@@ -940,14 +935,14 @@ export default {
           this.toggleModel()
           this.updateOdds = data.update_odds
         } else if (this.confirm.id) {
-          if (this.mine.balance < this.totalMoney || this.mine.balance < this.textSum) {
-            this.toggle()
-          } else {
-            this.$router.push({
-              name: 'PaymentOrder',
-              query: { id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP' }
-            })
-          }
+          // if (this.mine.balance < this.totalMoney || this.mine.balance < this.textSum) {
+          //   this.toggle()
+          // } else {
+          this.$router.push({
+            name: 'PaymentOrder',
+            query: { id: this.confirm.id, sign: this.confirm.sign, product_name: 'LHCP' }
+          })
+          // }
         } else {
           Toast('无订单id,登录已过期,请重新登录!')
         }

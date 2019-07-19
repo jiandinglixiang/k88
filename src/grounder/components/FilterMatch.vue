@@ -1,33 +1,119 @@
 <template>
-  <div class="f-filter-match" @click.stop>
+  <div class="f-filter-match">
     <p class="f-title">赛事选择</p>
     <ul class="f-filter-one">
-      <li class="active-select">全选</li>
-      <li>反选</li>
-      <li>仅五大联赛</li>
+      <li @click.stop="addInverse(0)" :class="filterUnconfirmed.length===filterTypeArr.length&&'active-select'">全选</li>
+      <li @click.stop="addInverse(1)">反选</li>
+      <li @click.stop="addInverse(2)">仅五大联赛</li>
     </ul>
-    <select-game/>
-    <p class="f-descriptio">共 <span>12</span> 场比赛</p>
+    <select-game
+      :list="filterTypeArr"
+      keys="value"
+      :target="filterUnconfirmed"
+      @switchTarget="addFilter"
+    />
+    <p class="f-descriptio">共 <span>{{several}}</span> 场比赛</p>
     <div class="f-filter-button">
       <button>取消</button>
-      <button>确定</button>
+      <button @click="filterUpdate">确定</button>
     </div>
   </div>
 </template>
 
 <script>// 筛选
-import SelectGame from '@/grounder/components/SelectGame'
+import SelectGame from './SelectGame.vue'
+import { mapState } from 'vuex'
+import { copy } from '../../common/util.js'
+
+const FIVE_LEAGUE = ['德甲', '西甲', '英超', '法甲', '意甲']
 
 export default {
   name: 'FilterMatch',
-  components: { SelectGame }
+  components: { SelectGame },
+  props: {
+    maskShow: Boolean,
+    filterArr: [Array, Boolean] // false默认不过滤,[]过滤
+  },
+  created () {
+    this.filterUnconfirmed = copy(this.filterTypeArr)
+  },
+  data () {
+    return {
+      filterUnconfirmed: [] // 没有操作
+    }
+  },
+  computed: {
+    ...mapState({
+      filterTypeArr: state => state.grounder[state.grounder.lotteryId].reduce(function (arr, val) {
+        return val.schedules.reduce(function (arr2, val2) {
+          const addLeague = arr2.some(value => {
+            const isEqual = value.value === val2.league
+            if (isEqual) value.num++
+            return isEqual
+          })
+          !addLeague && arr2.push({ value: val2.league, num: 1 })
+          return arr2
+        }, arr)
+      }, [])
+    }),
+    several () {
+      // 如果没有过滤条件 默认全选
+      const arr = this.filterUnconfirmed
+      return arr.reduce(function (total, val) {
+        return total + val.num
+      }, 0)
+    }
+  },
+  methods: {
+    addFilter (val) {
+      let isExist
+      const transcript = this.filterUnconfirmed.map((value, index) => {
+        if (value.value === val.value) isExist = index
+        return { ...value }
+      })
+      if (typeof isExist === 'number') {
+        transcript.splice(isExist, 1)
+      } else {
+        transcript.push(val)
+      }
+      this.filterUnconfirmed = transcript
+    },
+    addInverse (x) {
+      const [len1, len2] = [this.filterUnconfirmed.length, this.filterTypeArr.length]
+      let arr = []
+      // console.log(x)
+      if (x === 0) {
+        if (len1 !== len2) arr = this.filterTypeArr
+      } else if (x === 1) {
+        if (len1 !== len2) {
+          arr = this.filterTypeArr.filter((val1) => !this.filterUnconfirmed.some(function (val2) {
+            return val2.value === val1.value
+          }))
+        }
+      } else {
+        // x===2
+        arr = this.filterTypeArr.filter((val1) => FIVE_LEAGUE.some(function (val2) {
+          return val2 === val1.value
+        }))
+      }
+      this.filterUnconfirmed = copy(arr)
+    },
+    filterUpdate (eve) {
+      return this.$emit('update:filter-arr', copy(this.filterUnconfirmed))
+    }
+  },
+  watch: {
+    maskShow (ne) {
+      if (ne) this.filterUnconfirmed = this.filterArr.length ? copy(this.filterArr) : []
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
   .f-filter-match {
     overflow: hidden;
-    max-width: 320px;
+    width: 320px;
     margin: 0 10px;
     align-self: center;
     text-align: center;
@@ -43,7 +129,7 @@ export default {
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
-      margin-top: 20px;
+      margin: 0 10px;
       overflow: hidden;
 
       > li {
@@ -60,7 +146,7 @@ export default {
         color: #ffc63a;
         font-weight: bold;
 
-        &.active-select {
+        &:active, &.active-select {
           color: #131313;
           border-color: #ffc63a;
           background-color: #ffc63a;

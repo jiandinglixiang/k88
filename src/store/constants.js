@@ -26,7 +26,9 @@ export const LOTTERYIDS = {
   BASKETBALL_HH: 705,
   AHFOOTBALL_QCRQ: 901,
   AHFOOTBALL_QCDXQ: 902,
-  GROUNDER: 44
+  GROUNDER_FOOTBALL: 31,
+  GROUNDER_FOOTBALL_RQ: 903,
+  GROUNDER_FOOTBALL_DXQ: 904
 }
 export const LotteryId = {
   '1': '双色球',
@@ -52,6 +54,7 @@ export const LotteryId = {
   '21': '任选九',
   '22': '江苏快三',
   '30': '足球亚盘',
+  '31': '足球滚盘',
   '601': '竞足-胜平负',
   '602': '竞足-让球胜平负',
   '603': '竞足-比分',
@@ -65,7 +68,8 @@ export const LotteryId = {
   '705': '竞篮-混合过关',
   '901': '亚盘-全场让球',
   '902': '亚盘-全场大/小球',
-  [LOTTERYIDS.GROUNDER]: '滚盘'
+  [LOTTERYIDS.GROUNDER_FOOTBALL_RQ]: '全场让球',
+  [LOTTERYIDS.GROUNDER_FOOTBALL_DXQ]: '全场大/小球'
 }
 export const LotteryIdArray = Object.keys(LotteryId).map(v => v * 1)
 export const LotteryFootballKey = {
@@ -459,7 +463,9 @@ export const IS_SPORTS = {
   [`20`]: 'SFC',
   [`21`]: 'RXJ',
   [`901`]: 'AHFOOTBALL_QCRQ',
-  [`902`]: 'AHFOOTBALL_QCDXQ'
+  [`902`]: 'AHFOOTBALL_QCDXQ',
+  [LOTTERYIDS.GROUNDER_FOOTBALL_RQ]: 'GROUNDER_FOOTBALL_RQ',
+  [LOTTERYIDS.GROUNDER_FOOTBALL_DXQ]: 'GROUNDER_FOOTBALL_DXQ'
 }
 export const IS_FOOTBALL = {
   // 足球

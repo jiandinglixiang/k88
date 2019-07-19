@@ -2,7 +2,7 @@
   <div class="sport-lottery-panel-item">
     <div class="row padding item-top">
       <div @click="showTip" class="col col-20 col-center text-center text-sm text-light">
-        <div>{{schedule.round_no}}</div>
+        <div v-show="![901,902].includes(schedule.lotteryId)">{{schedule.round_no}}</div>
         <div>{{schedule.league}}</div>
         <div>{{schedule.end_time | dateFormat('hh:mm')}}截止</div>
         <div><span :class="{'up': tipVisible}" class="down-gray-icon"></span></div>

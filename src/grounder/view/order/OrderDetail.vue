@@ -14,8 +14,8 @@
       <div class="title">订单状态：<span class="text-primary">{{StatusTxt(details.status)}}</span></div>
     </div>
     <div class="card order-content">
-      <div class="title">投注内容：<span>滚盘</span></div>
-      <order-table :list="details.jc_info"></order-table>
+      <div class="title">投注内容：<span>1注,1场,滚盘</span></div>
+      <order-table :list="details.jc_info" :status="details.status"></order-table>
       <div class="title">投注时间：<span>{{time(details.buying_time)}}</span></div>
       <div class="title">方案编号：<span>{{details.sku}}</span></div>
     </div>

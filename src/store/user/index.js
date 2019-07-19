@@ -34,6 +34,7 @@ const actions = {
     loading.show()
     return Http.get('/User').then(data => {
       context.commit(types.MINE_INFO, data)
+    }).finally(() => {
       loading.hide()
     })
   },

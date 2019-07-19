@@ -104,7 +104,7 @@ export default {
 
   .information-header .head .back-icon.white {
     background: url("../../../assets/icon/white_back_icon.png") no-repeat center;
-    background-size: 40% 40%;
+    background-size: 8px 15px;
   }
 
   .information-header {

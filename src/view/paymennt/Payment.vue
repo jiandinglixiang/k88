@@ -52,7 +52,7 @@ export default {
   name: 'payment',
   data () {
     return {
-      number: Util.urlSearch()['lack'] || 100
+      number: Util.urlSearch()['lack'] || 300
     }
   },
   computed: {
@@ -97,6 +97,7 @@ export default {
       if (query.redirect) {
         const redirect = query.redirect
         delete query.redirect
+        delete query.lack
         this.$router.replace({ path: redirect, query })
         // 返回重定向页面,带参数
       } else {
