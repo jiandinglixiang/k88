@@ -3,7 +3,7 @@
     <v-head is-fixed="true">
       <span slot="centre" class="g-title g-click-up" @click.stop="switchMask(0)">{{targetId()}}</span>
       <div slot="right" class="g-right">
-        <span class="g-refresh" @click.stop="fifteenTimeUpdate">
+        <span class="g-refresh" @click.stop="manuallyUpdate">
           <roundness-chart
             :green="timeTxt[2]"
             :red="timeTxt[1]"
@@ -37,7 +37,7 @@
         v-show="mask[1].show"
       />
       <grounder-bet-popup
-        @fifteenUpdate="fifteenTimeUpdate"
+        @fifteenUpdate="manuallyUpdate"
         v-if="mask[2].load"
         v-show="mask[2].show"
         :mask-show="mask[2].show"
@@ -57,6 +57,7 @@ import { mapActions, mapState } from 'vuex'
 import { ADD_BETTING_ITEM, GET_JC_LIST } from '../../store/betting'
 import { LotteryId, LOTTERYIDS } from '../../../store/constants.js'
 import { loading } from '../../../common/loading.js'
+import Toast from '../../../common/toast.js'
 
 let isGet = true
 export default {
@@ -117,6 +118,11 @@ export default {
         this.time = setTimeout(this.fifteenTimeUpdate, 15000)
       })
     },
+    manuallyUpdate () {
+      return this.fifteenTimeUpdate().then(function () {
+        Toast('刷新赔率成功')
+      })
+    },
     switchMask (type, func) {
       if (type === -1) {
         this.mask = this.mask.map(value => ({ load: value.load, show: false }))
@@ -134,7 +140,7 @@ export default {
     },
     switchGame (val) {
       loading.show()
-      this.$store.commit(ADD_BETTING_ITEM, null)
+      this.$store.commit(ADD_BETTING_ITEM, null) // 清理选中的比赛
       this.fifteenTimeUpdate(this.GrounderFootballList.find(value => val.lotteryId === value.lotteryId)).finally(() => {
         loading.hide()
         this.switchMask(-1)

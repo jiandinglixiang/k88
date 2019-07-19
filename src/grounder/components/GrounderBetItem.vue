@@ -55,9 +55,10 @@ export default {
       const sizeBall = this.lotteryId === 904 // 大小球
       const letBall = this.lotteryId === 903
       const objKey = (letBall && 'betting_score_letball') || (sizeBall && 'betting_score_sizeball')
+      let arr = []
+      if (!this.item.betting_score_odds || !this.item.betting_score_odds[objKey]) return arr
       const obj = Object.keys(this.item.betting_score_odds[objKey])
       const oddTxt = LotteryFootballKey[objKey]
-      let arr = []
       obj.sort((key1, key2) => key1.slice(1) > key2.slice(1))
 
       function f1 (arr) {
