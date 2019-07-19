@@ -112,7 +112,7 @@ export default {
             this.timeTxt = [15, 100, 0]
             return
           }
-          const total = Math.floor(this.timeTxt[0] / 15 * 100)
+          const total = Math.floor((this.timeTxt[0] - 1) / 15 * 100)
           this.timeTxt = [this.timeTxt[0] - 1, total, 100 - total]
         }, 1000)
         this.time = setTimeout(this.fifteenTimeUpdate, 15000)
@@ -142,7 +142,7 @@ export default {
       loading.show()
       this.$store.commit(ADD_BETTING_ITEM, null) // 清理选中的比赛
       this.fifteenTimeUpdate(this.GrounderFootballList.find(value => val.lotteryId === value.lotteryId)).finally(() => {
-        loading.hide()
+        loading.hide() //
         this.switchMask(-1)
       })
     }

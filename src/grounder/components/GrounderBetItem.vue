@@ -10,7 +10,7 @@
         <div
           v-for="n2 of n"
           :key="n2.key"
-          :class="{'lock':item.is_lock}"
+          :class="n2.isLock"
           @click="addBetItem(n2)"
         ><span>{{n2.text}}</span><span
           :class="n2.oddStatus">{{n2.odd}}</span>
@@ -27,7 +27,7 @@
         <div>{{n[0].text}}</div>
         <div v-for="n2 of n" :key="n2.key"
              @click="addBetItem(n2)"
-             :class="{'lock':item.is_lock,[n2.oddStatus]:1}">{{n2.odd}}
+             :class="`${n2.isLock} ${n2.oddStatus}`"><span>{{n2.odd}}</span>
         </div>
       </li>
     </ul>
@@ -70,19 +70,23 @@ export default {
         return obj[i].slice(0, obj[i].length - 1)
       }
 
+      const oddData2 = this.item.betting_score_odds[objKey]
+      const isLock = (this.item.is_lock || this.item.game_stauts < 0) ? `lock` : ''
+
       for (let i = obj.length - 1; i >= 1;) {
-        const oddData2 = this.item.betting_score_odds[objKey]
         if (f2(i) === f2(i - 1)) {
           arr.unshift([
             {
               ...oddDiscern(oddData2[obj[i]]),
               key: obj[i],
-              text: f1(oddTxt[obj[i]])
+              text: f1(oddTxt[obj[i]]),
+              isLock
             },
             {
               ...oddDiscern(oddData2[obj[i - 1]]),
               key: obj[i - 1],
-              text: f1(oddTxt[obj[i - 1]])
+              text: f1(oddTxt[obj[i - 1]]),
+              isLock
             }
           ])
           i -= 2
@@ -90,8 +94,11 @@ export default {
           arr.push([{
             ...oddDiscern(oddData2[obj[i]]),
             key: obj[i],
-            text: f1(oddTxt[obj[i]])
-          }, {}])
+            text: f1(oddTxt[obj[i]]),
+            isLock
+          }, {
+            isLock: 'lock'
+          }])
           i--
         }
       }
@@ -110,7 +117,7 @@ export default {
         Toast('未登录账号')
         return
       }
-      if (this.item.is_lock) {
+      if (n.isLock) {
         Toast('投注已锁定')
         return
       }
@@ -219,11 +226,19 @@ export default {
           border-bottom: 1px solid #3F3F3F;
         }
 
-        div.active-select, div:active {
+        div.active-select, div:nth-child(n+2):active {
           color: #131313;
           background-color: #FFC63A;
         }
 
+        div.lock {
+          span {
+            display: none;
+          }
+
+          background: url("../assets/ic_selclose.png") no-repeat center center, url("../assets/ya_rang_bg.png") no-repeat center center;
+          background-size: 10px 15px, 110% 110%;
+        }
         .up {
           color: #1AC456;
 
