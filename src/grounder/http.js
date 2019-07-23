@@ -24,10 +24,7 @@ function randomWord (randomFlag, min, max) {
 
 function codeInit (data) {
   // code识别初始化message
-  if (!data) {
-    console.log(data)
-    return {}
-  }
+  // console.log(data)
   switch (data.code * 1) {
     case 10003:
       data.msg = '登录已过期,请重新登录!'
@@ -41,6 +38,7 @@ function codeInit (data) {
       data.msg = '余额不足,请充值'
       break
     default:
+      data.msg = ''
   }
   return data
 }
@@ -105,10 +103,9 @@ export const Http = {
     params.nonce = nonce
     params.ssign = sign
     params.token = Token
-    return Request.get(url, { params, data }).then(function (response) {
-      if (response.data.code * 1 !== 0) return Promise.reject(response.data)
-      return response.data.data
-    })
+    const data2 = await Request.get(url, { params, data })
+    if (data2.data.code * 1 !== 0) return Promise.reject(data2.data)
+    return Promise.resolve(data2.data.data)
   },
   async post (url, data = {}, params = {}) {
     const data1 = await Request.get('/Index/getTime')
@@ -122,10 +119,9 @@ export const Http = {
     params.nonce = nonce
     params.ssign = sign
     params.token = Token
-    return Request.post(url, data, { params }).then(function (response) {
-      if (response.data.code * 1 !== 0) return Promise.reject(response.data)
-      return response.data.data
-    })
+    const data2 = await Request.post(url, data, { params })
+    if (data2.data.code * 1 !== 0) return Promise.reject(data2.data)
+    return Promise.resolve(data2.data.data)
   }
 }
 
@@ -150,15 +146,6 @@ export const HTTP = {
   },
   getUserCouponList (id) {
     return Http.get('/User/couponList', { lottery_id: id })
-  },
-  postWebBetPreBetYp (Orders) {
-    // {"Orders":[{"series":"101","lottery_id":901,"play_type":1,"stake_count":"1","total_amount":"122","schedule_orders":[{"bet_number":"v281","schedule_id":"415574","is_sure":"0","odds":"1.90"}]},]}
-    const mdStr = `${Orders.lottery_id}${Orders.play_type}${parseInt(Orders.total_amount)}Ehcv2b1AvWAMSey2`
-    return Http.post(`/WebBet/preBetYp?lottery_id=${Orders.lottery_id}&product_name=LHCP&sign=${md5(mdStr)}`, { Orders: [Orders] })
-  },
-  postBetSubmitPay (red, id, sign) {
-    // {"coupon_id":"28","id":"PB190722113515JNEE5Q","sign":"2461821f43d0a88f094827d0921b0c40","product_name":"LHCP"}
-    return Http.post('/Bet/submitPay', { 'coupon_id': red, id, sign, 'product_name': 'LHCP' })
   }
 }
 

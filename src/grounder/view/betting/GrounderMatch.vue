@@ -120,7 +120,7 @@ export default {
     },
     manuallyUpdate () {
       return this.fifteenTimeUpdate().then(function () {
-        Toast('刷新成功')
+        Toast('刷新赔率成功')
       })
     },
     switchMask (type, func) {

@@ -43,9 +43,7 @@ import {
 import { recommendIssue } from '../../../common/store'
 import Lottery from '../../../model/common/Lottery'
 import { LOTTERYIDS } from '../../../store/constants'
-import Toast from '../../../common/toast.js'
 
-let theFirstTime = false
 export default {
   name: 'lotteryHeader',
   props: {
@@ -54,7 +52,7 @@ export default {
   data () {
     return {
       panelVisible: false,
-      time: null
+      time: 0
     }
   },
   computed: {
@@ -105,9 +103,8 @@ export default {
       // 更新
       const item = this.currentType
       if (Lottery.isAHFootBall(this.lottery)) {
-        this.fifteenTimeUpdate().finally(function () {
-          Toast('刷新成功')
-        })
+        clearTimeout(this.time)
+        this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, item).finally(this.fifteenTimeUpdate)
       } else if (Lottery.isFootBall(this.lottery) || Lottery.isBasketBall(this.lottery)) {
         this.$store.dispatch(GET_CURRENT_SPORT_LOTTERY, item)
       } else if (Lottery.isSSQ(this.lottery) || Lottery.isDLT(this.lottery) ||
@@ -117,20 +114,16 @@ export default {
     },
     fifteenTimeUpdate () {
       // 亚盘更新
-      clearTimeout(this.time)
-      return this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType).finally(() => {
-        this.time = setTimeout(this.fifteenTimeUpdate, 15000)
-      })
+      this.time = setTimeout(() => {
+        this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType).finally(this.fifteenTimeUpdate)
+      }, 15000)
     }
   },
   created () {
     if (Lottery.isAHFootBall(this.lottery)) {
+      clearTimeout(this.time)
       // 亚盘每15秒更新次
-      if (theFirstTime) {
-        return this.fifteenTimeUpdate()
-      }
-      theFirstTime = true
-      this.time = setTimeout(this.fifteenTimeUpdate, 15000)
+      this.fifteenTimeUpdate()
     } else if (Lottery.isSSQ(this.lottery) || Lottery.isDLT(this.lottery) || Lottery.isK3(this.lottery) || Lottery.isFC3D(this.lottery)) {
       this.$store.dispatch(GET_CURRENT_LOTTERY).then(() => {
         let issue = recommendIssue.get()
