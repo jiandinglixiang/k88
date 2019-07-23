@@ -743,187 +743,6 @@ export default {
     confirmPaymentYp () {
       // 亚盘下单
       const result = {}
-      // if (this.confirm.mode === 2) {
-      //   // 过关
-      //   let msg = '请输入正确的投注金额'
-      //   let inputArray = []
-      //   for (let i in this.ManyValue) {
-      //     if (/^\d+$/.test(this.ManyValue[i]) && this.ManyValue[i] > 0) {
-      //       inputArray.push({
-      //         text: i, Value: this.ManyValue[i]
-      //       })
-      //     } else {
-      //       msg = '投注金额必须是整数'
-      //       break
-      //     }
-      //   }
-      //   if (inputArray.length <= 0) {
-      //     Toast(msg)
-      //     return
-      //   } else {
-      //     const postArray = []
-      //     for (let i in this.popupArray) {
-      //       for (let j in inputArray) {
-      //         if (this.popupArray[i].text.toLowerCase() === inputArray[j].text.toLowerCase()) {
-      //           postArray.push({
-      //             key: this.popupArray[i].key,
-      //             value: this.popupArray[i].value,
-      //             text: this.popupArray[i].text,
-      //             stake: this.popupArray[i].stake,
-      //             upperLimit: this.popupArray[i].upperLimit,
-      //             total: inputArray[j].Value
-      //           })
-      //         }
-      //       }
-      //     }
-      //     let stats = true
-      //     for (let i in postArray) {
-      //       if (postArray[i].total > postArray[i].upperLimit) {
-      //         Toast(postArray[i].value + '超过投注上限,请重新输入')
-      //         stats = false
-      //         break
-      //       }
-      //     }
-      //     if (stats === true) {
-      //       if (JSON.stringify(this.updateOdds) === '{}') {
-      //         result.Orders = postArray.map((v) => {
-      //           return {
-      //             series: v.key,
-      //             lottery_id: this.lotteryId,
-      //             play_type: this.confirm.mode,
-      //             stake_count: v.stake,
-      //             total_amount: v.total,
-      //             schedule_orders: this.bettingList.map(value => {
-      //               return {
-      //                 bet_number: value.selected[0].key,
-      //                 schedule_id: value.id,
-      //                 is_sure: value.isSure ? 1 : 0,
-      //                 odds: value.selected[0].value
-      //               }
-      //             })
-      //           }
-      //         })
-      //       } else {
-      //         const updateOddsArray = []
-      //         for (let i in this.updateOdds) {
-      //           for (let j in this.updateOdds[i]) {
-      //             updateOddsArray.push({
-      //               schedule_id: i,
-      //               new_odds: this.updateOdds[i][j],
-      //               key: j
-      //             })
-      //           }
-      //         }
-      //         result.Orders = postArray.map((v) => {
-      //           return {
-      //             series: v.key,
-      //             lottery_id: this.lotteryId,
-      //             play_type: this.confirm.mode,
-      //             stake_count: v.stake,
-      //             total_amount: v.total,
-      //             schedule_orders: this.bettingList.map(value => {
-      //               for (let i in updateOddsArray) {
-      //                 if (value.id === updateOddsArray[i].schedule_id) {
-      //                   return {
-      //                     bet_number: value.selected[0].key,
-      //                     schedule_id: value.id,
-      //                     is_sure: value.isSure ? 1 : 0,
-      //                     odds: updateOddsArray[i].new_odds
-      //                   }
-      //                 }
-      //               }
-      //             })
-      //           }
-      //         })
-      //       }
-      //     } else {
-      //       return
-      //     }
-      //   }
-      // } else {
-      //   // 单关
-      //   let selectedCount = 0 // 选中个数
-      //   let inputValueCount = 0 // 输入个数
-      //   for (let i in this.bettingList) {
-      //     selectedCount += this.bettingList[i].selected.length
-      //   }
-      //   for (let i in this.inputValue) {
-      //     inputValueCount += this.inputValue[i].length
-      //   }
-      //   if (inputValueCount <= 0 || inputValueCount < selectedCount) {
-      //     Toast('请输入投注金额')
-      //     return
-      //   } else {
-      //     let msg = '请输入投注金额'
-      //     let postArray = []
-      //     Object.keys(this.inputValue).find(key => !!Object.keys(this.inputValue[key]).find(key2 => {
-      //       const val2 = this.inputValue[key][key2]
-      //       if (/^\d+$/.test(val2.total) && val2.total > 0) {
-      //         if (val2.total > val2.upperLimit) {
-      //           msg = '超过投注上限,请重新输入'
-      //           postArray = []
-      //           return true
-      //         }
-      //         postArray.push(val2)
-      //         return false
-      //       }
-      //       msg = '投注金额必须是整数'
-      //       postArray = []
-      //       return true
-      //     }))
-      //     if (postArray.length === 0) {
-      //       Toast(msg)
-      //       return
-      //     }
-      //     if (JSON.stringify(this.updateOdds) === '{}') {
-      //       result.Orders = postArray.map(v => {
-      //         return {
-      //           series: '101',
-      //           lottery_id: this.lotteryId,
-      //           play_type: this.confirm.mode,
-      //           stake_count: '1',
-      //           total_amount: v.total,
-      //           schedule_orders: [{
-      //             bet_number: v.key,
-      //             schedule_id: v.id,
-      //             is_sure: '0',
-      //             odds: v.value
-      //           }]
-      //         }
-      //       })
-      //     } else {
-      //       const updateOddsArray = []
-      //       for (let i in this.updateOdds) {
-      //         for (let j in this.updateOdds[i]) {
-      //           updateOddsArray.push({
-      //             schedule_id: i,
-      //             new_odds: this.updateOdds[i][j],
-      //             key: j
-      //           })
-      //         }
-      //       }
-      //       result.Orders = postArray.map((v) => {
-      //         for (let i in updateOddsArray) {
-      //           if (v.id === updateOddsArray[i].schedule_id && v.key === updateOddsArray[i].key) {
-      //             return {
-      //               series: '101',
-      //               lottery_id: this.lotteryId,
-      //               play_type: this.confirm.mode,
-      //               stake_count: '1',
-      //               total_amount: v.total,
-      //               schedule_orders: [{
-      //                 bet_number: v.key,
-      //                 schedule_id: v.id,
-      //                 is_sure: '0',
-      //                 odds: updateOddsArray[i].new_odds
-      //               }]
-      //             }
-      //           }
-      //         }
-      //       })
-      //     }
-      //   }
-      // }
       if (this.confirm.mode === 2) {
         result.Orders = this.confirmPaymentYpGG()
       } else {
@@ -1065,19 +884,19 @@ export default {
       }
     },
     refresh () {
-      clearTimeout(this.time)
-      this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType).then(() => {
-        return this.$store.commit(SPORTS_CONFIRM_BET)
-      }).finally(this.fifteenTimeUpdate)
+      this.fifteenTimeUpdate().then(function () {
+        Toast('刷新成功')
+      })
       this.toggleModel()
     },
     fifteenTimeUpdate () {
       // 亚盘更新
-      this.time = setTimeout(() => {
-        this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType).then(() => {
-          return this.$store.commit(SPORTS_CONFIRM_BET)
-        }).finally(this.fifteenTimeUpdate)
-      }, 15000)
+      clearTimeout(this.time)
+      return this.$store.dispatch(CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, this.currentType).then(() => {
+        return this.$store.commit(SPORTS_CONFIRM_BET)
+      }).finally(() => {
+        this.time = setTimeout(this.fifteenTimeUpdate, 15000)
+      })
     }
   },
   created () {
@@ -1106,7 +925,6 @@ export default {
         }
       }
       if (Lottery.isAHFootBall(this.lotteryId)) {
-        clearTimeout(this.time)
         // 亚盘每15秒更新次
         this.fifteenTimeUpdate()
       } else {

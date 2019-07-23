@@ -74,7 +74,7 @@ export default {
         const sizeBall = betItem.lotteryId === 904 // 大小球
         const letBall = betItem.lotteryId === 903
         const objKey = (letBall && 'betting_score_letball') || (sizeBall && 'betting_score_sizeball')
-        const bonusLimit = state.user.mine.bonus_limit || 0
+        const bonusLimit = state.user.mine.run_bonus_limit || 0
         let betObj = {}
         const noBet = lottery.some(v => {
           const isEq = v.id * 1 === betItem.Id[0] * 1
@@ -89,11 +89,12 @@ export default {
         betObj.BET_teamName = betItem.key.startsWith('1', betItem.key.length - 1) ? betObj.home : betObj.guest
         const oddss = betObj.betting_score_odds && betObj.betting_score_odds[objKey] && betObj.betting_score_odds[objKey][betItem.key]
         const odd = oddss ? oddDiscern(oddss) : {}
+        betObj.BET_key = betItem.key
         betObj.BET_oddStatus = odd.oddStatus
         betObj.BET_odds = odd.odd
         betObj.BET_text = betItem.text
         betObj.BET_lotteryId = betItem.lotteryId
-        betObj.BET_maxMoney = Math.floor(bonusLimit / odd.odd)
+        betObj.BET_maxMoney = Math.floor(bonusLimit / (odd.odd || 1))
         return betObj
       }
     }),
@@ -134,6 +135,9 @@ export default {
     },
     async payment () {
       let balance = this.mine.balance
+      let redCo = {}
+      let data = {}
+      let action = ''
       if (!this.itemData.BET_odds) {
         return Toast('投注比赛消失')
       }
@@ -154,33 +158,92 @@ export default {
         // const type = this.redObj.type * 1
         // if (type === 1) {
         balance += (this.redObj.balance * 1)
+        redCo = copy(this.redObj)
         // } else if (type === 2) {
         // 满减红包
         // }
       }
       if (this.money > balance) {
-        const action = await MessageBox({
+        action = await MessageBox({
           title: '',
           message: '余额不足,请充值',
           showCancelButton: true,
           confirmButtonText: '去充值',
-          confirmButtonClass: 'order-message-box'
+          confirmButtonClass: 'order-message-box',
+          closeOnClickModal: false
         })
-        if (action === 'confirm') {
-          return this.$router.push({
-            name: 'Payment',
-            query: { lack: (Math.floor((this.money - balance) / 100) * 100 + 300).toFixed(2) }
-          })
-        }
-        return action
+        if (action !== 'confirm') return
+        return this.$router.push({
+          name: 'Payment',
+          query: { lack: (Math.floor((this.money - balance) / 100) * 100 + 300).toFixed(2) }
+        })
       }
+
+      const postData = {
+        series: '101',
+        lottery_id: this.itemData.BET_lotteryId,
+        play_type: '1', // 1单关2过关
+        stake_count: '1',
+        total_amount: this.money,
+        schedule_orders: [{
+          bet_number: this.itemData.BET_key,
+          schedule_id: this.itemData.id,
+          is_sure: '0', // 胆
+          odds: this.itemData.BET_odds
+        }]
+      }
+      data = await HTTP.postWebBetPreBetYp(postData).catch(err => {
+        Toast('下单失败')
+        return Promise.reject(err)
+      })
+      data = { update_odds: { [postData.schedule_orders[0].schedule_id]: { [postData.schedule_orders[0].bet_number]: postData.schedule_orders[0].odds } } }
+      // 赔率变化
+      if (data.update_odds && data.update_odds[postData.schedule_orders[0].schedule_id] && data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number]) {
+        action = await MessageBox({
+          title: '',
+          message: '赔率发生变动是否接受',
+          showCancelButton: true,
+          confirmButtonText: '接受付款',
+          confirmButtonClass: 'order-message-box',
+          closeOnClickModal: false
+        })
+        if (action !== 'confirm') return
+        postData.schedule_orders[0].odds = floor(data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number])
+        // 重新提交
+        data = await HTTP.postWebBetPreBetYp(postData).catch(err => {
+          Toast('下单失败.')
+          return Promise.reject(err)
+        })
+      }
+      if (data.update_odds) return Toast('更新赔率,重新提交')
+      this.playSubmit(redCo.id, data.id, data.sign)
+    },
+    playSubmit (red, id, sign) {
+      if (!id || !sign) return new Error('参数错误')
+      return HTTP.postBetSubmitPay(red || 0, id, sign).then(async (ok) => {
+        // console.log(ok)
+        // Toast('下单成功')
+        const action = await MessageBox({
+          title: '',
+          message: '下单成功',
+          showCancelButton: true,
+          confirmButtonText: '查看订单',
+          confirmButtonClass: 'order-message-box',
+          closeOnClickModal: false
+        })
+        if (action !== 'confirm') return
+        return this.$router.push({ name: 'OrderDetail', params: { id: ok.order_id } })
+      }).catch(function (msg) {
+        Toast('支付失败')
+        console.log(msg)
+      })
     }
   },
   created () {
     this.getMineInfo()
   },
   watch: {
-    maskShow (val) {
+    async maskShow (val) {
       if (val) {
         this.money = ''
         this.redObj = null
@@ -196,6 +259,7 @@ export default {
     background-color: $cffC63A;
     color: $c131313;
   }
+
   #g-grounder-betting {
     max-width: 300px;
     margin: 0 auto;
