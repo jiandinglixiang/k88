@@ -5,7 +5,7 @@
         <div class="g-Match-message" @click.stop="swAnalyze(x)" :class="show[x]&&'g-click-up'">
           <img class="g-msg-icon" src="../assets/ic_gun.png"/>
           <p class="g-msg-name">
-            <span>{{n.round_no}}</span>
+            <!--            <span>{{n.round_no}}</span>-->
             <span>{{n.league}}</span>
             <!--            <span>联赛</span>-->
           </p>
@@ -80,8 +80,8 @@ export default {
         '-14': '比赛推迟'
       }
       if (gameStauts === 1 || gameStauts === 3) {
-        const duration = gameStauts === 3 ? 45 * 60 : 90 * 60 // 持续时间
-        const past = duration - (n.server_time - n.start_time) // 现在时间与开始时间差额
+        // const duration = gameStauts === 3 ? 45 * 60 : 90 * 60 // 持续时间
+        const past = n.server_time - n.start_time // 现在时间与开始时间差额
         const m = Math.floor(past / 60)
         const ms = past - m * 60
         return `${m}:${ms > 9 ? ms : ms + '0'}`
@@ -136,7 +136,7 @@ export default {
           }
 
           .g-msg-name {
-            /*margin-top: 5px;*/
+            margin-top: 5px;
             display: flex;
             flex-flow: column nowrap;
             align-items: center;
