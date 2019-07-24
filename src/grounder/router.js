@@ -7,7 +7,7 @@ const orderDetailScheme = () => import('./view/order/OrderDetailScheme.vue')
 const routes = [
   {
     path: '/orderDetial/:id',
-    name: 'OrderDetail1',
+    name: 'GrounderOrderDetail',
     component: orderDetial
   },
   {
