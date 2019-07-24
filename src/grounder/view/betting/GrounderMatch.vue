@@ -40,7 +40,7 @@
         @fifteenUpdate="manuallyUpdate"
         v-if="mask[2].load"
         v-show="mask[2].show"
-        :mask-show="mask[2].show"
+        :mask-show.sync="mask[2].show"
       />
     </m-mask>
   </div>

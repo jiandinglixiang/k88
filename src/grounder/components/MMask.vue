@@ -12,7 +12,6 @@ export default {
   name: 'MMask'
 }
 </script>
-
 <style scoped>
   #m-mask {
     position: fixed;
@@ -20,7 +19,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 100;
+    z-index: 10;
     background-color: rgba(28, 28, 28, 0.5);
     display: flex;
     flex-flow: row;

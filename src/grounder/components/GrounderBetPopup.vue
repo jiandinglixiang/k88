@@ -36,7 +36,7 @@
       :red-obj.sync="redObj"
     />
     <div class="g-submit-button">
-      <button :disabled="disabledPayment" @click="payment">付款</button>
+      <button :disabled="disabledPayment" @click="payment">{{antiShake}}</button>
     </div>
   </div>
 </template>
@@ -60,6 +60,7 @@ export default {
   },
   data () {
     return {
+      antiShake: '付款',
       money: '', // 输入金额
       redObj: null // 红包
     }
@@ -109,16 +110,16 @@ export default {
       if (this.itemData.is_lock) {
         return '投注已暂停'
       }
+      if (this.itemData.BET_oddStatus) {
+        return '赔率已发生变化'
+      }
       // '赔率已发生变化'
       return ''
     },
     disabledPayment () {
-      if (!this.itemData.BET_odds) {
-        return true
-      }
-      if (this.itemData.is_lock * 1) {
-        return true
-      }
+      if (this.antiShake !== '付款') return true
+      if (!this.itemData.BET_odds) return true
+      if (this.itemData.is_lock * 1) return true
       return !this.money
     },
     disabledInput () {
@@ -136,7 +137,6 @@ export default {
     async payment () {
       let balance = this.mine.balance
       let redCo = {}
-      let data = {}
       let action = ''
       if (!this.itemData.BET_odds) {
         return Toast('投注比赛消失')
@@ -165,8 +165,8 @@ export default {
       }
       if (this.money > balance) {
         action = await MessageBox({
-          title: '',
-          message: '余额不足,请充值',
+          title: '提示',
+          message: '余额不足,请充值!',
           showCancelButton: true,
           confirmButtonText: '去充值',
           confirmButtonClass: 'order-message-box',
@@ -178,7 +178,31 @@ export default {
           query: { lack: (Math.floor((this.money - balance) / 100) * 100 + 300).toFixed(2) }
         })
       }
-
+      this.antiShake = '付款中...'
+      const data = await this.postOrder().catch((err) => {
+        if (err !== 'cancel') Toast('下单失败')
+        console.log(err)
+        this.antiShake = '付款'
+        return Promise.reject(err)
+      })
+      this.playSubmit(redCo.id, data.id, data.sign).catch(err => {
+        this.antiShake = '付款'
+        Toast('支付失败')
+        console.log(err)
+      })
+    },
+    async postOrder (odds) {
+      if (odds) {
+        const action = await MessageBox({
+          title: '提示',
+          message: '赔率发生变动是否接受?',
+          showCancelButton: true,
+          confirmButtonText: '接受付款',
+          confirmButtonClass: 'order-message-box',
+          closeOnClickModal: false
+        })
+        if (action !== 'confirm') return Promise.reject(action)
+      }
       const postData = {
         series: '101',
         lottery_id: this.itemData.BET_lotteryId,
@@ -189,53 +213,33 @@ export default {
           bet_number: this.itemData.BET_key,
           schedule_id: this.itemData.id,
           is_sure: '0', // 胆
-          odds: this.itemData.BET_odds
+          odds: odds || this.itemData.BET_odds
         }]
       }
-      data = await HTTP.postWebBetPreBetYp(postData).catch(err => {
-        Toast('下单失败')
-        return Promise.reject(err)
+      return HTTP.postWebBetPreBetYp(postData).then(data => {
+        if (!data.update_odds) return data
+        if (!odds && data.update_odds[postData.schedule_orders[0].schedule_id] && data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number]) {
+          return this.postOrder(floor(data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number]))
+        }
+        return Promise.reject(data)
       })
-      data = { update_odds: { [postData.schedule_orders[0].schedule_id]: { [postData.schedule_orders[0].bet_number]: postData.schedule_orders[0].odds } } }
-      // 赔率变化
-      if (data.update_odds && data.update_odds[postData.schedule_orders[0].schedule_id] && data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number]) {
-        action = await MessageBox({
-          title: '',
-          message: '赔率发生变动是否接受',
-          showCancelButton: true,
-          confirmButtonText: '接受付款',
-          confirmButtonClass: 'order-message-box',
-          closeOnClickModal: false
-        })
-        if (action !== 'confirm') return
-        postData.schedule_orders[0].odds = floor(data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number])
-        // 重新提交
-        data = await HTTP.postWebBetPreBetYp(postData).catch(err => {
-          Toast('下单失败.')
-          return Promise.reject(err)
-        })
-      }
-      if (data.update_odds) return Toast('更新赔率,重新提交')
-      this.playSubmit(redCo.id, data.id, data.sign)
     },
     playSubmit (red, id, sign) {
-      if (!id || !sign) return new Error('参数错误')
-      return HTTP.postBetSubmitPay(red || 0, id, sign).then(async (ok) => {
+      if (!id || !sign) return Promise.reject(new Error('参数错误'))
+      return HTTP.postBetSubmitPay(red || 0, id, sign).then(async ok => {
         // console.log(ok)
-        // Toast('下单成功')
+        // Toast('下单成功');
+        this.$emit('update:mask-show', false)
         const action = await MessageBox({
-          title: '',
+          title: ` `,
           message: '下单成功',
           showCancelButton: true,
           confirmButtonText: '查看订单',
           confirmButtonClass: 'order-message-box',
           closeOnClickModal: false
         })
-        if (action !== 'confirm') return
-        return this.$router.push({ name: 'OrderDetail', params: { id: ok.order_id } })
-      }).catch(function (msg) {
-        Toast('支付失败')
-        console.log(msg)
+        if (action !== 'confirm') return (this.antiShake = '付款')
+        return this.$router.push({ name: 'OrderDetail1', params: { id: ok.order_id } })
       })
     }
   },

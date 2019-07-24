@@ -81,6 +81,9 @@ export default class Lottery {
     return [LOTTERYIDS.AHFOOTBALL_QCRQ, LOTTERYIDS.AHFOOTBALL_QCDXQ].indexOf(parseInt(lotteryId)) !== -1
   }
 
+  static isGrounderFootBall (lotteryId) {
+    return [LOTTERYIDS.GROUNDER_FOOTBALL, LOTTERYIDS.GROUNDER_FOOTBALL_DXQ, LOTTERYIDS.GROUNDER_FOOTBALL_RQ].indexOf(parseInt(lotteryId)) !== -1
+  }
   static isRecommend (lotteryId) {
     return this.isFootBall(lotteryId) || this.isBasketBall(lotteryId) || this.isAHFootBall(lotteryId)
   }
