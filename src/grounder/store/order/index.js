@@ -1,4 +1,4 @@
-export const Demo = 'Demo'
+import { LotteryFootballKey } from '../../../store/constants.js'
 
 const actions = {}
 const mutations = {}
@@ -7,4 +7,102 @@ export default {
   state: {},
   mutations,
   actions
+}
+
+export function betOddText (item, lotteryid) {
+  const letBall = lotteryid === '903'
+  const sizeBall = lotteryid === '904' // 大小球
+  const finalArray = item.score && item.score.final && item.score.final.split(':')
+  let total = 0 // 总分
+  const finalArr = Array.isArray(finalArray) && finalArray.map(val => {
+    val = parseInt(val)
+    total += val
+    return val
+  })
+  const objKey = (letBall && 'betting_score_letball') || (sizeBall && 'betting_score_sizeball')
+  let arr = []
+  if (!item.betting_order || !item.betting_order[objKey]) return arr
+  const obj = Object.keys(item.betting_order[objKey])
+  const odd = item.betting_order[objKey]
+  const oddTxt = LotteryFootballKey[objKey]
+  obj.sort((key1, key2) => key1.slice(1) > key2.slice(1))
+  const difference = item.lottery_id === '903' ? f2 : f3
+
+  function f1 (arr) {
+    if (sizeBall) arr.join('/')
+    return arr.map(v => v > 0 ? `+${v}` : v).join('/')
+  }
+
+  function f2 (obj) {
+    // 让球
+    let status = 0 // 中奖状态
+    const big = obj[0].charAt(obj[0].length - 1) === '1' // 主队
+    if (Array.isArray(finalArr)) {
+      if (big) {
+        for (let letBall of oddTxt[obj[0]]) { // 暂用  即时比分做判断
+          const arr1 = finalArr[0] + letBall
+          if (arr1 > finalArr[1]) {
+            status = 3 // 中奖
+          } else if (arr1 < finalArr[1]) {
+            status = 0 // 未中奖
+          } else {
+            status = 1 // 平局
+            break
+          }
+        }
+      } else {
+        for (let letBall of oddTxt[obj[0]]) {
+          const arr1 = finalArr[1] + letBall
+          if (arr1 > finalArr[0]) {
+            status = 3
+          } else if (arr1 < finalArr[0]) {
+            status = 0
+          } else {
+            status = 1
+            break
+          }
+        }
+      }
+    }
+    return status
+  }
+
+  function f3 (obj) {
+    // 大小球
+    let status = 0 // 状态
+    const big = obj[0].charAt(obj[0].length - 1) === '1' // 大球
+    let key = 0
+    for (let i in oddTxt[obj[0]]) {
+      key = oddTxt[obj[0]][i]
+    }
+    if (big) {
+      // 买大球
+      if (total > key) {
+        status = 3
+      } else if (total < key) {
+        status = 0
+      } else {
+        status = 1
+      }
+    } else {
+      // 买小球
+      if (total < key) {
+        status = 3
+      } else if (total > key) {
+        status = 0
+      } else {
+        status = 1
+      }
+    }
+    return status
+  }
+  const odds = odd[obj[0]].split('-')
+  arr.push({
+    key: obj[0],
+    text: f1(oddTxt[obj[0]]),
+    odd: odds[0],
+    status: difference(obj)
+  })
+  // console.log(arr[0])
+  return arr[0]
 }
