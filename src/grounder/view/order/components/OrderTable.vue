@@ -49,8 +49,6 @@ export default {
         _html = `<p>最终</p><p>${finalArr[0]}-${finalArr[1]}</p>`
       } else if (status === 11) {
         _html = `<p class="text-primary">取消</p>`
-      } else {
-        _html = ``
       }
       return _html
     },
@@ -69,8 +67,6 @@ export default {
         } else {
           _html = `<span>小<br>(${oddtxt.text}) ${oddtxt.odd}</span>`
         }
-      } else {
-        _html = ``
       }
       return _html
     }
