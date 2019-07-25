@@ -66,6 +66,11 @@ export default {
           name: 'OrderDetail',
           params: { id: order.id }
         })
+      } else if (Lottery.isGrounderFootBall(id)) {
+        this.$router.push({
+          name: 'GrounderOrderDetail',
+          params: { id: order.id }
+        })
       } else {
         Toast('该功能暂未开发!')
       }

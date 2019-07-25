@@ -3,7 +3,7 @@
     <tr>
       <th>场次</th>
       <th>主队vs客队</th>
-      <th>即时比分</th>
+      <th v-if="lotteryId==='903'">即时比分</th>
       <th>投注内容/出票赔率</th>
       <th>彩果</th>
     </tr>
@@ -16,11 +16,13 @@
         <p>VS</p>
         <p>{{item.guest}}</p>
       </td>
-      <td>
-        <p>0-2</p>
+      <td v-if="item.lottery_id==='903'">
+        <p>即时比分 <br>{{item.bet_score}}</p>
       </td>
       <td>
-        <p class="state-0">让球 <span>布拉加</span> <br><span>(-1.5/-2.0）</span><span>2.35</span></p>
+        <p
+          :class="{'state-0': oddText(item,item.lottery_id ).status===3,'state-1': oddText(item,item.lottery_id).status===1}"
+          v-html="BetContent (oddText(item,item.lottery_id), item)"></p>
       </td>
       <td>
         <p v-html="Fruit(item, status)"></p>
@@ -30,11 +32,16 @@
 </template>
 
 <script>//
+import { betOddText } from '../../../store/order'
 
 export default {
   name: 'OrderTable',
-  props: ['list', 'status'],
+  props: ['list', 'status', 'lotteryId'],
+  computed: {},
   methods: {
+    oddText (item, id) {
+      return betOddText(item, id)
+    },
     Fruit (n, status) {
       let _html = ``
       let finalArr = n.schedule_final_score.split(':')
@@ -42,8 +49,24 @@ export default {
         _html = `<p>最终</p><p>${finalArr[0]}-${finalArr[1]}</p>`
       } else if (status === 11) {
         _html = `<p class="text-primary">取消</p>`
-      } else {
-        _html = ``
+      }
+      return _html
+    },
+    BetContent (oddtxt, n) {
+      let _html = ``
+      let big = oddtxt.key.charAt(oddtxt.key.length - 1) === '1' // 1 大球/主队
+      if (n.lottery_id === '903') {
+        if (big) {
+          _html = `<span>让球 <br> ${n.home}<br>(${oddtxt.text}) ${oddtxt.odd}</span>`
+        } else {
+          _html = `<span>让球 <br> ${n.guest}<br>(${oddtxt.text}) ${oddtxt.odd}</span>`
+        }
+      } else if (n.lottery_id === '904') {
+        if (big) {
+          _html = `<span>大<br>(${oddtxt.text}) ${oddtxt.odd}</span>`
+        } else {
+          _html = `<span>小<br>(${oddtxt.text}) ${oddtxt.odd}</span>`
+        }
       }
       return _html
     }
@@ -87,6 +110,21 @@ export default {
         width: 12px;
         height: 9px;
         background-image: url(../../../../assets/icon/gold_check.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+
+    .state-1 {
+      color: #3698fb;
+
+      &:after {
+        content: '';
+        display: inline-block;
+        width: 12px;
+        height: 9px;
+        background-image: url(../../../../assets/icon/blue_check.png);
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;

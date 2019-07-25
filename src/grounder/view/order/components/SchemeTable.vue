@@ -10,7 +10,9 @@
       </tr>
       <tr :key="index1" v-for="(ticket, index1) in scheme.tickets">
         <td>
-          <p class="state-0" :key="index2" v-for="(jc, index2) in ticket.jc_info">{{jc.round_no}} </p>
+          <p :class="{'state-0': oddText(jc, ticket.lottery_id).status===3,'state-1': oddText(jc, ticket.lottery_id).status===1}"
+             :key="index2" v-for="(jc, index2) in ticket.jc_info">
+            {{jc.round_no}} ({{oddText(jc, ticket.lottery_id).text}}) {{oddText(jc,ticket.lottery_id).odd}}</p>
         </td>
         <td>
           <p v-html="GameName(ticket.lottery_id)"></p>
@@ -35,6 +37,8 @@
 </template>
 
 <script>//
+import { betOddText } from '../../../store/order'
+
 export default {
   name: 'SchemeTable',
   props: ['scheme'],
@@ -67,6 +71,9 @@ export default {
       const winstatus = parseInt(status)
       const prizeText = winstatus === -1 ? '未中奖' : winstatus === 0 ? '待开奖' : winnings
       return prizeText
+    },
+    oddText (item, id) {
+      return betOddText(item, id)
     }
   }
 }
@@ -104,6 +111,21 @@ export default {
         width: 12px;
         height: 9px;
         background-image: url(../../../../assets/icon/gold_check.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+
+    .state-1 {
+      color: #3698fb;
+
+      &:after {
+        content: '';
+        display: inline-block;
+        width: 12px;
+        height: 9px;
+        background-image: url(../../../../assets/icon/blue_check.png);
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
