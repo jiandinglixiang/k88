@@ -55,54 +55,46 @@ export default {
       const sizeBall = this.lotteryId === 904 // 大小球
       const letBall = this.lotteryId === 903
       const objKey = (letBall && 'betting_score_letball') || (sizeBall && 'betting_score_sizeball')
-      let arr = []
+      const arr = []
       if (!this.item.betting_score_odds || !this.item.betting_score_odds[objKey]) return arr
       const obj = Object.keys(this.item.betting_score_odds[objKey])
       const oddTxt = LotteryFootballKey[objKey]
-      obj.sort((key1, key2) => key1.slice(1) > key2.slice(1))
+      obj.sort((key1, key2) => key1.slice(1) - key2.slice(1))
 
       function f1 (arr) {
         if (sizeBall) arr.join('/')
         return arr.map(v => v > 0 ? `+${v}` : v).join('/')
       }
 
-      function f2 (i) {
-        return obj[i].slice(0, obj[i].length - 1)
+      function f2 (ovj) {
+        return ovj.slice(0, ovj.length - 1)
       }
 
-      const oddData2 = this.item.betting_score_odds[objKey]
+      function f3 (obj) {
+        return {
+          ...oddDiscern(oddData2[obj]),
+          key: obj,
+          text: f1(oddTxt[obj]),
+          isLock
+        }
+      }
+
+      const oddData2 = this.item.betting_score_odds[objKey] // {v:1.2}
       const isLock = (this.item.is_lock || this.item.game_stauts < 0) ? `lock` : ''
 
       for (let i = obj.length - 1; i >= 1;) {
-        if (f2(i) === f2(i - 1)) {
-          arr.unshift([
-            {
-              ...oddDiscern(oddData2[obj[i]]),
-              key: obj[i],
-              text: f1(oddTxt[obj[i]]),
-              isLock
-            },
-            {
-              ...oddDiscern(oddData2[obj[i - 1]]),
-              key: obj[i - 1],
-              text: f1(oddTxt[obj[i - 1]]),
-              isLock
-            }
-          ])
+        const pushArr = [f3(obj[i])]
+        if (f2(obj[i]) === f2(obj[i - 1])) {
+          // v01 1===v01 2
+          pushArr.unshift(f3(obj[i - 1]))
+          arr.unshift(pushArr)
           i -= 2
         } else {
-          arr.push([{
-            ...oddDiscern(oddData2[obj[i]]),
-            key: obj[i],
-            text: f1(oddTxt[obj[i]]),
-            isLock
-          }, {
-            isLock: 'lock'
-          }])
+          obj[i].slice(obj[i].length - 1) > 1 ? pushArr.unshift({ isLock: 'lock' }) : pushArr.push({ isLock: 'lock' })
+          arr.push(pushArr)
           i--
         }
       }
-      // console.log(obj, arr)
       return arr
     },
     timeScore () {
@@ -239,6 +231,7 @@ export default {
           background: url("../assets/ic_selclose.png") no-repeat center center, url("../assets/ya_rang_bg.png") no-repeat center center;
           background-size: 10px 15px, 110% 110%;
         }
+
         .up {
           color: #1AC456;
 
