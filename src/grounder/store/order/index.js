@@ -12,7 +12,12 @@ export default {
 export function betOddText (item, lotteryid) {
   const letBall = lotteryid === '903'
   const sizeBall = lotteryid === '904' // 大小球
-  const finalArray = item.score && item.score.final && item.score.final.split(':')
+  const betScoreArray = item.bet_score.split(':') // 即时比分
+  const finalArray = item.score && item.score.final && item.score.final.split(':') // 彩果
+  const betScoreArr = Array.isArray(betScoreArray) && betScoreArray.map(val => {
+    val = parseInt(val)
+    return val
+  })
   let total = 0 // 总分
   const finalArr = Array.isArray(finalArray) && finalArray.map(val => {
     val = parseInt(val)
@@ -26,7 +31,7 @@ export function betOddText (item, lotteryid) {
   const odd = item.betting_order[objKey]
   const oddTxt = LotteryFootballKey[objKey]
   obj.sort((key1, key2) => key1.slice(1) > key2.slice(1))
-  const difference = item.lottery_id === '903' ? f2 : f3
+  const difference = lotteryid === '903' ? f2 : f3
 
   function f1 (arr) {
     if (sizeBall) arr.join('/')
@@ -37,13 +42,15 @@ export function betOddText (item, lotteryid) {
     // 让球
     let status = 0 // 中奖状态
     const big = obj[0].charAt(obj[0].length - 1) === '1' // 主队
-    if (Array.isArray(finalArr)) {
+    if (Array.isArray(finalArr) && Array.isArray(betScoreArr)) {
+      const final1 = finalArr[0] - betScoreArr[0] // 减去即时比分
+      const final2 = finalArr[1] - betScoreArr[1]
       if (big) {
-        for (let letBall of oddTxt[obj[0]]) { // 暂用  即时比分做判断
-          const arr1 = finalArr[0] + letBall
-          if (arr1 > finalArr[1]) {
+        for (let letBall of oddTxt[obj[0]]) {
+          const arr1 = final1 + letBall
+          if (arr1 > final2) {
             status = 3 // 中奖
-          } else if (arr1 < finalArr[1]) {
+          } else if (arr1 < final2) {
             status = 0 // 未中奖
           } else {
             status = 1 // 平局
@@ -52,10 +59,10 @@ export function betOddText (item, lotteryid) {
         }
       } else {
         for (let letBall of oddTxt[obj[0]]) {
-          const arr1 = finalArr[1] + letBall
-          if (arr1 > finalArr[0]) {
+          const arr1 = final2 + letBall
+          if (arr1 > final1) {
             status = 3
-          } else if (arr1 < finalArr[0]) {
+          } else if (arr1 < final1) {
             status = 0
           } else {
             status = 1
@@ -96,6 +103,7 @@ export function betOddText (item, lotteryid) {
     }
     return status
   }
+
   const odds = odd[obj[0]].split('-')
   arr.push({
     key: obj[0],

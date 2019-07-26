@@ -17,7 +17,7 @@
         <p>{{item.guest}}</p>
       </td>
       <td v-if="item.lottery_id==='903'">
-        <p>即时比分 <br>{{item.bet_score}}</p>
+        <p>{{item.bet_score}}</p>
       </td>
       <td>
         <p
