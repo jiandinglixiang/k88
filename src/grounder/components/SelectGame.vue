@@ -37,6 +37,7 @@ export default {
 
 <style scoped lang="scss">
   .s-select-game {
+    max-width: 640px;
     width: 100%;
     align-self: flex-start;
     display: flex;
