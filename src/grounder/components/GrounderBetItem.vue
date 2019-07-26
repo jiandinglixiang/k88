@@ -55,8 +55,9 @@ export default {
       const sizeBall = this.lotteryId === 904 // 大小球
       const letBall = this.lotteryId === 903
       const objKey = (letBall && 'betting_score_letball') || (sizeBall && 'betting_score_sizeball')
-      const arr = []
-      if (!this.item.betting_score_odds || !this.item.betting_score_odds[objKey]) return arr
+      if (!this.item.betting_score_odds || !this.item.betting_score_odds[objKey]) {
+        return [[{ text: '-', isLock: 'lock' }, { text: '-', isLock: 'lock' }]]
+      }
       const obj = Object.keys(this.item.betting_score_odds[objKey])
       const oddTxt = LotteryFootballKey[objKey]
       obj.sort((key1, key2) => key1.slice(1) - key2.slice(1))
@@ -81,7 +82,7 @@ export default {
 
       const oddData2 = this.item.betting_score_odds[objKey] // {v:1.2}
       const isLock = (this.item.is_lock || this.item.game_stauts < 0) ? `lock` : ''
-
+      const arr = []
       for (let i = obj.length - 1; i >= 1;) {
         const pushArr = [f3(obj[i])]
         if (f2(obj[i]) === f2(obj[i - 1])) {
@@ -90,7 +91,10 @@ export default {
           arr.unshift(pushArr)
           i -= 2
         } else {
-          obj[i].slice(obj[i].length - 1) > 1 ? pushArr.unshift({ isLock: 'lock' }) : pushArr.push({ isLock: 'lock' })
+          obj[i].slice(obj[i].length - 1) > 1 ? pushArr.unshift({
+            text: '-',
+            isLock: 'lock'
+          }) : pushArr.push({ text: '-', isLock: 'lock' })
           arr.push(pushArr)
           i--
         }

@@ -29,8 +29,7 @@ if (!String.prototype.format) {
 
 export function floor (x) {
   if (/^\d+(\.\d+)?$/.test(x)) {
-    x = (Math.floor(x * 10000) / 10000).toFixed(3)
-    return (Math.floor(`${x}1` * 10000) / 10000).toFixed(2)
+    return (Math.floor(`${x}${x ? '001' : ''}` * 100) / 100).toFixed(2)
   }
   return x
 }

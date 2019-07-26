@@ -13,8 +13,8 @@
         <span @click.stop="switchMask(1)" class="g-filtrate"></span>
         <router-link
           :to="{ name: 'WebPage',query: {
-          title: '玩法说明',
-          url: 'http://tgapi.k888.bet/index.php?s=/Content/help/jczq.html'
+          title: '滚盘玩法说明',
+          url: 'http://tgapi.k888.bet/index.php?s=/Content/help/jcgp.html'
         }
       }" tag="span" class="g-help"
         ></router-link>

@@ -239,7 +239,7 @@ export default {
           closeOnClickModal: false
         })
         if (action !== 'confirm') return (this.antiShake = '付款')
-        return this.$router.push({ name: 'OrderDetail1', params: { id: ok.order_id } })
+        return this.$router.push({ name: 'GrounderOrderDetail', params: { id: ok.order_id } })
       })
     }
   },
