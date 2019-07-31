@@ -98,13 +98,18 @@ export default {
       }
       this.filterUnconfirmed = copy(arr)
     },
-    filterUpdate (eve) {
-      return this.$emit('update:filter-arr', copy(this.filterUnconfirmed))
+    filterUpdate () {
+      if (this.filterUnconfirmed.length !== this.filterTypeArr.length) {
+        return this.$emit('update:filter-arr', copy(this.filterUnconfirmed))
+      }
+      this.$emit('update:filter-arr', false)
     }
   },
   watch: {
     maskShow (ne) {
-      if (ne) this.filterUnconfirmed = this.filterArr.length ? copy(this.filterArr) : []
+      if (ne && Array.isArray(this.filterArr)) {
+        this.filterUnconfirmed = this.filterArr.length ? copy(this.filterArr) : []
+      }
     }
   }
 }

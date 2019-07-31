@@ -11,6 +11,7 @@
     "alloyfinger": "^0.1.7",
     "alloytouch": "^0.2.4",
     "axios": "^0.19.0",
+    "bignumber.js": "^9.0.0",
     "core-js": "^2.6.5",
     "css3transform": "^1.1.7",
     "fastclick": "^1.0.6",

@@ -21,10 +21,11 @@
         type="number"
         placeholder="输入投注金额"
         :disabled="disabledInput"
+        v-show="!disabledInput"
         v-model="money"
         maxlength="6"
       >
-      <div class="g-disabled" v-show="!disabledInput"></div>
+      <div class="g-disabled" v-show="disabledInput"></div>
       <div class="g-input-bottom">
         <div>预计奖金 <span style="color: #3393FF">{{expectBonuses}}</span></div>
         <p>投注上限 {{itemData.BET_maxMoney}}</p>
@@ -95,7 +96,13 @@ export default {
         betObj.BET_odds = odd.odd
         betObj.BET_text = betItem.text
         betObj.BET_lotteryId = betItem.lotteryId
+        // 限制金额投注
         betObj.BET_maxMoney = Math.floor(bonusLimit / (odd.odd || 1))
+        if (betObj.BET_maxMoney > 30000) {
+          betObj.BET_maxMoney = 30000
+        } else if (betObj.BET_maxMoney < 30000) {
+          betObj.BET_maxMoney = 3000
+        }
         return betObj
       }
     }),
@@ -123,10 +130,14 @@ export default {
       return !this.money
     },
     disabledInput () {
-      if (this.itemData.BET_odds) {
-        return false
+      if (!this.itemData.BET_odds) {
+        // 赔率不存在
+        return true
+      } else if (this.itemData.is_lock * 1) {
+        // ===1
+        return true
       }
-      return !!this.itemData.is_lock * 1
+      return false
     }
   },
   methods: {
@@ -187,7 +198,7 @@ export default {
       })
       this.playSubmit(redCo.id, data.id, data.sign).catch(err => {
         this.antiShake = '付款'
-        Toast('支付失败')
+        Toast((err && err.msg) || '支付失败')
         console.log(err)
       })
     },
@@ -391,27 +402,24 @@ export default {
         }
       }
 
-      > input[disabled='disabled'] ~ .g-disabled {
+      > .g-disabled {
         // 禁止提示
-        width: 34px;
+        margin: 10px 0;
+        width: 100%;
         height: 34px;
-        background: url("../assets/ic_selclose.png") no-repeat center center;
+        background: url("../assets/ic_selclose.png") #ddd no-repeat center center;
         background-size: 15px 20px;
-        transform: translate(-50%, -50%);
-        position: absolute;
-        color: #999999;
-        left: 50%;
-        top: 50%;
+        border-radius: 5px;
       }
 
-      .g-input-top, .g-input-bottom {
+      > .g-input-top, > .g-input-bottom {
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
         font-weight: 500;
       }
 
-      .g-input-top {
+      > .g-input-top {
         > div {
           font-size: 13px;
           color: #131313;
@@ -427,7 +435,7 @@ export default {
         }
       }
 
-      .g-input-bottom {
+      > .g-input-bottom {
         color: #999;
         height: 17px;
 

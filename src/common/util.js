@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js'
 /**
  * Created by weishuwen on 2017/3/29.
  */
@@ -28,8 +29,14 @@ if (!String.prototype.format) {
 }
 
 export function floor (x) {
+  // let s = x
   if (/^\d+(\.\d+)?$/.test(x)) {
-    return (Math.floor(Math.floor(x * 1000) / 10) / 100).toFixed(2)
+    x = new BigNumber(x).toFormat(2)
+    // eslint-disable-next-line eqeqeq
+    // if (s != x) {
+    //   console.log(s, x)
+    // }
+    return x
   }
   return x
 }

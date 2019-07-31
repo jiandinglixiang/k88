@@ -52,7 +52,6 @@ import MMask from '../../components/MMask.vue'
 import RoundnessChart from '../../components/RoundnessChart.vue'
 import SelectGame from '../../components/SelectGame.vue'
 import GrounderBetPopup from '../../components/GrounderBetPopup.vue'
-import FilterMatch from '../../components/FilterMatch.vue'
 import { mapActions, mapState } from 'vuex'
 import { ADD_BETTING_ITEM, GET_JC_LIST } from '../../store/betting'
 import { LotteryId, LOTTERYIDS } from '../../../store/constants.js'
@@ -62,7 +61,14 @@ import Toast from '../../../common/toast.js'
 let isGet = true
 export default {
   name: 'GrounderMatch',
-  components: { FilterMatch, GrounderBetPopup, SelectGame, RoundnessChart, MMask, MatchContainer },
+  components: {
+    FilterMatch: () => import('../../components/FilterMatch.vue'),
+    GrounderBetPopup,
+    SelectGame,
+    RoundnessChart,
+    MMask,
+    MatchContainer
+  },
   created () {
     this.fifteenTimeUpdate(isGet && this.GrounderFootballList[0])
     isGet = false
@@ -92,8 +98,8 @@ export default {
       mask: [{ load: false, show: false }, { load: false, show: false }, { load: false, show: false }],
       filterArr: false, // 过滤条件
       timeTxt: [15, 100, 0], // 倒计时计算
-      time: 0, // 刷新
-      time2: 0 // 倒计时
+      time: null, // 刷新
+      time2: null // 倒计时
     }
   },
   methods: {
@@ -104,21 +110,26 @@ export default {
       // 亚盘更新
       clearTimeout(this.time)
       clearInterval(this.time2)
+      this.time = 0
+      this.time2 = 0
       this.timeTxt = [15, 100, 0]
       // console.log(new Date().getSeconds(), new Date().getSeconds() + 15)
       return this.getList(data).finally(() => {
-        this.time2 = setInterval(() => {
-          if (this.timeTxt[0] <= 1) {
-            this.timeTxt = [15, 100, 0]
-            return
-          }
-          const total = Math.floor((this.timeTxt[0] - 1) / 15 * 100)
-          this.timeTxt = [this.timeTxt[0] - 1, total, 100 - total]
-        }, 1000)
-        this.time = setTimeout(this.fifteenTimeUpdate, 15000)
+        if (this.time2 === 0) {
+          this.time2 = setInterval(() => {
+            if (this.timeTxt[0] <= 1) {
+              this.timeTxt = [15, 100, 0]
+              return
+            }
+            const total = Math.floor((this.timeTxt[0] - 1) / 15 * 100)
+            this.timeTxt = [this.timeTxt[0] - 1, total, 100 - total]
+          }, 1000)
+        }
+        if (this.time === 0) this.time = setTimeout(this.fifteenTimeUpdate, 15000)
       })
     },
     manuallyUpdate () {
+      if (!this.time || !this.time2) return
       return this.fifteenTimeUpdate().then(function () {
         Toast('刷新成功')
       })
@@ -135,12 +146,10 @@ export default {
       }
       return func
     },
-    filterUpdate (arr) {
-      if (Array.isArray(arr)) this.filterArr = arr
-    },
     switchGame (val) {
       loading.show()
       this.$store.commit(ADD_BETTING_ITEM, null) // 清理选中的比赛
+      this.filterArr = false
       this.fifteenTimeUpdate(this.GrounderFootballList.find(value => val.lotteryId === value.lotteryId)).finally(() => {
         loading.hide() //
         this.switchMask(-1)
@@ -150,6 +159,8 @@ export default {
   beforeDestroy () {
     clearTimeout(this.time)
     clearInterval(this.time2)
+    this.time = null
+    this.time2 = null
     console.log('销毁')
   },
   watch: {

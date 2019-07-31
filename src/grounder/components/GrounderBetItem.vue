@@ -12,8 +12,7 @@
           :key="n2.key"
           :class="n2.isLock"
           @click="addBetItem(n2)"
-        ><span>{{n2.text}}</span><span
-          :class="n2.oddStatus">{{n2.odd}}</span>
+        ><span>{{n2.text}}</span><span :class="n2.oddStatus">{{n2.odd}}</span>
         </div>
       </li>
     </ul>
@@ -27,7 +26,7 @@
         <div>{{n[0].text}}</div>
         <div v-for="n2 of n" :key="n2.key"
              @click="addBetItem(n2)"
-             :class="`${n2.isLock} ${n2.oddStatus}`"><span>{{n2.odd}}</span>
+             :class="`${n2.isLock||n2.oddStatus}`"><span>{{n2.odd}}</span>
         </div>
       </li>
     </ul>
@@ -61,6 +60,9 @@ export default {
       const obj = Object.keys(this.item.betting_score_odds[objKey])
       const oddTxt = LotteryFootballKey[objKey]
       obj.sort((key1, key2) => key1.slice(1) - key2.slice(1))
+      const oddData2 = this.item.betting_score_odds[objKey] // {v:1.2}
+      const isLock = (this.item.is_lock || this.item.game_stauts * 1 === 2 || this.item.game_stauts < 0) ? `lock` : ''
+      const arr = []
 
       function f1 (arr) {
         if (sizeBall) arr.join('/')
@@ -80,9 +82,6 @@ export default {
         }
       }
 
-      const oddData2 = this.item.betting_score_odds[objKey] // {v:1.2}
-      const isLock = (this.item.is_lock || this.item.game_stauts < 0) ? `lock` : ''
-      const arr = []
       for (let i = obj.length - 1; i >= 1;) {
         const pushArr = [f3(obj[i])]
         if (f2(obj[i]) === f2(obj[i - 1])) {
