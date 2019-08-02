@@ -81,24 +81,26 @@ export function betOddText (item, lotteryid) {
     let key = 0
     for (let i in oddTxt[obj[0]]) {
       key = oddTxt[obj[0]][i]
-    }
-    if (big) {
-      // 买大球
-      if (total > key) {
-        status = 3
-      } else if (total < key) {
-        status = 0
+      if (big) {
+        // 买大球
+        if (total > key) {
+          status = 3
+        } else if (total < key) {
+          status = 0
+        } else {
+          status = 1
+          break
+        }
       } else {
-        status = 1
-      }
-    } else {
-      // 买小球
-      if (total < key) {
-        status = 3
-      } else if (total > key) {
-        status = 0
-      } else {
-        status = 1
+        // 买小球
+        if (total < key) {
+          status = 3
+        } else if (total > key) {
+          status = 0
+        } else {
+          status = 1
+          break
+        }
       }
     }
     return status
