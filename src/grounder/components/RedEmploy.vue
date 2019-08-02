@@ -9,7 +9,7 @@
       <!--        <div :class="redTypeIndex===0&&'active-select'" @click="cutRedActive(0)">现金红包</div>-->
       <!--        <div :class="redTypeIndex===1&&'active-select'" @click="cutRedActive(1)">满减红包</div>-->
       <!--      </div>-->
-      <ul class="r-re-list" @click.stop @touchmove.stop v-show="list.length" >
+      <ul class="r-re-list" @click.stop @touchmove.stop v-show="list.length">
         <!--        <li :key="32158" class="active-select">-->
         <!--          <div><span>9928元</span></div>-->
         <!--          <p><span style="color:#999;">剩余</span> <span style="color: #FF3333">98988元</span></p>-->
@@ -36,19 +36,14 @@ export default {
   },
   data () {
     return {
-      // listName: '',
       list: []
-      // redTypeIndex: 0
     }
   },
   methods: {
     setRedId (n) {
-      if (this.redObj && this.redObj.id === n.id) return this.$emit('update:red-obj', null)
+      if (this.redObj && n && this.redObj.id === n.id) return this.$emit('update:red-obj', null)
       this.$emit('update:red-obj', n)
     },
-    // cutRedActive (x) {
-    //   this.redTypeIndex = x
-    // },
     getUserCouponList () {
       return HTTP.getUserCouponList(this.lotteryId).then(value => {
         if (value.coupon_list && value.coupon_list[0] && value.coupon_list[0].list && value.coupon_list[0].list.length) {
@@ -56,16 +51,16 @@ export default {
           this.list = value.coupon_list[0].list
           const red = value.coupon_list[0].list.find(v => v.is_default * 1)
           this.setRedId(red) // 添加默认
+        } else {
+          this.list = []
+          this.setRedId(null)
         }
-        return []
+      }).catch(() => {
+        this.list = []
+        this.setRedId(null)
       })
     }
   },
-  // computed: {
-  //   cashFilled () {
-  //     return []
-  //   }
-  // },
   created () {
     this.getUserCouponList()
   },

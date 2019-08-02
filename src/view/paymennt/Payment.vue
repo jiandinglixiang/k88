@@ -27,15 +27,21 @@
       </div>
     </div>
     <div class="bank-list margin-top-5">
-      <div :key="item.id" @click="changeRechargeTypeId(item.id)" class="item" v-for="item in list">
+      <div :key="item.id" @click="changeRechargeTypeId(item.id)" class="item" v-for="item in list()">
         <img :src="item.image" alt="">
         <div class="main">{{item.name}}</div>
         <div class="desc text-light">{{item.description||'......'}}</div>
         <checkbox :checked="checkId === item.id"></checkbox>
       </div>
+      <router-link class="item" :key="item.id" v-for="item in list(true)" tag="div"
+                   :to="{path:'/PaymentNoticeSubmitted',query: item.copy}">
+        <img :src="item.image" alt="">
+        <div class="main">{{item.name}}</div>
+        <div class="desc text-light">{{item.description||'......'}}</div>
+      </router-link>
     </div>
     <div class="padding margin-top-20">
-      <a :class="{'disabled': list.length === 0}" @click="submit" class="btn" href="javascript:">立即支付</a>
+      <a :class="{'disabled': list().length === 0}" @click="submit" class="btn" href="javascript:">立即支付</a>
     </div>
   </div>
 </template>
@@ -63,7 +69,29 @@ export default {
       return parseFloat(this.number)
     },
     ...mapState({
-      list: state => state.payment.rechargeList,
+      list (state) {
+        const [check, button] = [[], []]
+        Array.isArray(state.payment.rechargeList) && state.payment.rechargeList.forEach(function (item) {
+          const copy = { ...item }
+          if (item.type * 1 === 4) {
+            copy.copy = {
+              id: item.id,
+              type: item.type,
+              name: item.name,
+              account_name: item.recharge_channel_account_name,
+              bank_account: item.recharge_channel_bank_account,
+              bank_name: item.recharge_channel_bank_name
+            }
+            button.push(copy)
+          } else {
+            check.push(copy)
+          }
+        })
+        return function (b) {
+          if (b) return button
+          return check
+        }
+      },
       checkId: state => state.payment.rechargeTypeId,
       mine: state => state.user.mine
     })

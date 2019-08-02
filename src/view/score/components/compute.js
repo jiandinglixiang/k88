@@ -2,6 +2,8 @@ import SportsCalculate from '../../../model/sports/SportsCalculate'
 import SportsLotteryJcInfo from '../../../model/sports/SportsLotteryJcInfo'
 import { SeriesType } from '../../../store/constants'
 
+// import { copy } from '../../../common/util.js'
+
 function initSeries (series) {
   let seriesText = ''
   const seriesCopy = []
@@ -27,6 +29,7 @@ export default class compute {
     let PromsSave = []
     this.groups.groups = this.groups.groups.map((data, indexA) => {
       data.list = data.list.map((list, indexB) => {
+        // const list = copy(orList)
         // 比赛信息处理
         if (list.lottery_id === '20' || list.lottery_id === '21') {
           // 胜负彩处理
@@ -45,23 +48,27 @@ export default class compute {
             return '-'
           })
         }
-        list.jc_info = list.jc_info.map(info => {
-          const newInfo = new SportsLotteryJcInfo(info, info.lottery_id)
-          const index = list.schedule_list.findIndex(schedule => {
-            if (schedule.id === info.id || schedule.issue_no + schedule.round_no === info.issue_no + info.round_no) {
-              return true
+        if (Array.isArray(list.jc_info)) {
+          list.jc_info = list.jc_info.map(info => {
+            const newInfo = new SportsLotteryJcInfo(info, info.lottery_id)
+            const index = list.schedule_list.findIndex(schedule => {
+              if (schedule.id === info.id || schedule.issue_no + schedule.round_no === info.issue_no + info.round_no) {
+                return true
+              }
+              return false
+            })
+            if (index !== -1) {
+              const AMatch = list.schedule_list.splice(index, 1)
+              info = Object.assign(newInfo, info, { AMatch: AMatch[0] })
+            } else {
+              info = Object.assign(newInfo, info, { AMatch: {} })
             }
-            return false
+            info.selected = info.betting
+            return info
           })
-          if (index !== -1) {
-            const AMatch = list.schedule_list.splice(index, 1)
-            info = Object.assign(newInfo, info, { AMatch: AMatch[0] })
-          } else {
-            info = Object.assign(newInfo, info, { AMatch: {} })
-          }
-          info.selected = info.betting
-          return info
-        })
+        } else {
+          list.jc_info = []
+        }
         // 如果是胜负彩就不计算奖金
         if (list.lottery_id === '20' || list.lottery_id === '21') return list
         // 奖金计算

@@ -81,22 +81,24 @@ export default class SportsCalculate {
 
   setBetContent (orders) {
     let betContent = ''
-    orders.map(order => {
-      order.lotteryId = order.lotteryId ? order.lotteryId : parseInt(order.lottery_id)
-      let content = ''
-      if (order.lotteryId === 606) {
-        for (let i = 0; i < 5; i++) {
-          content += this.getScheduleContent(parseInt('60{0}'.format(i + 1)), order.selected[i] || [])
+    if (Array.isArray(orders)) {
+      orders.map(order => {
+        order.lotteryId = order.lotteryId ? order.lotteryId : parseInt(order.lottery_id)
+        let content = ''
+        if (order.lotteryId === 606) {
+          for (let i = 0; i < 5; i++) {
+            content += this.getScheduleContent(parseInt('60{0}'.format(i + 1)), order.selected[i] || [])
+          }
+        } else if (order.lotteryId === 705) {
+          for (let i = 0; i < 4; i++) {
+            content += this.getScheduleContent(parseInt('70{0}'.format(i + 1)), order.selected[i] || [])
+          }
+        } else {
+          content = this.getScheduleContent(order.lotteryId, order.selected)
         }
-      } else if (order.lotteryId === 705) {
-        for (let i = 0; i < 4; i++) {
-          content += this.getScheduleContent(parseInt('70{0}'.format(i + 1)), order.selected[i] || [])
-        }
-      } else {
-        content = this.getScheduleContent(order.lotteryId, order.selected)
-      }
-      betContent = `${betContent}${order.schedule_id || order.id}|${this.getLetPoint(order)}|${(order.is_sure > 0 || order.isSure > 0) ? '1' : '0'}|${content};`
-    })
+        betContent = `${betContent}${order.schedule_id || order.id}|${this.getLetPoint(order)}|${(order.is_sure > 0 || order.isSure > 0) ? '1' : '0'}|${content};`
+      })
+    }
     this.betContent = betContent
   }
 

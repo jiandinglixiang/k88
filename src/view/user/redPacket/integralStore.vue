@@ -224,20 +224,6 @@ export default {
         this.getMineInfo()
         this.hied1 = false
       })
-        .catch(err => {
-          switch (err.code) {
-            case 1090301:
-              Toast('商品已下架')
-              break
-            case 1090302:
-              Toast('积分不足')
-              break
-            case 1090303:
-              Toast('每日兑换次数限制')
-              break
-            default:
-          }
-        })
     },
     entityConversion (data) {
       if (data) {

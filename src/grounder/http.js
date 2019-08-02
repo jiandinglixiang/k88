@@ -159,6 +159,9 @@ export const HTTP = {
   postBetSubmitPay (red, id, sign) {
     // {"coupon_id":"28","id":"PB190722113515JNEE5Q","sign":"2461821f43d0a88f094827d0921b0c40","product_name":"LHCP"}
     return Http.post('/Bet/submitPay', { 'coupon_id': red, id, sign, 'product_name': 'LHCP' })
+  },
+  postTransferRecharge (id, name, money, remark) {
+    return Http.post('/Recharge/getTransferRecharge', { id, name, money, remark })
   }
 }
 

@@ -1,12 +1,13 @@
 import { LOTTERYIDS } from '../../../store/constants.js'
 import { HTTP } from '../../http.js'
 import { floor } from '../../../common/util.js'
+
 export const GROUNDER_STATUS = {
   '0': '未开始',
   '1': '上半场',
   '2': '中场休息',
   '3': '下半场',
-  '4': '加时',
+  '4': '加时赛',
   '5': '点球',
   '-1': '比赛结束',
   '-10': '比赛取消',
