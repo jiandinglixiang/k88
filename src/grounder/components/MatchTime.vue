@@ -8,6 +8,7 @@ import { GROUNDER_STATUS } from '../store/betting'
 export default {
   name: 'MatchTime',
   props: {
+    timeUpdate: Number,
     gameStatus: Number,
     serverTime: Number,
     startTime: Number
@@ -16,8 +17,7 @@ export default {
     return {
       downTime: 1,
       time: null,
-      serverTimeCopy: Number,
-      startTimeCopy: Number
+      serverTimeCopy: Number
     }
   },
   created () {},
@@ -32,34 +32,39 @@ export default {
       return false
     },
     timeInit () {
-      const [status1, status3] = [this.gameStatus === 1, this.gameStatus === 3]
-      if (status1 && status3) {
+      const [status1, status3] = [
+        this.gameStatus === 1,
+        this.gameStatus === 3
+      ]
+      if (status1 || status3) {
         // if (this.serverTimeCopy !== this.serverTime) {
-        //   this.countdown(1);
+        //   this.countdown(1)
         // }
-        const past = (this.serverTime) - this.startTime + this.downTime // 现在时间与开始时间差额
+        const nowTime = status3 ? this.serverTime + 2700 : this.serverTime // 下半场
+        const past = nowTime - this.startTime + 15 - this.timeUpdate // 现在时间与开始时间差额
         const m = Math.floor(past / 60)
         const ms = past - m * 60
-        if (status1 && m > 45) return '45:00+'
-        if (status3 && m > 90) return '90:00+'
+        if (status1 && past > 2700) return '45+'
+        if (status3 && past > 5400) return '90+'
         return `${m}:${ms > 9 ? ms : '0' + ms}`
       }
       return GROUNDER_STATUS[this.gameStatus]
     }
   },
   methods: {
-    countdown () {
-      clearInterval(this.time)
-      this.downTime = 1
+    countdown (x) {
+      this.downTime = x
       this.serverTimeCopy = this.serverTime
-      this.startTimeCopy = this.startTime
-      this.time = setInterval(() => {
-        this.downTime++
-      }, 1100)
+      if (!this.time) {
+        this.time = setInterval(() => {
+          this.downTime++
+        }, 1000)
+      }
     }
   },
   beforeDestroy () {
     clearInterval(this.time)
+    this.time = null
   }
 }
 </script>

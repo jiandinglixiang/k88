@@ -16,6 +16,7 @@
         :schedules-id="n1.id"
         :filter-arr="filterArr"
         :lottery-id="lotteryId"
+        :time-update="timeUpdate"
       />
     </li>
   </ul>
@@ -29,6 +30,7 @@ export default {
   name: 'MatchContainer',
   components: { GrounderBetting },
   props: {
+    timeUpdate: Number,
     filterArr: [Array, Boolean] // false默认不过滤,[]过滤
   },
   data () {

@@ -16,7 +16,7 @@ const actions = {
   },
   [types.RECHARGE] (context, params) {
     Http.post('/Recharge/userRecharge', params).then(data => {
-      context.commit(types.RECHARGE, data)
+      // context.commit(types.RECHARGE, data)
     })
   },
   [types.RECHARGE_INFO] (context, params) {
@@ -50,7 +50,6 @@ const actions = {
       loading.hide()
     }, (error) => {
       if (error.data && error.data.lack_money > 0) {
-        Toast(error.msg)
         error.code * 1 === 10006 && router.replace({
           name: 'Payment',
           query: {

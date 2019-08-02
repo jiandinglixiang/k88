@@ -20,7 +20,7 @@
         ></router-link>
       </div>
     </v-head>
-    <match-container :filter-arr="filterArr"/>
+    <match-container :filter-arr="filterArr" :time-update="timeTxt[0]"/>
     <m-mask @click.native.stop="switchMask(-1)" v-show="showMask">
       <select-game
         :list="GrounderFootballList"
@@ -117,10 +117,10 @@ export default {
       return this.getList(data).finally(() => {
         if (this.time2 === 0) {
           this.time2 = setInterval(() => {
-            if (this.timeTxt[0] <= 1) {
-              this.timeTxt = [15, 100, 0]
-              return
-            }
+            // if (this.timeTxt[0] <= 1) {
+            //   this.timeTxt = [15, 100, 0]
+            //   return
+            // }
             const total = Math.floor((this.timeTxt[0] - 1) / 15 * 100)
             this.timeTxt = [this.timeTxt[0] - 1, total, 100 - total]
           }, 1000)
