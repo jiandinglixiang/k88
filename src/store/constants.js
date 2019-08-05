@@ -30,6 +30,7 @@ export const LOTTERYIDS = {
   GROUNDER_FOOTBALL_RQ: 903,
   GROUNDER_FOOTBALL_DXQ: 904
 }
+
 export const LotteryId = {
   '1': '双色球',
   '2': '福彩3D',
@@ -68,10 +69,12 @@ export const LotteryId = {
   '705': '竞篮-混合过关',
   '901': '亚盘-全场让球',
   '902': '亚盘-全场大/小球',
-  [LOTTERYIDS.GROUNDER_FOOTBALL_RQ]: '全场让球',
+  [LOTTERYIDS.GROUNDER_FOOTBALL_RQ]: '让球&大小',
   [LOTTERYIDS.GROUNDER_FOOTBALL_DXQ]: '全场大/小球'
 }
-export const LotteryIdArray = Object.keys(LotteryId).map(v => v * 1)
+export const LotteryIdArray = Object.keys(LotteryId).map(function (value) {
+  return value * 1
+})
 export const LotteryFootballKey = {
   'betting_score_no_concede': {
     key: '601',

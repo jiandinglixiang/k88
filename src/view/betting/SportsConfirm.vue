@@ -577,9 +577,13 @@ export default {
       if (this.series.length <= 0) {
         return Toast('请选择投注方式')
       }
-      if (this.confirm.multiple < 5) {
-        return Toast('不能小于5倍')
+      const totalAmount = this.confirm.stakeCount * this.confirm.multiple * 2
+      if (totalAmount < 10) {
+        return Toast('投注金额不能小于10元')
       }
+      // if (this.confirm.multiple < 5) {
+      //   return Toast('不能小于5倍')
+      // }
 
       let seriesArr = []
       this.series.map(v => seriesArr.push(v.key))
@@ -590,7 +594,7 @@ export default {
         series: seriesArr.join(','),
         play_type: this.confirm.mode,
         stake_count: this.confirm.stakeCount,
-        total_amount: this.confirm.stakeCount * this.confirm.multiple * 2,
+        total_amount: totalAmount,
         schedule_orders: this.bettingList.map(value => {
           return {
             bet_number: value.getBetNumber(),
@@ -655,8 +659,8 @@ export default {
           msg = '投注金额必须是整数'
           return msg
         }
-        if (money < 2) {
-          msg = '投注金额必须大于2元'
+        if (money < 10) {
+          msg = '投注金额必须大于10元'
           return msg
         }
         if (money > value.upperLimit) {
@@ -704,8 +708,8 @@ export default {
               msg = '投注金额必须是整数'
               return msg
             }
-            if (value.total < 20) {
-              msg = '投注金额必须大于20元'
+            if (value.total < 10) {
+              msg = '投注金额必须大于10元'
               return msg
             }
             if (value.total > value.upperLimit) {

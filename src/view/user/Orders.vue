@@ -1,12 +1,16 @@
 <template>
   <div class="orders">
-    <v-head :hide-back="true" title="我的投注"></v-head>
-    <nav @click.stop="changeStatus" class="row text-center bg-black text-sm" data-top="y">
-      <div :class="{active: listIndex['0'] === '0'}" class="col col-25" data-value="0,0"><span>全部</span></div>
-      <div :class="{active: listIndex['0'] === '1'}" class="col col-25" data-value="1,-1"><span>待开奖</span></div>
-      <div :class="{active: listIndex['0'] === '2'}" class="col col-25" data-value="2,1"><span>中奖</span></div>
-      <div :class="{active: listIndex['0'] === '3'}" class="col col-25" data-value="3,-2"><span>未中奖</span></div>
-    </nav>
+    <div class="fixation-top">
+      <div>
+        <v-head :hide-back="true" title="我的投注"></v-head>
+        <nav @click.stop="changeStatus" class="row text-center bg-black text-sm" data-top="y">
+          <div :class="{active: listIndex['0'] === '0'}" class="col col-25" data-value="0,0"><span>全部</span></div>
+          <div :class="{active: listIndex['0'] === '1'}" class="col col-25" data-value="1,-1"><span>待开奖</span></div>
+          <div :class="{active: listIndex['0'] === '2'}" class="col col-25" data-value="2,1"><span>中奖</span></div>
+          <div :class="{active: listIndex['0'] === '3'}" class="col col-25" data-value="3,-2"><span>未中奖</span></div>
+        </nav>
+      </div>
+    </div>
     <div class="list"
          infinite-scroll-disabled="loading"
          infinite-scroll-distance="10"
@@ -101,6 +105,7 @@ export default {
         if (event.path[i].dataset) {
           if (event.path[i].dataset.top) break
           if (event.path[i].dataset.value) {
+            window.scrollTo(0, 0)
             const index = event.path[i].dataset.value.split(',')
             const unEqual = index[0] !== this.listIndex[0] // 不相等
             const isData = this.list[index[0]].length === 0 // 没有数据
@@ -137,6 +142,19 @@ export default {
 
 <style lang="scss">
   @import "../../style/main.css";
+
+  .fixation-top {
+    height: 78px;
+
+    > div {
+      max-width: 640px;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      z-index: 2;
+      background-color: rgb(19, 19, 19);
+    }
+  }
 
   .bg-black {
     @if ($lotteryIg) {

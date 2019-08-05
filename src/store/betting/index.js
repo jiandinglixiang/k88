@@ -27,6 +27,9 @@ const actions = {
       context.commit(types.CLEAR_CONFIRM_BETTING_LIST)
       context.commit(types.GET_CURRENT_LOTTERY, data)
       loading.hide()
+    }).catch(err => {
+      loading.hide()
+      return Promise.reject(err)
     })
   },
   [types.CURRENT_LOTTERY_REFRESH] (context) {
@@ -51,6 +54,9 @@ const actions = {
       Http.get('/Lottery/getCtzqList', { lottery_id: state.lottery }).then(data => {
         context.commit(types.GET_CURRENT_SFC_LOTTERY, data.result)
         loading.hide()
+      }).catch(err => {
+        loading.hide()
+        return Promise.reject(err)
       })
     }
   },
@@ -61,6 +67,9 @@ const actions = {
       return Http.post('/WebBet/preBet?lottery_id={0}&product_name=LHCP&sign={1}'.format(result.lottery_id, md5(mdStr)), result).then(data => {
         context.commit(types.DIGITAL_CONFIRM_PAYMENT, data)
         loading.hide()
+      }).catch(err => {
+        loading.hide()
+        return Promise.reject(err)
       })
     }
   },
@@ -71,6 +80,9 @@ const actions = {
       return Http.post('/WebBet/preBet?lottery_id={0}&product_name=LHCP&sign={1}'.format(result.lottery_id, md5(mdStr)), result).then(data => {
         context.commit(types.SPORTS_CONFIRM_PAYMENT, data)
         loading.hide()
+      }).catch(err => {
+        loading.hide()
+        return Promise.reject(err)
       })
     }
   },
@@ -82,6 +94,9 @@ const actions = {
       context.commit(types.SPORTS_CONFIRM_PAYMENT_PREBETYP, data)
       loading.hide()
       return data
+    }).catch(err => {
+      loading.hide()
+      return Promise.reject(err)
     })
   },
   [types.SFC_CONFIRM_PAYMENT] (context, result) {
@@ -91,6 +106,9 @@ const actions = {
       return Http.post('/WebBet/preBet?lottery_id={0}&product_name=LHCP&sign={1}'.format(result.lottery_id, md5(mdStr)), result).then(data => {
         context.commit(types.SPORTS_CONFIRM_PAYMENT, data)
         loading.hide()
+      }).catch(err => {
+        loading.hide()
+        return Promise.reject(err)
       })
     }
   },
@@ -104,6 +122,9 @@ const actions = {
         return Http.get('/Lottery/getJcList', { lottery_id: state.lottery, play_type: obj.mode }).then(data => {
           context.commit(types.CURRENT_SPORT_PLAY_TYPE_SELECT, data)
           loading.hide()
+        }).catch(err => {
+          loading.hide()
+          return Promise.reject(err)
         })
       }
     } else {
@@ -118,6 +139,9 @@ const actions = {
     }).then(data => {
       commit(types.CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, data)
       return data
+    }).catch(err => {
+      loading.hide()
+      return Promise.reject(err)
     })
   },
   [types.SPORT_MODE_SELECT] (context, mode) {
@@ -473,8 +497,8 @@ export default {
     [LOTTERYIDS.BASKETBALL_HH]: { playType: { id: 705, value: '混合过关' }, mode: 2, scheme: [] },
     [LOTTERYIDS.SFC]: [],
     [LOTTERYIDS.RXJ]: [],
-    [LOTTERYIDS.AHFOOTBALL_QCRQ]: { playType: { id: 901, value: '全场让球' }, mode: 2, scheme: [] },
-    [LOTTERYIDS.AHFOOTBALL_QCDXQ]: { playType: { id: 902, value: '全场大/小球' }, mode: 2, scheme: [] },
+    [LOTTERYIDS.AHFOOTBALL_QCRQ]: { playType: { id: 901, value: '全场让球' }, mode: 1, scheme: [] },
+    [LOTTERYIDS.AHFOOTBALL_QCDXQ]: { playType: { id: 902, value: '全场大/小球' }, mode: 1, scheme: [] },
     sfc: { issues: [], current: {} },
     confirm: {
       bettingList: [],

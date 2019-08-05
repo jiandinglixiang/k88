@@ -18,7 +18,6 @@
           <img v-show="n.is_lock" src="../assets/ic_closeall.png" class="g-msg-lock" alt="" width="15" height="15">
         </div>
         <grounder-bet-item
-          :lottery-id="lotteryId"
           :item="n"
           :schedules-id="schedulesId"
         />
@@ -61,8 +60,7 @@ export default {
     timeUpdate: Number,
     filterArr: [Array, Boolean], // false默认不过滤,[]过滤
     schedules: Array,
-    schedulesId: [String, Number],
-    lotteryId: Number
+    schedulesId: [String, Number]
   },
   data () {
     return {

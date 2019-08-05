@@ -1,35 +1,38 @@
 <template>
   <div class="g-Match-button">
-    <div class="g-button-vs">
-      <p>{{item.home}}</p>
-      <div>{{timeScore}}</div>
-      <p>{{item.guest}}</p>
+    <div class="g-team-score">
+      <div class="team-card-left">
+        <!--        <span class="red-card">1</span>-->
+        <!--        <span class="yellow-card">2</span>-->
+        {{item.home}}
+      </div>
+      <div class="score">{{timeScore}}</div>
+      <div class="team-card-right">
+        <p class="team">{{item.guest}}</p>
+        <!--        <span class="red-card">1</span>-->
+        <!--        <span class="yellow-card">2</span>-->
+      </div>
     </div>
-    <ul v-if="lotteryId===903" class="g-button-body-rq">
-      <li v-for="(n,x) of betOdd" :key="x">
-        <div
-          v-for="n2 of n"
-          :key="n2.key"
-          :class="n2.isLock"
-          @click="addBetItem(n2)"
-        ><span>{{n2.text}}</span><span :class="n2.oddStatus">{{n2.odd}}</span>
-        </div>
-      </li>
-    </ul>
-    <ul v-else-if="lotteryId===904" class="g-button-body-dxq">
-      <li>
-        <div>进球</div>
-        <div>大</div>
-        <div>小</div>
-      </li>
-      <li v-for="(n,x) of betOdd" :key="x">
-        <div>{{n[0].text}}</div>
-        <div v-for="n2 of n" :key="n2.key"
-             @click="addBetItem(n2)"
-             :class="`${n2.isLock||n2.oddStatus}`"><span>{{n2.odd}}</span>
-        </div>
-      </li>
-    </ul>
+    <div class="bet-odds-but">
+      <ul>
+        <li v-for="(n,x) of betOdd(true)" :key="x">
+          <div class="rq-txt" v-for="n2 of n" :key="n2.key" :class="n2.isLock" @click="addBetItem(n2)">
+            <span class="sm-big">{{n2.hosGue}}</span>
+            <span class="item-score">{{n2.text}}</span>
+            <span class="item-odds" :class="n2.oddStatus">{{n2.odd}}</span>
+          </div>
+        </li>
+      </ul>
+      <ul>
+        <li v-for="(n,x) of betOdd(false)" :key="x">
+          <div class="dxq-txt" v-for="n2 of n" :key="n2.key" :class="n2.isLock" @click="addBetItem(n2)">
+            <span class="sm-big">{{n2.hosGue}}</span>
+            <span class="item-score">{{n2.text}}</span>
+            <span class="item-odds" :class="n2.oddStatus">{{n2.odd}}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -43,29 +46,41 @@ export default {
   name: 'GrounderBetItem',
   props: {
     item: Object,
-    schedulesId: [String, Number],
-    lotteryId: Number
+    schedulesId: [String, Number]
   },
   computed: {
     ...mapState({
       isLogin: state => !state.user.token
     }),
     betOdd () {
-      const sizeBall = this.lotteryId === 904 // 大小球
-      const letBall = this.lotteryId === 903
-      const objKey = (letBall && 'betting_score_letball') || (sizeBall && 'betting_score_sizeball')
-      if (!this.item.betting_score_odds || !this.item.betting_score_odds[objKey]) {
-        return [[{ text: '-', isLock: 'lock' }, { text: '-', isLock: 'lock' }]]
-      }
-      const obj = Object.keys(this.item.betting_score_odds[objKey])
-      const oddTxt = LotteryFootballKey[objKey]
-      obj.sort((key1, key2) => key1.slice(1) - key2.slice(1))
-      const oddData2 = this.item.betting_score_odds[objKey] // {v:1.2}
+      const nu$ll = [{ text: '-', isLock: 'lock', key: 11 }, { text: '-', isLock: 'lock', key: 22 }]
+      const scoreOdds = this.item.betting_score_odds
       const isLock = (this.item.is_lock || this.item.game_stauts * 1 === 2 || this.item.game_stauts < 0) ? `lock` : ''
-      const arr = []
+      const initArr = [
+        {
+          lotteryId: 903,
+          key: 'betting_score_letball',
+          keys1: '空',
+          keys2: '空',
+          betObj: scoreOdds.betting_score_letball
+        },
+        {
+          lotteryId: 904,
+          key: 'betting_score_sizeball',
+          keys1: '大',
+          keys2: '小',
+          betObj: scoreOdds.betting_score_sizeball
+        }
+      ]
 
-      function f1 (arr) {
-        if (sizeBall) arr.join('/')
+      if (!scoreOdds || isLock) {
+        return function () {
+          return [nu$ll]
+        }
+      }
+
+      function f1 (arr, key) {
+        if (key === 'betting_score_sizeball') arr.join('/')
         return arr.map(v => v > 0 ? `+${v}` : v).join('/')
       }
 
@@ -73,32 +88,53 @@ export default {
         return ovj.slice(0, ovj.length - 1)
       }
 
-      function f3 (obj) {
+      function f3 (match, key) {
         return {
-          ...oddDiscern(oddData2[obj]),
-          key: obj,
-          text: f1(oddTxt[obj]),
-          isLock
+          key: key, // v101
+          text: f1(LotteryFootballKey[match.key][key] || [], match.key), // 0/+0.5
+          isLock, // true
+          hosGue: match[`keys${f4(key)}`], // 大/小
+          lotteryId: match.lotteryId, // id
+          ...oddDiscern(match.betObj[key]) // { odd: '', oddStatus: '' }
         }
       }
 
-      for (let i = obj.length - 1; i >= 1;) {
-        const pushArr = [f3(obj[i])]
-        if (f2(obj[i]) === f2(obj[i - 1])) {
-          // v01 1===v01 2
-          pushArr.unshift(f3(obj[i - 1]))
-          arr.unshift(pushArr)
-          i -= 2
-        } else {
-          obj[i].slice(obj[i].length - 1) > 1 ? pushArr.unshift({
-            text: '-',
-            isLock: 'lock'
-          }) : pushArr.push({ text: '-', isLock: 'lock' })
-          arr.push(pushArr)
-          i--
-        }
+      function f4 (key) {
+        return key.slice(key.length - 1)
       }
-      return arr
+
+      const [letBall, sizeBall] = initArr.map(match => {
+        if (!match.betObj) return [nu$ll] // 如果赔率为空就返回锁定
+        const oddKeyArray = Object.keys(match.betObj).sort((key1, key2) => key1.slice(1) - key2.slice(1))
+        // 排序key
+        const arr = []
+        for (let i = oddKeyArray.length - 1; i >= 0;) {
+          // 对赔率进行排序
+          const pushArr = [f3(match, oddKeyArray[i])]
+          if (i >= 1 && f2(oddKeyArray[i]) === f2(oddKeyArray[i - 1])) {
+            console.log(i, i - 1, f2(oddKeyArray[i]), f2(oddKeyArray[i - 1]))
+            // 如果赔率符合v01===v01说明他们是一对儿
+            // 在pushArr开头插入obj{}
+            pushArr.unshift(f3(match, oddKeyArray[i - 1]))
+            // 因为是从后向前遍历 所以arr开头插入
+            arr.unshift(pushArr)
+            i -= 2
+          } else {
+            console.log(i, f2(oddKeyArray[i]))
+            // 不是一对儿 判断当前key最末位的是1还是2还是0
+            f4(oddKeyArray[i]) > 1 ? pushArr.unshift(nu$ll[0]) : pushArr.push(nu$ll[1])
+            // 把只有单组赔率的放到末尾
+            arr.push(pushArr)
+            i--
+          }
+        }
+        return arr
+      })
+
+      return function (x) {
+        if (x) return letBall
+        return sizeBall
+      }
     },
     timeScore () {
       const arr = !!this.item.real_time_score && this.item.real_time_score.split(':')
@@ -117,7 +153,7 @@ export default {
         return
       }
       this.$store.commit(ADD_BETTING_ITEM, {
-        lotteryId: this.lotteryId,
+        lotteryId: n.lotteryId,
         Id: [this.schedulesId, this.item.id],
         key: n.key,
         text: n.text
@@ -131,249 +167,164 @@ export default {
   .g-Match-button {
     width: 80%;
 
-    .g-button-vs {
-      height: 25px;
+    .g-team-score {
+      height: 30px;
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
 
-      > p {
+      .red-card, .yellow-card {
+        flex: 0 0 auto;
+        color: white;
+        font-weight: bold;
+        border-radius: 4px;
+        padding: 1px 2px 2px 2px;
+      }
+
+      .red-card {
+        background: linear-gradient(0deg, rgba(255, 8, 68, 1) 0%, rgba(255, 78, 80, 1) 100%);
+      }
+
+      .yellow-card {
+        background-color: #FFC63A;
+      }
+
+      .team-card-right {
+        width: 0;
+        flex: 1 1 auto;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: center;
+
+        .team {
+          margin-right: 2px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      .team-card-left {
+        width: 0;
+        flex: 1 1 auto;
         text-align: center;
-        width: 40%;
-        height: 15px;
-        color: #CCCCCC;
-        font-weight: 500;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
 
-      > div {
-        text-align: center;
-        font-weight: bold;
-        line-height: 15px;
-        flex: 0 0 40px;
+      .score {
+        flex: 0 0 auto;
         background: linear-gradient(90deg, rgba(133, 131, 142, 1) 0%, rgba(133, 131, 142, 1) 100%);
+        line-height: 1;
         border-radius: 6px;
+        white-space: nowrap;
+        padding: 1px 5px 2px 5px;
       }
     }
 
-    .g-button-body-dxq {
-      width: 100%;
-      text-align: center;
+    .bet-odds-but {
+      > ul {
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 10px;
 
-      > li {
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-
-        div:first-child {
-          width: 20%;
-        }
-
-        div:nth-child(n+2) {
-          width: 40%;
-        }
-      }
-
-      > li:first-child {
-
-        div:nth-child(1) {
-          line-height: 17px;
-          background-color: #494949;
-          border-top-left-radius: 2px;
-        }
-
-        div:nth-child(2) {
-          line-height: 17px;
-          color: white;
-          background-color: #FF3333;
-        }
-
-        div:nth-child(3) {
-          line-height: 17px;
-          color: white;
-          background-color: #3393FF;
-          border-top-right-radius: 2px;
-        }
-      }
-
-      > li:nth-child(n+2) {
-        font-weight: 500;
-
-        div:first-child {
-          background-color: #DDDDDD;
-          color: #131313;
-          height: 30px;
-          line-height: 30px;
-          border-bottom: 1px solid #3F3F3F;
-        }
-
-        div:nth-child(2) {
-          border-right: 1px dashed #3F3F3F;
-        }
-
-        div:nth-child(n+2) {
-          height: 30px;
-          line-height: 30px;
-          background-color: #494949;
-          border-bottom: 1px solid #3F3F3F;
-        }
-
-        div.active-select, div:nth-child(n+2):active {
-          color: #131313;
-          background-color: #FFC63A;
-        }
-
-        div.lock {
-          span {
-            display: none;
-          }
-
-          background: url("../assets/ic_selclose.png") no-repeat center center, url("../assets/ya_rang_bg.png") no-repeat center center;
-          background-size: 10px 15px, 110% 110%;
-        }
-
-        .up {
-          color: #1AC456;
-
-          &:after {
-            display: inline-block;
-            content: '';
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-bottom: 6px solid #1AC456;
-            margin: 0 0 2px 4px;
-          }
-        }
-
-        .down {
-          color: #FF3333;
-
-          &:after {
-            display: inline-block;
-            content: '';
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-top: 6px solid #FF3333;
-            margin: 0 0 2px 4px;
-          }
-        }
-      }
-
-      > li:last-child {
-        > div:first-child {
-          border-bottom: 0;
-          border-bottom-left-radius: 2px;
-        }
-
-        > div:nth-child(2) {
-          border-bottom: 0;
-        }
-
-        > div:last-child {
-          border-bottom: 0;
-          border-bottom-right-radius: 2px;
-        }
-      }
-    }
-
-    .g-button-body-rq {
-      width: 100%;
-      overflow: hidden;
-      border-radius: 2px;
-
-      > li {
-        display: flex;
-        flex-flow: row nowrap;
-
-        div {
-          background-color: #494949;
-          height: 30px;
-          line-height: 30px;
-          width: 50%;
+        > li {
           display: flex;
           flex-flow: row nowrap;
-          align-items: center;
-          font-weight: 500;
+          justify-content: flex-start;
+          align-content: center;
+          height: 30px;
 
-          span:first-child {
-            width: 65%;
-            overflow: hidden;
-            text-align: center;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            color: #999999;
-          }
+          .rq-txt:active, .dxq-txt:active {
+            background-color: #FFC63A;
 
-          span:last-child {
-            color: white;
-            width: 35%;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
-
-          span.up {
-            color: #1AC456;
-
-            &:after {
-              display: inline-block;
-              content: '';
-              width: 0;
-              height: 0;
-              border-left: 6px solid transparent;
-              border-right: 6px solid transparent;
-              border-bottom: 6px solid #1AC456;
-              margin: 0 0 2px 4px;
+            .item-score {
+              color: #131313;
             }
           }
 
-          span.down {
-            color: #FF3333;
+          .rq-txt, .dxq-txt {
+            width: 0;
+            flex: 0 0 50%;
+            background-color: #494949;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            justify-content: flex-end;
 
-            &:after {
-              display: inline-block;
-              content: '';
-              width: 0;
-              height: 0;
-              border-left: 6px solid transparent;
-              border-right: 6px solid transparent;
-              border-top: 6px solid #FF3333;
-              margin: 0 0 2px 4px;
+            .sm-big {
+              flex: 0 0 10%;
+              text-align: center;
+            }
+
+            .item-score {
+              flex: 0 0 40%;
+              text-align: center;
+              color: #999999;
+              font-weight: 500;
             }
           }
-        }
 
-        div.active-select, div:active {
-          background-color: #FFC63A;
+          .rq-txt > .sm-big {
+            visibility: hidden;
+          }
 
-          span {
-            color: #131313;
+          .item-odds {
+            width: 0;
+            flex: 0 0 40%;
+            font-weight: bold;
+
+            &.up {
+              color: #1AC456;
+
+              &:after {
+                display: inline-block;
+                content: '';
+                width: 0;
+                height: 0;
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-bottom: 6px solid #1AC456;
+                margin: 0 0 2px 4px;
+              }
+            }
+
+            &.down {
+              color: #FF3333;
+
+              &:after {
+                display: inline-block;
+                content: '';
+                width: 0;
+                height: 0;
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 6px solid #FF3333;
+                margin: 0 0 2px 4px;
+              }
+            }
+          }
+
+          > div.lock {
+            span {
+              display: none;
+            }
+
+            background: url("../assets/ic_selclose.png") no-repeat center center, url("../assets/ya_rang_bg.png") no-repeat center center;
+            background-size: 10px 15px, 110% 110%;
+          }
+
+          > div:first-child {
+            border-right: 1px solid #3f3f3f;
           }
         }
 
-        div.lock {
-          span {
-            display: none;
-          }
-
-          background: url("../assets/ic_selclose.png") no-repeat center center, url("../assets/ya_rang_bg.png") no-repeat center center;
-          background-size: 10px 15px, 110% 110%;
+        > li:nth-child(n+2) {
+          border-top: 1px solid #3F3F3F;
         }
-
-        div:last-child {
-          border-left: 1px dashed #3F3F3F;
-        }
-      }
-
-      > li:nth-child(n+ 2) {
-        border-top: 1px solid #3F3F3F;
       }
     }
   }
