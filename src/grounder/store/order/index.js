@@ -34,8 +34,11 @@ export function betOddText (item, lotteryid) {
   const difference = lotteryid === '903' ? f2 : f3
 
   function f1 (arr) {
-    if (sizeBall) arr.join('/')
-    return arr.map(v => v > 0 ? `+${v}` : v).join('/')
+    if (sizeBall) {
+      return arr.join('/')
+    } else {
+      return arr.map(v => v > 0 ? `+${v}` : v).join('/')
+    }
   }
 
   function f2 (obj) {
