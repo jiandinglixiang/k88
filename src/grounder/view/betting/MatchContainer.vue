@@ -15,7 +15,6 @@
         :schedules="n1.schedules"
         :schedules-id="n1.id"
         :filter-arr="filterArr"
-        :lottery-id="lotteryId"
         :time-update="timeUpdate"
       />
     </li>
@@ -45,8 +44,7 @@ export default {
   },
   computed: {
     ...mapState({
-      list: state => state.grounder.lotteryId ? state.grounder[state.grounder.lotteryId] : [],
-      lotteryId: state => state.grounder.lotteryId
+      list: state => state.grounder.lotteryId ? state.grounder[state.grounder.lotteryId] : []
     })
   },
   filters: {

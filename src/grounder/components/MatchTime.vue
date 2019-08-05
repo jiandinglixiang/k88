@@ -20,7 +20,6 @@ export default {
       serverTimeCopy: Number
     }
   },
-  created () {},
   computed: {
     serverTimeOptimize () {
       const date = Date.now() / 1000
@@ -41,7 +40,8 @@ export default {
         //   this.countdown(1)
         // }
         const nowTime = status3 ? this.serverTime + 2700 : this.serverTime // 下半场
-        const past = nowTime - this.startTime + 15 - this.timeUpdate // 现在时间与开始时间差额
+        // console.log(this.timeUpdate)
+        const past = nowTime - this.startTime + this.timeUpdate // 现在时间与开始时间差额
         const m = Math.floor(past / 60)
         const ms = past - m * 60
         if (status1 && past > 2700) return '45+'

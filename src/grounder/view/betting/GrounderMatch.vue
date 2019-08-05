@@ -20,7 +20,7 @@
         ></router-link>
       </div>
     </v-head>
-    <match-container :filter-arr="filterArr" :time-update="timeTxt[0]"/>
+    <match-container :filter-arr="filterArr" :time-update="timeTxt[3]"/>
     <m-mask @click.native.stop="switchMask(-1)" v-show="showMask">
       <select-game
         :list="GrounderFootballList"
@@ -76,9 +76,10 @@ export default {
   computed: {
     ...mapState({
       targetId: function (state) {
+        const id = state.grounder.lotteryId
         return function (x) {
-          if (x) return state.grounder.lotteryId
-          return (state.grounder.lotteryId && LotteryId[state.grounder.lotteryId]) || '加载中.'
+          if (x) return id
+          return (id && LotteryId[id]) || '加载中.'
         }
       },
       betItem: state => state.grounder.betItem
@@ -92,12 +93,11 @@ export default {
   data () {
     return {
       GrounderFootballList: [
-        { lotteryId: LOTTERYIDS.GROUNDER_FOOTBALL_RQ, playType: 1, value: LotteryId[LOTTERYIDS.GROUNDER_FOOTBALL_RQ] },
-        { lotteryId: LOTTERYIDS.GROUNDER_FOOTBALL_DXQ, playType: 1, value: LotteryId[LOTTERYIDS.GROUNDER_FOOTBALL_DXQ] }
+        { lotteryId: LOTTERYIDS.GROUNDER_FOOTBALL_RQ, playType: 1, value: LotteryId[LOTTERYIDS.GROUNDER_FOOTBALL_RQ] }
       ],
       mask: [{ load: false, show: false }, { load: false, show: false }, { load: false, show: false }],
       filterArr: false, // 过滤条件
-      timeTxt: [15, 100, 0], // 倒计时计算
+      timeTxt: [15, 100, 0, 0], // 倒计时计算
       time: null, // 刷新
       time2: null // 倒计时
     }
@@ -110,22 +110,19 @@ export default {
       // 亚盘更新
       clearTimeout(this.time)
       clearInterval(this.time2)
-      this.time = 0
-      this.time2 = 0
-      this.timeTxt = [15, 100, 0]
-      // console.log(new Date().getSeconds(), new Date().getSeconds() + 15)
+      this.time = null
+      this.time2 = null
+      this.timeTxt = [15, 100, 0, 0]
       return this.getList(data).finally(() => {
-        if (this.time2 === 0) {
+        if (this.time2 === null) {
           this.time2 = setInterval(() => {
-            // if (this.timeTxt[0] <= 1) {
-            //   this.timeTxt = [15, 100, 0]
-            //   return
-            // }
-            const total = Math.floor((this.timeTxt[0] - 1) / 15 * 100)
-            this.timeTxt = [this.timeTxt[0] - 1, total, 100 - total]
+            let ms = this.timeTxt[0]
+            if (ms < 1) ms++
+            const total = Math.floor((ms - 1) / 15 * 100)
+            this.timeTxt = [ms - 1, total, 100 - total, 15 - ms]
           }, 1000)
         }
-        if (this.time === 0) this.time = setTimeout(this.fifteenTimeUpdate, 15000)
+        if (this.time === null) this.time = setTimeout(this.fifteenTimeUpdate, 15000)
       })
     },
     manuallyUpdate () {
@@ -150,7 +147,9 @@ export default {
       loading.show()
       this.$store.commit(ADD_BETTING_ITEM, null) // 清理选中的比赛
       this.filterArr = false
-      this.fifteenTimeUpdate(this.GrounderFootballList.find(value => val.lotteryId === value.lotteryId)).finally(() => {
+      this.fifteenTimeUpdate(this.GrounderFootballList.find(function (value) {
+        return val.lotteryId === value.lotteryId
+      })).finally(() => {
         loading.hide() //
         this.switchMask(-1)
       })

@@ -35,7 +35,7 @@ const actions = {
       return new Error('参数错误')
     }
     data = await HTTP.getLotteryGetJcList(lotteryId, playType)
-    commit(SET_LOTTERY_ID, data.lottery_id * 1 || lotteryId * 1)
+    commit(SET_LOTTERY_ID, data.lottery_id || lotteryId)
     commit(SET_PLAY_TYPE, playType)
     commit(SET_LOTTERY_DATA, data)
     return data
@@ -43,10 +43,13 @@ const actions = {
 }
 const mutations = {
   [SET_LOTTERY_DATA] (state, { groups }) {
-    state[state.lotteryId] = groups
+    state[state.lotteryId] = groups || []
   },
   [SET_LOTTERY_ID] (state, lotteryId) {
-    state.lotteryId !== lotteryId && (state.lotteryId = lotteryId)
+    const id = lotteryId * 1
+    if (state.lotteryId !== id) {
+      state.lotteryId = id
+    }
   },
   [SET_PLAY_TYPE] (state, playType) {
     state.playType !== playType && (state.playType = playType)
