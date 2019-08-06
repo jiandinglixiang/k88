@@ -8,7 +8,7 @@
       <div :style="{transform:`rotateZ(${rotate[0]}deg)`}" class="right-red"></div>
       <div :style="{transform:`rotateZ(${rotate[2]}deg)`}" class="right-green"></div>
     </div>
-    <div class="progress"><span>{{txt||''}}</span></div>
+    <div class="progress"><span>{{txt||'0'}}</span></div>
   </div>
 </template>
 

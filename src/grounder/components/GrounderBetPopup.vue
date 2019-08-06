@@ -238,7 +238,7 @@ export default {
         if (!odds &&
           data.update_odds[postData.schedule_orders[0].schedule_id] &&
           (data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number] ||
-            data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number] === 0)) {
+            data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number] * 1 === 0)) {
           return this.postOrder(floor(data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number]))
         }
         return Promise.reject(data)

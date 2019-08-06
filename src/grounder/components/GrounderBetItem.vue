@@ -112,7 +112,7 @@ export default {
           // 对赔率进行排序
           const pushArr = [f3(match, oddKeyArray[i])]
           if (i >= 1 && f2(oddKeyArray[i]) === f2(oddKeyArray[i - 1])) {
-            console.log(i, i - 1, f2(oddKeyArray[i]), f2(oddKeyArray[i - 1]))
+            // console.log(i, i - 1, f2(oddKeyArray[i]), f2(oddKeyArray[i - 1]))
             // 如果赔率符合v01===v01说明他们是一对儿
             // 在pushArr开头插入obj{}
             pushArr.unshift(f3(match, oddKeyArray[i - 1]))
@@ -120,7 +120,7 @@ export default {
             arr.unshift(pushArr)
             i -= 2
           } else {
-            console.log(i, f2(oddKeyArray[i]))
+            // console.log(i, f2(oddKeyArray[i]))
             // 不是一对儿 判断当前key最末位的是1还是2还是0
             f4(oddKeyArray[i]) > 1 ? pushArr.unshift(nu$ll[0]) : pushArr.push(nu$ll[1])
             // 把只有单组赔率的放到末尾

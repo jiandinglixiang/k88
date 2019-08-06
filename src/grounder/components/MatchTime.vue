@@ -40,7 +40,6 @@ export default {
         //   this.countdown(1)
         // }
         const nowTime = status3 ? this.serverTime + 2700 : this.serverTime // 下半场
-        // console.log(this.timeUpdate)
         const past = nowTime - this.startTime + this.timeUpdate // 现在时间与开始时间差额
         const m = Math.floor(past / 60)
         const ms = past - m * 60

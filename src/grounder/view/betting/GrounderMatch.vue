@@ -99,7 +99,8 @@ export default {
       filterArr: false, // 过滤条件
       timeTxt: [15, 100, 0, 0], // 倒计时计算
       time: null, // 刷新
-      time2: null // 倒计时
+      time2: null, // 倒计时
+      fifteen: 20000
     }
   },
   methods: {
@@ -112,17 +113,25 @@ export default {
       clearInterval(this.time2)
       this.time = null
       this.time2 = null
-      this.timeTxt = [15, 100, 0, 0]
-      return this.getList(data).finally(() => {
-        if (this.time2 === null) {
-          this.time2 = setInterval(() => {
-            let ms = this.timeTxt[0]
-            if (ms < 1) ms++
-            const total = Math.floor((ms - 1) / 15 * 100)
-            this.timeTxt = [ms - 1, total, 100 - total, 15 - ms]
-          }, 1000)
+      return this.getList(data).then(({ groups }) => {
+        // 如果取到的值木有就延长刷新时间
+        if (groups && Array.isArray(groups) && groups.length) {
+          this.fifteen = 15000
+        } else if (this.fifteen === 15100) {
+          this.fifteen = 20000
+        } else {
+          this.fifteen = 15100
         }
-        if (this.time === null) this.time = setTimeout(this.fifteenTimeUpdate, 15000)
+      }).finally(() => {
+        if (this.time2 === null) {
+          this.timeTxt = [15, 100, 0, 0]
+          this.time2 = setInterval(() => {
+            let ms = this.timeTxt[0] - 1
+            const total = Math.floor((ms) / 15 * 100)
+            this.timeTxt = [ms, total, 100 - total, 15 - ms]
+          }, this.fifteen / 15)
+        }
+        if (this.time === null) this.time = setTimeout(this.fifteenTimeUpdate, this.fifteen)
       })
     },
     manuallyUpdate () {
