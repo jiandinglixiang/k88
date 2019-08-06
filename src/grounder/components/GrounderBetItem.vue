@@ -80,7 +80,7 @@ export default {
       }
 
       function f1 (arr, key) {
-        if (key === 'betting_score_sizeball') arr.join('/')
+        if (key === 'betting_score_sizeball') return arr.join('/')
         return arr.map(v => v > 0 ? `+${v}` : v).join('/')
       }
 

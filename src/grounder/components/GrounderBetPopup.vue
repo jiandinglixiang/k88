@@ -72,10 +72,16 @@ export default {
       itemData (state) {
         const betItem = state.grounder.betItem
         if (!betItem) return {}
-        const lottery = state.grounder[betItem.lotteryId]
-        const sizeBall = betItem.lotteryId === 904 // 大小球
-        const letBall = betItem.lotteryId === 903
-        const objKey = (letBall && 'betting_score_letball') || (sizeBall && 'betting_score_sizeball')
+        let [betId, scoreKey, lottery] = [betItem.lotteryId, null, null]
+        if (betId === 903) {
+          scoreKey = 'betting_score_letball'
+          lottery = state.grounder[903]
+        } else if (betId === 904) {
+          scoreKey = 'betting_score_sizeball'
+          lottery = state.grounder[903]
+        } else {
+          return {}
+        }
         const bonusLimit = state.user.mine.run_bonus_limit || 0
         let betObj = {}
         const noBet = lottery.some(v => {
@@ -87,15 +93,15 @@ export default {
           })
         })
         if (!noBet) return {}
-        betObj.BET_gameName = LotteryId[betItem.lotteryId]
+        betObj.BET_gameName = LotteryId[betId]
         betObj.BET_teamName = betItem.key.startsWith('1', betItem.key.length - 1) ? betObj.home : betObj.guest
-        const oddss = betObj.betting_score_odds && betObj.betting_score_odds[objKey] && betObj.betting_score_odds[objKey][betItem.key]
+        const oddss = betObj.betting_score_odds && betObj.betting_score_odds[scoreKey] && betObj.betting_score_odds[scoreKey][betItem.key]
         const odd = oddss ? oddDiscern(oddss) : {}
         betObj.BET_key = betItem.key
         betObj.BET_oddStatus = odd.oddStatus
         betObj.BET_odds = odd.odd
         betObj.BET_text = betItem.text
-        betObj.BET_lotteryId = betItem.lotteryId
+        betObj.BET_lotteryId = betId
         // 限制金额投注
         betObj.BET_maxMoney = Math.floor(bonusLimit / (odd.odd || 1))
         if (betObj.BET_maxMoney > 30000) {
@@ -229,7 +235,10 @@ export default {
       }
       return HTTP.postWebBetPreBetYp(postData).then(data => {
         if (!data.update_odds) return data
-        if (!odds && data.update_odds[postData.schedule_orders[0].schedule_id] && data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number]) {
+        if (!odds &&
+          data.update_odds[postData.schedule_orders[0].schedule_id] &&
+          (data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number] ||
+            data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number] === 0)) {
           return this.postOrder(floor(data.update_odds[postData.schedule_orders[0].schedule_id][postData.schedule_orders[0].bet_number]))
         }
         return Promise.reject(data)
