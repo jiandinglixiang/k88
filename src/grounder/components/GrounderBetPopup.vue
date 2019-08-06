@@ -220,6 +220,14 @@ export default {
         })
         if (action !== 'confirm') return Promise.reject(action)
       }
+
+      function initKey (id) {
+        if (id * 1 === 904) {
+          return 'sizeball_id'
+        }
+        return 'id'
+      }
+
       const postData = {
         series: '101',
         lottery_id: this.itemData.BET_lotteryId,
@@ -228,7 +236,7 @@ export default {
         total_amount: this.money,
         schedule_orders: [{
           bet_number: this.itemData.BET_key,
-          schedule_id: this.itemData.id,
+          schedule_id: this.itemData[initKey(this.itemData.BET_lotteryId)],
           is_sure: '0', // 胆
           odds: odds || this.itemData.BET_odds
         }]
