@@ -51,14 +51,14 @@ export default {
       }
     },
     StatusTxt (status) {
-      // 订单状态: 1未支付 2出票失败 3未开奖 4未中奖 5已中奖 6等待派奖 7出票中 8出票失败已退款 9部分中奖 10未开始 11已取消
+      // 订单状态: 1未支付 2出票失败 3待开奖 4未中奖 5已中奖 6等待派奖 7出票中 8出票失败已退款 9部分中奖 10未开始 11已取消
       switch (parseInt(status)) {
         case 1:
           return '未支付'
         case 2:
           return '出票失败'
         case 3:
-          return '未开奖'
+          return '待开奖'
         case 4:
           return '未中奖'
         case 5:
