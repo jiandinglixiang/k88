@@ -10,8 +10,9 @@
       </tr>
       <tr :key="index1" v-for="(ticket, index1) in scheme.tickets">
         <td>
-          <p :class="{'state-0': oddText(jc, ticket.lottery_id).status===3,'state-1': oddText(jc, ticket.lottery_id).status===1}"
-             :key="index2" v-for="(jc, index2) in ticket.jc_info">
+          <p
+            :class="{'state-0': oddText(jc, ticket.lottery_id).status===3,'state-1': oddText(jc, ticket.lottery_id).status===1}"
+            :key="index2" v-for="(jc, index2) in ticket.jc_info">
             {{jc.round_no}} ({{oddText(jc, ticket.lottery_id).text}}) {{oddText(jc,ticket.lottery_id).odd}}</p>
         </td>
         <td>
@@ -21,8 +22,8 @@
           <p>{{ticket.ticket_amount}}</p>
         </td>
         <td>
-          <p :class="{'status-2':ticket.ticket_winnings_status*1===0}">
-            {{SetTicketStatus(ticket.ticket_winnings_status, ticket.ticket_winnings)}}</p>
+          <p :class="{'status-2':ticket.ticket_winnings_status*1===0}"
+             v-html="SetTicketStatus(ticket.ticket_status, ticket.ticket_winnings_status, ticket.ticket_winnings)"></p>
         </td>
         <td>
           <p>{{TicketStatusTxt(ticket.ticket_status)}}</p>
@@ -67,10 +68,17 @@ export default {
           return ''
       }
     },
-    SetTicketStatus (status, winnings) {
-      const winstatus = parseInt(status)
+    SetTicketStatus (status1, status2, winnings) {
+      // status1 出票状态  status2 中奖状态
+      const winstatus = parseInt(status2)
       const prizeText = winstatus === -1 ? '未中奖' : winstatus === 0 ? '待开奖' : winnings
-      return prizeText
+      let _html = ``
+      if (status1 === 2) {
+        _html = `<span>--</span>`
+      } else {
+        _html = `<span>` + prizeText + `</span>`
+      }
+      return _html
     },
     oddText (item, id) {
       return betOddText(item, id)
