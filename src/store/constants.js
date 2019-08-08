@@ -69,7 +69,7 @@ export const LotteryId = {
   '705': '竞篮-混合过关',
   '901': '亚盘-全场让球',
   '902': '亚盘-全场大/小球',
-  [LOTTERYIDS.GROUNDER_FOOTBALL_RQ]: '让球&大小',
+  [LOTTERYIDS.GROUNDER_FOOTBALL_RQ]: '全场让球&大小',
   [LOTTERYIDS.GROUNDER_FOOTBALL_DXQ]: '全场大/小球'
 }
 export const LotteryIdArray = Object.keys(LotteryId).map(function (value) {

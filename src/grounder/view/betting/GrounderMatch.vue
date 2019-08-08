@@ -211,7 +211,10 @@ export default {
     .g-right {
       width: 120px;
       @media screen and (max-width: 360px) {
-        width: 100px;
+        width: 110px;
+      }
+      @media screen and (max-width: 320px) {
+        width: 90px;
       }
       display: flex;
       flex-flow: row nowrap;
