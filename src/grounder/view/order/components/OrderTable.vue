@@ -46,7 +46,7 @@ export default {
       let _html = ``
       let finalArr = n.schedule_final_score.split(':')
       if (status === 4 || status === 5) {
-        _html = `<p>最终</p><p>${finalArr[0]}-${finalArr[1]}</p>`
+        _html = `<p>全场</p><p>${finalArr[0]}-${finalArr[1]}</p>`
       } else if (status === 11) {
         _html = `<p class="text-primary">取消</p>`
       }

@@ -31,6 +31,7 @@ export function betOddText (item, lotteryid) {
   const odd = item.betting_order[objKey]
   const oddTxt = LotteryFootballKey[objKey]
   obj.sort((key1, key2) => key1.slice(1) > key2.slice(1))
+
   const difference = lotteryid === '903' ? f2 : f3
 
   function f1 (arr) {
@@ -82,30 +83,33 @@ export function betOddText (item, lotteryid) {
     let status = 0 // 状态
     const big = obj[0].charAt(obj[0].length - 1) === '1' // 大球
     let key = 0
-    for (let i in oddTxt[obj[0]]) {
-      key = oddTxt[obj[0]][i]
-      if (big) {
-        // 买大球
-        if (total > key) {
-          status = 3
-        } else if (total < key) {
-          status = 0
+    if (Array.isArray(finalArr)) {
+      for (let i in oddTxt[obj[0]]) {
+        key = oddTxt[obj[0]][i]
+        if (big) {
+          // 买大球
+          if (total > key) {
+            status = 3
+          } else if (total < key) {
+            status = 0
+          } else {
+            status = 1
+            break
+          }
         } else {
-          status = 1
-          break
-        }
-      } else {
-        // 买小球
-        if (total < key) {
-          status = 3
-        } else if (total > key) {
-          status = 0
-        } else {
-          status = 1
-          break
+          // 买小球
+          if (total < key) {
+            status = 3
+          } else if (total > key) {
+            status = 0
+          } else {
+            status = 1
+            break
+          }
         }
       }
     }
+
     return status
   }
 

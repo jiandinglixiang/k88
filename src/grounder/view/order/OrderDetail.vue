@@ -1,7 +1,7 @@
 <template>
   <div class="order-detail">
     <v-head title="投注详情"></v-head>
-    <!--0中奖1未中奖2待开3取消-->
+    <!--0中奖1未中奖2退款-->
     <div class="order-info" :class="StatusClass(details.status)">
       <img class="thumb" :src="details.lottery_image" alt="" width="40" height="40">
       <div class="info">
@@ -40,25 +40,27 @@ export default {
   },
   methods: {
     StatusClass (val) {
-      // 5中奖 4未中奖
+      // 5中奖 4未中奖 //8退款
       switch (parseInt(val)) {
         case 5:
           return 'status-0'
         case 4:
           return 'status-1'
+        case 8:
+          return 'status-2'
         default:
           return ''
       }
     },
     StatusTxt (status) {
-      // 订单状态: 1未支付 2出票失败 3未开奖 4未中奖 5已中奖 6等待派奖 7出票中 8出票失败已退款 9部分中奖 10未开始 11已取消
+      // 订单状态: 1未支付 2出票失败 3待开奖 4未中奖 5已中奖 6等待派奖 7出票中 8出票失败 9部分中奖 10未开始 11已取消
       switch (parseInt(status)) {
         case 1:
           return '未支付'
         case 2:
           return '出票失败'
         case 3:
-          return '未开奖'
+          return '待开奖'
         case 4:
           return '未中奖'
         case 5:
@@ -68,7 +70,7 @@ export default {
         case 7:
           return '出票中'
         case 8:
-          return '出票失败已退款'
+          return '出票失败'
         case 9:
           return '部分中奖'
         case 10:
@@ -168,6 +170,16 @@ export default {
         top: 12px;
         height: 26px;
         background-image: url("../../../assets/icon/no_win.png");
+      }
+    }
+
+    &.status-2 {
+      &:before {
+        top: 35px;
+        right: 14px;
+        width: 51px;
+        height: 45px;
+        background-image: url("../../../assets/icon/refund.png");
       }
     }
 
