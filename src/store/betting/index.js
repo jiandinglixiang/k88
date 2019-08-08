@@ -26,10 +26,9 @@ const actions = {
     return Http.get('/Lottery/getCurrentIssue', { lottery_id: state.lottery }).then(data => {
       context.commit(types.CLEAR_CONFIRM_BETTING_LIST)
       context.commit(types.GET_CURRENT_LOTTERY, data)
+      return data
+    }).finally(function () {
       loading.hide()
-    }).catch(err => {
-      loading.hide()
-      return Promise.reject(err)
     })
   },
   [types.CURRENT_LOTTERY_REFRESH] (context) {
@@ -53,10 +52,9 @@ const actions = {
       loading.show()
       Http.get('/Lottery/getCtzqList', { lottery_id: state.lottery }).then(data => {
         context.commit(types.GET_CURRENT_SFC_LOTTERY, data.result)
+        return data
+      }).finally(function () {
         loading.hide()
-      }).catch(err => {
-        loading.hide()
-        return Promise.reject(err)
       })
     }
   },
@@ -66,10 +64,9 @@ const actions = {
       const mdStr = '{0}{1}{2}Ehcv2b1AvWAMSey2'.format(result.lottery_id, result.issue_id, parseInt(result.total_amount))
       return Http.post('/WebBet/preBet?lottery_id={0}&product_name=LHCP&sign={1}'.format(result.lottery_id, md5(mdStr)), result).then(data => {
         context.commit(types.DIGITAL_CONFIRM_PAYMENT, data)
+        return data
+      }).finally(function () {
         loading.hide()
-      }).catch(err => {
-        loading.hide()
-        return Promise.reject(err)
       })
     }
   },
@@ -79,10 +76,9 @@ const actions = {
       const mdStr = '{0}{1}{2}Ehcv2b1AvWAMSey2'.format(result.lottery_id, result.play_type, parseInt(result.total_amount))
       return Http.post('/WebBet/preBet?lottery_id={0}&product_name=LHCP&sign={1}'.format(result.lottery_id, md5(mdStr)), result).then(data => {
         context.commit(types.SPORTS_CONFIRM_PAYMENT, data)
+        return data
+      }).finally(function () {
         loading.hide()
-      }).catch(err => {
-        loading.hide()
-        return Promise.reject(err)
       })
     }
   },
@@ -92,11 +88,9 @@ const actions = {
     const mdStr = '{0}{1}{2}Ehcv2b1AvWAMSey2'.format(result.Orders[0].lottery_id, result.Orders[0].play_type, parseInt(result.Orders[0].total_amount))
     return Http.post('/WebBet/preBetYp?lottery_id={0}&product_name=LHCP&sign={1}'.format(result.Orders[0].lottery_id, md5(mdStr)), result).then(data => {
       context.commit(types.SPORTS_CONFIRM_PAYMENT_PREBETYP, data)
-      loading.hide()
       return data
-    }).catch(err => {
+    }).finally(function () {
       loading.hide()
-      return Promise.reject(err)
     })
   },
   [types.SFC_CONFIRM_PAYMENT] (context, result) {
@@ -105,10 +99,9 @@ const actions = {
       const mdStr = '{0}{1}{2}Ehcv2b1AvWAMSey2'.format(result.lottery_id, result.issue_no, parseInt(result.total_amount))
       return Http.post('/WebBet/preBet?lottery_id={0}&product_name=LHCP&sign={1}'.format(result.lottery_id, md5(mdStr)), result).then(data => {
         context.commit(types.SPORTS_CONFIRM_PAYMENT, data)
+        return data
+      }).finally(function () {
         loading.hide()
-      }).catch(err => {
-        loading.hide()
-        return Promise.reject(err)
       })
     }
   },
@@ -121,10 +114,9 @@ const actions = {
         loading.show()
         return Http.get('/Lottery/getJcList', { lottery_id: state.lottery, play_type: obj.mode }).then(data => {
           context.commit(types.CURRENT_SPORT_PLAY_TYPE_SELECT, data)
+          return data
+        }).finally(function () {
           loading.hide()
-        }).catch(err => {
-          loading.hide()
-          return Promise.reject(err)
         })
       }
     } else {
@@ -139,9 +131,8 @@ const actions = {
     }).then(data => {
       commit(types.CURRENT_SPORT_PLAY_TYPE_SELECT_UPDATE, data)
       return data
-    }).catch(err => {
+    }).finally(function () {
       loading.hide()
-      return Promise.reject(err)
     })
   },
   [types.SPORT_MODE_SELECT] (context, mode) {
@@ -153,6 +144,8 @@ const actions = {
       Http.get('/Lottery/getJcList', { lottery_id: state.lottery, play_type: mode }).then(data => {
         context.commit(types.SPORT_MODE_SELECT, mode)
         context.commit(types.CURRENT_SPORT_PLAY_TYPE_SELECT, data)
+        return data
+      }).finally(function () {
         loading.hide()
       })
     } else {

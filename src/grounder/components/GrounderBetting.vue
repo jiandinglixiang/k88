@@ -22,28 +22,6 @@
           :schedules-id="schedulesId"
         />
       </div>
-      <!--      <div class="g-bet-analyze" v-show="show[x]">-->
-      <!--        <p>-->
-      <!--          <span>历史交锋</span>-->
-      <!--          <span>近{{n.history_fight.games_count}}次交战，-->
-      <!--          {{n.home}}</span>-->
-      <!--          <span style="color: #FF3333">{{n.history_fight.win}}胜</span>-->
-      <!--          <span style="color: #3393FF">{{n.history_fight.equal}}平</span>-->
-      <!--          <span style="color: #1AC456">{{n.history_fight.lose}}负</span>-->
-      <!--        </p>-->
-      <!--        <p>-->
-      <!--          <span>近期战绩</span>-->
-      <!--          <span>主队</span><span>{{n.latest_record.home.win}}胜</span><span>{{n.latest_record.home.equal}}平</span> <span>{{n.latest_record.home.lose}}负</span>-->
-      <!--          <span></span>-->
-      <!--          <span>客队</span> <span>{{n.latest_record.guest.win}}胜</span> <span>{{n.latest_record.guest.equal}}平</span>-->
-      <!--          <span>{{n.latest_record.guest.lose}}负</span>-->
-      <!--        </p>-->
-      <!--        <p>-->
-      <!--          <span>平均赔率</span>-->
-      <!--          <span>{{n.average_win_odds}}</span> <span>{{n.average_equal_odds}}</span> <span>{{n.average_lose_odds}}</span>-->
-      <!--        </p>-->
-      <!--        <div @click="goDetail(n)"><img src="../../assets/ball.png" alt="">详细赛事分析</div>-->
-      <!--      </div>-->
     </li>
   </ul>
 </template>

@@ -75,14 +75,14 @@ export default {
         let [betId, scoreKey, lottery] = [betItem.lotteryId, null, null]
         if (betId === 903) {
           scoreKey = 'betting_score_letball'
-          lottery = state.grounder[903]
+          lottery = state.grounder[betId]
         } else if (betId === 904) {
           scoreKey = 'betting_score_sizeball'
           lottery = state.grounder[903]
         } else {
           return {}
         }
-        const bonusLimit = state.user.mine.run_bonus_limit || 0
+        const bonusLimit = (state.user.mine && state.user.mine.run_bonus_limit) || 0
         let betObj = {}
         const noBet = lottery.some(v => {
           const isEq = v.id * 1 === betItem.Id[0] * 1
@@ -93,15 +93,17 @@ export default {
           })
         })
         if (!noBet) return {}
-        betObj.BET_gameName = LotteryId[betId]
-        betObj.BET_teamName = betItem.key.startsWith('1', betItem.key.length - 1) ? betObj.home : betObj.guest
-        const oddss = betObj.betting_score_odds && betObj.betting_score_odds[scoreKey] && betObj.betting_score_odds[scoreKey][betItem.key]
-        const odd = oddss ? oddDiscern(oddss) : {}
+        if (betId !== 904) {
+          betObj.BET_teamName = betItem.troops * 1 === 1 ? betObj.home : betObj.guest// 队伍名称
+        }
+        const odds = betObj.betting_score_odds && betObj.betting_score_odds[scoreKey] && betObj.betting_score_odds[scoreKey][betItem.key]
+        const odd = odds ? oddDiscern(odds) : {}
         betObj.BET_key = betItem.key
         betObj.BET_oddStatus = odd.oddStatus
         betObj.BET_odds = odd.odd
         betObj.BET_text = betItem.text
         betObj.BET_lotteryId = betId
+        betObj.BET_gameName = LotteryId[betId]
         // 限制金额投注
         betObj.BET_maxMoney = Math.floor(bonusLimit / (odd.odd || 1))
         if (betObj.BET_maxMoney > 30000) {
@@ -310,12 +312,17 @@ export default {
       flex-flow: row nowrap;
       align-items: center;
 
-      > span {
-        max-width: 45%;
+      > span:first-child, > span:last-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 50%;
+        flex: 0 1 auto;
       }
 
       > span:nth-child(2) {
         margin: 0 5px;
+        flex: 0 0 auto;
       }
     }
 
@@ -364,8 +371,8 @@ export default {
           }
         }
 
-        span:first-child {
-          margin-right: 5px;
+        span:last-child {
+          text-indent: 5px;
         }
       }
 
@@ -424,7 +431,7 @@ export default {
         margin: 10px 0;
         width: 100%;
         height: 34px;
-        background: url("../assets/ic_selclose.png") #ddd no-repeat center center;
+        background: url("../assets/rollingball_ic_lock.png") #ddd no-repeat center center;
         background-size: 15px 20px;
         border-radius: 5px;
       }

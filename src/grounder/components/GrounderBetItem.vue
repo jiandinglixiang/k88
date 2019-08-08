@@ -55,7 +55,7 @@ export default {
     betOdd () {
       const nu$ll = [{ text: '-', isLock: 'lock', key: 11 }, { text: '-', isLock: 'lock', key: 22 }]
       const scoreOdds = this.item.betting_score_odds
-      const isLock = (this.item.is_lock || this.item.game_stauts * 1 === 2 || this.item.game_stauts < 0) ? `lock` : ''
+      const isLock = (this.item.is_lock * 1 || ['0', '2', '-1', '-10', '-11', '-12', '-13', '-14'].includes(`${this.item.game_stauts}`)) ? `lock` : ''
       const initArr = [
         {
           lotteryId: 903,
@@ -89,11 +89,13 @@ export default {
       }
 
       function f3 (match, key) {
+        const troops = f4(key)
         return {
           key: key, // v101
           text: f1(LotteryFootballKey[match.key][key] || [], match.key), // 0/+0.5
           isLock, // true
-          hosGue: match[`keys${f4(key)}`], // 大/小
+          hosGue: match[`keys${troops}`], // 大/小
+          troops,
           lotteryId: match.lotteryId, // id
           ...oddDiscern(match.betObj[key]) // { odd: '', oddStatus: '' }
         }
@@ -156,7 +158,8 @@ export default {
         lotteryId: n.lotteryId,
         Id: [this.schedulesId, this.item.id],
         key: n.key,
-        text: n.text
+        text: n.text,
+        troops: n.troops
       })
     }
   }

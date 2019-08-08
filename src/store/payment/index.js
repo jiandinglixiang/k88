@@ -11,8 +11,9 @@ const actions = {
     loading.show()
     Http.get('/Recharge/getPlatformList').then(data => {
       context.commit(types.RECHARGE_LIST, data)
+    }).finally(function () {
       loading.hide()
-    }, loading.hide)
+    })
   },
   [types.RECHARGE] (context, params) {
     Http.post('/Recharge/userRecharge', params).then(data => {
@@ -64,16 +65,20 @@ const actions = {
     loading.show()
     return Http.post('/Bet/submitPay', params).then(data => {
       context.commit(types.PAYMENT, data)
+      return data
+    }).finally(() => {
       loading.hide()
-    }, loading.hide)
+    })
   },
   [types.PAYMENT_ORDER_COMPLETE] (context, params) {
     loading.show()
     return Http.post('/Bet/submitPay', params).then(data => {
       context.commit(types.PAYMENT_ORDER_COMPLETE, data)
       context.commit(CLEAR_CONFIRM_BETTING_LIST)
+      return data
+    }).finally(() => {
       loading.hide()
-    }, loading.hide)
+    })
   }
 }
 

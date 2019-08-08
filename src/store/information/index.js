@@ -12,6 +12,7 @@ const actions = {
       third_party_schedule_id: state.thirdId
     }).then(data => {
       context.commit(types.INFORMATION_SCHEDULE_DETAIL, data)
+    }).finally(function () {
       loading.hide()
     })
   },
@@ -102,6 +103,7 @@ const actions = {
     }).then(data => {
       data.type = params.type
       context.commit(types.INFORMATION_ODDS_CHANGE, data)
+    }).finally(function () {
       loading.hide()
     })
   },
@@ -160,6 +162,7 @@ const actions = {
       third_party_schedule_id: state.thirdId
     }).then(data => {
       context.commit(types.INFORMATION_PLAYER_DATA, data)
+    }).finally(function () {
       loading.hide()
     })
   }

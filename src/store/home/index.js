@@ -20,6 +20,7 @@ const actions = {
       loading.show()
       return Http.get('/Lottery/getLotteryList').then(data => {
         context.commit(types.GET_LOTTERY_LIST, data)
+      }).finally(function () {
         loading.hide()
       })
     }

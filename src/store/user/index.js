@@ -34,6 +34,7 @@ const actions = {
     loading.show()
     return Http.get('/User').then(data => {
       context.commit(types.MINE_INFO, data)
+      return data
     }).finally(() => {
       loading.hide()
     })
@@ -52,6 +53,8 @@ const actions = {
     loading.show()
     return Http.get('/User/getUserBankCard').then(data => {
       context.commit(types.GET_USER_BANKCARD, data)
+      return data
+    }).finally(() => {
       loading.hide()
     })
   },
@@ -59,6 +62,8 @@ const actions = {
     loading.show()
     return Http.get('/Config/fetBankList').then(data => {
       context.commit(types.GET_BANKS_LIST, data)
+      return data
+    }).finally(() => {
       loading.hide()
     })
   },
@@ -82,6 +87,8 @@ const actions = {
       limit: state.orders.limit
     }).then(data => {
       context.commit(types.GET_ORDERS_LIST, data)
+      return data
+    }).finally(() => {
       loading.hide()
     })
   },
@@ -106,11 +113,12 @@ const actions = {
       loading.show()
       return Http.get(`/Order/detail`, { order_id: id }).then(data => {
         context.commit(types.ORDER_DETAIL_SUCCESS, data)
-        loading.hide()
       }, (data) => {
         if (data.code === 10008) {
           history.back()
         }
+      }).finally(() => {
+        loading.hide()
       })
     }
   },
@@ -121,12 +129,14 @@ const actions = {
       context.dispatch(types.ORDER_DETAIL_REQUEST, id).then(() => {
         Http.get(`/Order/program`, { order_id: id, limit: 100000, offset: 0 }).then(data => {
           context.commit(types.ORDER_SCHEME_SUCCESS, data)
+        }).finally(() => {
           loading.hide()
         })
       })
     } else {
       Http.get(`/Order/program`, { order_id: id, limit: 100000, offset: 0 }).then(data => {
         context.commit(types.ORDER_SCHEME_SUCCESS, data)
+      }).finally(() => {
         loading.hide()
       })
     }
@@ -138,8 +148,9 @@ const actions = {
     loading.show()
     return Http.get('/UserIntegral/userSign').then((data) => {
       context.commit(types.MINE_SIGN_IN, data)
-      loading.hide()
       return data
+    }).finally(() => {
+      loading.hide()
     })
   },
   [types.SIGN_IN_ACCEPT_THE_PRIZE] (context, id) {

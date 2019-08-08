@@ -14,6 +14,7 @@ const actions = {
       loading.show()
       Http.get('/Lottery/getPrizeIssueInfo').then(data => {
         context.commit(types.GET_PRIZE_LIST, data)
+      }).finally(function () {
         loading.hide()
       })
     }
@@ -27,6 +28,7 @@ const actions = {
       lottery_id: state.detail.lottery, offset: state.detail.offset, limit: state.detail.limit
     }).then(data => {
       context.commit(types.GET_PRIZE_DETAIL_LIST, data)
+    }).finally(function () {
       loading.hide()
     })
   },
@@ -47,6 +49,7 @@ const actions = {
     }).then(data => {
       data.lottery = lottery
       context.commit(types.GET_PRIZE_SPORTS_DETAIL, data)
+    }).finally(function () {
       loading.hide()
     })
   }
