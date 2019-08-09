@@ -299,6 +299,7 @@ import SportsCalculate from '../../model/sports/SportsCalculate'
 import Lottery from '../../model/common/Lottery'
 import Toast from '../../common/toast'
 import { MINE_INFO } from '../../store/user/types'
+import BigNumber from 'bignumber.js'
 
 Vue.component(Popup.name, Popup)
 let calculate
@@ -578,12 +579,12 @@ export default {
         return Toast('请选择投注方式')
       }
       const totalAmount = this.confirm.stakeCount * this.confirm.multiple * 2
-      if (totalAmount < 10) {
-        return Toast('投注金额不能小于10元')
-      }
-      // if (this.confirm.multiple < 5) {
-      //   return Toast('不能小于5倍')
+      // if (totalAmount < 10) {
+      //   return Toast('投注金额不能小于10元')
       // }
+      if (this.confirm.multiple < 5) {
+        return Toast('不能小于5倍')
+      }
 
       let seriesArr = []
       this.series.map(v => seriesArr.push(v.key))
@@ -672,7 +673,7 @@ export default {
           lottery_id: lotteryId,
           play_type: MatchMode,
           stake_count: value.stake,
-          total_amount: money,
+          total_amount: new BigNumber(money).toNumber(),
           schedule_orders: scheduleOrders || scheduleOrdersInit.call(this)
         })
         return false
@@ -721,7 +722,7 @@ export default {
               lottery_id: lotteryId,
               play_type: MatchMode,
               stake_count: '1',
-              total_amount: value.total,
+              total_amount: new BigNumber(value.total).toNumber(),
               schedule_orders: [{
                 bet_number: value.key,
                 schedule_id: value.id,
