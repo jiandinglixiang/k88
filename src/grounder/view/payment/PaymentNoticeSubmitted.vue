@@ -14,14 +14,14 @@
           ></textarea>
           <button @click="copyTxt('openingBank')">复制</button>
         </li>
-        <li class="opening-bank">
+        <li class="opening-bank two-lines">
           <p class="bank-title">银行账户:</p>
-          <textarea class="bank-content" rows="1" readonly ref="account" v-model="query.bank_account"></textarea>
+          <textarea class="bank-content" rows="2" readonly ref="account" v-model="query.bank_account"></textarea>
           <button @click="copyTxt('account')">复制</button>
         </li>
         <li class="opening-bank">
           <p class="bank-title">账户名称:</p>
-          <textarea class="bank-content" rows="1" disabled v-model="query.account_name">喵哩个喵</textarea>
+          <textarea class="bank-content" rows="1" disabled v-model="query.account_name"></textarea>
         </li>
       </ul>
     </div>
@@ -130,7 +130,7 @@ export default {
     }
 
     .opening-bank {
-      margin: 4% 8.5% 0 8.5%;
+      margin: 2.5% 8.5% 0 8.5%;
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
@@ -162,7 +162,7 @@ export default {
       }
 
       button {
-        flex: 0 0 4em;
+        flex: 0 0 3em;
         font-size: 0.4rem;
         color: white;
         font-weight: bold;

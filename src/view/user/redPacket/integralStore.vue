@@ -198,10 +198,11 @@ export default {
     getUserIntegralGoodsList () {
       loading.show()
       Http.get('/UserIntegral/getIntegralGoodsList').then(data => {
-        loading.hide()
         if (data && data.groups) {
           this.list = data.groups
         }
+      }).finally(function () {
+        loading.hide()
       })
     },
     redConversion (data) {

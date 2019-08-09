@@ -103,6 +103,7 @@ export default {
         if (data && data.list) {
           this.redList = data.list
         }
+      }).finally(function () {
         loading.hide()
       })
     },
@@ -111,7 +112,6 @@ export default {
       loading.show()
       Http.get('/Coupon/buyCoupon', { coupon_id: this.purchase.id })
         .then(data => {
-          loading.hide()
           Toast('红包购买成功')
         })
         .catch(err => {
@@ -122,6 +122,9 @@ export default {
             }
             this.$router.push({ name: 'Payment', query: { lack: money } })
           }
+        })
+        .finally(function () {
+          loading.hide()
         })
     },
     payAffirm (data) {

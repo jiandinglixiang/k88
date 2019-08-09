@@ -79,7 +79,7 @@ export default {
         Toast('该功能暂未开发!')
       }
     },
-    getList (index = '0', orderType = '0', offset = 0, lotteryId = 0) {
+    getList (index = this.listIndex[0], orderType = this.listIndex[1], offset = 0, lotteryId = 0) {
       this.loading = 'true'
       return Http.get('/Order', {
         lottery_id: lotteryId,

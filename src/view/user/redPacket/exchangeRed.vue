@@ -68,11 +68,13 @@ export default {
         loading.show()
         Http.get('/Coupon/exchangeCoupon', { coupon_code: this.cdKey })
           .then(() => {
-            loading.hide()
             Toast('兑换成功')
           })
           .catch(err => {
             console.log(err)
+          })
+          .finally(function () {
+            loading.hide()
           })
       } else {
         Toast('兑换码不能为空')

@@ -128,6 +128,7 @@ export default {
         } else {
           this.loading = true
         }
+      }).finally(function () {
         loading.hide()
       })
     }

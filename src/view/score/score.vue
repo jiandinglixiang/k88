@@ -316,9 +316,7 @@ export default {
           this.showToB = true
         }
         this.switchover(target)
-        loading.hide()
-      }).catch(err => {
-        console.log(err)
+      }).finally(function () {
         loading.hide()
       })
     },
@@ -349,8 +347,11 @@ export default {
             // 是否显示没有比赛
             this.showToB = true
           }
+        }).finally(function () {
           loading.hide()
         })
+      }).finally(function () {
+        loading.hide()
       })
     },
     findToTheTop (presentTop = [], presentData) {
