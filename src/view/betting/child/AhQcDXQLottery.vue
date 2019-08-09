@@ -56,7 +56,7 @@
                  @click="selectedItem(item)"
                  class="box-item row" v-for="(item, index) in schedule.holderList">
               <div class="col bg-dark">{{ item.text }}</div>
-              <div :class="isStyle(item.str)" class="col-67 text-color">{{ item.value }}<span class="arrow-icon"></span>
+              <div :class="isStyle(item.str)" class="col-67 text-color">{{ twoDecimal[index] }}<span class="arrow-icon"></span>
               </div>
             </div>
           </div>
