@@ -109,15 +109,20 @@ export function betOddText (item, lotteryid) {
         }
       }
     }
-
     return status
   }
 
-  const odds = odd[obj[0]].split('-')
+  let oddText = 0
+  if (odd[obj[0]] && typeof odd[obj[0]] === 'string') {
+    const odds = odd[obj[0]].split('-')
+    oddText = odds[0]
+  } else {
+    oddText = odd[obj[0]]
+  }
   arr.push({
     key: obj[0],
     text: f1(oddTxt[obj[0]]),
-    odd: odds[0],
+    odd: oddText,
     status: difference(obj)
   })
   // console.log(arr[0])
