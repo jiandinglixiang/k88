@@ -12,7 +12,12 @@ export default {
 export function betOddText (item, lotteryid) {
   const letBall = lotteryid === '903'
   const sizeBall = lotteryid === '904' // 大小球
-  const betScoreArray = item.bet_score.split(':') // 即时比分
+  let betScoreArray
+  try {
+    betScoreArray = item.bet_score.split(':')// 即时比分
+  } catch (e) {
+    betScoreArray = [0, 0]
+  }
   const finalArray = item.score && item.score.final && item.score.final.split(':') // 彩果
   const betScoreArr = Array.isArray(betScoreArray) && betScoreArray.map(val => {
     val = parseInt(val)

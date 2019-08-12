@@ -54,7 +54,13 @@ export default {
     },
     BetContent (oddtxt, n) {
       let _html = ``
-      let big = oddtxt.key.charAt(oddtxt.key.length - 1) === '1' // 1 大球/主队
+      let big
+      try {
+        big = oddtxt.key.charAt(oddtxt.key.length - 1) === '1' // 1 大球/主队
+      } catch (e) {
+        big = '0'
+      }
+
       if (n.lottery_id === '903') {
         if (big) {
           _html = `<span>让球 <br> ${n.home}<br>(${oddtxt.text}) ${oddtxt.odd}</span>`

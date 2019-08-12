@@ -3,11 +3,15 @@
     <div class="fixation-top">
       <div>
         <v-head :hide-back="true" title="我的投注"></v-head>
-        <nav @click.stop="changeStatus" class="row text-center bg-black text-sm" data-top="y">
-          <div :class="{active: listIndex['0'] === '0'}" class="col col-25" data-value="0,0"><span>全部</span></div>
-          <div :class="{active: listIndex['0'] === '1'}" class="col col-25" data-value="1,-1"><span>待开奖</span></div>
-          <div :class="{active: listIndex['0'] === '2'}" class="col col-25" data-value="2,1"><span>中奖</span></div>
-          <div :class="{active: listIndex['0'] === '3'}" class="col col-25" data-value="3,-2"><span>未中奖</span></div>
+        <nav class="row text-center bg-black text-sm">
+          <div :class="{active: listIndex[0] === 0}" class="col col-25" @click="changeStatus([0,0])"><span>全部</span>
+          </div>
+          <div :class="{active: listIndex[0] === 1}" class="col col-25" @click="changeStatus([1,-1])"><span>待开奖</span>
+          </div>
+          <div :class="{active: listIndex[0] === 2}" class="col col-25" @click="changeStatus([2,1])"><span>中奖</span>
+          </div>
+          <div :class="{active: listIndex[0] === 3}" class="col col-25" @click="changeStatus([3,-2])"><span>未中奖</span>
+          </div>
         </nav>
       </div>
     </div>
@@ -19,7 +23,7 @@
       <div :key="index"
            @click="goOrderDetail(item)"
            class="item item-avatar item-right-icon"
-           v-for="(item,index) in list[listIndex['0']]">
+           v-for="(item,index) in list[listIndex[0]]">
         <img :src="item.lottery_image" alt="ball">
         <div class="main">
           <span>{{item.lottery_name}}</span>
@@ -35,7 +39,7 @@
       </div>
       <infinite-scroll-loading :show="loading==='true'"/>
     </div>
-    <no-order v-show="list[listIndex['0']].length===0"/>
+    <no-order v-show="list[listIndex[0]].length===0"/>
   </div>
 </template>
 
@@ -47,14 +51,20 @@ import Toast from '../../common/toast'
 import Http from '../../store/Http'
 import { copy } from '../../common/util'
 import { OrderStatus } from '../../store/constants'
+import loading from '../../common/loading.js'
 
 export default {
   name: 'orders',
   data () {
-    const index = localStorage.getItem('ordersIndex') || `["0","0"]`
+    let listIndex
+    try {
+      listIndex = JSON.parse(localStorage.getItem('ordersIndex') || `[0,0]`)
+    } catch (e) {
+      listIndex = [0, 0]
+    }
     return {
       list: [[], [], [], []],
-      listIndex: JSON.parse(index),
+      listIndex,
       loading: true,
       limit: 15,
       load: true
@@ -81,6 +91,7 @@ export default {
     },
     getList (index = this.listIndex[0], orderType = this.listIndex[1], offset = 0, lotteryId = 0) {
       this.loading = 'true'
+      loading.show()
       return Http.get('/Order', {
         lottery_id: lotteryId,
         order_type: orderType,
@@ -97,33 +108,26 @@ export default {
           this.loading = true
         }
         return list
+      }).finally(function () {
+        loading.hide()
       })
     },
-    changeStatus (event) {
+    changeStatus (index) {
       // 切换
-      for (let i in event.path) {
-        if (event.path[i].dataset) {
-          if (event.path[i].dataset.top) break
-          if (event.path[i].dataset.value) {
-            window.scrollTo(0, 0)
-            const index = event.path[i].dataset.value.split(',')
-            const unEqual = index[0] !== this.listIndex[0] // 不相等
-            const isData = this.list[index[0]].length === 0 // 没有数据
-            if (unEqual && isData) {
-              this.getList(index[0], index[1], 0).then(() => {
-                // 加载完后切换
-                this.listIndex = index
-                localStorage.setItem('ordersIndex', JSON.stringify(index))
-              })
-            } else {
-              this.loading = this.list[index[0]].length % 10 === 0
-              // 可被整除
-              this.listIndex = index
-              localStorage.setItem('ordersIndex', JSON.stringify(index))
-            }
-            break
-          }
-        }
+      window.scrollTo(0, 0)
+      const unEqual = index[0] !== this.listIndex[0] // 不相等
+      const isData = this.list[index[0]].length === 0 // 没有数据
+      if (unEqual && isData) {
+        this.getList(index[0], index[1], 0).then(() => {
+          // 加载完后切换
+          this.listIndex = index
+          localStorage.setItem('ordersIndex', JSON.stringify(index))
+        })
+      } else {
+        this.loading = this.list[index[0]].length % 10 === 0
+        // 可被整除
+        this.listIndex = index
+        localStorage.setItem('ordersIndex', JSON.stringify(index))
       }
     },
     loadMore () {
@@ -135,7 +139,7 @@ export default {
   },
   components: { NoOrder, InfiniteScrollLoading },
   created () {
-    this.getList()
+    this.getList(this.listIndex[0], this.listIndex[1])
   }
 }
 </script>
