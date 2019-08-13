@@ -199,7 +199,9 @@ export default {
       }
       this.antiShake = '付款中...'
       const data = await this.postOrder().catch((err) => {
-        if (err !== 'cancel') Toast('下单失败')
+        if (err !== 'cancel') {
+          Toast((err && err.msg) || '下单失败')
+        }
         console.log(err)
         this.antiShake = '付款'
         return Promise.reject(err)
