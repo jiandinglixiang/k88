@@ -2,15 +2,15 @@
   <div class="g-Match-button">
     <div class="g-team-score">
       <div class="team-card-left">
-        <!--        <span class="red-card">1</span>-->
-        <!--        <span class="yellow-card">2</span>-->
+        <span v-show="card.team1_red_card" class="red-card">{{card.team1_red_card}}</span>
+        <span v-show="card.team1_yellow_card" class="yellow-card">{{card.team1_yellow_card}}</span>
         {{item.home}}
       </div>
       <div class="score">{{timeScore}}</div>
       <div class="team-card-right">
         <p class="team">{{item.guest}}</p>
-        <!--        <span class="red-card">1</span>-->
-        <!--        <span class="yellow-card">2</span>-->
+        <span v-show="card.team2_red_card" class="red-card">{{card.team2_red_card}}</span>
+        <span v-show="card.team2_yellow_card" class="yellow-card">{{card.team2_yellow_card}}</span>
       </div>
     </div>
     <div class="bet-odds-but">
@@ -142,6 +142,15 @@ export default {
       const arr = !!this.item.real_time_score && this.item.real_time_score.split(':')
       if (arr) return `${arr[0] || 0} - ${arr[1] || 0}`
       return `0 - 0`
+    },
+    card () {
+      if (this.item && this.item.schedule_team_card) {
+        return Object.keys(this.item.schedule_team_card).reduce((t, key) => {
+          if (this.item.schedule_team_card[key]) t[key] = this.item.schedule_team_card[key] * 1
+          return t
+        }, {})
+      }
+      return {}
     }
   },
   methods: {

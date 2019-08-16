@@ -44,7 +44,7 @@ export default {
     flex-flow: row wrap;
     background-color: #171717;
 
-    >li {
+    > li {
       font-weight: bold;
       box-sizing: border-box;
       overflow: hidden;
@@ -60,7 +60,7 @@ export default {
 
       &.active-select {
         background-image: url("../../assets/betting/selected.png");
-        background-position: bottom right;
+        background-position: 100% 110%;
         background-repeat: no-repeat;
         background-size: 20px 20px;
         border-color: #ffc63a;

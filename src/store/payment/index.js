@@ -17,7 +17,7 @@ const actions = {
   },
   [types.RECHARGE] (context, params) {
     Http.post('/Recharge/userRecharge', params).then(data => {
-      // context.commit(types.RECHARGE, data)
+      context.commit(types.RECHARGE, data)
     })
   },
   [types.RECHARGE_INFO] (context, params) {
