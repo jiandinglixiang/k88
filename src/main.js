@@ -13,7 +13,7 @@ import './style/common.scss'
 device(store)
 Vue.config.devtools = process.env.NODE_ENV !== 'production' || !!localStorage.getItem('devtools')
 Vue.config.productionTip = false
-
+// 321
 export default new Vue({
   router,
   store,
